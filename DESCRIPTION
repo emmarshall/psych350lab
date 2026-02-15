@@ -1,0 +1,44 @@
+Package: psychrmslab
+Type: Package
+Title: R Package Companion to PSYCH 350 at University of Nebraska-Lincoln
+Version: 0.1.0
+Date: 2026
+Authors@R: as.person(c(
+    "Emma Marshall <em.marshall47@gmail.com> [aut, cre]"
+  ))
+Description: A collection of statistical analysis and APA-style reporting functions 
+    designed for behavioral science courses. Includes functions for correlations, 
+    chi-square tests, between- and within-groups ANOVA, factorial ANOVA, and 
+    multiple regression, along with APA-formatted tables, write-ups, and 
+    interactive worksheet checkers. Includes a built-in Superman media dataset 
+    for demonstrations.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+LazyData: true
+Depends: 
+    R (>= 4.1.0)
+Imports:
+    dplyr,
+    tidyr,
+    haven,
+    here,
+    glue,
+    flextable,
+    officer,
+    ggplot2,
+    scales,
+    psych,
+    jmv,
+    tibble
+Suggests:
+    knitr,
+    rmarkdown,
+    pkgdown,
+    webexercises,
+    tinytable,
+    htmltools,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
