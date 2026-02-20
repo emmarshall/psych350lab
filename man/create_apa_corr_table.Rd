@@ -30,8 +30,8 @@ sample sizes, and significance stars using \code{\link[psych:corr.test]{psych::c
 This function always computes correlations from the raw data.
 }
 \examples{
-data(superman_data)
-sm <- superman_data[, c("clark_height_in", "rt_critics_score", "rt_audience_score")]
+data(superman)
+sm <- superman[, c("clark_height_in", "rt_critics_score", "rt_audience_score")]
 sm <- sm[stats::complete.cases(sm), ]
 ft <- create_apa_corr_table(sm,
   vars = c("clark_height_in", "rt_critics_score", "rt_audience_score"),

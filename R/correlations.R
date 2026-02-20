@@ -18,8 +18,8 @@
 #' }
 #'
 #' @examples
-#' data(superman_data)
-#' result <- corr_answers(superman_data, "clark_height_in", "rt_critics_score")
+#' data(superman)
+#' result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 #' result$Correlation$r
 #' result$Descriptives
 #'
@@ -75,3 +75,4 @@ corr_answers <- function(data, var1, var2) {
 
   invisible(results_list)
 }
+

@@ -30,8 +30,8 @@ A character string with APA write-up.
 Generates an APA-style paragraph for a repeated measures ANOVA.
 }
 \examples{
-data(superman_data)
-result <- wg_anova_answers(superman_data,
+data(superman)
+result <- wg_anova_answers(superman,
   dv1 = "rt_critics_score",
   dv2 = "rt_audience_score"
 )

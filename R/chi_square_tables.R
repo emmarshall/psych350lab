@@ -16,8 +16,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+#' data(superman)
+#' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 #' # Answer key
 #' cat(format_chi2_results("RH1", c("clark_grp", "tomatometer"), result,
 #'   var1_labels = c("Under 6ft", "6ft+"),
@@ -104,8 +104,8 @@ format_chi2_results <- function(rh_name, vars, chi_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+#' data(superman)
+#' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 #'
 #' # Filled version
 #' ft <- create_rh_contingency(
@@ -237,8 +237,8 @@ create_rh_contingency <- function(var1_name = "Variable 1",
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+#' data(superman)
+#' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 #'
 #' # Filled table with percentages
 #' ft <- create_chi_crosstabs_table(
@@ -438,8 +438,8 @@ create_chi_crosstabs_table <- function(chi_results_list = NULL,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+#' data(superman)
+#' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 #' ft <- create_chi_combined_table("RH1", c("clark_grp", "tomatometer"),
 #'   result,
 #'   var1_labels = c("Under 6ft", "6ft+"),

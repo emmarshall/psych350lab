@@ -1,0 +1,127 @@
+url: https://emmarshall.github.io/psych350lab/
+template:
+  bootstrap: 5
+  bslib:
+    bootswatch: materia
+    bg: "#F5F5F5"
+    fg: "#072e3c"
+    primary: "#ff6361"
+    base_font: {google: "IBM Plex Sans"}
+    heading_font: {google: "Newsreader"}
+
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [search, github]
+
+reference:
+  - title: "Data"
+    contents:
+      - superman
+      - superman_smes
+
+  - title: "Descriptive Statistics"
+    contents:
+      - compute_summary_stats
+      - create_univariate_checker
+      - create_answer_table
+      - create_descriptive_table
+
+  - title: "Data Import"
+    contents:
+      - get_spss_data
+
+  - title: "Correlation Analysis"
+    contents:
+      - corr_answers
+      - format_corr_results
+      - create_corr_table
+      - create_corr_apa_table
+      - create_apa_corr_table
+      - create_corr_checker
+      - apa_corr_writeup
+
+  - title: "Chi-Square Analysis"
+    contents:
+      - chi_square_answers
+      - format_chi2_results
+      - create_rh_contingency
+      - create_chi_crosstabs_table
+      - create_chi_combined_table
+      - create_chi_checker
+      - apa_chi_writeup
+
+  - title: "Between-Groups ANOVA"
+    contents:
+      - bg_anova_answers
+      - format_bg_anova_results
+      - create_bg_anova_table
+      - create_anova_source_table
+      - create_bg_anova_combined_table
+      - create_bg_anova_checker
+      - apa_bg_anova_writeup
+
+  - title: "Within-Groups ANOVA"
+    contents:
+      - wg_anova_answers
+      - format_wg_anova_results
+      - create_wg_anova_table
+      - create_wg_anova_combined_table
+      - create_wg_anova_checker
+      - apa_wg_anova_writeup
+
+  - title: "K-Group Analysis Checkers"
+    contents:
+      - create_anova_omnibus_checker
+      - create_lsd_pairwise_checker
+      - create_chisq_omnibus_checker
+      - create_chisq_pairwise_checker
+      - lsd_hsd_calculator
+
+  - title: "Factorial ANOVA"
+    contents:
+      - anova_factorial_answers
+      - format_factorial_results
+      - create_factorial_anova_stats_table
+      - create_factorial_checker
+      - create_factorial_desc_checker
+      - create_factorial_anova_checker
+      - create_factorial_apa_desc_table
+      - factorial_table_with_comparisons
+      - factorial_interaction_results
+      - factorial_main_effect_results
+      - apa_factorial_writeup
+      - check_factor_alignment
+
+  - title: "Multiple Regression"
+    contents:
+      - regression_answers
+      - regression_model_statistics
+      - regression_model_evaluation
+      - create_regression_combined_table
+      - regression_table_legend
+      - create_correlation_interp_ft
+      - create_regwt_interp_ft
+      - regression_category_legend
+      - create_model_summary_checker
+      - create_predictor_checker
+      - create_correlation_interpretations
+      - create_regression_weight_interpretations
+      - create_regression_model_checker
+      - create_regression_predictor_checker
+      - apa_regression_writeup
+
+  - title: "SPSS Theme"
+    contents:
+      - theme_SPSS
+      - palette_SPSS
+      - SPSS_pal
+      - scale_color_SPSS
+      - scale_fill_SPSS
+      - number_SPSS
+
+  - title: "Utilities"
+    contents:
+      - format_p_value
+      - p_to_stars
+      - sig_mcq

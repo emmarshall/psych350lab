@@ -10,8 +10,8 @@
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- corr_answers(superman_data, "clark_height_in", "rt_critics_score")
+#' data(superman)
+#' result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 #' ft <- create_corr_table("RH1", c("clark_height_in", "rt_critics_score"), result)
 #' ft
 #'
@@ -82,8 +82,8 @@ create_corr_table <- function(rh_name, vars, corr_results_list) {
 #' @return A character string.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- corr_answers(superman_data, "clark_height_in", "rt_critics_score")
+#' data(superman)
+#' result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 #'
 #' # Answer key version
 #' cat(format_corr_results("RH1", c("clark_height_in", "rt_critics_score"), result))
@@ -168,8 +168,8 @@ format_corr_results <- function(rh_name, vars, corr_results_list, Key = TRUE) {
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman_data)
-#' sm <- superman_data[, c("clark_height_in", "rt_critics_score", "rt_audience_score")]
+#' data(superman)
+#' sm <- superman[, c("clark_height_in", "rt_critics_score", "rt_audience_score")]
 #' sm <- sm[stats::complete.cases(sm), ]
 #' ft <- create_apa_corr_table(sm,
 #'   vars = c("clark_height_in", "rt_critics_score", "rt_audience_score"),
@@ -277,11 +277,11 @@ create_apa_corr_table <- function(data, vars, var_labels = NULL,
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman_data)
+#' data(superman)
 #'
 #' # Filled answer key table
 #' ft_key <- create_corr_apa_table(
-#'   data = superman_data,
+#'   data = superman,
 #'   vars = c("clark_height_in", "rt_critics_score", "rt_audience_score"),
 #'   var_labels = c("1. Clark Height", "2. Critics Score", "3. Audience Score"),
 #'   Key = TRUE

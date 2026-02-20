@@ -32,9 +32,9 @@ returning observed and expected frequencies, proportions, and
 descriptive counts.
 }
 \examples{
-data(superman_data)
+data(superman)
 # Chi-square test of clark_grp by tomatometer
-result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 result$ChiSquare
 result$ContingencyTable
 

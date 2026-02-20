@@ -31,8 +31,8 @@ Creates a single flextable that combines the repeated measures ANOVA
 test results with descriptive statistics for each condition.
 }
 \examples{
-data(superman_data)
-result <- wg_anova_answers(superman_data,
+data(superman)
+result <- wg_anova_answers(superman,
   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 ft <- create_wg_anova_combined_table(result,
   rh_name = "RH1",

@@ -32,8 +32,8 @@ Returns formatted between-groups ANOVA results as either a filled-in
 answer key or a blank student worksheet.
 }
 \examples{
-data(superman_data)
-result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+data(superman)
+result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 
 # Answer key
 cat(format_bg_anova_results("RH1", c("clark_grp", "rt_critics_score"),

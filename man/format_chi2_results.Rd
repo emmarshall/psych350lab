@@ -37,8 +37,8 @@ Returns a formatted text string of chi-square results, either filled in
 }
 \examples{
 \dontrun{
-data(superman_data)
-result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+data(superman)
+result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 # Answer key
 cat(format_chi2_results("RH1", c("clark_grp", "tomatometer"), result,
   var1_labels = c("Under 6ft", "6ft+"),

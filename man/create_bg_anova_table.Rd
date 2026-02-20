@@ -41,8 +41,8 @@ ANOVA, showing mean, SD, and n for each group. Can be filled (answer key)
 or blank (student worksheet).
 }
 \examples{
-data(superman_data)
-result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+data(superman)
+result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 
 # Filled table
 ft <- create_bg_anova_table(result,

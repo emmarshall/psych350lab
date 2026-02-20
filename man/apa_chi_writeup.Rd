@@ -39,8 +39,8 @@ A character string with APA write-up.
 Generates an APA-style paragraph reporting a chi-square test of independence.
 }
 \examples{
-data(superman_data)
-result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+data(superman)
+result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 writeup <- apa_chi_writeup(result,
   var1_name = "Height Group", var2_name = "Tomatometer",
   var1_labels = c("Under 6ft", "6ft+"),

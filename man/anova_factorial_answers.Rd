@@ -52,9 +52,9 @@ interaction, estimated marginal means, descriptive statistics for all cells,
 and LSD/HSD post-hoc values.
 }
 \examples{
-data(superman_data)
+data(superman)
 # Create a binary predictor for demonstration
-sm <- superman_data
+sm <- superman
 sm$era <- ifelse(sm$year >= 2000, 2, 1)
 
 \dontrun{

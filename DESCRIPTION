@@ -1,4 +1,4 @@
-Package: psychrmslab
+Package: psych350lab
 Type: Package
 Title: R Package Companion to PSYCH 350 at University of Nebraska-Lincoln
 Version: 0.1.0
@@ -31,7 +31,9 @@ Imports:
     scales,
     psych,
     jmv,
-    tibble
+    tibble,
+    purrr,
+    rlang
 Suggests:
     knitr,
     rmarkdown,

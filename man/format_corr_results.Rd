@@ -23,8 +23,8 @@ Returns a formatted text string of correlation results, either filled
 in (answer key) or blank (student worksheet).
 }
 \examples{
-data(superman_data)
-result <- corr_answers(superman_data, "clark_height_in", "rt_critics_score")
+data(superman)
+result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 
 # Answer key version
 cat(format_corr_results("RH1", c("clark_height_in", "rt_critics_score"), result))

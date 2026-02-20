@@ -32,8 +32,8 @@ Returns formatted repeated measures ANOVA results as either a filled-in
 answer key or a blank student worksheet.
 }
 \examples{
-data(superman_data)
-result <- wg_anova_answers(superman_data,
+data(superman)
+result <- wg_anova_answers(superman,
   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 
 # Answer key

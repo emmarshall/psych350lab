@@ -13,8 +13,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data
+#' data(superman)
+#' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
 #'   iv1 = "clark_grp", iv2 = "era",
@@ -153,8 +153,8 @@ create_factorial_anova_stats_table <- function(rh_name, anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data
+#' data(superman)
+#' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
 #'   iv1 = "clark_grp", iv2 = "era",
@@ -294,8 +294,8 @@ create_factorial_checker <- function(rh_name, anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data
+#' data(superman)
+#' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
 #'   iv1 = "clark_grp", iv2 = "era",
@@ -428,8 +428,8 @@ create_factorial_desc_checker <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data
+#' data(superman)
+#' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
 #'   iv1 = "clark_grp", iv2 = "era",
@@ -656,8 +656,8 @@ factorial_table_with_comparisons <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data
+#' data(superman)
+#' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
 #'   iv1 = "clark_grp", iv2 = "era",
@@ -748,8 +748,8 @@ factorial_interaction_results <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data
+#' data(superman)
+#' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
 #'   iv1 = "clark_grp", iv2 = "era",
@@ -906,8 +906,8 @@ factorial_main_effect_results <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data
+#' data(superman)
+#' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
 #'   iv1 = "clark_grp", iv2 = "era",
@@ -1030,8 +1030,8 @@ create_factorial_apa_desc_table <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data
+#' data(superman)
+#' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
 #'   iv1 = "clark_grp", iv2 = "era",

@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' data <- get_spss_data("data/superman_data.sav")
+#' data <- get_spss_data("data/superman.sav")
 #' }
 #'
 #' @export

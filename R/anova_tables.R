@@ -13,8 +13,8 @@
 #' @return A character string with formatted results.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+#' data(superman)
+#' result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 #'
 #' # Answer key
 #' cat(format_bg_anova_results("RH1", c("clark_grp", "rt_critics_score"),
@@ -113,8 +113,8 @@ Support research hypothesis? {rh_support}
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+#' data(superman)
+#' result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 #'
 #' # Filled table
 #' ft <- create_bg_anova_table(result,
@@ -217,8 +217,8 @@ create_bg_anova_table <- function(anova_results_list = NULL,
 #' @return A character string with formatted results.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- wg_anova_answers(superman_data,
+#' data(superman)
+#' result <- wg_anova_answers(superman,
 #'   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 #'
 #' # Answer key
@@ -318,8 +318,8 @@ Support research hypothesis? {rh_support}
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- wg_anova_answers(superman_data,
+#' data(superman)
+#' result <- wg_anova_answers(superman,
 #'   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 #'
 #' # Filled table
@@ -423,8 +423,8 @@ create_wg_anova_table <- function(anova_results_list = NULL,
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+#' data(superman)
+#' result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 #' ft <- create_anova_source_table(result,
 #'   iv_name = "Height Group", dv_name = "Critics Score")
 #' ft
@@ -522,8 +522,8 @@ create_anova_source_table <- function(anova_results_list = NULL,
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+#' data(superman)
+#' result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 #' ft <- create_bg_anova_combined_table(result,
 #'   rh_name = "RH1",
 #'   iv_name = "Height Group", dv_name = "Critics Score",
@@ -639,8 +639,8 @@ create_bg_anova_combined_table <- function(anova_results_list,
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- wg_anova_answers(superman_data,
+#' data(superman)
+#' result <- wg_anova_answers(superman,
 #'   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 #' ft <- create_wg_anova_combined_table(result,
 #'   rh_name = "RH1",

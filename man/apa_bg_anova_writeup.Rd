@@ -33,8 +33,8 @@ A character string with APA write-up.
 Generates an APA-style paragraph for a between-groups one-way ANOVA.
 }
 \examples{
-data(superman_data)
-result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+data(superman)
+result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 writeup <- apa_bg_anova_writeup(result,
   iv_name = "Height Group", dv_name = "Critics Score",
   iv_labels = c("Under 6ft", "6ft+")

@@ -16,9 +16,9 @@
 #' @return A character string.
 #'
 #' @examples
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
@@ -85,9 +85,9 @@ regression_model_statistics <- function(reg_results_list,
 #' @return A character string with markdown formatting.
 #'
 #' @examples
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
@@ -160,9 +160,9 @@ regression_model_evaluation <- function(reg_results_list,
 #' @return A \code{\link[flextable]{flextable}} object.
 #'
 #' @examples
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
@@ -298,9 +298,9 @@ regression_table_legend <- function() {
 #' @return A \code{\link[flextable]{flextable}} object.
 #'
 #' @examples
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
@@ -398,9 +398,9 @@ create_correlation_interp_ft <- function(reg_results_list,
 #' @return A \code{\link[flextable]{flextable}} object.
 #'
 #' @examples
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
@@ -521,9 +521,9 @@ regression_category_legend <- function() {
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
@@ -596,9 +596,9 @@ create_model_summary_checker <- function(reg_results_list) {
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
@@ -722,9 +722,9 @@ create_predictor_checker <- function(reg_results_list, show_legend = TRUE) {
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
@@ -824,9 +824,9 @@ create_correlation_interpretations <- function(reg_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",

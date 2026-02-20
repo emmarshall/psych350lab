@@ -12,8 +12,8 @@
 #' @return A character string with the APA write-up (uses markdown italics).
 #'
 #' @examples
-#' data(superman_data)
-#' result <- corr_answers(superman_data, "clark_height_in", "rt_critics_score")
+#' data(superman)
+#' result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 #' writeup <- apa_corr_writeup(result, "Clark Height", "Critics Score")
 #' cat(writeup)
 #'
@@ -95,8 +95,8 @@ apa_corr_writeup <- function(corr_results_list,
 #' @return A character string with APA write-up.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+#' data(superman)
+#' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 #' writeup <- apa_chi_writeup(result,
 #'   var1_name = "Height Group", var2_name = "Tomatometer",
 #'   var1_labels = c("Under 6ft", "6ft+"),
@@ -213,8 +213,8 @@ apa_chi_writeup <- function(chi_results_list,
 #' @return A character string with APA write-up.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+#' data(superman)
+#' result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 #' writeup <- apa_bg_anova_writeup(result,
 #'   iv_name = "Height Group", dv_name = "Critics Score",
 #'   iv_labels = c("Under 6ft", "6ft+")
@@ -309,8 +309,8 @@ apa_bg_anova_writeup <- function(anova_results_list,
 #' @return A character string with APA write-up.
 #'
 #' @examples
-#' data(superman_data)
-#' result <- wg_anova_answers(superman_data,
+#' data(superman)
+#' result <- wg_anova_answers(superman,
 #'   dv1 = "rt_critics_score",
 #'   dv2 = "rt_audience_score"
 #' )
@@ -414,8 +414,8 @@ apa_wg_anova_writeup <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman_data)
-#' sm <- superman_data
+#' data(superman)
+#' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
 #'   iv1 = "clark_grp", iv2 = "era",
@@ -749,9 +749,9 @@ apa_factorial_writeup <- function(anova_results_list,
 #' @return A character string with APA write-up.
 #'
 #' @examples
-#' data(superman_data)
-#' sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-#'                     !is.na(superman_data$rt_audience_score), ]
+#' data(superman)
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
 #' result <- regression_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",

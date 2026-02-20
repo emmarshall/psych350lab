@@ -43,8 +43,8 @@ or a blank template for student worksheets.
 }
 \examples{
 \dontrun{
-data(superman_data)
-result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+data(superman)
+result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 
 # Filled version
 ft <- create_rh_contingency(

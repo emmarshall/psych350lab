@@ -25,7 +25,7 @@ and removes all labels.
 }
 \examples{
 \dontrun{
-data <- get_spss_data("data/superman_data.sav")
+data <- get_spss_data("data/superman.sav")
 }
 
 }

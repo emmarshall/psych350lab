@@ -29,8 +29,8 @@ statistics computed separately for each variable (matching SPSS/Jamovi behavior)
 and inferential statistics for complete pairs.
 }
 \examples{
-data(superman_data)
-result <- corr_answers(superman_data, "clark_height_in", "rt_critics_score")
+data(superman)
+result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 result$Correlation$r
 result$Descriptives
 

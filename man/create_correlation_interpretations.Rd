@@ -26,9 +26,9 @@ either filled (answer key with red HTML) or blank. Requires \code{tinytable}.
 }
 \examples{
 \dontrun{
-data(superman_data)
-sm <- superman_data[!is.na(superman_data$rt_critics_score) &
-                    !is.na(superman_data$rt_audience_score), ]
+data(superman)
+sm <- superman[!is.na(superman$rt_critics_score) &
+                    !is.na(superman$rt_audience_score), ]
 result <- regression_answers(
   data = sm,
   criterion = "rt_critics_score",

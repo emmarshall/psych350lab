@@ -48,8 +48,8 @@ the footer. Can produce either a filled answer key or a blank template.
 }
 \examples{
 \dontrun{
-data(superman_data)
-result <- chi_square_answers(superman_data, "clark_grp", "tomatometer")
+data(superman)
+result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 
 # Filled table with percentages
 ft <- create_chi_crosstabs_table(

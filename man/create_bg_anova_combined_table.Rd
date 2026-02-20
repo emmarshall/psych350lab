@@ -35,8 +35,8 @@ Creates a single flextable that combines the ANOVA test results
 Useful for compact reporting or worksheets.
 }
 \examples{
-data(superman_data)
-result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+data(superman)
+result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 ft <- create_bg_anova_combined_table(result,
   rh_name = "RH1",
   iv_name = "Height Group", dv_name = "Critics Score",

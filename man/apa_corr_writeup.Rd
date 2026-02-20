@@ -31,8 +31,8 @@ A character string with the APA write-up (uses markdown italics).
 Generates an APA-style paragraph reporting a Pearson correlation result.
 }
 \examples{
-data(superman_data)
-result <- corr_answers(superman_data, "clark_height_in", "rt_critics_score")
+data(superman)
+result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 writeup <- apa_corr_writeup(result, "Clark Height", "Critics Score")
 cat(writeup)
 

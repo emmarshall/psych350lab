@@ -53,8 +53,8 @@ including interaction and main effects.
 }
 \examples{
 \dontrun{
-data(superman_data)
-sm <- superman_data
+data(superman)
+sm <- superman
 sm$era <- ifelse(sm$year >= 2000, 2, 1)
 result <- anova_factorial_answers(sm, dv = "clark_height_in",
   iv1 = "clark_grp", iv2 = "era",

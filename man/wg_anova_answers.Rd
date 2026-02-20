@@ -29,8 +29,8 @@ Performs a one-way repeated measures ANOVA comparing two conditions
 measured on the same participants.
 }
 \examples{
-data(superman_data)
-result <- wg_anova_answers(superman_data,
+data(superman)
+result <- wg_anova_answers(superman,
   dv1 = "rt_critics_score",
   dv2 = "rt_audience_score"
 )

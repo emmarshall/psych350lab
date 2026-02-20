@@ -26,8 +26,8 @@ Performs a one-way between-groups ANOVA with descriptive statistics
 for each group level.
 }
 \examples{
-data(superman_data)
-result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
+data(superman)
+result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 result$ANOVA
 result$Descriptives
 

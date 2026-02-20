@@ -34,11 +34,11 @@ values (answer key) or blank (student worksheet). Unlike \code{\link[=create_apa
 this function supports a \code{Key} toggle and can produce empty templates.
 }
 \examples{
-data(superman_data)
+data(superman)
 
 # Filled answer key table
 ft_key <- create_corr_apa_table(
-  data = superman_data,
+  data = superman,
   vars = c("clark_height_in", "rt_critics_score", "rt_audience_score"),
   var_labels = c("1. Clark Height", "2. Critics Score", "3. Audience Score"),
   Key = TRUE
