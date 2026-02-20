@@ -11,12 +11,14 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 # psych350lab <img src="man/figures/logo.png" align="right" height="139" />
 
 <!-- badges: start -->
 <!-- badges: end -->
 
 **psych350lab** provides helper functions for a Research Methods and Statistical Analysis lab course. It streamlines running common statistical analyses, generating APA-formatted tables, and creating interactive student worksheets — all from R and Quarto/RMarkdown.
+
 
 ## Installation
 

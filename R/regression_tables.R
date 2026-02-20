@@ -51,7 +51,7 @@ regression_model_statistics <- function(reg_results_list,
   if (KEY) {
     output <- paste0(
       "R = ", hl(r), "     ",
-      "R2 = ", hl(r_sq), "     ",
+      "R\u00B2 = ", hl(r_sq), "     ",
       "F = ", hl(f_stat), "     ",
       "df = ", hl(df1), ", ", hl(df2), "     ",
       "p ", hl(p_val_formatted), "\n"
@@ -59,7 +59,7 @@ regression_model_statistics <- function(reg_results_list,
   } else {
     output <- paste0(
       "R = ______     ",
-      "R2 = ______     ",
+      "R\u00B2 = ______     ",
       "F = ______     ",
       "df = ____, ____     ",
       "p = ______\n"
@@ -132,7 +132,7 @@ regression_model_evaluation <- function(reg_results_list,
       ", p ", hl(p_val_formatted), ")\n\n",
       "**b. How well does the multiple regression model work?**\n\n",
       "Accounts for ", hl(var_explained), "% of ", criterion_label,
-      " variance (R2 = ", hl(r_sq), ")\n"
+      " variance (R\u00B2 = ", hl(r_sq), ")\n"
     )
   } else {
     output <- paste0(
@@ -561,12 +561,13 @@ create_model_summary_checker <- function(reg_results_list) {
   model_table <- tibble::tibble(
     ` ` = "Model Summary",
     `R` = webexercises::fitb(r),
-    `R2` = webexercises::fitb(r_sq),   # temporary name
+    R2 = webexercises::fitb(r_sq),
     `F` = webexercises::fitb(f_stat),
     `df1, df2` = paste0(webexercises::fitb(df1), ", ", webexercises::fitb(df2)),
     `p` = webexercises::fitb(p_val_formatted),
     `Does the model work?` = model_works_mcq
   )
+  names(model_table)[3] <- "R\u00B2"
 
   result_table <- tinytable::tt(model_table) |>
     tinytable::format_tt(escape = FALSE) |>

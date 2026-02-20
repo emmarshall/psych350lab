@@ -322,11 +322,12 @@ create_chi_checker <- function(rh_name, vars, chi_results_list,
 
   chi_table_data <- tibble::tibble(
     ` `  = paste("Chi-Square:", rh_name),
-    Chi2 = webexercises::fitb(chi_sq),
+    chi2 = webexercises::fitb(chi_sq),
     p    = webexercises::fitb(p_value),
     df   = webexercises::fitb(df),
     `Reject or Retain H0?` = reject_retain_mcq
   )
+  names(chi_table_data)[2] <- "\u03C7\u00B2"
   chi_table <- tinytable::tt(chi_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
@@ -873,13 +874,14 @@ create_chisq_omnibus_checker <- function(rh_name, chisq_results_list,
 
   chisq_table_data <- tibble::tibble(
     ` `  = paste("Chi-Square:", rh_name),
-    Chi2 = webexercises::fitb(chi_sq),
+    chi2 = webexercises::fitb(chi_sq),
     p    = webexercises::fitb(p_value),
     df   = webexercises::fitb(df),
     N    = webexercises::fitb(total_n),
     `  ` = "",
     `Do we need to perform pairwise comparisons?` = posthoc_mcq
   )
+  names(chisq_table_data)[2] <- "\u03C7\u00B2"
   chisq_table <- tinytable::tt(chisq_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
@@ -984,7 +986,7 @@ create_chisq_pairwise_checker <- function(chisq_results_list,
       paste0(webexercises::fitb(pairwise[[i]]$pct1), "% vs ",
              webexercises::fitb(pairwise[[i]]$pct2), "%")
     }),
-    `Chi2 Result` = sapply(seq_len(n_pairwise), function(i) {
+    chi2_result = sapply(seq_len(n_pairwise), function(i) {
       paste0(webexercises::fitb(pairwise[[i]]$chi_sq), " ",
              webexercises::fitb(pairwise[[i]]$chi_result))
     }),
@@ -1021,6 +1023,7 @@ create_chisq_pairwise_checker <- function(chisq_results_list,
       }
     })
   )
+  names(pairwise_table_data)[3] <- "\u03C7\u00B2 Result"
   pairwise_table <- tinytable::tt(pairwise_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
@@ -1318,12 +1321,13 @@ create_regression_model_checker <- function(reg_results_list) {
   model_table <- tibble::tibble(
     ` `        = "Model Summary",
     `R`        = webexercises::fitb(r),
-    `R-sq`     = webexercises::fitb(r_sq),
+    R2         = webexercises::fitb(r_sq),
     `F`        = webexercises::fitb(f_stat),
     `df1, df2` = paste0(webexercises::fitb(df1), ", ", webexercises::fitb(df2)),
     `p`        = webexercises::fitb(p_val_fmt),
     `Does the model work?` = model_works_mcq
   )
+  names(model_table)[3] <- "R\u00B2"
 
   result_table <- tinytable::tt(model_table) |>
     tinytable::format_tt(escape = FALSE) |>

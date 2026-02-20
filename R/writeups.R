@@ -184,13 +184,13 @@ apa_chi_writeup <- function(chi_results_list,
   if (p < 0.05) {
     writeup <- glue::glue(
       "{hypothesis_text} A chi-square test found a significant relationship between ",
-      "{var1_name} and {var2_name}, \\u03C7\\u00B2({df}) = {chi_sq}, *p* {p_text}. ",
+      "{var1_name} and {var2_name}, \u03C7\u00B2({df}) = {chi_sq}, *p* {p_text}. ",
       "{desc_text_sig}"
     )
   } else {
     writeup <- glue::glue(
       "{hypothesis_text} A chi-square test found no significant relationship between ",
-      "{var1_name} and {var2_name}, \\u03C7\\u00B2({df}) = {chi_sq}, *p* {p_text}. ",
+      "{var1_name} and {var2_name}, \u03C7\u00B2({df}) = {chi_sq}, *p* {p_text}. ",
       "{desc_text_nonsig}"
     )
   }
@@ -792,7 +792,7 @@ apa_regression_writeup <- function(reg_results_list,
   if (p_val < 0.05) {
     writeup <- paste0(writeup,
                       "The overall model was statistically significant, ",
-                      "*R*\\u00B2 = ", sprintf("%.3f", r_sq),
+                      "*R*\u00B2 = ", sprintf("%.3f", r_sq),
                       ", *F*(", df1, ", ", df2, ") = ", sprintf("%.2f", f_stat),
                       ", *p* ", format_p(p_val),
                       ", explaining ", round(r_sq * 100, 1), "% of the variance in ",
@@ -800,7 +800,7 @@ apa_regression_writeup <- function(reg_results_list,
   } else {
     writeup <- paste0(writeup,
                       "The overall model was not statistically significant, ",
-                      "*R*\\u00B2 = ", sprintf("%.3f", r_sq),
+                      "*R*\u00B2 = ", sprintf("%.3f", r_sq),
                       ", *F*(", df1, ", ", df2, ") = ", sprintf("%.2f", f_stat),
                       ", *p* ", format_p(p_val), ". ")
   }
