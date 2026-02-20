@@ -14,6 +14,16 @@ navbar:
     left: [intro, reference, articles]
     right: [search, github]
 
+articles:
+  - title: "Getting Started"
+    contents:
+      - homework-checkers
+  - title: "SPSS-Style Output"
+    contents:
+      - spss-tables-html
+      - spss-tables-typst
+      - spss-plots
+
 reference:
   - title: "Data"
     contents:
@@ -111,7 +121,60 @@ reference:
       - create_regression_predictor_checker
       - apa_regression_writeup
 
-  - title: "SPSS Theme"
+  - title: "SPSS-Style HTML Tables"
+    desc: >
+      Functions that generate SPSS-style tables as HTML output for use in
+
+      Quarto HTML documents, R Markdown, or any web-based output.
+    contents:
+      - spss_descriptives_html
+      - spss_descriptives_png
+      - spss_descriptives_by_group_html
+      - spss_anova_html
+      - spss_levene_html
+      - spss_chisq_html
+      - spss_crosstab_html
+      - spss_correlations_html
+      - spss_regression_model_html
+      - spss_regression_anova_html
+      - spss_regression_coefficients_html
+      - spss_ttest_independent_html
+      - spss_ttest_paired_html
+      - spss_ttest_one_html
+
+  - title: "SPSS-Style Typst Tables"
+    desc: >
+
+      Functions that generate SPSS-style tables as Typst markup for use in
+      Quarto documents with `format: typst` for PDF output.
+    contents:
+      - typst_descriptives
+      - typst_descriptives_by_group
+      - typst_levene
+      - typst_anova_oneway
+      - typst_posthoc
+      - typst_chisq
+      - typst_crosstab
+      - typst_correlations
+      - typst_regression
+      - typst_group_stats
+      - typst_ttest_independent
+      - typst_ttest_paired
+      - typst_ttest_one
+      - typst_kruskal
+      - typst_box
+
+  - title: "SPSS-Style Plots"
+    desc: >
+      Functions for creating plots with SPSS styling using ggplot2.
+    contents:
+      - spss_histogram
+      - spss_barchart
+      - spss_save_plot
+
+  - title: "SPSS Theme & Colors"
+    desc: >
+      ggplot2 theme and color palettes that mimic SPSS chart appearance.
     contents:
       - theme_SPSS
       - palette_SPSS

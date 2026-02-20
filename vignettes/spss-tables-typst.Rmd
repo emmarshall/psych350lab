@@ -1,0 +1,299 @@
+---
+title: "SPSS-Style Typst Tables for PDF Output"
+output: rmarkdown::html_vignette
+vignette: >
+ %\VignetteIndexEntry{SPSS-Style Typst Tables for PDF Output}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+ collapse = TRUE,
+ comment = "#>",
+ eval = FALSE
+)
+```
+
+## Overview
+
+The `psych350lab` package provides functions to create SPSS-style statistical tables as Typst markup. These are designed for use in Quarto documents with `format: typst` to produce high-quality PDF output that mimics SPSS table appearance.
+
+## Prerequisites
+
+### Quarto Setup
+
+To use these functions, you need:
+
+1. Quarto installed (version 1.3+)
+2. A Quarto document with `format: typst`
+3. A Typst template that defines `#spss_table()` and `#spss_table_complex()` functions
+
+### Document YAML
+
+Your Quarto document should have a YAML header like:
+
+```yaml
+---
+title: "My Analysis"
+format:
+ typst:
+   template: spss-template.typ
+---
+```
+
+## Basic Usage
+
+In Quarto chunks, use `results: asis` to output the raw Typst markup:
+
+````markdown
+```{r}
+#| results: asis
+library(psych350lab)
+data(superman)
+typst_descriptives(superman, c("clark_height_in", "rt_critics_score"))
+```
+````
+
+## Descriptive Statistics
+
+### Basic Descriptives
+
+```{r}
+typst_descriptives(superman, c("clark_height_in", "rt_critics_score", "rt_audience_score"))
+```
+
+### Grouped Descriptives (for ANOVA)
+
+```{r}
+typst_descriptives_by_group(superman, dv = "rt_critics_score", iv = "clark_grp")
+```
+
+## T-Tests
+
+### Group Statistics
+
+```{r}
+typst_group_stats(superman, dv = "rt_critics_score", iv = "clark_grp")
+```
+
+### Independent Samples T-Test
+
+```{r}
+typst_ttest_independent(superman, dv = "rt_critics_score", iv = "clark_grp")
+```
+
+### Paired Samples T-Test
+
+```{r}
+typst_ttest_paired(superman, var1 = "rt_critics_score", var2 = "rt_audience_score")
+```
+### One-Sample T-Test
+
+```{r}
+typst_ttest_one(superman, variable = "clark_height_in", mu = 72)
+```
+
+## ANOVA
+
+### One-Way ANOVA
+
+```{r}
+typst_anova_oneway(superman, dv = "rt_critics_score", iv = "clark_grp")
+```
+
+### Levene's Test
+
+```{r}
+typst_levene(superman, dv = "rt_critics_score", iv = "clark_grp")
+```
+
+### Post-Hoc Comparisons
+
+Generate Tukey HSD and/or LSD post-hoc tables:
+
+```{r}
+# Both Tukey and LSD
+typst_posthoc(superman, dv = "rt_critics_score", iv = "type", methods = c("tukey", "lsd"))
+
+# Tukey only
+typst_posthoc(superman, dv = "rt_critics_score", iv = "type", methods = "tukey")
+
+# LSD only
+typst_posthoc(superman, dv = "rt_critics_score", iv = "type", methods = "lsd")
+```
+
+## Chi-Square Analysis
+
+### Chi-Square Test
+
+```{r}
+typst_chisq(superman, var1 = "clark_grp", var2 = "tomatometer")
+```
+
+The output includes:
+
+- Pearson Chi-Square
+- Continuity Correction (for 2x2 tables)
+- N of Valid Cases
+- Footnotes about expected counts
+
+### Crosstabulation
+
+```{r}
+typst_crosstab(superman, var1 = "clark_grp", var2 = "tomatometer")
+```
+
+## Correlation Analysis
+
+```{r}
+typst_correlations(
+ superman,
+ variables = c("clark_height_in", "rt_critics_score", "rt_audience_score")
+)
+```
+
+## Regression Analysis
+
+The `typst_regression()` function outputs all three standard regression tables:
+
+1. Model Summary (R, R², Adjusted R², Std. Error)
+2. ANOVA table
+3. Coefficients table
+
+```{r}
+typst_regression(superman, "rt_critics_score ~ clark_height_in + rt_audience_score")
+```
+
+## Non-Parametric Tests
+
+### Kruskal-Wallis Test
+
+```{r}
+typst_kruskal(superman, dv = "rt_critics_score", iv = "type")
+```
+
+## Styled Text Boxes
+
+Use `typst_box()` to create styled callout boxes for writeups, tips, warnings, etc.:
+
+```{r}
+# APA-style writeup box
+typst_box("The results indicated a significant relationship...", "writeup")
+
+# Tip in the margin
+typst_box("Remember to check assumptions!", "tip", side = "right")
+
+# Warning box
+typst_box("Assumptions were violated.", "warning", side = "left")
+```
+
+Available box types:
+
+- `"writeup"` - For APA-style results paragraphs
+- `"tip"` - Helpful hints (margin note)
+- `"warning"` - Cautions and warnings (margin note)
+- `"important"` - Key information (margin note)
+- `"note"` - General notes (margin note)
+
+## Working with SPSS Data Files
+
+When working with `.sav` files imported via `haven::read_sav()`, you can pass the original data to preserve value labels:
+
+```{r}
+library(haven)
+
+# Read SPSS file
+data_raw <- read_sav("mydata.sav")
+data <- zap_labels(zap_missing(data_raw))
+
+# Tables will use value labels from original data
+typst_descriptives_by_group(data, dv = "score", iv = "group", data_raw = data_raw)
+typst_crosstab(data, var1 = "gender", var2 = "treatment", data_raw = data_raw)
+```
+
+## Complete Example
+
+Here's a complete Quarto document example:
+
+````markdown
+---
+title: "Superman Analysis"
+format:
+ typst:
+   template: spss-template.typ
+---
+
+```{r}
+#| include: false
+library(psych350lab)
+data(superman)
+```
+
+## Descriptive Statistics
+
+```{r}
+#| results: asis
+typst_descriptives(superman, c("clark_height_in", "rt_critics_score"))
+```
+
+## Group Comparison
+
+```{r}
+#| results: asis
+typst_descriptives_by_group(superman, "rt_critics_score", "clark_grp")
+```
+
+```{r}
+#| results: asis
+typst_levene(superman, "rt_critics_score", "clark_grp")
+```
+
+```{r}
+#| results: asis
+typst_anova_oneway(superman, "rt_critics_score", "clark_grp")
+```
+
+## Interpretation
+
+```{r}
+#| results: asis
+typst_box(
+ "A one-way ANOVA revealed a significant effect of Clark height group on critics scores...",
+ "writeup"
+)
+```
+````
+
+## Typst Template Requirements
+
+Your Typst template needs to define these functions:
+
+### `#spss_table()`
+
+For simple tables with uniform column headers.
+
+Parameters:
+
+- `title`: Table title
+- `subtitle`: Optional subtitle
+- `columns`: Array of column headers
+- `rows`: Array of row data
+- `label_cols`: Number of label columns (default: 1)
+- `footnotes`: Optional array of footnotes
+
+### `#spss_table_complex()`
+
+For tables with multi-level headers.
+
+Parameters:
+
+- `title`: Table title
+- `subtitle`: Optional subtitle
+- `ncols`: Number of columns
+- `header_rows`: Array of header row arrays
+- `rows`: Array of row data
+- `label_cols`: Number of label columns (default: 1)
+- `footnotes`: Optional array of footnotes
+
+See the package documentation for example Typst template implementations.

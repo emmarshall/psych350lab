@@ -1,0 +1,303 @@
+---
+title: "SPSS-Style Plots"
+output: rmarkdown::html_vignette
+vignette: >
+ %\VignetteIndexEntry{SPSS-Style Plots}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+ collapse = TRUE,
+ comment = "#>",
+ fig.width = 6,
+ fig.height = 4.5
+)
+```
+
+## Overview
+
+The `psych350lab` package provides functions to create plots that mimic the appearance of SPSS charts. This includes:
+
+- A complete ggplot2 theme (`theme_SPSS()`)
+- SPSS color palettes (`palette_SPSS()`, `scale_color_SPSS()`, `scale_fill_SPSS()`)
+- Convenience functions for common chart types (`spss_histogram()`, `spss_barchart()`)
+
+## Getting Started
+
+```{r load-package}
+library(psych350lab)
+library(ggplot2)
+data(superman)
+```
+
+## SPSS Theme
+
+### Basic Usage
+
+Apply `theme_SPSS()` to any ggplot2 plot:
+
+```{r theme-basic}
+ggplot(superman, aes(x = clark_height_in, y = rt_critics_score)) +
+ geom_point(color = "#1192E8", size = 3) +
+ labs(x = "Clark Height (inches)", y = "Critics Score") +
+ theme_SPSS()
+```
+
+### Modern vs Legacy Style
+
+The theme supports two styles:
+
+- **Modern** (default): White background, horizontal grid lines, no box border
+- **Legacy**: Grey background, box border, no grid lines
+
+```{r theme-legacy}
+ggplot(superman, aes(x = clark_height_in, y = rt_critics_score)) +
+ geom_point(color = "#3E58AC", size = 3) +
+ labs(x = "Clark Height (inches)", y = "Critics Score") +
+ theme_SPSS(version = "legacy")
+```
+
+### Discrete vs Continuous Scales
+
+Adjust text sizing based on axis type:
+
+```{r theme-discrete}
+ggplot(superman, aes(x = factor(clark_grp), y = rt_critics_score)) +
+ geom_boxplot(fill = "#1192E8", alpha = 0.7) +
+ labs(x = "Height Group", y = "Critics Score") +
+ theme_SPSS(scale.x = "discrete")
+```
+
+## SPSS Color Palettes
+
+### Viewing the Palette
+
+```{r palette-view}
+# Get first 8 colors from modern palette
+palette_SPSS(8)
+
+# Get legacy palette colors
+palette_SPSS(8, version = "legacy")
+```
+
+### Using with ggplot2
+
+```{r palette-ggplot}
+ggplot(superman, aes(x = rt_critics_score, y = rt_audience_score, color = factor(type))) +
+ geom_point(size = 3) +
+ scale_color_SPSS() +
+ labs(x = "Critics Score", y = "Audience Score", color = "Type") +
+ theme_SPSS()
+```
+
+### Fill Scale
+
+```{r fill-scale}
+ggplot(superman, aes(x = factor(type), fill = factor(type))) +
+ geom_bar() +
+ scale_fill_SPSS() +
+ labs(x = "Superman Type", y = "Count") +
+ theme_SPSS(scale.x = "discrete") +
+ theme(legend.position = "none")
+```
+
+## SPSS-Style Histogram
+
+The `spss_histogram()` function creates a histogram with:
+
+- SPSS blue fill color
+- Optional normal distribution overlay
+- Mean, SD, and N annotation
+
+```{r histogram-basic}
+spss_histogram(superman, "clark_height_in")
+```
+
+### Customization Options
+
+```{r histogram-custom}
+spss_histogram(
+ superman,
+ variable = "rt_critics_score",
+ bins = 15,
+ show_normal = TRUE,
+ show_stats = TRUE,
+ fill_color = "#005D5D",
+ version = "modern"
+)
+```
+
+### Without Normal Curve
+
+```{r histogram-no-normal}
+spss_histogram(
+ superman,
+ variable = "rt_audience_score",
+ show_normal = FALSE,
+ show_stats = TRUE
+)
+```
+
+### Legacy Style
+
+```{r histogram-legacy}
+spss_histogram(
+ superman,
+ variable = "clark_height_in",
+ version = "legacy",
+ fill_color = "#3E58AC"
+)
+```
+
+## SPSS-Style Bar Chart
+
+The `spss_barchart()` function creates frequency bar charts for categorical variables:
+
+```{r barchart-basic}
+spss_barchart(superman, "clark_grp")
+```
+
+### Customization
+
+```{r barchart-custom}
+spss_barchart(
+ superman,
+ variable = "type",
+ show_counts = TRUE,
+ fill_color = "#9F1853",
+ version = "modern"
+)
+```
+
+### Without Count Labels
+
+```{r barchart-no-counts}
+spss_barchart(
+ superman,
+ variable = "tomatometer",
+ show_counts = FALSE
+)
+```
+
+## Saving Plots
+
+### Using spss_save_plot()
+
+```{r save-plot, eval=FALSE}
+# Create a plot
+p <- spss_histogram(superman, "clark_height_in")
+
+# Save as PNG
+spss_save_plot(p, "histogram.png", width = 6, height = 4.5, dpi = 150)
+```
+
+### Using ggplot2's ggsave()
+
+Since the functions return ggplot2 objects, you can also use `ggsave()`:
+
+```{r ggsave, eval=FALSE}
+p <- spss_histogram(superman, "clark_height_in")
+ggsave("histogram.pdf", p, width = 6, height = 4.5)
+```
+
+## Building Custom Plots
+
+You can combine `theme_SPSS()` and the color scales with any ggplot2 code:
+
+### Scatter Plot with Regression Line
+
+```{r custom-scatter}
+ggplot(superman, aes(x = clark_height_in, y = rt_critics_score)) +
+ geom_point(color = "#1192E8", size = 2, alpha = 0.7) +
+ geom_smooth(method = "lm", color = "#FA4D56", se = TRUE, fill = "#FA4D56", alpha = 0.2) +
+ labs(
+   x = "Clark Height (inches)",
+   y = "Critics Score",
+   title = "Relationship Between Clark Height and Critics Score"
+ ) +
+ theme_SPSS()
+```
+
+### Grouped Box Plot
+
+```{r custom-boxplot}
+ggplot(superman, aes(x = factor(type), y = rt_critics_score, fill = factor(type))) +
+ geom_boxplot(alpha = 0.8) +
+ scale_fill_SPSS() +
+ labs(x = "Superman Type", y = "Critics Score") +
+ theme_SPSS(scale.x = "discrete") +
+ theme(legend.position = "none")
+```
+
+### Faceted Plot
+
+```{r custom-facet}
+ggplot(superman, aes(x = rt_critics_score)) +
+ geom_histogram(bins = 10, fill = "#1192E8", color = "black", linewidth = 0.3) +
+ facet_wrap(~clark_grp) +
+ labs(x = "Critics Score", y = "Frequency") +
+ theme_SPSS()
+```
+
+## Number Formatting
+
+Use `number_SPSS()` for axis labels without thousands separators (matching SPSS defaults):
+```{r number-format}
+# Create data with large numbers
+big_data <- data.frame(
+ x = c(1000, 5000, 10000, 25000),
+ y = c(100, 200, 150, 300)
+)
+
+ggplot(big_data, aes(x = x, y = y)) +
+ geom_point(size = 3, color = "#1192E8") +
+ scale_x_continuous(labels = number_SPSS) +
+ theme_SPSS()
+```
+
+## Theme Parameters Reference
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `base_size` | Base font size (pt) | 14 |
+| `base_family` | Font family | "sans" |
+| `base_line_size` | Line width | 0.75 |
+| `base_rect_size` | Rectangle border width | 0.75 |
+| `version` | "modern" or "legacy" | "modern" |
+| `scales` | "continuous" or "discrete" | "continuous" |
+| `scale.x` | Override for x-axis | Same as `scales` |
+| `scale.y` | Override for y-axis | Same as `scales` |
+
+## Color Palette Reference
+
+### Modern Palette (SPSS v24+)
+
+The first 10 colors:
+
+1. `#1192E8` - Blue
+2. `#005D5D` - Teal
+3. `#9F1853` - Magenta
+4. `#FA4D56` - Red
+5. `#570408` - Dark Red
+6. `#198038` - Green
+7. `#002D9C` - Dark Blue
+8. `#EE538B` - Pink
+9. `#B28600` - Gold
+10. `#009D9A` - Cyan
+
+### Legacy Palette (SPSS <v24)
+
+The first 10 colors:
+
+1. `#3E58AC` - Blue
+2. `#2EB848` - Green
+3. `#D3CE97` - Tan
+4. `#79287D` - Purple
+5. `#FBF873` - Yellow
+6. `#EF3338` - Red
+7. `#48C2C5` - Cyan
+8. `#CCCCCC` - Grey
+9. `#7AAAD5` - Light Blue
+10. `#0A562C` - Dark Green
