@@ -1,41 +1,39 @@
----
-output: github_document
----
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # psych350lab <img src="man/figures/logo.png" align="right" height="139" />
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-**psych350lab** provides helper functions for a Research Methods and Statistical Analysis lab course. It streamlines running common statistical analyses, generating APA-formatted tables, and creating interactive student worksheets — all from R and Quarto/RMarkdown.
+**psych350lab** provides helper functions for a Research Methods and
+Statistical Analysis lab course. It streamlines running common
+statistical analyses, generating APA-formatted tables, and creating
+interactive student worksheets — all from R and Quarto/RMarkdown.
 
 ## Installation
 
-You can install **psych350lab** using the [`pak`](https://pak.r-lib.org/) package, which handles both CRAN and GitHub installations seamlessly.
+You can install **psych350lab** using the
+[`pak`](https://pak.r-lib.org/) package, which handles both CRAN and
+GitHub installations seamlessly.
 
-### Install `pak` (if you don't have it)
-```{r, eval = FALSE}
+### Install `pak` (if you don’t have it)
+
+``` r
 install.packages("pak")
 ```
 
 ### Install from GitHub (recommended)
-```{r, eval = FALSE}
+
+``` r
 pak::pak("emmarshall/psych350lab")
 ```
 
 ### Install from a local source
 
-If you have a local copy of the package (e.g., a `.tar.gz` file or a cloned repo), you can install it with:
-```{r, eval = FALSE}
+If you have a local copy of the package (e.g., a `.tar.gz` file or a
+cloned repo), you can install it with:
+
+``` r
 # From a .tar.gz file
 pak::pak("local::path/to/psych350lab_0.1.0.tar.gz")
 
@@ -45,19 +43,21 @@ pak::pak("local::path/to/psych350lab")
 
 ## Overview
 
-The package is organized around several core analysis workflows, each with a computation function (`*_answers()`) and companion table/formatting functions.
+The package is organized around several core analysis workflows, each
+with a computation function (`*_answers()`) and companion
+table/formatting functions.
 
 ### Data Import
 
 | Function | Description |
-|---|---|
+|----|----|
 | `get_spss_data()` | Read SPSS `.sav` files, convert missing values, and strip labels |
-| `format_p_value()` | Format p-values in APA style (e.g., "< .001") |
+| `format_p_value()` | Format p-values in APA style (e.g., “\< .001”) |
 
 ### Correlation Analysis
 
 | Function | Description |
-|---|---|
+|----|----|
 | `corr_answers()` | Compute Pearson correlation with descriptives and hypothesis test |
 | `create_corr_table()` | Compact flextable with r, p, df, means, SDs |
 | `format_corr_results()` | Fill-in-the-blank or answer key text output |
@@ -67,7 +67,7 @@ The package is organized around several core analysis workflows, each with a com
 ### Between-Groups ANOVA
 
 | Function | Description |
-|---|---|
+|----|----|
 | `bg_anova_answers()` | One-way between-groups ANOVA with group descriptives |
 | `format_bg_anova_results()` | Fill-in-the-blank or answer key text |
 | `create_bg_anova_table()` | APA descriptive statistics table |
@@ -77,7 +77,7 @@ The package is organized around several core analysis workflows, each with a com
 ### Within-Groups (Repeated Measures) ANOVA
 
 | Function | Description |
-|---|---|
+|----|----|
 | `wg_anova_answers()` | Repeated measures ANOVA for two conditions |
 | `format_wg_anova_results()` | Fill-in-the-blank or answer key text |
 | `create_wg_anova_table()` | APA descriptive statistics table |
@@ -86,7 +86,7 @@ The package is organized around several core analysis workflows, each with a com
 ### Factorial (Two-Way) ANOVA
 
 | Function | Description |
-|---|---|
+|----|----|
 | `anova_factorial_answers()` | 2×2 factorial ANOVA via `jmv` with EMMs and post-hoc |
 | `lsd_hsd_calculator()` | Compute LSD and HSD minimum mean differences |
 | `check_factor_alignment()` | Diagnostic check for factor level ordering |
@@ -94,10 +94,10 @@ The package is organized around several core analysis workflows, each with a com
 ### Multiple Regression
 
 | Function | Description |
-|---|---|
+|----|----|
 | `regression_answers()` | Full regression with univariate, bivariate, and multivariate results plus interpretation categories (a–d) |
 | `regression_model_statistics()` | Formatted model summary line (R, R², F, df, p) |
-| `regression_model_evaluation()` | "Does the model work?" / "How well?" text |
+| `regression_model_evaluation()` | “Does the model work?” / “How well?” text |
 | `create_regression_combined_table()` | Flextable with r, b, type, and result category per predictor |
 | `regression_table_legend()` | Markdown legend for result categories |
 | `regression_category_legend()` | Extended markdown legend |
@@ -107,7 +107,7 @@ The package is organized around several core analysis workflows, each with a com
 #### Interactive Webexercise Checkers (for Quarto)
 
 | Function | Description |
-|---|---|
+|----|----|
 | `create_model_summary_checker()` | Fill-in-the-blank model summary (tinytable + webexercises) |
 | `create_predictor_checker()` | Interactive predictor results table with MCQs |
 | `create_correlation_interpretations()` | Interactive correlation interpretation table |
@@ -116,7 +116,7 @@ The package is organized around several core analysis workflows, each with a com
 ### SPSS-Style Plotting
 
 | Function | Description |
-|---|---|
+|----|----|
 | `theme_SPSS()` | Complete ggplot2 theme mimicking SPSS charts (modern or legacy) |
 | `scale_color_SPSS()` | SPSS discrete color scale |
 | `scale_fill_SPSS()` | SPSS discrete fill scale |
@@ -127,7 +127,8 @@ The package is organized around several core analysis workflows, each with a com
 ## Quick Examples
 
 ### Correlation
-```{r, eval = FALSE}
+
+``` r
 library(psych350lab)
 data(superman_data)
 
@@ -140,7 +141,8 @@ create_corr_table("RH1", c("clark_height_in", "rt_critics_score"), result)
 ```
 
 ### Between-Groups ANOVA
-```{r, eval = FALSE}
+
+``` r
 result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
 result$ANOVA
 result$Descriptives
@@ -151,7 +153,8 @@ cat(format_bg_anova_results("RH1", c("clark_grp", "rt_critics_score"),
 ```
 
 ### Multiple Regression
-```{r, eval = FALSE}
+
+``` r
 sm <- superman_data[!is.na(superman_data$rt_critics_score) &
                     !is.na(superman_data$rt_audience_score), ]
 
@@ -171,7 +174,8 @@ create_regression_combined_table(result, KEY = TRUE)
 ```
 
 ### SPSS-Style Plot
-```{r, eval = FALSE}
+
+``` r
 library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, fill = factor(cyl))) +
@@ -181,10 +185,14 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, fill = factor(cyl))) +
   labs(x = "Cylinders", y = "MPG")
 ```
 
-## Answer Key vs. Student Worksheet
+## Answer Key vs. Student Worksheet
 
-Most table and formatting functions include a `Key` (or `KEY`) argument. Set `Key = TRUE` for a filled answer key, or `Key = FALSE` for a blank student worksheet — making it easy to generate both versions from the same code.
-```{r, eval = FALSE}
+Most table and formatting functions include a `Key` (or `KEY`) argument.
+Set `Key = TRUE` for a filled answer key, or `Key = FALSE` for a blank
+student worksheet — making it easy to generate both versions from the
+same code.
+
+``` r
 # Answer key
 cat(format_bg_anova_results("RH1", vars, result, iv_labels = labels, Key = TRUE))
 
@@ -194,8 +202,13 @@ cat(format_bg_anova_results("RH1", vars, result, iv_labels = labels, Key = FALSE
 
 ## Interactive Webexercises (Quarto)
 
-Several functions generate interactive fill-in-the-blank and multiple-choice tables powered by [`webexercises`](https://psyteachr.github.io/webexercises/) and [`tinytable`](https://vincentarelbundock.github.io/tinytable/). These are designed for use in Quarto HTML documents:
-```{r, eval = FALSE}
+Several functions generate interactive fill-in-the-blank and
+multiple-choice tables powered by
+[`webexercises`](https://psyteachr.github.io/webexercises/) and
+[`tinytable`](https://vincentarelbundock.github.io/tinytable/). These
+are designed for use in Quarto HTML documents:
+
+``` r
 # In a Quarto document
 create_model_summary_checker(result)
 create_predictor_checker(result)
@@ -203,8 +216,10 @@ create_predictor_checker(result)
 
 ## Sample Data
 
-The package includes `superman_data`, a dataset used throughout the examples and course materials.
-```{r, eval = FALSE}
+The package includes `superman_data`, a dataset used throughout the
+examples and course materials.
+
+``` r
 data(superman_data)
 str(superman_data)
 ```

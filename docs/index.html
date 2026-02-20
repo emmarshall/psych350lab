@@ -58,8 +58,415 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-A collection of statistical analysis and APA-style reporting functions designed for behavioral science courses. Includes functions for correlations, chi-square tests, between- and within-groups ANOVA, factorial ANOVA, and multiple regression, along with APA-formatted tables, write-ups, and interactive worksheet checkers. Includes a built-in Superman media dataset for demonstrations.
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="psych350lab-">psych350lab <a class="anchor" aria-label="anchor" href="#psych350lab-"></a>
+</h1>
+</div>
+<!-- badges: start -->
+<!-- badges: end -->
+<p><strong>psych350lab</strong> provides helper functions for a Research Methods and Statistical Analysis lab course. It streamlines running common statistical analyses, generating APA-formatted tables, and creating interactive student worksheets — all from R and Quarto/RMarkdown.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install <strong>psych350lab</strong> using the <a href="https://pak.r-lib.org/" class="external-link"><code>pak</code></a> package, which handles both CRAN and GitHub installations seamlessly.</p>
+<div class="section level3">
+<h3 id="install-pak-if-you-dont-have-it">Install <code>pak</code> (if you don’t have it)<a class="anchor" aria-label="anchor" href="#install-pak-if-you-dont-have-it"></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="install-from-github-recommended">Install from GitHub (recommended)<a class="anchor" aria-label="anchor" href="#install-from-github-recommended"></a>
+</h3>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"emmarshall/psych350lab"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="install-from-a-local-source">Install from a local source<a class="anchor" aria-label="anchor" href="#install-from-a-local-source"></a>
+</h3>
+<p>If you have a local copy of the package (e.g., a <code>.tar.gz</code> file or a cloned repo), you can install it with:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># From a .tar.gz file</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"local::path/to/psych350lab_0.1.0.tar.gz"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># From a local directory</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"local::path/to/psych350lab"</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>The package is organized around several core analysis workflows, each with a computation function (<code>*_answers()</code>) and companion table/formatting functions.</p>
+<div class="section level3">
+<h3 id="data-import">Data Import<a class="anchor" aria-label="anchor" href="#data-import"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/get_spss_data.html">get_spss_data()</a></code></td>
+<td>Read SPSS <code>.sav</code> files, convert missing values, and strip labels</td>
+</tr>
+<tr>
+<td><code><a href="reference/format_p_value.html">format_p_value()</a></code></td>
+<td>Format p-values in APA style (e.g., “&lt; .001”)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="correlation-analysis">Correlation Analysis<a class="anchor" aria-label="anchor" href="#correlation-analysis"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/corr_answers.html">corr_answers()</a></code></td>
+<td>Compute Pearson correlation with descriptives and hypothesis test</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_corr_table.html">create_corr_table()</a></code></td>
+<td>Compact flextable with r, p, df, means, SDs</td>
+</tr>
+<tr>
+<td><code><a href="reference/format_corr_results.html">format_corr_results()</a></code></td>
+<td>Fill-in-the-blank or answer key text output</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_apa_corr_table.html">create_apa_corr_table()</a></code></td>
+<td>APA correlation matrix with significance stars</td>
+</tr>
+<tr>
+<td><code>create_corr_matrix_checker()</code></td>
+<td>Interactive webexercise correlation matrix</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="between-groups-anova">Between-Groups ANOVA<a class="anchor" aria-label="anchor" href="#between-groups-anova"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/bg_anova_answers.html">bg_anova_answers()</a></code></td>
+<td>One-way between-groups ANOVA with group descriptives</td>
+</tr>
+<tr>
+<td><code><a href="reference/format_bg_anova_results.html">format_bg_anova_results()</a></code></td>
+<td>Fill-in-the-blank or answer key text</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_bg_anova_table.html">create_bg_anova_table()</a></code></td>
+<td>APA descriptive statistics table</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_anova_source_table.html">create_anova_source_table()</a></code></td>
+<td>APA ANOVA source table (SS, df, MS, F, p)</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_bg_anova_combined_table.html">create_bg_anova_combined_table()</a></code></td>
+<td>Combined ANOVA + descriptives flextable</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="within-groups-repeated-measures-anova">Within-Groups (Repeated Measures) ANOVA<a class="anchor" aria-label="anchor" href="#within-groups-repeated-measures-anova"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/wg_anova_answers.html">wg_anova_answers()</a></code></td>
+<td>Repeated measures ANOVA for two conditions</td>
+</tr>
+<tr>
+<td><code><a href="reference/format_wg_anova_results.html">format_wg_anova_results()</a></code></td>
+<td>Fill-in-the-blank or answer key text</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_wg_anova_table.html">create_wg_anova_table()</a></code></td>
+<td>APA descriptive statistics table</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_wg_anova_combined_table.html">create_wg_anova_combined_table()</a></code></td>
+<td>Combined ANOVA + descriptives flextable</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="factorial-two-way-anova">Factorial (Two-Way) ANOVA<a class="anchor" aria-label="anchor" href="#factorial-two-way-anova"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/anova_factorial_answers.html">anova_factorial_answers()</a></code></td>
+<td>2×2 factorial ANOVA via <code>jmv</code> with EMMs and post-hoc</td>
+</tr>
+<tr>
+<td><code><a href="reference/lsd_hsd_calculator.html">lsd_hsd_calculator()</a></code></td>
+<td>Compute LSD and HSD minimum mean differences</td>
+</tr>
+<tr>
+<td><code><a href="reference/check_factor_alignment.html">check_factor_alignment()</a></code></td>
+<td>Diagnostic check for factor level ordering</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="multiple-regression">Multiple Regression<a class="anchor" aria-label="anchor" href="#multiple-regression"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/regression_answers.html">regression_answers()</a></code></td>
+<td>Full regression with univariate, bivariate, and multivariate results plus interpretation categories (a–d)</td>
+</tr>
+<tr>
+<td><code><a href="reference/regression_model_statistics.html">regression_model_statistics()</a></code></td>
+<td>Formatted model summary line (R, R², F, df, p)</td>
+</tr>
+<tr>
+<td><code><a href="reference/regression_model_evaluation.html">regression_model_evaluation()</a></code></td>
+<td>“Does the model work?” / “How well?” text</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_regression_combined_table.html">create_regression_combined_table()</a></code></td>
+<td>Flextable with r, b, type, and result category per predictor</td>
+</tr>
+<tr>
+<td><code><a href="reference/regression_table_legend.html">regression_table_legend()</a></code></td>
+<td>Markdown legend for result categories</td>
+</tr>
+<tr>
+<td><code><a href="reference/regression_category_legend.html">regression_category_legend()</a></code></td>
+<td>Extended markdown legend</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_correlation_interp_ft.html">create_correlation_interp_ft()</a></code></td>
+<td>Flextable with auto-generated correlation interpretations</td>
+</tr>
+<tr>
+<td><code>create_regression_weight_interp_ft()</code></td>
+<td>Flextable with regression weight interpretations</td>
+</tr>
+</tbody>
+</table>
+<div class="section level4">
+<h4 id="interactive-webexercise-checkers-for-quarto">Interactive Webexercise Checkers (for Quarto)<a class="anchor" aria-label="anchor" href="#interactive-webexercise-checkers-for-quarto"></a>
+</h4>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/create_model_summary_checker.html">create_model_summary_checker()</a></code></td>
+<td>Fill-in-the-blank model summary (tinytable + webexercises)</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_predictor_checker.html">create_predictor_checker()</a></code></td>
+<td>Interactive predictor results table with MCQs</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_correlation_interpretations.html">create_correlation_interpretations()</a></code></td>
+<td>Interactive correlation interpretation table</td>
+</tr>
+<tr>
+<td><code><a href="reference/create_regression_weight_interpretations.html">create_regression_weight_interpretations()</a></code></td>
+<td>Interactive regression weight interpretation table</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section level3">
+<h3 id="spss-style-plotting">SPSS-Style Plotting<a class="anchor" aria-label="anchor" href="#spss-style-plotting"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Function</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code><a href="reference/theme_SPSS.html">theme_SPSS()</a></code></td>
+<td>Complete ggplot2 theme mimicking SPSS charts (modern or legacy)</td>
+</tr>
+<tr>
+<td><code><a href="reference/scale_color_SPSS.html">scale_color_SPSS()</a></code></td>
+<td>SPSS discrete color scale</td>
+</tr>
+<tr>
+<td><code><a href="reference/scale_fill_SPSS.html">scale_fill_SPSS()</a></code></td>
+<td>SPSS discrete fill scale</td>
+</tr>
+<tr>
+<td><code><a href="reference/palette_SPSS.html">palette_SPSS()</a></code></td>
+<td>Get SPSS hex color codes directly</td>
+</tr>
+<tr>
+<td><code><a href="reference/SPSS_pal.html">SPSS_pal()</a></code></td>
+<td>Palette function factory for ggplot2 scales</td>
+</tr>
+<tr>
+<td><code><a href="reference/number_SPSS.html">number_SPSS()</a></code></td>
+<td>Format axis numbers without thousands separators</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section level2">
+<h2 id="quick-examples">Quick Examples<a class="anchor" aria-label="anchor" href="#quick-examples"></a>
+</h2>
+<div class="section level3">
+<h3 id="correlation">Correlation<a class="anchor" aria-label="anchor" href="#correlation"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emmarshall.github.io/psych350lab">psych350lab</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">superman_data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/corr_answers.html">corr_answers</a></span><span class="op">(</span><span class="va">superman_data</span>, <span class="st">"clark_height_in"</span>, <span class="st">"rt_critics_score"</span><span class="op">)</span></span>
+<span><span class="va">result</span><span class="op">$</span><span class="va">Correlation</span></span>
+<span><span class="va">result</span><span class="op">$</span><span class="va">Descriptives</span></span>
+<span></span>
+<span><span class="co"># APA table</span></span>
+<span><span class="fu"><a href="reference/create_corr_table.html">create_corr_table</a></span><span class="op">(</span><span class="st">"RH1"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clark_height_in"</span>, <span class="st">"rt_critics_score"</span><span class="op">)</span>, <span class="va">result</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="between-groups-anova-1">Between-Groups ANOVA<a class="anchor" aria-label="anchor" href="#between-groups-anova-1"></a>
+</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bg_anova_answers.html">bg_anova_answers</a></span><span class="op">(</span><span class="va">superman_data</span>, iv <span class="op">=</span> <span class="st">"clark_grp"</span>, dv <span class="op">=</span> <span class="st">"rt_critics_score"</span><span class="op">)</span></span>
+<span><span class="va">result</span><span class="op">$</span><span class="va">ANOVA</span></span>
+<span><span class="va">result</span><span class="op">$</span><span class="va">Descriptives</span></span>
+<span></span>
+<span><span class="co"># Formatted results (answer key)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="reference/format_bg_anova_results.html">format_bg_anova_results</a></span><span class="op">(</span><span class="st">"RH1"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clark_grp"</span>, <span class="st">"rt_critics_score"</span><span class="op">)</span>,</span>
+<span>  <span class="va">result</span>, iv_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Under 6ft"</span>, <span class="st">"6ft+"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="multiple-regression-1">Multiple Regression<a class="anchor" aria-label="anchor" href="#multiple-regression-1"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sm</span> <span class="op">&lt;-</span> <span class="va">superman_data</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">superman_data</span><span class="op">$</span><span class="va">rt_critics_score</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>                    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">superman_data</span><span class="op">$</span><span class="va">rt_audience_score</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/regression_answers.html">regression_answers</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">sm</span>,</span>
+<span>  criterion <span class="op">=</span> <span class="st">"rt_critics_score"</span>,</span>
+<span>  quant_predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clark_height_in"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span>,</span>
+<span>  quant_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Clark Height (in)"</span>, <span class="st">"Audience Score"</span><span class="op">)</span>,</span>
+<span>  criterion_label <span class="op">=</span> <span class="st">"Critics Score"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span><span class="op">$</span><span class="va">Model</span></span>
+<span><span class="va">result</span><span class="op">$</span><span class="va">Regression_Weights</span></span>
+<span></span>
+<span><span class="co"># Combined predictor table</span></span>
+<span><span class="fu"><a href="reference/create_regression_combined_table.html">create_regression_combined_table</a></span><span class="op">(</span><span class="va">result</span>, KEY <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="spss-style-plot">SPSS-Style Plot<a class="anchor" aria-label="anchor" href="#spss-style-plot"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">mpg</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/scale_fill_SPSS.html">scale_fill_SPSS</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/theme_SPSS.html">theme_SPSS</a></span><span class="op">(</span>scale.x <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cylinders"</span>, y <span class="op">=</span> <span class="st">"MPG"</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="answer-key-vs-student-worksheet">Answer Key vs. Student Worksheet<a class="anchor" aria-label="anchor" href="#answer-key-vs-student-worksheet"></a>
+</h2>
+<p>Most table and formatting functions include a <code>Key</code> (or <code>KEY</code>) argument. Set <code>Key = TRUE</code> for a filled answer key, or <code>Key = FALSE</code> for a blank student worksheet — making it easy to generate both versions from the same code.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Answer key</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="reference/format_bg_anova_results.html">format_bg_anova_results</a></span><span class="op">(</span><span class="st">"RH1"</span>, <span class="va">vars</span>, <span class="va">result</span>, iv_labels <span class="op">=</span> <span class="va">labels</span>, Key <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Student worksheet</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="reference/format_bg_anova_results.html">format_bg_anova_results</a></span><span class="op">(</span><span class="st">"RH1"</span>, <span class="va">vars</span>, <span class="va">result</span>, iv_labels <span class="op">=</span> <span class="va">labels</span>, Key <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="interactive-webexercises-quarto">Interactive Webexercises (Quarto)<a class="anchor" aria-label="anchor" href="#interactive-webexercises-quarto"></a>
+</h2>
+<p>Several functions generate interactive fill-in-the-blank and multiple-choice tables powered by <a href="https://psyteachr.github.io/webexercises/" class="external-link"><code>webexercises</code></a> and <a href="https://vincentarelbundock.github.io/tinytable/" class="external-link"><code>tinytable</code></a>. These are designed for use in Quarto HTML documents:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># In a Quarto document</span></span>
+<span><span class="fu"><a href="reference/create_model_summary_checker.html">create_model_summary_checker</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/create_predictor_checker.html">create_predictor_checker</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="sample-data">Sample Data<a class="anchor" aria-label="anchor" href="#sample-data"></a>
+</h2>
+<p>The package includes <code>superman_data</code>, a dataset used throughout the examples and course materials.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">superman_data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">superman_data</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
