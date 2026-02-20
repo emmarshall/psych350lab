@@ -71,30 +71,22 @@
 <span class="r-in"><span><span class="fu">spss_anova_html</span><span class="op">(</span><span class="va">superman</span>, <span class="st">"rt_critics_score"</span>, <span class="st">"clark_grp"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;style&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* Color definitions from spss-tables.typ */</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* spss-blue: #264a60 - header text */</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* spss-gray: #e4e4e4 - label column bg */</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* spss-lightgray: #f9f9fb - data column bg */</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* spss-darkgray: #aeaeae - grid lines */</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* spss-body-fg: #1a1a1a - body text */</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-container {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     font-family: Arial, "Helvetica Neue", sans-serif;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 8pt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 9pt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     margin: 16px 0;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     display: inline-block;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-title {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     font-weight: bold;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 9pt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     color: #1a1a1a;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     margin-bottom: 2px;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 10pt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     color: black;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     margin-bottom: 4px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: center;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-subtitle {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 8pt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     color: #1a1a1a;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     margin-bottom: 2px;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 9pt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     color: black;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     margin-bottom: 4px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: center;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table {</span>
@@ -103,59 +95,58 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-top: 1px solid black;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-bottom: 1px solid black;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* Header cells - white background, blue text */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   /* Header cells - gray background, dark blue text */</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table thead th {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: white;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #e4e4e4;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     color: #264a60;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     font-weight: bold;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 7.5pt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 3px 6px;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 8pt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 3px 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: right;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     vertical-align: middle;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-bottom: 1px solid black;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: 1px solid #aeaeae;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* Data cells - light gray background */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table thead th:last-child {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: none;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   /* Data cells - very light gray background */</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table tbody td {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 3px 6px;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 3px 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: right;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 8pt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 9pt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     color: #1a1a1a;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     vertical-align: middle;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #f9f9fb;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border: none;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border-top: 1px solid #aeaeae;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     border-bottom: 1px solid #aeaeae;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: 1px solid #aeaeae;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table tbody td:last-child {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table tbody tr:first-child td {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border-top: none;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table tbody tr:last-child td {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     border-bottom: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* Row label cells - gray background, left aligned, no right border */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   /* Row label cells - gray background, left aligned */</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table tbody td.spss-rowlabel {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: left;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #e4e4e4;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table tbody td.spss-rowlabel-sub {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: left;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #e4e4e4;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   /* Footnotes */</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-footnotes {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 7pt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     color: #555555;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     margin-top: 3px;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: left;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 8pt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     color: #555;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     margin-top: 4px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-footnotes p {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     margin: 1px 0;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     margin: 2px 0;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   /* === SIMPLE TABLE STYLE (same base styling) === */</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   /* === SIMPLE TABLE STYLE (for crosstabs etc) === */</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-collapse: collapse;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-spacing: 0;</span>
@@ -163,42 +154,43 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-bottom: 1px solid black;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple thead th {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: white;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #e4e4e4;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     color: #264a60;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     font-weight: bold;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 7.5pt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 3px 6px;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 8pt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 3px 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: right;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     vertical-align: middle;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-bottom: 1px solid black;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: 1px solid #aeaeae;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple thead th:last-child {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple thead th:first-child,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple thead th:nth-child(2) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: left;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple tbody td {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 3px 6px;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 3px 8px;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: right;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 8pt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 9pt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     color: #1a1a1a;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     vertical-align: middle;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #f9f9fb;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border: none;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border-top: 1px solid #aeaeae;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     border-bottom: 1px solid #aeaeae;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: 1px solid #aeaeae;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple tbody td:last-child {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple tbody tr:first-child td {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border-top: none;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple tbody tr:last-child td {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     border-bottom: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple tbody td:first-child,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table-simple tbody td:nth-child(2) {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: left;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #e4e4e4;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border-right: none;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/style&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;div class="spss-container"&gt;</span>

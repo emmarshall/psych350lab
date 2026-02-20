@@ -51,30 +51,22 @@ utils::globalVariables(c("label", "count", "x", "density"))
 .spss_table_css <- function() {
   '
   <style>
-  /* Color definitions from spss-tables.typ */
-  /* spss-blue: #264a60 - header text */
-  /* spss-gray: #e4e4e4 - label column bg */
-  /* spss-lightgray: #f9f9fb - data column bg */
-  /* spss-darkgray: #aeaeae - grid lines */
-  /* spss-body-fg: #1a1a1a - body text */
-
   .spss-container {
     font-family: Arial, "Helvetica Neue", sans-serif;
-    font-size: 8pt;
+    font-size: 9pt;
     margin: 16px 0;
-    display: inline-block;
   }
   .spss-title {
     font-weight: bold;
-    font-size: 9pt;
-    color: #1a1a1a;
-    margin-bottom: 2px;
+    font-size: 10pt;
+    color: black;
+    margin-bottom: 4px;
     text-align: center;
   }
   .spss-subtitle {
-    font-size: 8pt;
-    color: #1a1a1a;
-    margin-bottom: 2px;
+    font-size: 9pt;
+    color: black;
+    margin-bottom: 4px;
     text-align: center;
   }
   .spss-table {
@@ -83,59 +75,58 @@ utils::globalVariables(c("label", "count", "x", "density"))
     border-top: 1px solid black;
     border-bottom: 1px solid black;
   }
-  /* Header cells - white background, blue text */
+  /* Header cells - gray background, dark blue text */
   .spss-table thead th {
-    background-color: white;
+    background-color: #e4e4e4;
     color: #264a60;
     font-weight: bold;
-    font-size: 7.5pt;
-    padding: 3px 6px;
+    font-size: 8pt;
+    padding: 3px 8px;
     text-align: right;
     vertical-align: middle;
-    border: none;
     border-bottom: 1px solid black;
+    border-right: 1px solid #aeaeae;
   }
-  /* Data cells - light gray background */
+  .spss-table thead th:last-child {
+    border-right: none;
+  }
+  /* Data cells - very light gray background */
   .spss-table tbody td {
-    padding: 3px 6px;
+    padding: 3px 8px;
     text-align: right;
-    font-size: 8pt;
+    font-size: 9pt;
     color: #1a1a1a;
     vertical-align: middle;
     background-color: #f9f9fb;
-    border: none;
-    border-top: 1px solid #aeaeae;
+    border-bottom: 1px solid #aeaeae;
     border-right: 1px solid #aeaeae;
   }
   .spss-table tbody td:last-child {
     border-right: none;
   }
-  .spss-table tbody tr:first-child td {
-    border-top: none;
+  .spss-table tbody tr:last-child td {
+    border-bottom: none;
   }
-  /* Row label cells - gray background, left aligned, no right border */
+  /* Row label cells - gray background, left aligned */
   .spss-table tbody td.spss-rowlabel {
     text-align: left;
     background-color: #e4e4e4;
-    border-right: none;
   }
   .spss-table tbody td.spss-rowlabel-sub {
     text-align: left;
     background-color: #e4e4e4;
-    border-right: none;
   }
   /* Footnotes */
   .spss-footnotes {
-    font-size: 7pt;
-    color: #555555;
-    margin-top: 3px;
-    text-align: left;
+    font-size: 8pt;
+    color: #555;
+    margin-top: 4px;
   }
   .spss-footnotes p {
-    margin: 1px 0;
+    margin: 2px 0;
   }
 
-  /* === SIMPLE TABLE STYLE (same base styling) === */
+  /* === SIMPLE TABLE STYLE (for crosstabs etc) === */
   .spss-table-simple {
     border-collapse: collapse;
     border-spacing: 0;
@@ -143,42 +134,43 @@ utils::globalVariables(c("label", "count", "x", "density"))
     border-bottom: 1px solid black;
   }
   .spss-table-simple thead th {
-    background-color: white;
+    background-color: #e4e4e4;
     color: #264a60;
     font-weight: bold;
-    font-size: 7.5pt;
-    padding: 3px 6px;
+    font-size: 8pt;
+    padding: 3px 8px;
     text-align: right;
     vertical-align: middle;
-    border: none;
     border-bottom: 1px solid black;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple thead th:last-child {
+    border-right: none;
   }
   .spss-table-simple thead th:first-child,
   .spss-table-simple thead th:nth-child(2) {
     text-align: left;
   }
   .spss-table-simple tbody td {
-    padding: 3px 6px;
+    padding: 3px 8px;
     text-align: right;
-    font-size: 8pt;
+    font-size: 9pt;
     color: #1a1a1a;
     vertical-align: middle;
     background-color: #f9f9fb;
-    border: none;
-    border-top: 1px solid #aeaeae;
+    border-bottom: 1px solid #aeaeae;
     border-right: 1px solid #aeaeae;
   }
   .spss-table-simple tbody td:last-child {
     border-right: none;
   }
-  .spss-table-simple tbody tr:first-child td {
-    border-top: none;
+  .spss-table-simple tbody tr:last-child td {
+    border-bottom: none;
   }
   .spss-table-simple tbody td:first-child,
   .spss-table-simple tbody td:nth-child(2) {
     text-align: left;
     background-color: #e4e4e4;
-    border-right: none;
   }
   </style>
   '
