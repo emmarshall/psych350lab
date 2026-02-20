@@ -95,6 +95,255 @@ appearance of SPSS output and are ideal for:</p>
 statistics table:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_descriptives_html.html">spss_descriptives_html</a></span><span class="op">(</span><span class="va">superman</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clark_height_in"</span>, <span class="st">"rt_critics_score"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Descriptive Statistics
+</div>
+<table class="table spss-table">
+<thead><tr>
+<th>
+</th>
+<th>
+N
+</th>
+<th>
+Mean
+</th>
+<th>
+Std. Deviation
+</th>
+<th>
+Std. Error
+</th>
+<th>
+Minimum
+</th>
+<th>
+Maximum
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel">
+clark_height_in
+</td>
+<td>
+11
+</td>
+<td>
+73.37
+</td>
+<td>
+1.68
+</td>
+<td>
+0.51
+</td>
+<td>
+71.26
+</td>
+<td>
+75.98
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+rt_critics_score
+</td>
+<td>
+8
+</td>
+<td>
+79.38
+</td>
+<td>
+10.53
+</td>
+<td>
+3.72
+</td>
+<td>
+57.00
+</td>
+<td>
+88.00
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+rt_audience_score
+</td>
+<td>
+9
+</td>
+<td>
+80.22
+</td>
+<td>
+9.86
+</td>
+<td>
+3.29
+</td>
+<td>
+60.00
+</td>
+<td>
+90.00
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+Valid N (listwise)
+</td>
+<td>
+8
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>This produces a table with N, Mean, Std. Deviation, Std. Error,
 Minimum, and Maximum for each variable.</p>
 </div>
@@ -104,6 +353,271 @@ Minimum, and Maximum for each variable.</p>
 <p>For ANOVA-style grouped descriptives with confidence intervals:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_descriptives_by_group_html.html">spss_descriptives_by_group_html</a></span><span class="op">(</span><span class="va">superman</span>, dv <span class="op">=</span> <span class="st">"rt_critics_score"</span>, iv <span class="op">=</span> <span class="st">"clark_grp"</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Descriptives
+</div>
+<div class="spss-subtitle">
+rt_critics_score
+</div>
+<table class="table spss-table">
+<thead>
+<tr>
+<th rowspan="2">
+</th>
+<th rowspan="2">
+N
+</th>
+<th rowspan="2">
+Mean
+</th>
+<th rowspan="2">
+Std. Deviation
+</th>
+<th rowspan="2">
+Std. Error
+</th>
+<th colspan="2">
+95% Confidence Interval for Mean
+</th>
+<th rowspan="2">
+Minimum
+</th>
+<th rowspan="2">
+Maximum
+</th>
+</tr>
+<tr>
+<th>
+Lower Bound
+</th>
+<th>
+Upper Bound
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel">
+1
+</td>
+<td>
+2
+</td>
+<td>
+87.00
+</td>
+<td>
+1.41
+</td>
+<td>
+1.00
+</td>
+<td>
+74.29
+</td>
+<td>
+99.71
+</td>
+<td>
+86.00
+</td>
+<td>
+88.00
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+2
+</td>
+<td>
+6
+</td>
+<td>
+76.83
+</td>
+<td>
+11.13
+</td>
+<td>
+4.54
+</td>
+<td>
+65.16
+</td>
+<td>
+88.51
+</td>
+<td>
+57.00
+</td>
+<td>
+88.00
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+Total
+</td>
+<td>
+8
+</td>
+<td>
+79.38
+</td>
+<td>
+10.53
+</td>
+<td>
+3.72
+</td>
+<td>
+70.57
+</td>
+<td>
+88.18
+</td>
+<td>
+57.00
+</td>
+<td>
+88.00
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -114,6 +628,254 @@ Minimum, and Maximum for each variable.</p>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_ttest_independent_html.html">spss_ttest_independent_html</a></span><span class="op">(</span><span class="va">superman</span>, dv <span class="op">=</span> <span class="st">"rt_critics_score"</span>, iv <span class="op">=</span> <span class="st">"clark_grp"</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Independent Samples Test
+</div>
+<table class="table spss-table">
+<thead>
+<tr>
+<th colspan="2">
+</th>
+<th colspan="2">
+Levene’s Test
+</th>
+<th colspan="7">
+t-test for Equality of Means
+</th>
+</tr>
+<tr>
+<th colspan="2">
+</th>
+<th>
+F
+</th>
+<th>
+Sig.
+</th>
+<th>
+t
+</th>
+<th>
+df
+</th>
+<th>
+Sig. (2-tailed)
+</th>
+<th>
+Mean Diff
+</th>
+<th>
+SE Diff
+</th>
+<th>
+Lower
+</th>
+<th>
+Upper
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel" rowspan="2">
+rt_critics_score
+</td>
+<td class="spss-rowlabel-sub">
+Equal variances assumed
+</td>
+<td>
+0.016
+</td>
+<td>
+.192
+</td>
+<td>
+1.224
+</td>
+<td>
+6
+</td>
+<td>
+.267
+</td>
+<td>
+10.167
+</td>
+<td>
+8.306
+</td>
+<td>
+-10.156
+</td>
+<td>
+30.490
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+Equal variances not assumed
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+2.186
+</td>
+<td>
+5.433
+</td>
+<td>
+.076
+</td>
+<td>
+10.167
+</td>
+<td>
+4.651
+</td>
+<td>
+-1.507
+</td>
+<td>
+21.841
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>This produces a complete independent samples t-test table
 including:</p>
 <ul>
@@ -126,13 +888,593 @@ including:</p>
 <h3 id="paired-samples-t-test">Paired Samples T-Test<a class="anchor" aria-label="anchor" href="#paired-samples-t-test"></a>
 </h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_ttest_paired_html.html">spss_ttest_paired_html</a></span><span class="op">(</span><span class="va">superman</span>, var1 <span class="op">=</span> <span class="st">"rt_critics_score"</span>, var2 <span class="op">=</span> <span class="st">"rt_audience_score"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/spss_ttest_paired_html.html">spss_ttest_paired_html</a></span><span class="op">(</span><span class="va">superman</span>, var1 <span class="op">=</span> <span class="st">"rt_critics_score"</span>, var2 <span class="op">=</span> <span class="st">"rt_audience_score"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Paired Samples Test
+</div>
+<table class="table spss-table">
+<thead>
+<tr>
+<th colspan="2">
+</th>
+<th colspan="3">
+Paired Differences
+</th>
+<th rowspan="2">
+t
+</th>
+<th rowspan="2">
+df
+</th>
+<th rowspan="2">
+Sig. (2-tailed)
+</th>
+</tr>
+<tr>
+<th colspan="2">
+</th>
+<th>
+Mean
+</th>
+<th>
+Std. Dev
+</th>
+<th>
+SE Mean
+</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="spss-rowlabel">
+Pair 1
+</td>
+<td class="spss-rowlabel-sub">
+rt_critics_score - rt_audience_score
+</td>
+<td>
+-1.000
+</td>
+<td>
+9.366
+</td>
+<td>
+3.311
+</td>
+<td>
+-0.302
+</td>
+<td>
+7
+</td>
+<td>
+.771
+</td>
+</tr></tbody>
+</table>
+</div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Paired Samples Test
+</div>
+<table class="table spss-table">
+<thead>
+<tr>
+<th colspan="2">
+</th>
+<th colspan="3">
+Paired Differences
+</th>
+<th rowspan="2">
+t
+</th>
+<th rowspan="2">
+df
+</th>
+<th rowspan="2">
+Sig. (2-tailed)
+</th>
+</tr>
+<tr>
+<th colspan="2">
+</th>
+<th>
+Mean
+</th>
+<th>
+Std. Dev
+</th>
+<th>
+SE Mean
+</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="spss-rowlabel">
+Pair 1
+</td>
+<td class="spss-rowlabel-sub">
+rt_critics_score - rt_audience_score
+</td>
+<td>
+-1.000
+</td>
+<td>
+9.366
+</td>
+<td>
+3.311
+</td>
+<td>
+-0.302
+</td>
+<td>
+7
+</td>
+<td>
+.771
+</td>
+</tr></tbody>
+</table>
+</div>
 </div>
 <div class="section level3">
 <h3 id="one-sample-t-test">One-Sample T-Test<a class="anchor" aria-label="anchor" href="#one-sample-t-test"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_ttest_one_html.html">spss_ttest_one_html</a></span><span class="op">(</span><span class="va">superman</span>, variable <span class="op">=</span> <span class="st">"clark_height_in"</span>, mu <span class="op">=</span> <span class="fl">72</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+One-Sample Test
+</div>
+<table class="table spss-table">
+<thead>
+<tr>
+<th rowspan="2">
+</th>
+<th colspan="6">
+Test Value = 72
+</th>
+</tr>
+<tr>
+<th>
+t
+</th>
+<th>
+df
+</th>
+<th>
+Sig. (2-tailed)
+</th>
+<th>
+Mean Diff
+</th>
+<th>
+Lower
+</th>
+<th>
+Upper
+</th>
+</tr>
+</thead>
+<tbody><tr>
+<td class="spss-rowlabel">
+clark_height_in
+</td>
+<td>
+2.704
+</td>
+<td>
+10
+</td>
+<td>
+.022
+</td>
+<td>
+1.371
+</td>
+<td>
+0.241
+</td>
+<td>
+2.501
+</td>
+</tr></tbody>
+</table>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -144,17 +1486,617 @@ including:</p>
 <p>You can create an ANOVA table from raw data:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_anova_html.html">spss_anova_html</a></span><span class="op">(</span><span class="va">superman</span>, dv <span class="op">=</span> <span class="st">"rt_critics_score"</span>, iv <span class="op">=</span> <span class="st">"clark_grp"</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+ANOVA
+</div>
+<div class="spss-subtitle">
+rt_critics_score
+</div>
+<table class="table spss-table">
+<thead><tr>
+<th>
+</th>
+<th>
+Sum of Squares
+</th>
+<th>
+df
+</th>
+<th>
+Mean Square
+</th>
+<th>
+F
+</th>
+<th>
+Sig.
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel">
+Between Groups
+</td>
+<td>
+155.042
+</td>
+<td>
+1
+</td>
+<td>
+155.042
+</td>
+<td>
+1.498
+</td>
+<td>
+.267
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+Within Groups
+</td>
+<td>
+620.833
+</td>
+<td>
+6
+</td>
+<td>
+103.472
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+Total
+</td>
+<td>
+775.875
+</td>
+<td>
+7
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>Or from pre-computed results using
 <code><a href="../reference/bg_anova_answers.html">bg_anova_answers()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">anova_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bg_anova_answers.html">bg_anova_answers</a></span><span class="op">(</span><span class="va">superman</span>, iv <span class="op">=</span> <span class="st">"clark_grp"</span>, dv <span class="op">=</span> <span class="st">"rt_critics_score"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/spss_anova_html.html">spss_anova_html</a></span><span class="op">(</span><span class="va">anova_result</span>, dv <span class="op">=</span> <span class="st">"rt_critics_score"</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+ANOVA
+</div>
+<div class="spss-subtitle">
+rt_critics_score
+</div>
+<table class="table spss-table">
+<thead><tr>
+<th>
+</th>
+<th>
+Sum of Squares
+</th>
+<th>
+df
+</th>
+<th>
+Mean Square
+</th>
+<th>
+F
+</th>
+<th>
+Sig.
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel">
+Between Groups
+</td>
+<td>
+</td>
+<td>
+1
+</td>
+<td>
+</td>
+<td>
+1.500
+</td>
+<td>
+.267
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+Within Groups
+</td>
+<td>
+620.820
+</td>
+<td>
+6
+</td>
+<td>
+103.470
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+Total
+</td>
+<td>
+</td>
+<td>
+7
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section level3">
 <h3 id="levenes-test">Levene’s Test<a class="anchor" aria-label="anchor" href="#levenes-test"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_levene_html.html">spss_levene_html</a></span><span class="op">(</span><span class="va">superman</span>, dv <span class="op">=</span> <span class="st">"rt_critics_score"</span>, iv <span class="op">=</span> <span class="st">"clark_grp"</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Test of Homogeneity of Variances
+</div>
+<div class="spss-subtitle">
+rt_critics_score
+</div>
+<table class="table spss-table">
+<thead><tr>
+<th>
+Levene Statistic
+</th>
+<th>
+df1
+</th>
+<th>
+df2
+</th>
+<th>
+Sig.
+</th>
+</tr></thead>
+<tbody><tr>
+<td>
+1.268
+</td>
+<td>
+1
+</td>
+<td>
+6
+</td>
+<td>
+.303
+</td>
+</tr></tbody>
+</table>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -165,17 +2107,696 @@ including:</p>
 </h3>
 <p>From raw data:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_chisq_html.html">spss_chisq_html</a></span><span class="op">(</span><span class="va">superman</span>, var1 <span class="op">=</span> <span class="st">"clark_grp"</span>, var2 <span class="op">=</span> <span class="st">"tomatometer"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_chisq_html.html">spss_chisq_html</a></span><span class="op">(</span><span class="va">superman</span>, var1 <span class="op">=</span> <span class="st">"clark_grp"</span>, var2 <span class="op">=</span> <span class="st">"tomatometer"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in stats::chisq.test(tab, correct = FALSE): Chi-squared approximation</span></span>
+<span><span class="co">#&gt; may be incorrect</span></span>
+<span><span class="co">#&gt; Warning in stats::chisq.test(tab, correct = TRUE): Chi-squared approximation</span></span>
+<span><span class="co">#&gt; may be incorrect</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Chi-Square Tests
+</div>
+<table class="table spss-table">
+<thead><tr>
+<th>
+</th>
+<th>
+Value
+</th>
+<th>
+df
+</th>
+<th>
+Asymptotic Significance (2-sided)
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel">
+Pearson Chi-Square
+</td>
+<td>
+0.381
+</td>
+<td>
+1
+</td>
+<td>
+.537
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+Continuity Correction<sup>b</sup>
+</td>
+<td>
+0.000
+</td>
+<td>
+1
+</td>
+<td>
+1.000
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+N of Valid Cases
+</td>
+<td>
+8
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="spss-footnotes">
+<p>
+</p>
+<ol style="list-style-type: lower-alpha"><li>3 cells (75.0%) have expected count less than 5. The minimum
+expected count is 0.25.
+
+<p>
+</p>
+<ol start="2" style="list-style-type: lower-alpha"><li>Computed only for a 2x2 table.
+
+</li></ol>
+</li></ol>
+</div>
+</div>
+
+
 <p>Or from pre-computed results:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chi_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/chi_square_answers.html">chi_square_answers</a></span><span class="op">(</span><span class="va">superman</span>, <span class="st">"clark_grp"</span>, <span class="st">"tomatometer"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/spss_chisq_html.html">spss_chisq_html</a></span><span class="op">(</span><span class="va">chi_result</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in stats::chisq.test(contingency_table, correct = FALSE): Chi-squared</span></span>
+<span><span class="co">#&gt; approximation may be incorrect</span></span>
+<span><span class="fu"><a href="../reference/spss_chisq_html.html">spss_chisq_html</a></span><span class="op">(</span><span class="va">chi_result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in stats::chisq.test(tab, correct = TRUE): Chi-squared approximation</span></span>
+<span><span class="co">#&gt; may be incorrect</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Chi-Square Tests
 </div>
+<table class="table spss-table">
+<thead><tr>
+<th>
+</th>
+<th>
+Value
+</th>
+<th>
+df
+</th>
+<th>
+Asymptotic Significance (2-sided)
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel">
+Pearson Chi-Square
+</td>
+<td>
+0.380
+</td>
+<td>
+1
+</td>
+<td>
+.537
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+Continuity Correction<sup>b</sup>
+</td>
+<td>
+0.000
+</td>
+<td>
+1
+</td>
+<td>
+1.000
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel">
+N of Valid Cases
+</td>
+<td>
+8
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="spss-footnotes">
+<p>
+</p>
+<ol style="list-style-type: lower-alpha"><li>3 cells (150.0%) have expected count less than 5. The minimum
+expected count is 0.25.
+
+<p>
+</p>
+<ol start="2" style="list-style-type: lower-alpha"><li>Computed only for a 2x2 table.
+
+</li></ol>
+</li></ol>
+</div>
+</div>
+
+
 <div class="section level3">
 <h3 id="crosstabulation">Crosstabulation<a class="anchor" aria-label="anchor" href="#crosstabulation"></a>
 </h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_crosstab_html.html">spss_crosstab_html</a></span><span class="op">(</span><span class="va">superman</span>, var1 <span class="op">=</span> <span class="st">"clark_grp"</span>, var2 <span class="op">=</span> <span class="st">"tomatometer"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_crosstab_html.html">spss_crosstab_html</a></span><span class="op">(</span><span class="va">superman</span>, var1 <span class="op">=</span> <span class="st">"clark_grp"</span>, var2 <span class="op">=</span> <span class="st">"tomatometer"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in stats::chisq.test(tab, correct = FALSE): Chi-squared approximation</span></span>
+<span><span class="co">#&gt; may be incorrect</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+clark_grp * tomatometer Crosstabulation
+</div>
+<table class="table spss-table-simple">
+<thead><tr>
+<th>
+clark_grp
+</th>
+<th>
+</th>
+<th>
+1
+</th>
+<th>
+2
+</th>
+<th>
+Total
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+1
+</td>
+<td>
+Count
+</td>
+<td>
+0
+</td>
+<td>
+2
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+Expected Count
+</td>
+<td>
+0.2
+</td>
+<td>
+1.8
+</td>
+<td>
+2.0
+</td>
+</tr>
+<tr>
+<td>
+2
+</td>
+<td>
+Count
+</td>
+<td>
+1
+</td>
+<td>
+5
+</td>
+<td>
+6
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+Expected Count
+</td>
+<td>
+0.8
+</td>
+<td>
+5.2
+</td>
+<td>
+6.0
+</td>
+</tr>
+<tr>
+<td>
+Total
+</td>
+<td>
+Count
+</td>
+<td>
+1
+</td>
+<td>
+7
+</td>
+<td>
+8
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+Expected Count
+</td>
+<td>
+1.0
+</td>
+<td>
+7.0
+</td>
+<td>
+8.0
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="section level2">
@@ -187,6 +2808,299 @@ including:</p>
 <span> <span class="va">superman</span>,</span>
 <span> variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"clark_height_in"</span>, <span class="st">"rt_critics_score"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Correlations
+</div>
+<table class="table spss-table">
+<thead><tr>
+<th colspan="2">
+</th>
+<th>
+clark_height_in
+</th>
+<th>
+rt_critics_score
+</th>
+<th>
+rt_audience_score
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel" rowspan="3">
+clark_height_in
+</td>
+<td class="spss-rowlabel-sub">
+Pearson Correlation
+</td>
+<td>
+1
+</td>
+<td>
+0.027
+</td>
+<td>
+-0.101
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+Sig. (2-tailed)
+</td>
+<td>
+</td>
+<td>
+.950
+</td>
+<td>
+.812
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+N
+</td>
+<td>
+8
+</td>
+<td>
+8
+</td>
+<td>
+8
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel" rowspan="3">
+rt_critics_score
+</td>
+<td class="spss-rowlabel-sub">
+Pearson Correlation
+</td>
+<td>
+0.027
+</td>
+<td>
+1
+</td>
+<td>
+0.604
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+Sig. (2-tailed)
+</td>
+<td>
+.950
+</td>
+<td>
+</td>
+<td>
+.113
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+N
+</td>
+<td>
+8
+</td>
+<td>
+8
+</td>
+<td>
+8
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel" rowspan="3">
+rt_audience_score
+</td>
+<td class="spss-rowlabel-sub">
+Pearson Correlation
+</td>
+<td>
+-0.101
+</td>
+<td>
+0.604
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+Sig. (2-tailed)
+</td>
+<td>
+.812
+</td>
+<td>
+.113
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+N
+</td>
+<td>
+8
+</td>
+<td>
+8
+</td>
+<td>
+8
+</td>
+</tr>
+</tbody>
+</table>
+<div class="spss-footnotes">
+<p>
+**. Correlation is significant at the 0.01 level (2-tailed).
+</p>
+<p>
+*. Correlation is significant at the 0.05 level (2-tailed).
+</p>
+</div>
+</div>
 <p>The table includes:</p>
 <ul>
 <li>Pearson correlation coefficients</li>
@@ -217,18 +3131,634 @@ including:</p>
 </h3>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_regression_model_html.html">spss_regression_model_html</a></span><span class="op">(</span><span class="va">reg_result</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Model Summary
+</div>
+<table class="table spss-table">
+<thead><tr>
+<th>
+Model
+</th>
+<th>
+R
+</th>
+<th>
+R Square
+</th>
+<th>
+Adjusted R Square
+</th>
+<th>
+Std. Error of the Estimate
+</th>
+</tr></thead>
+<tbody><tr>
+<td class="spss-rowlabel">
+1
+</td>
+<td>
+0.611
+</td>
+<td>
+0.373
+</td>
+<td>
+0.122
+</td>
+<td>
+</td>
+</tr></tbody>
+</table>
+</div>
 </div>
 <div class="section level3">
 <h3 id="regression-anova">Regression ANOVA<a class="anchor" aria-label="anchor" href="#regression-anova"></a>
 </h3>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_regression_anova_html.html">spss_regression_anova_html</a></span><span class="op">(</span><span class="va">reg_result</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+ANOVA<sup>a</sup>
+</div>
+<table class="table spss-table">
+<thead><tr>
+<th colspan="2">
+Model
+</th>
+<th>
+Sum of Squares
+</th>
+<th>
+df
+</th>
+<th>
+Mean Square
+</th>
+<th>
+F
+</th>
+<th>
+Sig.
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel" rowspan="3">
+1
+</td>
+<td class="spss-rowlabel-sub">
+Regression
+</td>
+<td>
+289.372
+</td>
+<td>
+2
+</td>
+<td>
+144.686
+</td>
+<td>
+1.487
+</td>
+<td>
+.311
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+Residual
+</td>
+<td>
+486.503
+</td>
+<td>
+5
+</td>
+<td>
+97.301
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+Total
+</td>
+<td>
+775.875
+</td>
+<td>
+7
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section level3">
 <h3 id="coefficients-table">Coefficients Table<a class="anchor" aria-label="anchor" href="#coefficients-table"></a>
 </h3>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/spss_regression_coefficients_html.html">spss_regression_coefficients_html</a></span><span class="op">(</span><span class="va">reg_result</span><span class="op">)</span></span></code></pre></div>
+<style>
+  /* Color definitions from spss-tables.typ */
+  /* spss-blue: #264a60 - header text */
+  /* spss-gray: #e4e4e4 - label column bg */
+  /* spss-lightgray: #f9f9fb - data column bg */
+  /* spss-darkgray: #aeaeae - grid lines */
+  /* spss-body-fg: #1a1a1a - body text */
+
+  .spss-container {
+    font-family: Arial, "Helvetica Neue", sans-serif;
+    font-size: 8pt;
+    margin: 16px 0;
+    display: inline-block;
+  }
+  .spss-title {
+    font-weight: bold;
+    font-size: 9pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-subtitle {
+    font-size: 8pt;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+    text-align: center;
+  }
+  .spss-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  /* Header cells - white background, blue text */
+  .spss-table thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  /* Data cells - light gray background */
+  .spss-table tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table tbody tr:first-child td {
+    border-top: none;
+  }
+  /* Row label cells - gray background, left aligned, no right border */
+  .spss-table tbody td.spss-rowlabel {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  .spss-table tbody td.spss-rowlabel-sub {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  /* Footnotes */
+  .spss-footnotes {
+    font-size: 7pt;
+    color: #555555;
+    margin-top: 3px;
+    text-align: left;
+  }
+  .spss-footnotes p {
+    margin: 1px 0;
+  }
+
+  /* === SIMPLE TABLE STYLE (same base styling) === */
+  .spss-table-simple {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th {
+    background-color: white;
+    color: #264a60;
+    font-weight: bold;
+    font-size: 7.5pt;
+    padding: 3px 6px;
+    text-align: right;
+    vertical-align: middle;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  .spss-table-simple thead th:first-child,
+  .spss-table-simple thead th:nth-child(2) {
+    text-align: left;
+  }
+  .spss-table-simple tbody td {
+    padding: 3px 6px;
+    text-align: right;
+    font-size: 8pt;
+    color: #1a1a1a;
+    vertical-align: middle;
+    background-color: #f9f9fb;
+    border: none;
+    border-top: 1px solid #aeaeae;
+    border-right: 1px solid #aeaeae;
+  }
+  .spss-table-simple tbody td:last-child {
+    border-right: none;
+  }
+  .spss-table-simple tbody tr:first-child td {
+    border-top: none;
+  }
+  .spss-table-simple tbody td:first-child,
+  .spss-table-simple tbody td:nth-child(2) {
+    text-align: left;
+    background-color: #e4e4e4;
+    border-right: none;
+  }
+  </style>
+<div class="spss-container">
+<div class="spss-title">
+Coefficients<sup>a</sup>
+</div>
+<table class="table spss-table">
+<thead>
+<tr>
+<th rowspan="2">
+Model
+</th>
+<th colspan="2">
+Unstandardized Coefficients
+</th>
+<th>
+Standardized Coefficients
+</th>
+<th rowspan="2">
+t
+</th>
+<th rowspan="2">
+Sig.
+</th>
+</tr>
+<tr>
+<th>
+B
+</th>
+<th>
+Std. Error
+</th>
+<th>
+Beta
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="spss-rowlabel-sub">
+(Constant)
+</td>
+<td>
+-7.193
+</td>
+<td>
+155.393
+</td>
+<td>
+</td>
+<td>
+-0.046
+</td>
+<td>
+.965
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+clark_height_in
+</td>
+<td>
+0.506
+</td>
+<td>
+2.033
+</td>
+<td>
+</td>
+<td>
+0.249
+</td>
+<td>
+.813
+</td>
+</tr>
+<tr>
+<td class="spss-rowlabel-sub">
+rt_audience_score
+</td>
+<td>
+0.613
+</td>
+<td>
+0.356
+</td>
+<td>
+</td>
+<td>
+1.723
+</td>
+<td>
+.146
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -243,7 +3773,8 @@ including:</p>
 <span> filename <span class="op">=</span> <span class="st">"descriptives.png"</span>,</span>
 <span> width <span class="op">=</span> <span class="fl">7</span>,</span>
 <span> dpi <span class="op">=</span> <span class="fl">150</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; file:////var/folders/sh/jqx4668538x6gxwzqysc9hmc0000gn/T//Rtmpt9XFox/file78aa215153ef.html screenshot completed</span></span></code></pre></div>
 <p>Note: This requires the <code>gt</code> package to be installed.</p>
 </div>
 <div class="section level2">
@@ -260,54 +3791,149 @@ to render the HTML tables properly:</p>
 <span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a></span>
 <span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a></span>
 <span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">style</span><span class="dt">&gt;</span></span>
-<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>  <span class="fu">.spss-table</span> {</span>
-<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>    <span class="kw">font-family</span><span class="ch">:</span> <span class="st">'Arial'</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
-<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">pt</span><span class="op">;</span></span>
-<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a>    <span class="kw">border-collapse</span><span class="ch">:</span> <span class="dv">collapse</span><span class="op">;</span></span>
-<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a>    <span class="kw">margin</span><span class="ch">:</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span></span>
-<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a>  }</span>
-<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a>  <span class="fu">.spss-table</span> caption {</span>
-<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a>    <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">bold</span><span class="op">;</span></span>
-<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">left</span><span class="op">;</span></span>
-<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">px</span> <span class="dv">4</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">11</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a>  <span class="co">/* Color definitions from spss-tables.typ */</span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a>  <span class="co">/* spss-blue: #264a60 - header text */</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a>  <span class="co">/* spss-gray: #e4e4e4 - label column bg */</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a>  <span class="co">/* spss-lightgray: #f9f9fb - data column bg */</span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a>  <span class="co">/* spss-darkgray: #aeaeae - grid lines */</span></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a>  <span class="co">/* spss-body-fg: #1a1a1a - body text */</span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a>  <span class="fu">.spss-container</span> {</span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a>    <span class="kw">font-family</span><span class="ch">:</span> <span class="dv">Arial</span><span class="op">,</span> <span class="st">"Helvetica Neue"</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a>    <span class="kw">margin</span><span class="ch">:</span> <span class="dv">16</span><span class="dt">px</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a>    <span class="kw">display</span><span class="ch">:</span> <span class="dv">inline-block</span><span class="op">;</span></span>
 <span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a>  }</span>
-<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a>  <span class="fu">.spss-table</span> th<span class="op">,</span> <span class="fu">.spss-table</span> td {</span>
-<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#000</span><span class="op">;</span></span>
-<span id="cb19-25"><a href="#cb19-25" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">4</span><span class="dt">px</span> <span class="dv">8</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb19-26"><a href="#cb19-26" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">right</span><span class="op">;</span></span>
-<span id="cb19-27"><a href="#cb19-27" tabindex="-1"></a>  }</span>
-<span id="cb19-28"><a href="#cb19-28" tabindex="-1"></a>  <span class="fu">.spss-table</span> th {</span>
-<span id="cb19-29"><a href="#cb19-29" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#E8E8E8</span><span class="op">;</span></span>
-<span id="cb19-30"><a href="#cb19-30" tabindex="-1"></a>    <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">normal</span><span class="op">;</span></span>
-<span id="cb19-31"><a href="#cb19-31" tabindex="-1"></a>  }</span>
-<span id="cb19-32"><a href="#cb19-32" tabindex="-1"></a>  <span class="fu">.spss-table</span> td<span class="fu">.label</span> {</span>
-<span id="cb19-33"><a href="#cb19-33" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">left</span><span class="op">;</span></span>
-<span id="cb19-34"><a href="#cb19-34" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#F5F5F5</span><span class="op">;</span></span>
+<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a>  <span class="fu">.spss-title</span> {</span>
+<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a>    <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">bold</span><span class="op">;</span></span>
+<span id="cb19-25"><a href="#cb19-25" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">9</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb19-26"><a href="#cb19-26" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#1a1a1a</span><span class="op">;</span></span>
+<span id="cb19-27"><a href="#cb19-27" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb19-28"><a href="#cb19-28" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
+<span id="cb19-29"><a href="#cb19-29" tabindex="-1"></a>  }</span>
+<span id="cb19-30"><a href="#cb19-30" tabindex="-1"></a>  <span class="fu">.spss-subtitle</span> {</span>
+<span id="cb19-31"><a href="#cb19-31" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb19-32"><a href="#cb19-32" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#1a1a1a</span><span class="op">;</span></span>
+<span id="cb19-33"><a href="#cb19-33" tabindex="-1"></a>    <span class="kw">margin-bottom</span><span class="ch">:</span> <span class="dv">2</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb19-34"><a href="#cb19-34" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">center</span><span class="op">;</span></span>
 <span id="cb19-35"><a href="#cb19-35" tabindex="-1"></a>  }</span>
-<span id="cb19-36"><a href="#cb19-36" tabindex="-1"></a>  <span class="fu">.spss-table</span> <span class="fu">.header-row</span> {</span>
-<span id="cb19-37"><a href="#cb19-37" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#D4D4D4</span><span class="op">;</span></span>
-<span id="cb19-38"><a href="#cb19-38" tabindex="-1"></a>  }</span>
-<span id="cb19-39"><a href="#cb19-39" tabindex="-1"></a>  <span class="fu">.spss-table</span> tfoot td {</span>
-<span id="cb19-40"><a href="#cb19-40" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">9</span><span class="dt">pt</span><span class="op">;</span></span>
-<span id="cb19-41"><a href="#cb19-41" tabindex="-1"></a>    <span class="kw">font-style</span><span class="ch">:</span> <span class="dv">italic</span><span class="op">;</span></span>
-<span id="cb19-42"><a href="#cb19-42" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
-<span id="cb19-43"><a href="#cb19-43" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">left</span><span class="op">;</span></span>
-<span id="cb19-44"><a href="#cb19-44" tabindex="-1"></a>    <span class="kw">padding-top</span><span class="ch">:</span> <span class="dv">4</span><span class="dt">px</span><span class="op">;</span></span>
-<span id="cb19-45"><a href="#cb19-45" tabindex="-1"></a>  }</span>
-<span id="cb19-46"><a href="#cb19-46" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
-<span id="cb19-47"><a href="#cb19-47" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">table</span><span class="ot"> class</span><span class="op">=</span><span class="st">"spss-table"</span><span class="dt">&gt;</span></span>
-<span id="cb19-48"><a href="#cb19-48" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">caption</span><span class="dt">&gt;</span>Descriptive Statistics<span class="dt">&lt;/</span><span class="kw">caption</span><span class="dt">&gt;</span></span>
-<span id="cb19-49"><a href="#cb19-49" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">thead</span><span class="dt">&gt;</span></span>
-<span id="cb19-50"><a href="#cb19-50" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>N<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Mean<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Std. Deviation<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Std. Error<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Minimum<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Maximum<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb19-51"><a href="#cb19-51" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">thead</span><span class="dt">&gt;</span></span>
-<span id="cb19-52"><a href="#cb19-52" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tbody</span><span class="dt">&gt;</span></span>
-<span id="cb19-53"><a href="#cb19-53" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="ot"> class</span><span class="op">=</span><span class="st">"label"</span><span class="dt">&gt;</span>clark_height_in<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>11<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>73.37<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>1.68<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>0.51<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>71.26<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>75.98<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb19-54"><a href="#cb19-54" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="ot"> class</span><span class="op">=</span><span class="st">"label"</span><span class="dt">&gt;</span>rt_critics_score<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>8<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>79.38<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>10.53<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>3.72<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>57.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>88.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb19-55"><a href="#cb19-55" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="ot"> class</span><span class="op">=</span><span class="st">"label"</span><span class="dt">&gt;</span>Valid N (listwise)<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>8<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
-<span id="cb19-56"><a href="#cb19-56" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">tbody</span><span class="dt">&gt;</span></span>
-<span id="cb19-57"><a href="#cb19-57" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">table</span><span class="dt">&gt;</span></span></code></pre></div>
+<span id="cb19-36"><a href="#cb19-36" tabindex="-1"></a>  <span class="fu">.spss-table</span> {</span>
+<span id="cb19-37"><a href="#cb19-37" tabindex="-1"></a>    <span class="kw">border-collapse</span><span class="ch">:</span> <span class="dv">collapse</span><span class="op">;</span></span>
+<span id="cb19-38"><a href="#cb19-38" tabindex="-1"></a>    <span class="kw">border-spacing</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb19-39"><a href="#cb19-39" tabindex="-1"></a>    <span class="kw">border-top</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb19-40"><a href="#cb19-40" tabindex="-1"></a>    <span class="kw">border-bottom</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb19-41"><a href="#cb19-41" tabindex="-1"></a>  }</span>
+<span id="cb19-42"><a href="#cb19-42" tabindex="-1"></a>  <span class="co">/* Header cells - white background, blue text */</span></span>
+<span id="cb19-43"><a href="#cb19-43" tabindex="-1"></a>  <span class="fu">.spss-table</span> thead th {</span>
+<span id="cb19-44"><a href="#cb19-44" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb19-45"><a href="#cb19-45" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#264a60</span><span class="op">;</span></span>
+<span id="cb19-46"><a href="#cb19-46" tabindex="-1"></a>    <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">bold</span><span class="op">;</span></span>
+<span id="cb19-47"><a href="#cb19-47" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">7.5</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb19-48"><a href="#cb19-48" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb19-49"><a href="#cb19-49" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">right</span><span class="op">;</span></span>
+<span id="cb19-50"><a href="#cb19-50" tabindex="-1"></a>    <span class="kw">vertical-align</span><span class="ch">:</span> <span class="dv">middle</span><span class="op">;</span></span>
+<span id="cb19-51"><a href="#cb19-51" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-52"><a href="#cb19-52" tabindex="-1"></a>    <span class="kw">border-bottom</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb19-53"><a href="#cb19-53" tabindex="-1"></a>  }</span>
+<span id="cb19-54"><a href="#cb19-54" tabindex="-1"></a>  <span class="co">/* Data cells - light gray background */</span></span>
+<span id="cb19-55"><a href="#cb19-55" tabindex="-1"></a>  <span class="fu">.spss-table</span> tbody td {</span>
+<span id="cb19-56"><a href="#cb19-56" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb19-57"><a href="#cb19-57" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">right</span><span class="op">;</span></span>
+<span id="cb19-58"><a href="#cb19-58" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb19-59"><a href="#cb19-59" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#1a1a1a</span><span class="op">;</span></span>
+<span id="cb19-60"><a href="#cb19-60" tabindex="-1"></a>    <span class="kw">vertical-align</span><span class="ch">:</span> <span class="dv">middle</span><span class="op">;</span></span>
+<span id="cb19-61"><a href="#cb19-61" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f9f9fb</span><span class="op">;</span></span>
+<span id="cb19-62"><a href="#cb19-62" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-63"><a href="#cb19-63" tabindex="-1"></a>    <span class="kw">border-top</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#aeaeae</span><span class="op">;</span></span>
+<span id="cb19-64"><a href="#cb19-64" tabindex="-1"></a>    <span class="kw">border-right</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#aeaeae</span><span class="op">;</span></span>
+<span id="cb19-65"><a href="#cb19-65" tabindex="-1"></a>  }</span>
+<span id="cb19-66"><a href="#cb19-66" tabindex="-1"></a>  <span class="fu">.spss-table</span> tbody td<span class="in">:last-child</span> {</span>
+<span id="cb19-67"><a href="#cb19-67" tabindex="-1"></a>    <span class="kw">border-right</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-68"><a href="#cb19-68" tabindex="-1"></a>  }</span>
+<span id="cb19-69"><a href="#cb19-69" tabindex="-1"></a>  <span class="fu">.spss-table</span> tbody tr<span class="in">:first-child</span> td {</span>
+<span id="cb19-70"><a href="#cb19-70" tabindex="-1"></a>    <span class="kw">border-top</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-71"><a href="#cb19-71" tabindex="-1"></a>  }</span>
+<span id="cb19-72"><a href="#cb19-72" tabindex="-1"></a>  <span class="co">/* Row label cells - gray background, left aligned, no right border */</span></span>
+<span id="cb19-73"><a href="#cb19-73" tabindex="-1"></a>  <span class="fu">.spss-table</span> tbody td<span class="fu">.spss-rowlabel</span> {</span>
+<span id="cb19-74"><a href="#cb19-74" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">left</span><span class="op">;</span></span>
+<span id="cb19-75"><a href="#cb19-75" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#e4e4e4</span><span class="op">;</span></span>
+<span id="cb19-76"><a href="#cb19-76" tabindex="-1"></a>    <span class="kw">border-right</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-77"><a href="#cb19-77" tabindex="-1"></a>  }</span>
+<span id="cb19-78"><a href="#cb19-78" tabindex="-1"></a>  <span class="fu">.spss-table</span> tbody td<span class="fu">.spss-rowlabel-sub</span> {</span>
+<span id="cb19-79"><a href="#cb19-79" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">left</span><span class="op">;</span></span>
+<span id="cb19-80"><a href="#cb19-80" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#e4e4e4</span><span class="op">;</span></span>
+<span id="cb19-81"><a href="#cb19-81" tabindex="-1"></a>    <span class="kw">border-right</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-82"><a href="#cb19-82" tabindex="-1"></a>  }</span>
+<span id="cb19-83"><a href="#cb19-83" tabindex="-1"></a>  <span class="co">/* Footnotes */</span></span>
+<span id="cb19-84"><a href="#cb19-84" tabindex="-1"></a>  <span class="fu">.spss-footnotes</span> {</span>
+<span id="cb19-85"><a href="#cb19-85" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">7</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb19-86"><a href="#cb19-86" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#555555</span><span class="op">;</span></span>
+<span id="cb19-87"><a href="#cb19-87" tabindex="-1"></a>    <span class="kw">margin-top</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb19-88"><a href="#cb19-88" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">left</span><span class="op">;</span></span>
+<span id="cb19-89"><a href="#cb19-89" tabindex="-1"></a>  }</span>
+<span id="cb19-90"><a href="#cb19-90" tabindex="-1"></a>  <span class="fu">.spss-footnotes</span> p {</span>
+<span id="cb19-91"><a href="#cb19-91" tabindex="-1"></a>    <span class="kw">margin</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb19-92"><a href="#cb19-92" tabindex="-1"></a>  }</span>
+<span id="cb19-93"><a href="#cb19-93" tabindex="-1"></a></span>
+<span id="cb19-94"><a href="#cb19-94" tabindex="-1"></a>  <span class="co">/* === SIMPLE TABLE STYLE (same base styling) === */</span></span>
+<span id="cb19-95"><a href="#cb19-95" tabindex="-1"></a>  <span class="fu">.spss-table-simple</span> {</span>
+<span id="cb19-96"><a href="#cb19-96" tabindex="-1"></a>    <span class="kw">border-collapse</span><span class="ch">:</span> <span class="dv">collapse</span><span class="op">;</span></span>
+<span id="cb19-97"><a href="#cb19-97" tabindex="-1"></a>    <span class="kw">border-spacing</span><span class="ch">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb19-98"><a href="#cb19-98" tabindex="-1"></a>    <span class="kw">border-top</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb19-99"><a href="#cb19-99" tabindex="-1"></a>    <span class="kw">border-bottom</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb19-100"><a href="#cb19-100" tabindex="-1"></a>  }</span>
+<span id="cb19-101"><a href="#cb19-101" tabindex="-1"></a>  <span class="fu">.spss-table-simple</span> thead th {</span>
+<span id="cb19-102"><a href="#cb19-102" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">white</span><span class="op">;</span></span>
+<span id="cb19-103"><a href="#cb19-103" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#264a60</span><span class="op">;</span></span>
+<span id="cb19-104"><a href="#cb19-104" tabindex="-1"></a>    <span class="kw">font-weight</span><span class="ch">:</span> <span class="dv">bold</span><span class="op">;</span></span>
+<span id="cb19-105"><a href="#cb19-105" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">7.5</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb19-106"><a href="#cb19-106" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb19-107"><a href="#cb19-107" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">right</span><span class="op">;</span></span>
+<span id="cb19-108"><a href="#cb19-108" tabindex="-1"></a>    <span class="kw">vertical-align</span><span class="ch">:</span> <span class="dv">middle</span><span class="op">;</span></span>
+<span id="cb19-109"><a href="#cb19-109" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-110"><a href="#cb19-110" tabindex="-1"></a>    <span class="kw">border-bottom</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">black</span><span class="op">;</span></span>
+<span id="cb19-111"><a href="#cb19-111" tabindex="-1"></a>  }</span>
+<span id="cb19-112"><a href="#cb19-112" tabindex="-1"></a>  <span class="fu">.spss-table-simple</span> thead th<span class="in">:first-child</span><span class="op">,</span></span>
+<span id="cb19-113"><a href="#cb19-113" tabindex="-1"></a>  <span class="fu">.spss-table-simple</span> thead th<span class="in">:nth-child(</span><span class="dv">2</span><span class="in">)</span> {</span>
+<span id="cb19-114"><a href="#cb19-114" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">left</span><span class="op">;</span></span>
+<span id="cb19-115"><a href="#cb19-115" tabindex="-1"></a>  }</span>
+<span id="cb19-116"><a href="#cb19-116" tabindex="-1"></a>  <span class="fu">.spss-table-simple</span> tbody td {</span>
+<span id="cb19-117"><a href="#cb19-117" tabindex="-1"></a>    <span class="kw">padding</span><span class="ch">:</span> <span class="dv">3</span><span class="dt">px</span> <span class="dv">6</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb19-118"><a href="#cb19-118" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">right</span><span class="op">;</span></span>
+<span id="cb19-119"><a href="#cb19-119" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">8</span><span class="dt">pt</span><span class="op">;</span></span>
+<span id="cb19-120"><a href="#cb19-120" tabindex="-1"></a>    <span class="kw">color</span><span class="ch">:</span> <span class="cn">#1a1a1a</span><span class="op">;</span></span>
+<span id="cb19-121"><a href="#cb19-121" tabindex="-1"></a>    <span class="kw">vertical-align</span><span class="ch">:</span> <span class="dv">middle</span><span class="op">;</span></span>
+<span id="cb19-122"><a href="#cb19-122" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#f9f9fb</span><span class="op">;</span></span>
+<span id="cb19-123"><a href="#cb19-123" tabindex="-1"></a>    <span class="kw">border</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-124"><a href="#cb19-124" tabindex="-1"></a>    <span class="kw">border-top</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#aeaeae</span><span class="op">;</span></span>
+<span id="cb19-125"><a href="#cb19-125" tabindex="-1"></a>    <span class="kw">border-right</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="cn">#aeaeae</span><span class="op">;</span></span>
+<span id="cb19-126"><a href="#cb19-126" tabindex="-1"></a>  }</span>
+<span id="cb19-127"><a href="#cb19-127" tabindex="-1"></a>  <span class="fu">.spss-table-simple</span> tbody td<span class="in">:last-child</span> {</span>
+<span id="cb19-128"><a href="#cb19-128" tabindex="-1"></a>    <span class="kw">border-right</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-129"><a href="#cb19-129" tabindex="-1"></a>  }</span>
+<span id="cb19-130"><a href="#cb19-130" tabindex="-1"></a>  <span class="fu">.spss-table-simple</span> tbody tr<span class="in">:first-child</span> td {</span>
+<span id="cb19-131"><a href="#cb19-131" tabindex="-1"></a>    <span class="kw">border-top</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-132"><a href="#cb19-132" tabindex="-1"></a>  }</span>
+<span id="cb19-133"><a href="#cb19-133" tabindex="-1"></a>  <span class="fu">.spss-table-simple</span> tbody td<span class="in">:first-child</span><span class="op">,</span></span>
+<span id="cb19-134"><a href="#cb19-134" tabindex="-1"></a>  <span class="fu">.spss-table-simple</span> tbody td<span class="in">:nth-child(</span><span class="dv">2</span><span class="in">)</span> {</span>
+<span id="cb19-135"><a href="#cb19-135" tabindex="-1"></a>    <span class="kw">text-align</span><span class="ch">:</span> <span class="dv">left</span><span class="op">;</span></span>
+<span id="cb19-136"><a href="#cb19-136" tabindex="-1"></a>    <span class="kw">background-color</span><span class="ch">:</span> <span class="cn">#e4e4e4</span><span class="op">;</span></span>
+<span id="cb19-137"><a href="#cb19-137" tabindex="-1"></a>    <span class="kw">border-right</span><span class="ch">:</span> <span class="dv">none</span><span class="op">;</span></span>
+<span id="cb19-138"><a href="#cb19-138" tabindex="-1"></a>  }</span>
+<span id="cb19-139"><a href="#cb19-139" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">style</span><span class="dt">&gt;</span></span>
+<span id="cb19-140"><a href="#cb19-140" tabindex="-1"></a>  <span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"spss-container"</span><span class="dt">&gt;</span></span>
+<span id="cb19-141"><a href="#cb19-141" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> class</span><span class="op">=</span><span class="st">"spss-title"</span><span class="dt">&gt;</span>Descriptive Statistics<span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb19-142"><a href="#cb19-142" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">table</span><span class="ot"> class</span><span class="op">=</span><span class="st">"spss-table"</span><span class="dt">&gt;</span></span>
+<span id="cb19-143"><a href="#cb19-143" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">thead</span><span class="dt">&gt;</span></span>
+<span id="cb19-144"><a href="#cb19-144" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tr</span><span class="ot"> </span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>N<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Mean<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Std. Deviation<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Std. Error<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Minimum<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;</span><span class="kw">th</span><span class="dt">&gt;</span>Maximum<span class="dt">&lt;/</span><span class="kw">th</span><span class="dt">&gt;&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb19-145"><a href="#cb19-145" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">thead</span><span class="dt">&gt;</span></span>
+<span id="cb19-146"><a href="#cb19-146" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tbody</span><span class="dt">&gt;</span></span>
+<span id="cb19-147"><a href="#cb19-147" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="ot"> class</span><span class="op">=</span><span class="st">"spss-rowlabel"</span><span class="dt">&gt;</span>clark_height_in<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>11<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>73.37<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>1.68<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>0.51<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>71.26<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>75.98<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb19-148"><a href="#cb19-148" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="ot"> class</span><span class="op">=</span><span class="st">"spss-rowlabel"</span><span class="dt">&gt;</span>rt_critics_score<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>8<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>79.38<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>10.53<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>3.72<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>57.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>88.00<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb19-149"><a href="#cb19-149" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">tr</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="ot"> class</span><span class="op">=</span><span class="st">"spss-rowlabel"</span><span class="dt">&gt;</span>Valid N (listwise)<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;</span>8<span class="dt">&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">td</span><span class="dt">&gt;&lt;/</span><span class="kw">tr</span><span class="dt">&gt;</span></span>
+<span id="cb19-150"><a href="#cb19-150" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">tbody</span><span class="dt">&gt;</span></span>
+<span id="cb19-151"><a href="#cb19-151" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">table</span><span class="dt">&gt;</span></span>
+<span id="cb19-152"><a href="#cb19-152" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="integration-with-package-calculation-functions">Integration with Package Calculation Functions<a class="anchor" aria-label="anchor" href="#integration-with-package-calculation-functions"></a>
@@ -348,13 +3974,15 @@ calculation functions:</p>
 <p>This allows you to compute statistics once and use the results for
 both interactive homework checkers and publication-ready tables.</p>
 </div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
-    </nav></aside>
+</div>
+</div>
+</main>
+</div>
 </div>
 
 
-
-    <footer><div class="pkgdown-footer-left">
+  <aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside><footer><div class="pkgdown-footer-left">
   <p>Developed by Emma Marshall.</p>
 </div>
 
@@ -363,11 +3991,5 @@ both interactive homework checkers and publication-ready tables.</p>
 </div>
 
     </footer>
-</div>
-
-
-
-
-
-  </body>
+</body>
 </html>

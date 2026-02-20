@@ -21,5 +21,5 @@ spss_save_plot(plot, filename, width = 6, height = 4.5, dpi = 150)
 The filename (invisibly).
 }
 \description{
-Saves a ggplot2 plot (such as from spss_histogram or spss_barchart) as PNG.
+Saves a ggplot2 plot as PNG.
 }

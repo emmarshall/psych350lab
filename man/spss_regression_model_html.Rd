@@ -17,11 +17,3 @@ HTML string (invisibly).
 \description{
 Creates an HTML model summary table from regression_answers() output.
 }
-\examples{
-data(superman)
-sm <- superman[complete.cases(superman[, c("rt_critics_score", "clark_height_in")]), ]
-result <- regression_answers(sm, "rt_critics_score",
-                             quant_predictors = "clark_height_in")
-spss_regression_model_html(result)
-
-}

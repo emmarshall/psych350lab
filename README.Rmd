@@ -32,6 +32,7 @@ pak::pak("emmarshall/psych350lab")
 ### Install from a local source
 
 If you have a local copy of the package (e.g., a `.tar.gz` file or a cloned repo), you can install it with:
+
 ```{r, eval = FALSE}
 # From a .tar.gz file
 pak::pak("local::path/to/psych350lab_0.1.0.tar.gz")

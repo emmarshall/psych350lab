@@ -35,7 +35,7 @@ data(superman)
 ### Basic Descriptives
 
 Use `spss_descriptives_html()` to create a descriptive statistics table:
-```{r descriptives, eval=FALSE}
+```{r descriptives, eval=TRUE}
 spss_descriptives_html(superman, c("clark_height_in", "rt_critics_score", "rt_audience_score"))
 ```
 
@@ -45,7 +45,7 @@ This produces a table with N, Mean, Std. Deviation, Std. Error, Minimum, and Max
 
 For ANOVA-style grouped descriptives with confidence intervals:
 
-```{r grouped-desc, eval=FALSE}
+```{r grouped-desc, eval=TRUE}
 spss_descriptives_by_group_html(superman, dv = "rt_critics_score", iv = "clark_grp")
 ```
 
@@ -53,7 +53,7 @@ spss_descriptives_by_group_html(superman, dv = "rt_critics_score", iv = "clark_g
 
 ### Independent Samples T-Test
 
-```{r ttest-ind, eval=FALSE}
+```{r ttest-ind, eval=TRUE}
 spss_ttest_independent_html(superman, dv = "rt_critics_score", iv = "clark_grp")
 ```
 
@@ -65,13 +65,13 @@ This produces a complete independent samples t-test table including:
 
 ### Paired Samples T-Test
 
-```{r ttest-paired, eval=FALSE}
-spss_ttest_paired_html(superman, var1 = "rt_critics_score", var2 = "rt_audience_score")
+```{r ttest-paired, eval=TRUE}
+cat(spss_ttest_paired_html(superman, var1 = "rt_critics_score", var2 = "rt_audience_score"))
 ```
 
 ### One-Sample T-Test
 
-```{r ttest-one, eval=FALSE}
+```{r ttest-one, eval=TRUE}
 spss_ttest_one_html(superman, variable = "clark_height_in", mu = 72)
 ```
 
@@ -81,20 +81,20 @@ spss_ttest_one_html(superman, variable = "clark_height_in", mu = 72)
 
 You can create an ANOVA table from raw data:
 
-```{r anova-raw, eval=FALSE}
+```{r anova-raw, eval=TRUE}
 spss_anova_html(superman, dv = "rt_critics_score", iv = "clark_grp")
 ```
 
 Or from pre-computed results using `bg_anova_answers()`:
 
-```{r anova-results, eval=FALSE}
+```{r anova-results, eval=TRUE}
 anova_result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 spss_anova_html(anova_result, dv = "rt_critics_score")
 ```
 
 ### Levene's Test
 
-```{r levene, eval=FALSE}
+```{r levene, eval=TRUE}
 spss_levene_html(superman, dv = "rt_critics_score", iv = "clark_grp")
 ```
 
@@ -104,20 +104,20 @@ spss_levene_html(superman, dv = "rt_critics_score", iv = "clark_grp")
 
 From raw data:
 
-```{r chisq-raw, eval=FALSE}
+```{r chisq-raw, eval=TRUE}
 spss_chisq_html(superman, var1 = "clark_grp", var2 = "tomatometer")
 ```
 
 Or from pre-computed results:
 
-```{r chisq-results, eval=FALSE}
+```{r chisq-results, eval=TRUE}
 chi_result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 spss_chisq_html(chi_result)
 ```
 
 ### Crosstabulation
 
-```{r crosstab, eval=FALSE}
+```{r crosstab, eval=TRUE}
 spss_crosstab_html(superman, var1 = "clark_grp", var2 = "tomatometer")
 ```
 
@@ -125,7 +125,7 @@ spss_crosstab_html(superman, var1 = "clark_grp", var2 = "tomatometer")
 
 Create a correlation matrix with significance stars:
 
-```{r correlations, eval=FALSE}
+```{r correlations, eval=TRUE}
 spss_correlations_html(
  superman,
  variables = c("clark_height_in", "rt_critics_score", "rt_audience_score")
@@ -159,19 +159,19 @@ reg_result <- regression_answers(
 
 ### Model Summary
 
-```{r reg-model, eval=FALSE}
+```{r reg-model, eval=TRUE}
 spss_regression_model_html(reg_result)
 ```
 
 ### Regression ANOVA
 
-```{r reg-anova, eval=FALSE}
+```{r reg-anova, eval=TRUE}
 spss_regression_anova_html(reg_result)
 ```
 
 ### Coefficients Table
 
-```{r reg-coef, eval=FALSE}
+```{r reg-coef, eval=TRUE}
 spss_regression_coefficients_html(reg_result)
 ```
 
@@ -179,7 +179,7 @@ spss_regression_coefficients_html(reg_result)
 
 For presentations or documents that require image files, use `spss_descriptives_png()`:
 
-```{r png-save, eval=FALSE}
+```{r png-save, eval=TRUE}
 spss_descriptives_png(
  superman,
  variables = c("clark_height_in", "rt_critics_score"),

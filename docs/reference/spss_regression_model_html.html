@@ -57,64 +57,6 @@
     <p>HTML string (invisibly).</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">superman</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">sm</span> <span class="op">&lt;-</span> <span class="va">superman</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html" class="external-link">complete.cases</a></span><span class="op">(</span><span class="va">superman</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rt_critics_score"</span>, <span class="st">"clark_height_in"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>, <span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="regression_answers.html">regression_answers</a></span><span class="op">(</span><span class="va">sm</span>, <span class="st">"rt_critics_score"</span>,</span></span>
-<span class="r-in"><span>                             quant_predictors <span class="op">=</span> <span class="st">"clark_height_in"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">spss_regression_model_html</span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;style&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-family: 'Arial', sans-serif;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 10pt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border-collapse: collapse;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     margin: 10px 0;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: white;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table caption {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-weight: bold;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: left;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 8px 4px;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 11pt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table th, .spss-table td {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border: 1px solid #000;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     padding: 4px 8px;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: right;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table th {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #E8E8E8;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-weight: normal;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table td.label {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: left;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #F5F5F5;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table .header-row {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     background-color: #D4D4D4;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .spss-table tfoot td {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-size: 9pt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     font-style: italic;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     border: none;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     text-align: left;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     padding-top: 4px;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;/style&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;table class="spss-table"&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;caption&gt;Model Summary&lt;/caption&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;thead&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;th&gt;Model&lt;/th&gt;&lt;th&gt;R&lt;/th&gt;&lt;th&gt;R Square&lt;/th&gt;&lt;th&gt;Adjusted R Square&lt;/th&gt;&lt;th&gt;Std. Error of the Estimate&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/thead&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tbody&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;0.027&lt;/td&gt;&lt;td&gt;0.001&lt;/td&gt;&lt;td&gt;-0.166&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/tbody&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;/table&gt;</span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -28,7 +28,7 @@ spss_histogram(
 
 \item{show_stats}{Logical. Show mean, SD, N annotation. Default TRUE.}
 
-\item{fill_color}{Character. Bar fill color. Default "#1192E8" (SPSS blue).}
+\item{fill_color}{Character. Bar fill color. Default "#1192E8".}
 
 \item{version}{Character. "modern" or "legacy" SPSS style.}
 }
@@ -36,8 +36,7 @@ spss_histogram(
 A ggplot2 object (invisibly). Also prints the plot.
 }
 \description{
-Creates a histogram with SPSS styling, optional normal curve overlay,
-and descriptive statistics annotation.
+Creates a histogram with SPSS styling.
 }
 \examples{
 data(superman)

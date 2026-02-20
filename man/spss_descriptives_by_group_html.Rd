@@ -30,8 +30,7 @@ spss_descriptives_by_group_html(
 HTML string (invisibly).
 }
 \description{
-Creates an HTML table displaying descriptive statistics by group,
-suitable for ANOVA reporting.
+Creates an HTML table displaying descriptive statistics by group.
 }
 \examples{
 data(superman)

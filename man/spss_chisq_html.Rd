@@ -19,16 +19,10 @@ spss_chisq_html(data, var1 = NULL, var2 = NULL, digits = 3)
 HTML string (invisibly).
 }
 \description{
-Creates an HTML chi-square test table from chi_square_answers() output
-or raw data.
+Creates an HTML chi-square test table from chi_square_answers() output or raw data.
 }
 \examples{
 data(superman)
-# From raw data
 spss_chisq_html(superman, "clark_grp", "tomatometer")
-
-# From pre-computed results
-result <- chi_square_answers(superman, "clark_grp", "tomatometer")
-spss_chisq_html(result)
 
 }

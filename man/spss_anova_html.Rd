@@ -23,11 +23,6 @@ Creates an HTML ANOVA table from bg_anova_answers() output or raw data.
 }
 \examples{
 data(superman)
-# From raw data
 spss_anova_html(superman, "rt_critics_score", "clark_grp")
-
-# From pre-computed results
-result <- bg_anova_answers(superman, "clark_grp", "rt_critics_score")
-spss_anova_html(result, dv = "rt_critics_score")
 
 }
