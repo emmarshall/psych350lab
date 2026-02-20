@@ -6,8 +6,8 @@ template:
     bg: "#F5F5F5"
     fg: "#072e3c"
     primary: "#ff6361"
-    base_font: {google: "IBM Plex Sans"}
-    heading_font: {google: "Newsreader"}
+    base_font: {google: "Sora"}
+    heading_font: {google: "Sora"}
 
 navbar:
   structure:
