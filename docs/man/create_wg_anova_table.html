@@ -314,13 +314,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Articles</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating Homework Checkers with psych350lab</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
@@ -933,7 +950,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <code id="anova_results_list">anova_results_list</code>
 </td>
 <td>
-Output from <code><a href="https://emmarshall.github.io/psych350lab/reference/wg_anova_answers.html">wg_anova_answers()</a></code> or <code>NULL</code> (for blank table).
+Output from <code><a href="https://emmarshall.github.io/psych350lab/man/wg_anova_answers.html">wg_anova_answers()</a></code> or <code>NULL</code> (for blank table).
 </td>
 </tr>
 <tr>
@@ -975,70 +992,70 @@ Character or <code>NULL</code>. Optional table caption.
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://emmarshall.github.io/psych350lab">"psych350lab"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">superman</span><span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/wg_anova_answers.html">wg_anova_answers</a></span><span class="op">(</span><span class="va">superman</span>,</span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/wg_anova_answers.html">wg_anova_answers</a></span><span class="op">(</span><span class="va">superman</span>,</span>
 <span>  dv1 <span class="op">=</span> <span class="st">"rt_critics_score"</span>, dv2 <span class="op">=</span> <span class="st">"rt_audience_score"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Filled table</span></span>
-<span><span class="va">ft</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/create_wg_anova_table.html">create_wg_anova_table</a></span><span class="op">(</span><span class="va">result</span>,</span>
+<span><span class="va">ft</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_wg_anova_table.html">create_wg_anova_table</a></span><span class="op">(</span><span class="va">result</span>,</span>
 <span>  dv_name <span class="op">=</span> <span class="st">"Rating"</span>,</span>
 <span>  condition_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Critics Score"</span>, <span class="st">"Audience Score"</span><span class="op">)</span>,</span>
 <span>  table_title <span class="op">=</span> <span class="st">"Table 1. Descriptive Statistics for Ratings"</span><span class="op">)</span></span>
 <span><span class="va">ft</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="tabwid tabwid_left">
-<style>.cl-e652b5c2{table-layout:auto;}.cl-e65018bc{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e6513e72{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e6513e7c{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e6514c28{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e6514c32{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e6514c33{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e6514c34{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e6514c35{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e6514c3c{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-e652b5c2">
+<style>.cl-8a183570{table-layout:auto;}.cl-8a1544f0{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8a169116{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8a169120{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8a16a03e{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a16a03f{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a16a040{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a16a048{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a16a052{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a16a05c{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-8a183570">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-e6514c28"><p class="cl-e6513e72"><span class="cl-e65018bc">Rating</span></p></th>
-<th class="cl-e6514c32"><p class="cl-e6513e7c"><span class="cl-e65018bc">M</span></p></th>
-<th class="cl-e6514c32"><p class="cl-e6513e7c"><span class="cl-e65018bc">SD</span></p></th>
-<th class="cl-e6514c32"><p class="cl-e6513e7c"><span class="cl-e65018bc">n</span></p></th>
+<th class="cl-8a16a03e"><p class="cl-8a169116"><span class="cl-8a1544f0">Rating</span></p></th>
+<th class="cl-8a16a03f"><p class="cl-8a169120"><span class="cl-8a1544f0">M</span></p></th>
+<th class="cl-8a16a03f"><p class="cl-8a169120"><span class="cl-8a1544f0">SD</span></p></th>
+<th class="cl-8a16a03f"><p class="cl-8a169120"><span class="cl-8a1544f0">n</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e6514c33"><p class="cl-e6513e72"><span class="cl-e65018bc">Critics Score</span></p></td>
-<td class="cl-e6514c34"><p class="cl-e6513e7c"><span class="cl-e65018bc">79.38</span></p></td>
-<td class="cl-e6514c34"><p class="cl-e6513e7c"><span class="cl-e65018bc">10.53</span></p></td>
-<td class="cl-e6514c34"><p class="cl-e6513e7c"><span class="cl-e65018bc">8</span></p></td>
+<td class="cl-8a16a040"><p class="cl-8a169116"><span class="cl-8a1544f0">Critics Score</span></p></td>
+<td class="cl-8a16a048"><p class="cl-8a169120"><span class="cl-8a1544f0">79.38</span></p></td>
+<td class="cl-8a16a048"><p class="cl-8a169120"><span class="cl-8a1544f0">10.53</span></p></td>
+<td class="cl-8a16a048"><p class="cl-8a169120"><span class="cl-8a1544f0">8</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e6514c35"><p class="cl-e6513e72"><span class="cl-e65018bc">Audience Score</span></p></td>
-<td class="cl-e6514c3c"><p class="cl-e6513e7c"><span class="cl-e65018bc">80.22</span></p></td>
-<td class="cl-e6514c3c"><p class="cl-e6513e7c"><span class="cl-e65018bc">9.86</span></p></td>
-<td class="cl-e6514c3c"><p class="cl-e6513e7c"><span class="cl-e65018bc">9</span></p></td>
+<td class="cl-8a16a052"><p class="cl-8a169116"><span class="cl-8a1544f0">Audience Score</span></p></td>
+<td class="cl-8a16a05c"><p class="cl-8a169120"><span class="cl-8a1544f0">80.22</span></p></td>
+<td class="cl-8a16a05c"><p class="cl-8a169120"><span class="cl-8a1544f0">9.86</span></p></td>
+<td class="cl-8a16a05c"><p class="cl-8a169120"><span class="cl-8a1544f0">9</span></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Blank table</span></span>
-<span><span class="va">ft_blank</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/create_wg_anova_table.html">create_wg_anova_table</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
+<span><span class="va">ft_blank</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_wg_anova_table.html">create_wg_anova_table</a></span><span class="op">(</span><span class="cn">NULL</span>,</span>
 <span>  dv_name <span class="op">=</span> <span class="st">"Rating"</span>,</span>
 <span>  condition_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Critics Score"</span>, <span class="st">"Audience Score"</span><span class="op">)</span>,</span>
 <span>  KEY <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">ft_blank</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="tabwid tabwid_left">
-<style>.cl-e658facc{table-layout:auto;}.cl-e6564dae{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e657a9ba{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e657a9c4{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e657b572{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e657b573{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e657b574{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e657b57c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e657b57d{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e657b57e{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-e658facc">
+<style>.cl-8a1f48f6{table-layout:auto;}.cl-8a1c254a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8a1dc06c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8a1dc06d{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-8a1dd12e{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a1dd12f{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a1dd130{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a1dd131{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a1dd138{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8a1dd139{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-8a1f48f6">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-e657b572"><p class="cl-e657a9ba"><span class="cl-e6564dae">Rating</span></p></th>
-<th class="cl-e657b573"><p class="cl-e657a9c4"><span class="cl-e6564dae">M</span></p></th>
-<th class="cl-e657b573"><p class="cl-e657a9c4"><span class="cl-e6564dae">SD</span></p></th>
-<th class="cl-e657b573"><p class="cl-e657a9c4"><span class="cl-e6564dae">n</span></p></th>
+<th class="cl-8a1dd12e"><p class="cl-8a1dc06c"><span class="cl-8a1c254a">Rating</span></p></th>
+<th class="cl-8a1dd12f"><p class="cl-8a1dc06d"><span class="cl-8a1c254a">M</span></p></th>
+<th class="cl-8a1dd12f"><p class="cl-8a1dc06d"><span class="cl-8a1c254a">SD</span></p></th>
+<th class="cl-8a1dd12f"><p class="cl-8a1dc06d"><span class="cl-8a1c254a">n</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e657b574"><p class="cl-e657a9ba"><span class="cl-e6564dae">Critics Score</span></p></td>
-<td class="cl-e657b57c"><p class="cl-e657a9c4"><span class="cl-e6564dae"></span></p></td>
-<td class="cl-e657b57c"><p class="cl-e657a9c4"><span class="cl-e6564dae"></span></p></td>
-<td class="cl-e657b57c"><p class="cl-e657a9c4"><span class="cl-e6564dae"></span></p></td>
+<td class="cl-8a1dd130"><p class="cl-8a1dc06c"><span class="cl-8a1c254a">Critics Score</span></p></td>
+<td class="cl-8a1dd131"><p class="cl-8a1dc06d"><span class="cl-8a1c254a"></span></p></td>
+<td class="cl-8a1dd131"><p class="cl-8a1dc06d"><span class="cl-8a1c254a"></span></p></td>
+<td class="cl-8a1dd131"><p class="cl-8a1dc06d"><span class="cl-8a1c254a"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e657b57d"><p class="cl-e657a9ba"><span class="cl-e6564dae">Audience Score</span></p></td>
-<td class="cl-e657b57e"><p class="cl-e657a9c4"><span class="cl-e6564dae"></span></p></td>
-<td class="cl-e657b57e"><p class="cl-e657a9c4"><span class="cl-e6564dae"></span></p></td>
-<td class="cl-e657b57e"><p class="cl-e657a9c4"><span class="cl-e6564dae"></span></p></td>
+<td class="cl-8a1dd138"><p class="cl-8a1dc06c"><span class="cl-8a1c254a">Audience Score</span></p></td>
+<td class="cl-8a1dd139"><p class="cl-8a1dc06d"><span class="cl-8a1c254a"></span></p></td>
+<td class="cl-8a1dd139"><p class="cl-8a1dc06d"><span class="cl-8a1c254a"></span></p></td>
+<td class="cl-8a1dd139"><p class="cl-8a1dc06d"><span class="cl-8a1c254a"></span></p></td>
 </tr>
 </tbody>
 </table>

@@ -2,14 +2,14 @@
 % Please edit documentation in R/answer_checkers.R
 \name{create_anova_omnibus_checker}
 \alias{create_anova_omnibus_checker}
-\title{Interactive K-Group ANOVA Omnibus Homework Checker}
+\title{Interactive k-Group ANOVA Omnibus Homework Checker}
 \usage{
 create_anova_omnibus_checker(rh_name, anova_results_list, group_labels = NULL)
 }
 \arguments{
 \item{rh_name}{Character. Research hypothesis label.}
 
-\item{anova_results_list}{Output from \code{anova_multigroup_answers()}. Must
+\item{anova_results_list}{Output from \code{anova_kgroup_answers()}. Must
 contain \verb{$ANOVA} (with \code{F}, \code{p_value}, \code{df_between}, \code{df_within}, \code{mse},
 \code{total_n}, \code{k}, \code{mean_n}) and \verb{$Descriptives} (with \code{group_label},
 \code{mean}, \code{sd}, \code{n}).}
@@ -20,13 +20,12 @@ contain \verb{$ANOVA} (with \code{F}, \code{p_value}, \code{df_between}, \code{d
 A tinytable object with embedded webexercise elements.
 }
 \description{
-Creates a \code{\link[tinytable:tt]{tinytable::tt()}} table for checking omnibus ANOVA statistics,
-sample information, and per-group descriptives from a multi-group
-between-groups ANOVA.
+Creates a \code{\link[tinytable:tt]{tinytable::tt()}} table for checking omnibus F-test statistics
+and group descriptives for a k-group one way between-subjects ANOVA.
 }
 \examples{
 \dontrun{
-result <- anova_multigroup_answers(data, dv = "sentence",
+result <- anova_kgroup_answers(data, dv = "sentence",
   iv = "attract",
   group_labels = c("Beautiful", "Average", "Unattractive"))
 create_anova_omnibus_checker("RH1", result)

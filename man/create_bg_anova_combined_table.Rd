@@ -2,7 +2,7 @@
 % Please edit documentation in R/anova_tables.R
 \name{create_bg_anova_combined_table}
 \alias{create_bg_anova_combined_table}
-\title{Combined ANOVA Results and Descriptives Table}
+\title{Combined Between-Groups ANOVA Results and Descriptives Table}
 \usage{
 create_bg_anova_combined_table(
   anova_results_list,
@@ -10,7 +10,7 @@ create_bg_anova_combined_table(
   iv_name = "Independent Variable",
   dv_name = "Dependent Variable",
   iv_labels = NULL,
-  Key = TRUE
+  KEY = TRUE
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ create_bg_anova_combined_table(
 
 \item{iv_labels}{Character vector or \code{NULL}. Labels for IV levels.}
 
-\item{Key}{Logical. If \code{TRUE}, fill with values; if \code{FALSE}, blank.}
+\item{KEY}{Logical. If \code{TRUE}, fill with values; if \code{FALSE}, blank.}
 }
 \value{
 A \code{\link[flextable:flextable]{flextable::flextable()}} object.

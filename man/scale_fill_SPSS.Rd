@@ -22,7 +22,7 @@ histograms, and other geoms that use the \code{fill} aesthetic.
 }
 \examples{
 library(ggplot2)
-ggplot(mtcars, aes(x = factor(cyl), fill = factor(cyl))) +
+ggplot(superman, aes(x = factor(type), fill = factor(type))) +
   geom_bar() +
   scale_fill_SPSS() +
   theme_SPSS(scale.x = "discrete")

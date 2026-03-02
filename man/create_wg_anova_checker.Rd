@@ -2,7 +2,7 @@
 % Please edit documentation in R/answer_checkers.R
 \name{create_wg_anova_checker}
 \alias{create_wg_anova_checker}
-\title{Interactive Within-Groups ANOVA Homework Checker (2-Group)}
+\title{Interactive Within-Groups ANOVA Homework Checker (2-Condition)}
 \usage{
 create_wg_anova_checker(
   rh_name,
@@ -27,9 +27,9 @@ labels for the two conditions.}
 A tinytable object with embedded webexercise elements.
 }
 \description{
-Creates a \code{\link[tinytable:tt]{tinytable::tt()}} table for checking a 2-condition
-within-groups (repeated measures) ANOVA. Includes ANOVA type
-identification, F-test statistics, and condition descriptives.
+Creates a \code{\link[tinytable:tt]{tinytable::tt()}} table for checking a 2-condition WG ANOVA.
+Includes ANOVA type identification, F-test statistics, and condition
+descriptives.
 }
 \examples{
 \dontrun{

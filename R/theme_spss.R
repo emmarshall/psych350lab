@@ -22,17 +22,17 @@
 #' library(ggplot2)
 #'
 #' # Basic usage with modern style
-#' ggplot(mtcars, aes(x = wt, y = mpg)) +
+#' ggplot(superman, aes(x = clark_height, y = lois_height)) +
 #'   geom_point() +
 #'   theme_SPSS()
 #'
 #' # Legacy SPSS style
-#' ggplot(mtcars, aes(x = wt, y = mpg)) +
+#' ggplot(superman, aes(x = clark_height, y = lois_height)) +
 #'   geom_point() +
 #'   theme_SPSS(version = "legacy")
 #'
 #' # With discrete x-axis
-#' ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+#' ggplot(superman, aes(x = factor(type), y = lois_height)) +
 #'   geom_boxplot() +
 #'   theme_SPSS(scale.x = "discrete")
 #'
@@ -309,7 +309,7 @@ SPSS_pal <- function(version = "modern", direction = 1) {
 #'
 #' @examples
 #' library(ggplot2)
-#' ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+#' ggplot(superman, aes(x = clark_height, y = lois_height, color = factor(type))) +
 #'   geom_point(size = 3) +
 #'   scale_color_SPSS() +
 #'   theme_SPSS()
@@ -334,7 +334,7 @@ scale_color_SPSS <- function(..., version = "modern", direction = 1) {
 #'
 #' @examples
 #' library(ggplot2)
-#' ggplot(mtcars, aes(x = factor(cyl), fill = factor(cyl))) +
+#' ggplot(superman, aes(x = factor(type), fill = factor(type))) +
 #'   geom_bar() +
 #'   scale_fill_SPSS() +
 #'   theme_SPSS(scale.x = "discrete")
@@ -363,7 +363,7 @@ scale_fill_SPSS <- function(..., version = "modern", direction = 1) {
 #'
 #' # Use with ggplot2 axis labels
 #' library(ggplot2)
-#' ggplot(mtcars, aes(x = hp, y = mpg)) +
+#' ggplot(superman, aes(x = clark_height, y = lois_height)) +
 #'   geom_point() +
 #'   scale_x_continuous(labels = number_SPSS) +
 #'   theme_SPSS()

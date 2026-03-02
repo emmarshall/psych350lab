@@ -7,7 +7,7 @@
 create_regression_predictor_checker(reg_results_list, show_legend = TRUE)
 }
 \arguments{
-\item{reg_results_list}{Output from \code{\link[=regression_answers]{regression_answers()}}.}
+\item{reg_results_list}{Output from \code{\link[=linear_reg_answers]{linear_reg_answers()}}.}
 
 \item{show_legend}{Logical. If \code{TRUE} (default), prints a collapsible
 significance key and result category legend above the table.}

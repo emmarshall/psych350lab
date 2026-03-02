@@ -1,0 +1,17 @@
+title: Simple HTML documents
+author: Emma Marshall
+version: 1.0.0
+quarto-required: ">=1.2"
+contributes:
+  metadata:
+    project:
+      brand: brand.yml
+  formats:
+    html:
+      mainfont: Sora
+      filters:
+          - webexercises.lua
+      theme: [default, custom.scss]
+      css: webex.css
+      footer: |
+              <a href="https://emmawmarshall.com">theme by me</a>

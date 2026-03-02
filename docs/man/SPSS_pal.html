@@ -313,13 +313,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Articles</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating Homework Checkers with psych350lab</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
@@ -915,7 +932,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/anova_descriptives_KEY.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/SPSS_pal.html">SPSS_pal</a></li></ol></nav></header><section id="spss-palette-function-for-ggplot2-scales" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="spss-palette-function-for-ggplot2-scales">SPSS Palette Function (for ggplot2 Scales)</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>Returns a palette function suitable for use with ggplot2 discrete scales. This is the function factory used internally by <code><a href="https://emmarshall.github.io/psych350lab/reference/scale_color_SPSS.html">scale_color_SPSS()</a></code> and <code><a href="https://emmarshall.github.io/psych350lab/reference/scale_fill_SPSS.html">scale_fill_SPSS()</a></code>.</p>
+<p>Returns a palette function suitable for use with ggplot2 discrete scales. This is the function factory used internally by <code><a href="https://emmarshall.github.io/psych350lab/man/scale_color_SPSS.html">scale_color_SPSS()</a></code> and <code><a href="https://emmarshall.github.io/psych350lab/man/scale_fill_SPSS.html">scale_fill_SPSS()</a></code>.</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <pre><code class="language-R">SPSS_pal(version = "modern", direction = 1)
 </code></pre>
@@ -943,12 +960,12 @@ Integer. <code>1</code> (default) for normal order, <code>-1</code> for reversed
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://emmarshall.github.io/psych350lab">"psych350lab"</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">pal_fn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/SPSS_pal.html">SPSS_pal</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">pal_fn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/SPSS_pal.html">SPSS_pal</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">pal_fn</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "#1192E8" "#005D5D" "#9F1853"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pal_fn_rev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/SPSS_pal.html">SPSS_pal</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pal_fn_rev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/SPSS_pal.html">SPSS_pal</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu">pal_fn_rev</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "#9F1853" "#005D5D" "#1192E8"</code></pre>

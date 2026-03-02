@@ -9,7 +9,7 @@ create_wg_anova_combined_table(
   rh_name = "RH1",
   dv_name = "Dependent Variable",
   condition_labels = NULL,
-  Key = TRUE
+  KEY = TRUE
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ create_wg_anova_combined_table(
 
 \item{condition_labels}{Character vector or \code{NULL}. Labels for conditions.}
 
-\item{Key}{Logical. If \code{TRUE}, fill with values; if \code{FALSE}, blank.}
+\item{KEY}{Logical. If \code{TRUE}, fill with values; if \code{FALSE}, blank.}
 }
 \value{
 A \code{\link[flextable:flextable]{flextable::flextable()}} object.
@@ -29,6 +29,7 @@ A \code{\link[flextable:flextable]{flextable::flextable()}} object.
 \description{
 Creates a single flextable that combines the repeated measures ANOVA
 test results with descriptive statistics for each condition.
+Useful for compact reporting or worksheets.
 }
 \examples{
 data(superman)

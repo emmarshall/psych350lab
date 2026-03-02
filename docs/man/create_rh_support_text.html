@@ -313,13 +313,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Articles</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating Homework Checkers with psych350lab</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
@@ -916,8 +933,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/anova_descriptives_KEY.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/create_rh_support_text.html">create_rh_support_text</a></li></ol></nav></header><section id="research-hypothesis-support-text-anova" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="research-hypothesis-support-text-anova">Research Hypothesis Support Text (ANOVA)</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>Creates formatted text evaluating whether research hypotheses are supported based on pairwise comparison results.</p>
+<p>Creates formatted text evaluating whether research hypotheses are supported based on pairwise comparison results.</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <pre><code class="language-R">create_rh_support_text(
+  anova_results_list,
+  hypotheses_list,
+  group_labels = NULL,
+  KEY = TRUE,
+  highlight = FALSE
+)
+
+create_rh_support_text(
   anova_results_list,
   hypotheses_list,
   group_labels = NULL,
@@ -932,7 +958,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <code id="anova_results_list">anova_results_list</code>
 </td>
 <td>
-Output from <code><a href="https://emmarshall.github.io/psych350lab/reference/anova_kgroup_answers.html">anova_kgroup_answers()</a></code>.
+Output from <code><a href="https://emmarshall.github.io/psych350lab/man/anova_kgroup_answers.html">anova_kgroup_answers()</a></code>.
 </td>
 </tr>
 <tr>
@@ -969,6 +995,7 @@ Logical. If TRUE and KEY is TRUE, wrap answers in highlight formatting.
 </tr>
 </tbody></table></section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
 <p>A character string with formatted RH evaluation.</p>
+<p>A character string with formatted RH evaluation.</p>
 </section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://emmarshall.github.io/psych350lab">"psych350lab"</a></span><span class="op">)</span></span>
@@ -977,7 +1004,14 @@ Logical. If TRUE and KEY is TRUE, wrap answers in highlight formatting.
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>group1 <span class="op">=</span> <span class="st">"High"</span>, group2 <span class="op">=</span> <span class="st">"Low"</span>, direction <span class="op">=</span> <span class="st">"&gt;"</span>,</span>
 <span>       text <span class="op">=</span> <span class="st">"High group will score higher than Low group"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/create_rh_support_text.html">create_rh_support_text</a></span><span class="op">(</span><span class="va">result</span>, <span class="va">hypotheses</span>, KEY <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_rh_support_text.html">create_rh_support_text</a></span><span class="op">(</span><span class="va">result</span>, <span class="va">hypotheses</span>, KEY <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">hypotheses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>group1 <span class="op">=</span> <span class="st">"High"</span>, group2 <span class="op">=</span> <span class="st">"Low"</span>, direction <span class="op">=</span> <span class="st">"&gt;"</span>,</span>
+<span>       text <span class="op">=</span> <span class="st">"High group will score higher than Low group"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_rh_support_text.html">create_rh_support_text</a></span><span class="op">(</span><span class="va">result</span>, <span class="va">hypotheses</span>, KEY <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 

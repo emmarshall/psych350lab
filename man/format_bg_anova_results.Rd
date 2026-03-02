@@ -9,7 +9,7 @@ format_bg_anova_results(
   vars,
   anova_results_list,
   iv_labels = NULL,
-  Key = TRUE
+  KEY = TRUE
 )
 }
 \arguments{
@@ -22,25 +22,25 @@ format_bg_anova_results(
 \item{iv_labels}{Character vector or \code{NULL}. Display labels for IV levels.
 Must have the same number of elements as groups in the ANOVA.}
 
-\item{Key}{Logical. If \code{TRUE} (default), show answers; if \code{FALSE}, show blanks.}
+\item{KEY}{Logical. If \code{TRUE} (default), show answers; if \code{FALSE}, show blanks.}
 }
 \value{
 A character string with formatted results.
 }
 \description{
 Returns formatted between-groups ANOVA results as either a filled-in
-answer key or a blank student worksheet.
+answer KEY or a blank student worksheet.
 }
 \examples{
 data(superman)
 result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 
-# Answer key
+# Answer KEY
 cat(format_bg_anova_results("RH1", c("clark_grp", "rt_critics_score"),
   result, iv_labels = c("Under 6ft", "6ft+")))
 
 # Blank version
 cat(format_bg_anova_results("RH1", c("clark_grp", "rt_critics_score"),
-  result, iv_labels = c("Under 6ft", "6ft+"), Key = FALSE))
+  result, iv_labels = c("Under 6ft", "6ft+"), KEY = FALSE))
 
 }

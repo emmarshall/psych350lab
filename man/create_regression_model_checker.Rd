@@ -7,18 +7,18 @@
 create_regression_model_checker(reg_results_list)
 }
 \arguments{
-\item{reg_results_list}{Output from \code{\link[=regression_answers]{regression_answers()}}.}
+\item{reg_results_list}{Output from \code{\link[=linear_reg_answers]{linear_reg_answers()}}.}
 }
 \value{
 A tinytable object with embedded webexercise elements.
 }
 \description{
-Creates a \code{\link[tinytable:tt]{tinytable::tt()}} table for checking overall regression model
-statistics including R, R-squared, F, df, p, and a model significance MCQ.
+Creates a \code{\link[tinytable:tt]{tinytable::tt()}} table for checking regression model
+statistics including R, R-squared, F, df, and model significance.
 }
 \examples{
 \dontrun{
-result <- regression_answers(data, criterion = "dv",
+result <- linear_reg_answers(data, criterion = "dv",
   quant_predictors = c("x1", "x2"),
   quant_labels = c("Pred 1", "Pred 2"),
   criterion_label = "Outcome")

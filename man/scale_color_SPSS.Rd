@@ -22,7 +22,7 @@ lines, and other geoms that use the \code{color} aesthetic.
 }
 \examples{
 library(ggplot2)
-ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+ggplot(superman, aes(x = clark_height, y = lois_height, color = factor(type))) +
   geom_point(size = 3) +
   scale_color_SPSS() +
   theme_SPSS()

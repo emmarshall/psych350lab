@@ -313,13 +313,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Articles</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating Homework Checkers with psych350lab</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
@@ -939,7 +956,7 @@ Character. Research hypothesis name/label.
 <code id="anova_results_list">anova_results_list</code>
 </td>
 <td>
-Output from <code><a href="https://emmarshall.github.io/psych350lab/reference/anova_factorial_answers.html">anova_factorial_answers()</a></code>.
+Output from <code><a href="https://emmarshall.github.io/psych350lab/man/anova_factorial_answers.html">anova_factorial_answers()</a></code>.
 </td>
 </tr>
 <tr>
@@ -967,11 +984,11 @@ Character. Display name for IV2.
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">superman</span><span class="op">)</span></span>
 <span><span class="va">sm</span> <span class="op">&lt;-</span> <span class="va">superman</span></span>
 <span><span class="va">sm</span><span class="op">$</span><span class="va">era</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">sm</span><span class="op">$</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">2000</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/anova_factorial_answers.html">anova_factorial_answers</a></span><span class="op">(</span><span class="va">sm</span>, dv <span class="op">=</span> <span class="st">"clark_height_in"</span>,</span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/anova_factorial_answers.html">anova_factorial_answers</a></span><span class="op">(</span><span class="va">sm</span>, dv <span class="op">=</span> <span class="st">"clark_height_in"</span>,</span>
 <span>  iv1 <span class="op">=</span> <span class="st">"clark_grp"</span>, iv2 <span class="op">=</span> <span class="st">"era"</span>,</span>
 <span>  iv1_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Under 6ft"</span>, <span class="st">"6ft+"</span><span class="op">)</span>,</span>
 <span>  iv2_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Pre-2000"</span>, <span class="st">"Post-2000"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/create_factorial_anova_stats_table.html">create_factorial_anova_stats_table</a></span><span class="op">(</span><span class="st">"RH1"</span>, <span class="va">result</span>,</span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_anova_stats_table.html">create_factorial_anova_stats_table</a></span><span class="op">(</span><span class="st">"RH1"</span>, <span class="va">result</span>,</span>
 <span>  iv1_name <span class="op">=</span> <span class="st">"Height Group"</span>, iv2_name <span class="op">=</span> <span class="st">"Era"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 

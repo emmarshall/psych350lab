@@ -2,21 +2,26 @@
 % Please edit documentation in R/answer_checkers.R
 \name{create_lsd_pairwise_checker}
 \alias{create_lsd_pairwise_checker}
-\title{Interactive K-Group ANOVA LSD Pairwise Homework Checker}
+\title{Interactive LSD Pairwise Comparisons Homework Checker}
 \usage{
 create_lsd_pairwise_checker(anova_results_list, group_labels = NULL)
 }
 \arguments{
-\item{anova_results_list}{Output from \code{anova_multigroup_answers()}.}
+\item{anova_results_list}{Output from \code{\link[=anova_kgroup_answers]{anova_kgroup_answers()}}.}
 
-\item{group_labels}{Character vector or \code{NULL}. Optional relabelling of
-comparison group names.}
+\item{group_labels}{Character vector or NULL. Display labels for groups.}
 }
 \value{
 A tinytable object with embedded webexercise elements.
 }
 \description{
-Creates a \code{\link[tinytable:tt]{tinytable::tt()}} table for checking LSD MMD value, pairwise
-mean differences, comparison results, error types, effect sizes, and
-power assessments.
+Creates a tinytable with embedded webexercises elements
+for checking LSD pairwise comparison results.
+}
+\examples{
+\dontrun{
+result <- anova_kgroup_answers(data, "dv", "iv")
+create_lsd_pairwise_table(result)
+}
+
 }

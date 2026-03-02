@@ -47,17 +47,17 @@ optimized for HTML output. Supports both modern (v24+) and legacy
 library(ggplot2)
 
 # Basic usage with modern style
-ggplot(mtcars, aes(x = wt, y = mpg)) +
+ggplot(superman, aes(x = clark_height, y = lois_height)) +
   geom_point() +
   theme_SPSS()
 
 # Legacy SPSS style
-ggplot(mtcars, aes(x = wt, y = mpg)) +
+ggplot(superman, aes(x = clark_height, y = lois_height)) +
   geom_point() +
   theme_SPSS(version = "legacy")
 
 # With discrete x-axis
-ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+ggplot(superman, aes(x = factor(type), y = lois_height)) +
   geom_boxplot() +
   theme_SPSS(scale.x = "discrete")
 

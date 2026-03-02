@@ -1,3 +1,46 @@
+# =============================================================================
+# anova_factorial.R
+# Factorial (Two-Way) ANOVA Analysis Functions
+# =============================================================================
+# Performs 2x2 factorial ANOVA using jmv package, returning main effects,
+# interaction, estimated marginal means, descriptive statistics, and
+# LSD/HSD post-hoc values.
+#
+# Updated for dplyr 1.2.0 (February 2026)
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# INTERNAL HELPERS
+# -----------------------------------------------------------------------------
+
+#' Create factor with appropriate level ordering
+#' @noRd
+.create_ordered_factor <- function(x, explicit_levels = NULL) {
+  if (!is.null(explicit_levels)) {
+    return(factor(x, levels = explicit_levels))
+  }
+
+  unique_vals <- unique(x[!is.na(x)])
+  if (is.numeric(unique_vals)) {
+    factor(x, levels = sort(unique_vals))
+  } else {
+    factor(x)
+  }
+}
+
+
+#' Format p-value for display
+#' @noRd
+.format_p_factorial <- function(p_value) {
+  if (p_value < 0.001) "< .001" else sprintf("%.3f", p_value)
+}
+
+
+# =============================================================================
+# MAIN FACTORIAL ANOVA FUNCTION
+# =============================================================================
+
 #' Factorial (Two-Way) ANOVA
 #'
 #' Performs a 2x2 factorial ANOVA using the `jmv` package, returning main effects,
@@ -49,38 +92,22 @@ anova_factorial_answers <- function(data, dv, iv1, iv2,
                                     iv1_levels = NULL, iv2_levels = NULL,
                                     interaction_label = NULL) {
 
+  # Extract and convert DV
   dv_vector <- as.numeric(data[[dv]])
 
-  # Handle IV1 factor levels
-  if (!is.null(iv1_levels)) {
-    iv1_vector <- factor(data[[iv1]], levels = iv1_levels)
-  } else {
-    unique_iv1 <- unique(data[[iv1]][!is.na(data[[iv1]])])
-    if (is.numeric(unique_iv1)) {
-      iv1_vector <- factor(data[[iv1]], levels = sort(unique_iv1))
-    } else {
-      iv1_vector <- factor(data[[iv1]])
-    }
-  }
+  # Create ordered factors using helper
+  iv1_vector <- .create_ordered_factor(data[[iv1]], iv1_levels)
+  iv2_vector <- .create_ordered_factor(data[[iv2]], iv2_levels)
 
-  # Handle IV2 factor levels
-  if (!is.null(iv2_levels)) {
-    iv2_vector <- factor(data[[iv2]], levels = iv2_levels)
-  } else {
-    unique_iv2 <- unique(data[[iv2]][!is.na(data[[iv2]])])
-    if (is.numeric(unique_iv2)) {
-      iv2_vector <- factor(data[[iv2]], levels = sort(unique_iv2))
-    } else {
-      iv2_vector <- factor(data[[iv2]])
-    }
-  }
+  # Build analysis data frame and filter complete cases
+  analysis_df <- tibble::tibble(
+    dv = dv_vector,
+    iv1 = iv1_vector,
+    iv2 = iv2_vector
+  ) |>
+    dplyr::filter(!is.na(dv), !is.na(iv1), !is.na(iv2))
 
-  analysis_df <- data.frame(dv = dv_vector, iv1 = iv1_vector, iv2 = iv2_vector)
-  analysis_df <- analysis_df[!is.na(analysis_df$dv) &
-                               !is.na(analysis_df$iv1) &
-                               !is.na(analysis_df$iv2), ]
-
-  # Run via jmv
+  # Run ANOVA via jmv
   anova_jmv <- jmv::ANOVA(
     data = analysis_df,
     dep = "dv",
@@ -92,6 +119,8 @@ anova_factorial_answers <- function(data, dv, iv1, iv2,
 
   anova_table <- anova_jmv$main$asDF
 
+  # Extract ANOVA statistics using filter_out for cleaner selection
+  # Note: Using base R extraction here as it's cleaner for single-row lookups
   f_iv1 <- anova_table$`F`[anova_table$name == "iv1"]
   p_iv1 <- anova_table$`p`[anova_table$name == "iv1"]
   df_iv1 <- anova_table$`df`[anova_table$name == "iv1"]
@@ -107,85 +136,108 @@ anova_factorial_answers <- function(data, dv, iv1, iv2,
   df_within <- anova_table$`df`[anova_table$name == "Residuals"]
   mse <- anova_table$`ss`[anova_table$name == "Residuals"] / df_within
 
-  # Cell descriptives
-  analysis_df$cell <- interaction(analysis_df$iv1, analysis_df$iv2)
+  # Calculate cell descriptives using modern dplyr patterns
+  analysis_df <- analysis_df |>
+    dplyr::mutate(cell = interaction(iv1, iv2))
 
-  desc_list <- lapply(split(analysis_df$dv, analysis_df$cell), function(x) {
-    data.frame(mean = round(mean(x, na.rm = TRUE), 2),
-               sd = round(sd(x, na.rm = TRUE), 2),
-               n = length(x))
-  })
-
-  desc_stats <- do.call(rbind, desc_list)
-  desc_stats$cell <- rownames(desc_stats)
-  rownames(desc_stats) <- NULL
-  desc_stats <- tibble::as_tibble(desc_stats)
-
-  desc_stats <- desc_stats |>
+  # Use .by for per-operation grouping (dplyr 1.1+)
+  desc_stats <- analysis_df |>
+    dplyr::summarise(
+      mean = round(mean(dv, na.rm = TRUE), 2),
+      sd = round(stats::sd(dv, na.rm = TRUE), 2),
+      n = dplyr::n(),
+      .by = cell
+    ) |>
     dplyr::mutate(
-      iv1_level = sub("\\..*", "", .data$cell),
-      iv2_level = sub(".*\\.", "", .data$cell)
+      iv1_level = sub("\\..*", "", cell),
+      iv2_level = sub(".*\\.", "", cell)
     )
 
+  # Get actual factor levels
   iv1_levels_actual <- levels(analysis_df$iv1)
   iv2_levels_actual <- levels(analysis_df$iv2)
 
+  # Apply labels if provided
   if (!is.null(iv1_labels) && !is.null(iv2_labels)) {
-    desc_stats$iv1_label <- iv1_labels[match(desc_stats$iv1_level, iv1_levels_actual)]
-    desc_stats$iv2_label <- iv2_labels[match(desc_stats$iv2_level, iv2_levels_actual)]
-    desc_stats$group_label <- paste(desc_stats$iv1_label, desc_stats$iv2_label, sep = " x ")
+    desc_stats <- desc_stats |>
+      dplyr::mutate(
+        iv1_label = iv1_labels[match(iv1_level, iv1_levels_actual)],
+        iv2_label = iv2_labels[match(iv2_level, iv2_levels_actual)],
+        group_label = paste(iv1_label, iv2_label, sep = " x ")
+      )
   } else {
-    desc_stats$iv1_label <- desc_stats$iv1_level
-    desc_stats$iv2_label <- desc_stats$iv2_level
-    desc_stats$group_label <- desc_stats$cell
+    desc_stats <- desc_stats |>
+      dplyr::mutate(
+        iv1_label = iv1_level,
+        iv2_label = iv2_level,
+        group_label = as.character(cell)
+      )
   }
 
-  # Weighted EMMs
+  # Calculate weighted EMMs using .by (dplyr 1.1+)
   emm_iv1_data <- desc_stats |>
-    dplyr::group_by(.data$iv1_level, .data$iv1_label) |>
     dplyr::summarise(
-      mean = sum(.data$mean * .data$n) / sum(.data$n),
-      se = sqrt(mse / sum(.data$n)),
-      .groups = "drop"
+      mean = sum(mean * n) / sum(n),
+      se = sqrt(mse / sum(n)),
+      iv1_label = dplyr::first(iv1_label),
+      .by = iv1_level
     ) |>
-    dplyr::arrange(match(.data$iv1_level, iv1_levels_actual))
+    dplyr::arrange(match(iv1_level, iv1_levels_actual))
 
   emm_iv2_data <- desc_stats |>
-    dplyr::group_by(.data$iv2_level, .data$iv2_label) |>
     dplyr::summarise(
-      mean = sum(.data$mean * .data$n) / sum(.data$n),
-      se = sqrt(mse / sum(.data$n)),
-      .groups = "drop"
+      mean = sum(mean * n) / sum(n),
+      se = sqrt(mse / sum(n)),
+      iv2_label = dplyr::first(iv2_label),
+      .by = iv2_level
     ) |>
-    dplyr::arrange(match(.data$iv2_level, iv2_levels_actual))
+    dplyr::arrange(match(iv2_level, iv2_levels_actual))
 
-  emm_iv1 <- data.frame(
+  # Convert to data frames for output
+  emm_iv1 <- tibble::tibble(
     iv1 = emm_iv1_data$iv1_level,
     mean = emm_iv1_data$mean,
     se = emm_iv1_data$se,
     iv1_label = emm_iv1_data$iv1_label
   )
 
-  emm_iv2 <- data.frame(
+  emm_iv2 <- tibble::tibble(
     iv2 = emm_iv2_data$iv2_level,
     mean = emm_iv2_data$mean,
     se = emm_iv2_data$se,
     iv2_label = emm_iv2_data$iv2_label
   )
 
+  # Calculate LSD/HSD parameters
   total_n <- nrow(analysis_df)
   k <- nrow(desc_stats)
   mean_n <- total_n / k
 
   lsd_hsd_results <- lsd_hsd_calculator(
-    k = k, n_per_group = mean_n, mse = mse, df_error_input = df_within
+    k = k,
+    n_per_group = mean_n,
+    mse = mse,
+    df_error_input = df_within
   )
 
+  # Build results list
   results_list <- list(
     ANOVA = list(
-      MainEffect_IV1 = list(F = round(f_iv1, 2), p_value = round(p_iv1, 3), df = df_iv1),
-      MainEffect_IV2 = list(F = round(f_iv2, 2), p_value = round(p_iv2, 3), df = df_iv2),
-      Interaction = list(F = round(f_interaction, 2), p_value = round(p_interaction, 3), df = df_interaction),
+      MainEffect_IV1 = list(
+        F = round(f_iv1, 2),
+        p_value = round(p_iv1, 3),
+        df = df_iv1
+      ),
+      MainEffect_IV2 = list(
+        F = round(f_iv2, 2),
+        p_value = round(p_iv2, 3),
+        df = df_iv2
+      ),
+      Interaction = list(
+        F = round(f_interaction, 2),
+        p_value = round(p_interaction, 3),
+        df = df_interaction
+      ),
       df_within = df_within,
       mse = round(mse, 2),
       total_n = total_n,
@@ -213,6 +265,10 @@ anova_factorial_answers <- function(data, dv, iv1, iv2,
 }
 
 
+# =============================================================================
+# LSD/HSD CALCULATOR
+# =============================================================================
+
 #' LSD/HSD Post-Hoc Calculator
 #'
 #' Calculates LSD and HSD minimum mean differences using a studentized range table.
@@ -230,7 +286,8 @@ anova_factorial_answers <- function(data, dv, iv1, iv2,
 #' @export
 lsd_hsd_calculator <- function(k, n_per_group, mse, df_error_input) {
 
-  studentized_range_table <- data.frame(
+  # Studentized range table (stored as tibble for clarity)
+  studentized_range_table <- tibble::tibble(
     df = c(5, 10, 15, 20, 25, 30, 35, 40, 50, 60, 90, 120, 200, 999),
     tcrit_p.05 = c(2.57, 2.23, 2.13, 2.09, 2.06, 2.04, 2.03, 2.02, 2.01, 2.00, 2.01, 1.98, 1.97, 1.96),
     k3 = c(4.60, 3.88, 3.67, 3.58, 3.52, 3.49, 3.47, 3.44, 3.42, 3.40, 3.37, 3.36, 3.34, 3.31),
@@ -239,22 +296,23 @@ lsd_hsd_calculator <- function(k, n_per_group, mse, df_error_input) {
     k6 = c(6.03, 4.91, 4.59, 4.45, 4.36, 4.30, 4.28, 4.23, 4.20, 4.16, 4.13, 4.10, 4.08, 4.03)
   )
 
+  # Find closest df row
   closest_df_index <- which.min(abs(studentized_range_table$df - df_error_input))
-  q_value <- NA
 
+  # Get q-value for the appropriate k
   k_col <- paste0("k", k)
-  if (k_col %in% names(studentized_range_table)) {
-    q_value <- studentized_range_table[[k_col]][closest_df_index]
-  } else {
+  if (!k_col %in% names(studentized_range_table)) {
     stop("k must be between 3 and 6 for this implementation")
   }
 
+  q_value <- studentized_range_table[[k_col]][closest_df_index]
   t_crit <- studentized_range_table$tcrit_p.05[closest_df_index]
 
+  # Calculate LSD and HSD
   lsd <- t_crit * sqrt(2 * mse / n_per_group)
   hsd <- (q_value / sqrt(2)) * sqrt(mse / n_per_group)
 
-  return(list(
+  list(
     lsd = lsd,
     hsd = hsd,
     parameters_used = list(
@@ -262,9 +320,13 @@ lsd_hsd_calculator <- function(k, n_per_group, mse, df_error_input) {
       q_value = q_value,
       t_crit = t_crit
     )
-  ))
+  )
 }
 
+
+# =============================================================================
+# DIAGNOSTIC FUNCTION
+# =============================================================================
 
 #' Check Factor Level Alignment (Diagnostic)
 #'
@@ -298,16 +360,16 @@ check_factor_alignment <- function(anova_results_list) {
                   anova_results_list$FactorLevels$iv2_levels[i],
                   anova_results_list$FactorLevels$iv2_labels[i]))
     }
-
-    cat("\n--- Cell Means ---\n")
-    desc <- anova_results_list$Descriptives
-    for (i in seq_len(nrow(desc))) {
-      cat(sprintf("  %s: M = %.2f, SD = %.2f, n = %d\n",
-                  desc$group_label[i], desc$mean[i], desc$sd[i], desc$n[i]))
-    }
-  } else {
-    cat("FactorLevels not found.\n")
   }
 
-  cat("\n=== End Check ===\n")
+  cat("\n=== Cell Descriptives ===\n")
+  print(anova_results_list$Descriptives)
+
+  cat("\n=== EMM IV1 ===\n")
+  print(anova_results_list$EMMs$IV1)
+
+  cat("\n=== EMM IV2 ===\n")
+  print(anova_results_list$EMMs$IV2)
+
+  invisible(NULL)
 }

@@ -314,13 +314,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Articles</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating Homework Checkers with psych350lab</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
@@ -916,7 +933,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/anova_descriptives_KEY.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/create_corr_apa_table.html">create_corr_apa_table</a></li></ol></nav></header><section id="apa-correlation-table-blank-or-filled" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="apa-correlation-table-blank-or-filled">APA Correlation Table (Blank or Filled)</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>Creates a correlation matrix table that can be either filled with computed values (answer key) or blank (student worksheet). Unlike <code><a href="https://emmarshall.github.io/psych350lab/reference/create_apa_corr_table.html">create_apa_corr_table()</a></code>, this function supports a <code>Key</code> toggle and can produce empty templates.</p>
+<p>Creates a correlation matrix table that can be either filled with computed values (answer key) or blank (student worksheet). Unlike <code><a href="https://emmarshall.github.io/psych350lab/man/create_apa_corr_table.html">create_apa_corr_table()</a></code>, this function supports a <code>Key</code> toggle and can produce empty templates.</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <pre><code class="language-R">create_corr_apa_table(
   data = NULL,
@@ -977,7 +994,7 @@ Character. Table caption text.
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">superman</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Filled answer key table</span></span>
-<span><span class="va">ft_key</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/create_corr_apa_table.html">create_corr_apa_table</a></span><span class="op">(</span></span>
+<span><span class="va">ft_key</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_corr_apa_table.html">create_corr_apa_table</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">superman</span>,</span>
 <span>  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"clark_height_in"</span>, <span class="st">"rt_critics_score"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span>,</span>
 <span>  var_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1. Clark Height"</span>, <span class="st">"2. Critics Score"</span>, <span class="st">"3. Audience Score"</span><span class="op">)</span>,</span>
@@ -986,105 +1003,105 @@ Character. Table caption text.
 <span><span class="va">ft_key</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="tabwid tabwid_left">
-<style>.cl-f2516396{table-layout:auto;width:80%;}.cl-f24e738e{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f24e7398{font-family:'Helvetica';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f24fe9da{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f24fe9db{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f24ff5d8{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f24ff5d9{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f24ff5da{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f24ff5db{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f24ff5dc{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f24ff5dd{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f24ff5e2{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f24ff5e3{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f24ff5e4{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-f2516396">
+<style>.cl-9647bc3a{table-layout:auto;width:80%;}.cl-9644a59a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-9644a5a4{font-family:'Helvetica';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-9645d564{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9645d56e{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-9645e3b0{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9645e3b1{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9645e3b2{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9645e3b3{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9645e3ba{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9645e3bb{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9645e3bc{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9645e3bd{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-9645e3be{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-9647bc3a">
 <thead>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-f24ff5d8"><p class="cl-f24fe9da"><span class="cl-f24e738e"></span></p></th>
-<th colspan="3" class="cl-f24ff5d9"><p class="cl-f24fe9db"><span class="cl-f24e738e">Descriptive Statistics</span></p></th>
-<th colspan="2" class="cl-f24ff5d9"><p class="cl-f24fe9db"><span class="cl-f24e738e">Correlations</span></p></th>
+<th class="cl-9645e3b0"><p class="cl-9645d564"><span class="cl-9644a59a"></span></p></th>
+<th colspan="3" class="cl-9645e3b1"><p class="cl-9645d56e"><span class="cl-9644a59a">Descriptive Statistics</span></p></th>
+<th colspan="2" class="cl-9645e3b1"><p class="cl-9645d56e"><span class="cl-9644a59a">Correlations</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-f24ff5da"><p class="cl-f24fe9da"><span class="cl-f24e738e">Variable</span></p></th>
-<th class="cl-f24ff5db"><p class="cl-f24fe9db"><span class="cl-f24e738e">M</span></p></th>
-<th class="cl-f24ff5db"><p class="cl-f24fe9db"><span class="cl-f24e738e">SD</span></p></th>
-<th class="cl-f24ff5db"><p class="cl-f24fe9db"><span class="cl-f24e738e">n</span></p></th>
-<th class="cl-f24ff5db"><p class="cl-f24fe9db"><span class="cl-f24e738e">1</span></p></th>
-<th class="cl-f24ff5db"><p class="cl-f24fe9db"><span class="cl-f24e738e">2</span></p></th>
+<th class="cl-9645e3b2"><p class="cl-9645d564"><span class="cl-9644a59a">Variable</span></p></th>
+<th class="cl-9645e3b3"><p class="cl-9645d56e"><span class="cl-9644a59a">M</span></p></th>
+<th class="cl-9645e3b3"><p class="cl-9645d56e"><span class="cl-9644a59a">SD</span></p></th>
+<th class="cl-9645e3b3"><p class="cl-9645d56e"><span class="cl-9644a59a">n</span></p></th>
+<th class="cl-9645e3b3"><p class="cl-9645d56e"><span class="cl-9644a59a">1</span></p></th>
+<th class="cl-9645e3b3"><p class="cl-9645d56e"><span class="cl-9644a59a">2</span></p></th>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f24ff5dc"><p class="cl-f24fe9da"><span class="cl-f24e738e">1. Clark Height</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">73.37</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">1.68</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">11</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">—</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">—</span></p></td>
+<td class="cl-9645e3ba"><p class="cl-9645d564"><span class="cl-9644a59a">1. Clark Height</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">73.37</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">1.68</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">11</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">—</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">—</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f24ff5dc"><p class="cl-f24fe9da"><span class="cl-f24e738e">2. Critics Score</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">79.38</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">10.53</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">8</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">0.03</span></p></td>
-<td class="cl-f24ff5dd"><p class="cl-f24fe9db"><span class="cl-f24e738e">—</span></p></td>
+<td class="cl-9645e3ba"><p class="cl-9645d564"><span class="cl-9644a59a">2. Critics Score</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">79.38</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">10.53</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">8</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">0.03</span></p></td>
+<td class="cl-9645e3bb"><p class="cl-9645d56e"><span class="cl-9644a59a">—</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f24ff5e2"><p class="cl-f24fe9da"><span class="cl-f24e738e">3. Audience Score</span></p></td>
-<td class="cl-f24ff5e3"><p class="cl-f24fe9db"><span class="cl-f24e738e">80.22</span></p></td>
-<td class="cl-f24ff5e3"><p class="cl-f24fe9db"><span class="cl-f24e738e">9.86</span></p></td>
-<td class="cl-f24ff5e3"><p class="cl-f24fe9db"><span class="cl-f24e738e">9</span></p></td>
-<td class="cl-f24ff5e3"><p class="cl-f24fe9db"><span class="cl-f24e738e">-0.10</span></p></td>
-<td class="cl-f24ff5e3"><p class="cl-f24fe9db"><span class="cl-f24e738e">0.60</span></p></td>
+<td class="cl-9645e3bc"><p class="cl-9645d564"><span class="cl-9644a59a">3. Audience Score</span></p></td>
+<td class="cl-9645e3bd"><p class="cl-9645d56e"><span class="cl-9644a59a">80.22</span></p></td>
+<td class="cl-9645e3bd"><p class="cl-9645d56e"><span class="cl-9644a59a">9.86</span></p></td>
+<td class="cl-9645e3bd"><p class="cl-9645d56e"><span class="cl-9644a59a">9</span></p></td>
+<td class="cl-9645e3bd"><p class="cl-9645d56e"><span class="cl-9644a59a">-0.10</span></p></td>
+<td class="cl-9645e3bd"><p class="cl-9645d56e"><span class="cl-9644a59a">0.60</span></p></td>
 </tr>
 </tbody>
-<tfoot><tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-f24ff5e4"><p class="cl-f24fe9da"><span class="cl-f24e7398">Note. *p &lt; .05. **p &lt; .01. ***p &lt; .001.</span></p></td></tr></tfoot>
+<tfoot><tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-9645e3be"><p class="cl-9645d564"><span class="cl-9644a5a4">Note. *p &lt; .05. **p &lt; .01. ***p &lt; .001.</span></p></td></tr></tfoot>
 </table>
 </div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Blank student worksheet table</span></span>
-<span><span class="va">ft_blank</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/create_corr_apa_table.html">create_corr_apa_table</a></span><span class="op">(</span></span>
+<span><span class="va">ft_blank</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_corr_apa_table.html">create_corr_apa_table</a></span><span class="op">(</span></span>
 <span>  var_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1. Clark Height"</span>, <span class="st">"2. Critics Score"</span>, <span class="st">"3. Audience Score"</span><span class="op">)</span>,</span>
 <span>  Key <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">ft_blank</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="tabwid tabwid_left">
-<style>.cl-f25a305c{table-layout:auto;width:80%;}.cl-f257ca88{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f257ca92{font-family:'Helvetica';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-f258d022{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f258d023{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-f258dcac{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f258dcad{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f258dcb6{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f258dcb7{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f258dcb8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f258dcb9{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f258dcc0{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f258dcc1{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-f258dcc2{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-f25a305c">
+<style>.cl-9650c03c{table-layout:auto;width:80%;}.cl-964e4e88{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-964e4e89{font-family:'Helvetica';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-964f4f7c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-964f4f7d{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-964f5c88{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-964f5c89{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-964f5c8a{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-964f5c92{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-964f5c93{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-964f5c94{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-964f5c9c{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-964f5c9d{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-964f5c9e{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-9650c03c">
 <thead>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-f258dcac"><p class="cl-f258d022"><span class="cl-f257ca88"></span></p></th>
-<th colspan="3" class="cl-f258dcad"><p class="cl-f258d023"><span class="cl-f257ca88">Descriptive Statistics</span></p></th>
-<th colspan="2" class="cl-f258dcad"><p class="cl-f258d023"><span class="cl-f257ca88">Correlations</span></p></th>
+<th class="cl-964f5c88"><p class="cl-964f4f7c"><span class="cl-964e4e88"></span></p></th>
+<th colspan="3" class="cl-964f5c89"><p class="cl-964f4f7d"><span class="cl-964e4e88">Descriptive Statistics</span></p></th>
+<th colspan="2" class="cl-964f5c89"><p class="cl-964f4f7d"><span class="cl-964e4e88">Correlations</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-f258dcb6"><p class="cl-f258d022"><span class="cl-f257ca88">Variable</span></p></th>
-<th class="cl-f258dcb7"><p class="cl-f258d023"><span class="cl-f257ca88">M</span></p></th>
-<th class="cl-f258dcb7"><p class="cl-f258d023"><span class="cl-f257ca88">SD</span></p></th>
-<th class="cl-f258dcb7"><p class="cl-f258d023"><span class="cl-f257ca88">n</span></p></th>
-<th class="cl-f258dcb7"><p class="cl-f258d023"><span class="cl-f257ca88">1</span></p></th>
-<th class="cl-f258dcb7"><p class="cl-f258d023"><span class="cl-f257ca88">2</span></p></th>
+<th class="cl-964f5c8a"><p class="cl-964f4f7c"><span class="cl-964e4e88">Variable</span></p></th>
+<th class="cl-964f5c92"><p class="cl-964f4f7d"><span class="cl-964e4e88">M</span></p></th>
+<th class="cl-964f5c92"><p class="cl-964f4f7d"><span class="cl-964e4e88">SD</span></p></th>
+<th class="cl-964f5c92"><p class="cl-964f4f7d"><span class="cl-964e4e88">n</span></p></th>
+<th class="cl-964f5c92"><p class="cl-964f4f7d"><span class="cl-964e4e88">1</span></p></th>
+<th class="cl-964f5c92"><p class="cl-964f4f7d"><span class="cl-964e4e88">2</span></p></th>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f258dcb8"><p class="cl-f258d022"><span class="cl-f257ca88">1. Clark Height</span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88">—</span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88">—</span></p></td>
+<td class="cl-964f5c93"><p class="cl-964f4f7c"><span class="cl-964e4e88">1. Clark Height</span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88">—</span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88">—</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f258dcb8"><p class="cl-f258d022"><span class="cl-f257ca88">2. Critics Score</span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcb9"><p class="cl-f258d023"><span class="cl-f257ca88">—</span></p></td>
+<td class="cl-964f5c93"><p class="cl-964f4f7c"><span class="cl-964e4e88">2. Critics Score</span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c94"><p class="cl-964f4f7d"><span class="cl-964e4e88">—</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-f258dcc0"><p class="cl-f258d022"><span class="cl-f257ca88">3. Audience Score</span></p></td>
-<td class="cl-f258dcc1"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcc1"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcc1"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcc1"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
-<td class="cl-f258dcc1"><p class="cl-f258d023"><span class="cl-f257ca88"></span></p></td>
+<td class="cl-964f5c9c"><p class="cl-964f4f7c"><span class="cl-964e4e88">3. Audience Score</span></p></td>
+<td class="cl-964f5c9d"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c9d"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c9d"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c9d"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
+<td class="cl-964f5c9d"><p class="cl-964f4f7d"><span class="cl-964e4e88"></span></p></td>
 </tr>
 </tbody>
-<tfoot><tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-f258dcc2"><p class="cl-f258d022"><span class="cl-f257ca92">Note. *p &lt; .05. **p &lt; .01. ***p &lt; .001.</span></p></td></tr></tfoot>
+<tfoot><tr style="overflow-wrap:break-word;"><td colspan="6" class="cl-964f5c9e"><p class="cl-964f4f7c"><span class="cl-964e4e89">Note. *p &lt; .05. **p &lt; .01. ***p &lt; .001.</span></p></td></tr></tfoot>
 </table>
 </div>
 </div>

@@ -7,7 +7,7 @@
 create_regwt_interp_ft(reg_results_list, interpretations = NULL, KEY = TRUE)
 }
 \arguments{
-\item{reg_results_list}{Output from \code{regression_answers()}.}
+\item{reg_results_list}{Output from \code{linear_reg_answers()}.}
 
 \item{interpretations}{Named list or \code{NULL}. Custom interpretations
 keyed by predictor variable name. If \code{NULL}, auto-generated.}
@@ -27,7 +27,7 @@ custom-provided ones. Answer key uses red text.
 data(superman)
 sm <- superman[!is.na(superman$rt_critics_score) &
                     !is.na(superman$rt_audience_score), ]
-result <- regression_answers(
+result <- linear_reg_answers(
   data = sm,
   criterion = "rt_critics_score",
   quant_predictors = c("clark_height_in", "rt_audience_score"),

@@ -8,7 +8,7 @@ create_wg_anova_table(
   anova_results_list = NULL,
   dv_name = "Dependent Variable",
   condition_labels = NULL,
-  Key = TRUE,
+  KEY = TRUE,
   table_title = NULL
 )
 }
@@ -20,10 +20,10 @@ create_wg_anova_table(
 Used as the row header label.}
 
 \item{condition_labels}{Character vector or \code{NULL}. Display labels for
-conditions. If \code{NULL} and \code{Key = TRUE}, uses condition names from results.
-If \code{NULL} and \code{Key = FALSE}, defaults to "Condition 1", "Condition 2".}
+conditions. If \code{NULL} and \code{KEY = TRUE}, uses condition names from results.
+If \code{NULL} and \code{KEY = FALSE}, defaults to "Condition 1", "Condition 2".}
 
-\item{Key}{Logical. If \code{TRUE} (default), fill with computed values.
+\item{KEY}{Logical. If \code{TRUE} (default), fill with computed values.
 If \code{FALSE}, create a blank template.}
 
 \item{table_title}{Character or \code{NULL}. Optional table caption.}
@@ -34,7 +34,7 @@ A \code{\link[flextable:flextable]{flextable::flextable()}} object.
 \description{
 Creates an APA-formatted descriptive statistics table for a repeated
 measures ANOVA, showing mean, SD, and n for each condition. Can be
-filled (answer key) or blank (student worksheet).
+filled (answer KEY) or blank (student worksheet).
 }
 \examples{
 data(superman)
@@ -49,10 +49,10 @@ ft <- create_wg_anova_table(result,
 ft
 
 # Blank table
-ft_blank <- create_wg_anova_table(
+ft_blank <- create_wg_anova_table(NULL,
   dv_name = "Rating",
   condition_labels = c("Critics Score", "Audience Score"),
-  Key = FALSE)
+  KEY = FALSE)
 ft_blank
 
 }

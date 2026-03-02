@@ -2,7 +2,7 @@
 % Please edit documentation in R/answer_checkers.R
 \name{create_chisq_pairwise_checker}
 \alias{create_chisq_pairwise_checker}
-\title{Interactive K-Group Chi-Square Pairwise Homework Checker}
+\title{Interactive Chi-Square Pairwise Comparisons Homework Checker}
 \usage{
 create_chisq_pairwise_checker(
   chisq_results_list,
@@ -11,7 +11,7 @@ create_chisq_pairwise_checker(
 )
 }
 \arguments{
-\item{chisq_results_list}{Output from \code{chi_square_multigroup_answers()}.}
+\item{chisq_results_list}{Output from chi-square kgroup analysis.}
 
 \item{var1_labels}{Character vector or \code{NULL}. Optional relabelling.}
 
@@ -21,7 +21,7 @@ create_chisq_pairwise_checker(
 A tinytable object with embedded webexercise elements.
 }
 \description{
-Creates a \code{\link[tinytable:tt]{tinytable::tt()}} table for checking pairwise chi-square
-comparisons including critical value, percentages, chi-square results,
-error types, effect sizes, and power assessments.
+Creates a \code{\link[tinytable:tt]{tinytable::tt()}} table for checking chi-square pairwise
+comparisons including percentages, chi-square values, effect sizes,
+and power assessments.
 }

@@ -1,0 +1,1688 @@
+/*-- scss:defaults --*/
+
+// ===========================
+// Based on brite bootswatch theme
+// ===========================
+
+// ===========================
+// ACCENT COLOR PALETTE
+// ===========================
+$accent-color: #ff6361 !default;
+$accent-color-light: #ffecb3 !default;
+$accent-color-dark: #072e3c !default;
+
+// em-inspired colors
+$lime: #a2e436 !default;
+$blue: #072e3c !default;
+$green: #68d391 !default;
+$yellow: #ffecb3 !default;
+$red: #f56565 !default;
+
+// Callout colours
+$callout-color-note: #072e3c !default;
+$callout-color-tip: #68d391 !default;
+$callout-color-warning: #ffecb3 !default;
+$callout-color-important: #f56565 !default;
+$callout-color-caution: #fa984a !default;
+
+/*-- scss:rules --*/
+
+// ===========================
+// em VARIABLES
+// ===========================
+$_em-border-width: 1.5px;
+$_em-shadow: 3px 3px 0 0 $body-color;
+$_em-transition: all 0.3s;
+
+
+// ===========================
+// LINK STYLE TOKENS
+// ===========================
+// Centralised variables for consistent link styling across the theme
+$_link-transition-duration: 0.3s;
+$_link-transition-timing: ease;
+$_link-transition: all $_link-transition-duration $_link-transition-timing;
+$_link-underline-color: rgba($accent-color, 0.4);
+$_link-underline-color-hover: $accent-color;
+$_link-underline-thickness: 1px;
+$_link-underline-thickness-hover: 2px;
+
+
+// ===========================
+// BOX SHADOW SCALE
+// ===========================
+$_shadow-sm: 0 2px 4px rgba($body-color, 0.08);
+$_shadow-md: 0 4px 12px rgba($body-color, 0.1);
+$_shadow-lg: 0 8px 24px rgba($body-color, 0.15);
+
+
+// ===========================
+// ANIMATION TIMING
+// ===========================
+$_anim-fast: 0.2s;
+$_anim-standard: 0.3s;
+$_anim-slow: 0.6s;
+$_easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+
+// ===========================
+// BORDER RADIUS
+// ===========================
+$_radius-sm: 4px;
+$_radius-md: 8px;
+$_radius-lg: 12px;
+$_radius-full: 50%;
+
+
+// ===========================
+// SPACING & SIZING
+// ===========================
+$_space-xs: 0.25rem;
+$_space-sm: 0.5rem;
+$_space-md: 1rem;
+$_space-lg: 1.5rem;
+$_space-xl: 2rem;
+
+$_breakpoint-md: 768px;
+$_breakpoint-lg: 992px;
+
+// ===========================
+// CSS CUSTOM PROPERTIES
+// ===========================
+body {
+  // Core theme colors
+  --em-fg: #{$body-color};
+  --em-bg: #{$body-bg};
+  --em-border-width: #{$_em-border-width};
+  --em-border-color: #{$body-color};
+
+  // Accent colors that swap in dark mode
+  --em-accent: #{$accent-color};
+  --em-accent-light: #{$accent-color-light};
+  --em-accent-dark: #{$accent-color-dark};
+
+  // Semantic accent aliases (use these throughout your styles)
+  --em-accent-contrast: #{$accent-color-dark};  // Dark in light mode, light in dark mode
+
+  // Callout colors
+  --em-callout-note: #{$callout-color-note};
+  --em-callout-tip: #{$callout-color-tip};
+  --em-callout-warning: #{$callout-color-warning};
+  --em-callout-important: #{$callout-color-important};
+  --em-callout-caution: #{$callout-color-caution};
+
+  // Syntax highlighting - light mode
+  --em-code-bg: #{body-mix(95%)};
+  --em-code-fg: #{$body-color};
+  --em-code-keyword: #cf222e;
+  --em-code-type: #8250df;
+  --em-code-string: #0a3069;
+  --em-code-comment: #6e7781;
+  --em-code-function: #8250df;
+  --em-code-operator: #cf222e;
+  --em-code-constant: #0550ae;
+  --em-code-variable: #{$body-color};
+  --em-code-number: #0550ae;
+  --em-code-attribute: #116329;
+  --em-code-error: #cf222e;
+  --em-code-warning: #9a6700;
+}
+
+[data-bs-theme="dark"],
+.quarto-dark {
+  // Core theme colors - dark mode
+  --em-fg: #{$body-color};
+  --em-bg: #{$body-bg};
+  --em-border-color: rgba(255, 255, 255, 0.5);
+
+  // Accent colors swap
+  --em-accent: #{$accent-color};
+  --em-accent-light: #{$accent-color-dark};
+  --em-accent-dark: #{$accent-color-light};
+  --em-accent-contrast: #{$accent-color-light};
+
+  // Syntax highlighting - dark mode (use body background)
+  --em-code-bg: #{$body-bg};  // Uses the dark mode background color
+  --em-code-fg: #{$body-color};  // Uses the dark mode text color
+  --em-code-keyword: #cba6f7;
+  --em-code-type: #89dceb;
+  --em-code-string: #a6e3a1;
+  --em-code-comment: #6c7086;
+  --em-code-function: #89b4fa;
+  --em-code-operator: #cba6f7;
+  --em-code-constant: #fab387;
+  --em-code-variable: #{$body-color};
+  --em-code-number: #fab387;
+  --em-code-attribute: #a6e3a1;
+  --em-code-error: #f38ba8;
+  --em-code-warning: #f9e2af;
+}
+
+// ===========================
+// BASE STYLES
+// ===========================
+html {
+  scroll-behavior: smooth;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid $body-color;
+  outline-offset: 2px;
+}
+
+// ===========================
+// CODE STYLING
+// ===========================
+code,
+a>code {
+  color: $body-color;
+  background-color: body-mix(90%);
+}
+
+a>code {
+  text-decoration: underline;
+  text-decoration-color: $accent-color;
+}
+
+div.sourceCode {
+  background-color: body-mix(95%);
+  border: $_em-border-width solid $body-color;
+  border-radius: $_radius-md;
+  box-shadow: $_em-shadow;
+}
+
+pre.sourceCode {
+  border-left: 6px solid var(--em-accent);
+  border-radius: 0;
+  background-color: body-mix(95%);
+  padding: $_space-lg;
+
+  // Line wrapping
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+pre.sourceCode code {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+// Code output
+.cell-output pre {
+  padding: $_space-lg;
+  background-color: body-mix(95%);
+  border: $_em-border-width solid $body-color;
+  border-radius: $_radius-md;
+  box-shadow: $_em-shadow;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+p code.sourceCode,
+li code.sourceCode,
+td code.sourceCode {
+  background-color: inherit;
+}
+
+// Code annotations
+.code-annotation-gutter {
+  background-color: body-mix(95%);
+}
+
+pre.code-annotation-code {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.code-annotation-anchor {
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  color: $accent-color;
+
+  &:hover {
+    transform: scale(1.15);
+    color: var(--em-accent-contrast);
+  }
+}
+
+.code-copy-outer-scaffold:has(.code-annotated)>.code-copy-button {
+  right: 1.5em;
+  margin-right: 0;
+}
+
+#code-annotation-line-highlight {
+  margin-left: unset;
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
+#code-annotation-line-highlight-gutter,
+.code-annotation-gutter-bg,
+.code-annotation-gutter {
+  all: unset;
+}
+
+// Inline code
+code:not(.sourceCode) {
+  color: $body-color !important;
+  background-color: body-mix(90%) !important;
+  padding: 0.15em 0.4em;
+  margin: 0 0.1em;
+  border-radius: $_radius-sm;
+  border: 1px solid rgba($body-color, 0.12);
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.code-copy-button {
+  transition: $_em-transition;
+
+  &:hover {
+    color: var(--em-accent);
+  }
+}
+
+// ===========================
+// CODE BLOCKS (macOS-style + Neobrutalist)
+// ===========================
+$_traffic-light-size: 12px;
+$_traffic-light-gap: 6px;
+
+div.sourceCode {
+  background-color: var(--em-code-bg);
+  border: $_em-border-width solid $body-color;
+  border-radius: $_radius-md;
+  box-shadow: $_em-shadow;
+  overflow: hidden;
+  position: relative;
+  padding-top: calc(#{$_traffic-light-size} + 1.2em);
+
+  // Traffic light buttons
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0.6em;
+    left: 1em;
+    display: inline-flex;
+    width: calc(#{$_traffic-light-size} * 3 + #{$_traffic-light-gap} * 2);
+    height: $_traffic-light-size;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='12'%3E%3Ccircle cx='6' cy='6' r='5' fill='%23ff5f56'/%3E%3Ccircle cx='24' cy='6' r='5' fill='%23ffbd2e'/%3E%3Ccircle cx='42' cy='6' r='5' fill='%2327c93f'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+  }
+
+  // Top bar background
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(#{$_traffic-light-size} + 1.2em);
+    background-color: rgba($body-color, 0.08);
+    border-bottom: $_em-border-width solid $body-color;
+    z-index: 0;
+  }
+
+  pre,
+  pre.sourceCode {
+    position: relative;
+    z-index: 1;
+    border: none !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: $_space-lg;
+    padding-top: $_space-md;
+    margin: 0;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+
+    code {
+      color: var(--em-code-fg);
+      white-space: pre-wrap !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+  }
+}
+
+// Syntax highlighting token colors
+code span.kw { color: var(--em-code-keyword); }
+code span.dt { color: var(--em-code-type); }
+code span.st { color: var(--em-code-string); }
+code span.co { color: var(--em-code-comment); font-style: italic; }
+code span.fu { color: var(--em-code-function); }
+code span.op { color: var(--em-code-operator); }
+code span.cn { color: var(--em-code-constant); }
+code span.va { color: var(--em-code-variable); }
+code span.cf { color: var(--em-code-keyword); }
+code span.bu { color: var(--em-code-type); }
+code span.al { color: var(--em-code-error); }
+code span.er { color: var(--em-code-error); }
+code span.dv { color: var(--em-code-number); }
+code span.bn { color: var(--em-code-number); }
+code span.fl { color: var(--em-code-number); }
+code span.ch { color: var(--em-code-string); }
+code span.ss { color: var(--em-code-string); }
+code span.an { color: var(--em-code-comment); }
+code span.im { color: var(--em-code-keyword); }
+code span.wa { color: var(--em-code-warning); }
+code span.in { color: var(--em-code-comment); }
+code span.sc { color: var(--em-code-string); }
+code span.at { color: var(--em-code-attribute); }
+code span.pp { color: var(--em-code-keyword); }
+code span.ex { color: var(--em-code-function); }
+code span.ot { color: var(--em-code-keyword); }
+
+// Code output
+.cell-output pre {
+  padding: $_space-lg;
+  background-color: var(--em-code-bg);
+  color: var(--em-code-fg);
+  border: $_em-border-width solid $body-color;
+  border-radius: $_radius-md;
+  box-shadow: $_em-shadow;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+// ===========================
+// DARK MODE - CODE
+// ===========================
+[data-bs-theme="dark"],
+.quarto-dark {
+  // Inline code - darker text for contrast
+  code:not(.sourceCode) {
+    color: #2d2d2d !important;
+    background-color: rgba(255, 255, 255, 0.75) !important;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  div.sourceCode {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 3px 3px 0 0 rgba(255, 255, 255, 0.5);
+    background-color: var(--em-code-bg);
+
+    &::after {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-bottom-color: rgba(255, 255, 255, 0.5);
+    }
+
+    pre,
+    pre.sourceCode {
+      code {
+        color: var(--em-code-fg);
+      }
+    }
+  }
+
+  .cell-output pre {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 3px 3px 0 0 rgba(255, 255, 255, 0.5);
+    background-color: var(--em-code-bg);
+    color: var(--em-code-fg);
+  }
+}
+
+// ===========================
+// CODE STYLING
+// ===========================
+
+// Base code styling
+code,
+a>code {
+  color: $body-color;
+  background-color: body-mix(90%);
+}
+
+a>code {
+  text-decoration: underline;
+  text-decoration-color: $accent-color;
+}
+
+// ===========================
+// CODE BLOCKS (macOS-style + Neobrutalist) credit to
+// ===========================
+$_traffic-light-size: 12px;
+$_traffic-light-gap: 6px;
+
+div.sourceCode {
+  background-color: body-mix(95%);
+  border: $_em-border-width solid $body-color;
+  border-radius: $_radius-md;
+  box-shadow: $_em-shadow;
+  overflow: hidden;
+  position: relative;
+  padding-top: calc(#{$_traffic-light-size} + 1.2em);
+
+  // Traffic light buttons
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0.6em;
+    left: 1em;
+    display: inline-flex;
+    width: calc(#{$_traffic-light-size} * 3 + #{$_traffic-light-gap} * 2);
+    height: $_traffic-light-size;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='12'%3E%3Ccircle cx='6' cy='6' r='5' fill='%23ff5f56'/%3E%3Ccircle cx='24' cy='6' r='5' fill='%23ffbd2e'/%3E%3Ccircle cx='42' cy='6' r='5' fill='%2327c93f'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  // Top bar background
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(#{$_traffic-light-size} + 1.2em);
+    background-color: rgba($body-color, 0.08);
+    border-bottom: $_em-border-width solid $body-color;
+    z-index: 0;
+  }
+
+  pre,
+  pre.sourceCode {
+    position: relative;
+    z-index: 1;
+    border: none !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: $_space-lg;
+    padding-top: $_space-md;
+    margin: 0;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+
+    code {
+      white-space: pre-wrap !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+  }
+}
+
+// Force remove any lingering left border
+pre.sourceCode,
+div.sourceCode pre,
+div.sourceCode pre.sourceCode {
+  border-left: none !important;
+}
+
+// Code output
+.cell-output pre {
+  padding: $_space-lg;
+  background-color: body-mix(95%);
+  border: $_em-border-width solid $body-color;
+  border-left: 6px solid $accent-color;
+  border-radius: $_radius-md;
+  box-shadow: $_em-shadow;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+// Inline code
+code:not(.sourceCode) {
+  color: $body-color !important;
+  background-color: body-mix(90%) !important;
+  padding: 0.15em 0.4em;
+  margin: 0 0.1em;
+  border-radius: $_radius-sm;
+  border: 1px solid rgba($body-color, 0.12);
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.code-copy-button {
+  transition: $_em-transition;
+  z-index: 2;  // Above the top bar
+
+  &:hover {
+    color: $accent-color;
+  }
+}
+
+// add wrapping
+
+pre.sourceCode {
+  position: relative;
+  z-index: 1;
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding: $_space-lg;
+  padding-top: $_space-md;
+  margin: 0;
+
+  // Line wrapping - force it
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+
+  code {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+  }
+}
+
+// Also for code output
+.cell-output pre {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+}
+
+// ===========================
+// DARK MODE - CODE
+// ===========================
+[data-bs-theme="dark"],
+.quarto-dark {
+  // Alternative: softer contrast
+code:not(.sourceCode) {
+  color: #2d2d2d !important;  // Slightly softer dark
+  background-color: rgba(255, 255, 255, 0.75) !important;  // Slightly more transparent
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+  div.sourceCode {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 3px 3px 0 0 rgba(255, 255, 255, 0.5);
+
+    &::after {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-bottom-color: rgba(255, 255, 255, 0.5);
+    }
+
+    pre.sourceCode {
+      border-left-color: $accent-color !important;
+    }
+  }
+
+  .cell-output pre {
+    border-color: rgba(255, 255, 255, 0.5);
+    //border-left-color: $accent-color;
+    box-shadow: 3px 3px 0 0 rgba(255, 255, 255, 0.5);
+  }
+}
+
+// ===========================
+// LINK STYLING WITH ACCENT
+// ===========================
+main a:not(:where(.nav-link, .btn, .about-link, .listing-category, .quarto-grid-link, .code-annotation-anchor, .anchor-section, .anchorjs-link, .toc-action, #quarto-back-to-top)):not(:has(img)) {
+  position: relative;
+  color: $accent-color;
+  text-decoration: underline;
+  text-decoration-color: $_link-underline-color;
+  text-decoration-thickness: $_link-underline-thickness;
+  text-underline-offset: 2px;
+  transition: $_link-transition;
+
+  &:hover {
+    color: var(--em-accent-contrast);
+    text-decoration-color: $_link-underline-color-hover;
+    text-decoration-thickness: $_link-underline-thickness-hover;
+  }
+
+  &:visited {
+    color: $accent-color;
+  }
+}
+
+
+// ===========================
+// NAVBAR
+// ===========================
+.navbar {
+  font-weight: 500;
+  border: $_em-border-width solid $body-color;
+
+  &.fixed-top {
+    border-width: 0 0 $_em-border-width 0;
+  }
+
+  &.fixed-bottom {
+    border-width: $_em-border-width 0 0 0;
+  }
+
+  .navbar-brand {
+    font-weight: 700;
+  }
+
+  .nav-link {
+    transition: $_em-transition;
+
+    &.active {
+      font-weight: 700;
+    }
+  }
+
+  .navbar-toggler {
+    border-width: $_em-border-width;
+  }
+}
+
+// ===========================
+// SIDEBAR
+// ===========================
+.sidebar.sidebar-navigation:not(.rollup) {
+  border-right: $_em-border-width solid $body-color !important;
+}
+
+.sidebar-title a {
+  color: $sidebar-fg;
+  font-weight: 500;
+}
+
+// ===========================
+// HEADINGS
+// ===========================
+
+// Effect variables
+$_fill-transition-speed: 0.4s;
+$_fill-transition-easing: ease-in-out;
+$_underline-transition-speed: 0.4s;
+$_underline-transition-easing: ease-in-out;
+$_underline-thickness: 6px;
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  font-weight: 500;
+  border-bottom: none !important;
+}
+
+// H1 - Thick underline + fill-right effect
+main h1.anchored {
+  text-decoration: underline;
+  text-decoration-color: var(--em-accent);
+  text-decoration-thickness: 8px;
+  text-underline-offset: 0.15em;
+  text-decoration-skip-ink: none;
+  position: relative;
+  display: inline;
+  line-height: 1.5;
+  z-index: 1;
+  transition: color $_fill-transition-speed $_fill-transition-easing;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 0;
+    background-color: var(--em-accent);
+    z-index: -1;
+    transition: width $_fill-transition-speed $_fill-transition-easing;
+  }
+
+  &:hover {
+    color: var(--em-bg);
+    text-decoration-color: var(--em-accent);
+
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+// H2-H6 - No default underline, closing underline effect on hover
+main h2.anchored,
+main h3.anchored,
+main h4.anchored,
+main h5.anchored,
+main h6.anchored {
+  position: relative;
+  display: inline;
+  line-height: 1.5;
+  text-decoration: none;
+
+  // Left side underline
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    width: 0;
+    height: $_underline-thickness;
+    background-color: var(--em-accent);
+    transition: width $_underline-transition-speed $_underline-transition-easing;
+  }
+
+  // Right side underline
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: $_underline-thickness;
+    background-color: var(--em-accent);
+    transition: width $_underline-transition-speed $_underline-transition-easing;
+  }
+
+  &:hover {
+    &::before,
+    &::after {
+      width: 50%;
+    }
+  }
+}
+
+// Spacing after headings - more gap before next paragraph
+main h1 {
+  margin-bottom: 1.5em;
+}
+
+main h2 {
+  margin-bottom: 1.25em;
+}
+
+main h3 {
+  margin-bottom: 1em;
+}
+
+main h4,
+main h5,
+main h6 {
+  margin-bottom: 0.95em;
+}
+
+// Remove ALL link styling from heading anchors
+main h1.anchored a,
+main h2.anchored a,
+main h3.anchored a,
+main h4.anchored a,
+main h5.anchored a,
+main h6.anchored a {
+  color: inherit !important;
+  text-decoration: none !important;
+  background: none !important;
+  background-color: transparent !important;
+  transition: color $_fill-transition-speed $_fill-transition-easing;
+}
+
+main h1.anchored:hover a {
+  color: var(--em-bg) !important;
+}
+
+main h2.anchored:hover a,
+main h3.anchored:hover a,
+main h4.anchored:hover a,
+main h5.anchored:hover a,
+main h6.anchored:hover a {
+  color: inherit !important;
+}
+
+.anchor-section,
+.anchor-section:hover,
+.anchorjs-link,
+.anchorjs-link:hover {
+  color: inherit !important;
+  text-decoration: none !important;
+  background: none !important;
+  background-color: transparent !important;
+}
+
+// ===========================
+// TABLE OF CONTENTS
+// ===========================
+nav#TOC {
+  #toc-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: $_space-md;
+  }
+
+  .nav-link {
+    padding: 0.15rem 0.75rem;
+    font-size: 0.875rem;
+    color: rgba($body-color, 0.75);
+    transition: $_em-transition;
+
+    &:hover {
+      color: $body-color;
+      font-weight: 500;
+    }
+
+    &.active {
+      color: $body-color;
+      font-weight: 700;
+      border-left: 3px solid $accent-color;
+    }
+  }
+}
+
+// ===========================
+// FOOTER
+// ===========================
+.nav-footer {
+  border-top: $_em-border-width solid $body-color;
+  color: $footer-fg;
+
+  a {
+    color: $footer-fg;
+    font-weight: 500;
+    transition: $_em-transition;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}
+
+// ===========================
+// BACK TO TOP
+// ===========================
+#quarto-back-to-top {
+  background-color: $accent-color;
+  border: $_em-border-width solid $body-color;
+  box-shadow: $_em-shadow;
+  color: $body-color;
+  transition: $_em-transition;
+  transform: translate(-3px, -3px);
+
+  &:hover {
+    box-shadow: none;
+    transform: translate(0, 0);
+  }
+}
+
+// ===========================
+// em BUTTONS
+// ===========================
+.btn {
+  margin: 3px 0 0 3px;
+  border: $_em-border-width solid $body-color;
+  border-radius: 0.375rem;
+  box-shadow: $_em-shadow;
+  font-weight: 500;
+  transition: $_em-transition;
+  transform: translate(-3px, -3px);
+
+  &:hover {
+    border-color: $body-color;
+    box-shadow: none;
+    transform: translate(0, 0);
+  }
+
+  &:active,
+  &:focus {
+    border-color: $body-color;
+    box-shadow: none;
+    transform: translate(0, 0);
+  }
+
+  &.disabled {
+    border-color: $body-color;
+  }
+}
+
+.btn-primary {
+  background-color: $accent-color;
+  border-color: $body-color;
+  color: $body-color;
+
+  &:hover,
+  &:focus {
+    background-color: $accent-color;
+    border-color: $body-color;
+    color: $body-color;
+  }
+}
+
+.btn-secondary {
+  background-color: $body-bg;
+  border-color: $body-color;
+  color: $body-color;
+
+  &:hover,
+  &:focus {
+    background-color: $body-bg;
+    border-color: $body-color;
+    color: $body-color;
+  }
+}
+
+.btn-outline-primary {
+  background-color: $accent-color;
+  border-color: $body-color;
+  color: $body-color;
+  box-shadow: none;
+  transform: translate(0, 0);
+
+  &:hover {
+    box-shadow: $_em-shadow;
+    transform: translate(-3px, -3px);
+  }
+}
+
+.btn-outline-secondary {
+  background-color: $body-bg;
+  border-color: $body-color;
+  color: $body-color;
+  box-shadow: none;
+  transform: translate(0, 0);
+
+  &:hover {
+    box-shadow: $_em-shadow;
+    transform: translate(-3px, -3px);
+  }
+}
+
+.btn-link,
+.btn-link:hover {
+  color: $body-color;
+}
+
+.btn-group {
+  .btn {
+    margin-left: 0;
+  }
+
+  > .btn.active {
+    z-index: 0;
+  }
+}
+
+.btn-group,
+.btn-group-vertical {
+  .btn {
+    &:hover,
+    &:active,
+    &:focus {
+      z-index: 0;
+    }
+  }
+}
+
+// ===========================
+// em BADGES
+// ===========================
+.badge,
+.quarto-category,
+.listing-category {
+  border: $_em-border-width solid $body-color;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  padding: 0.3em 0.6em;
+  color: $body-color;
+
+  &.bg-dark {
+    color: $body-bg;
+  }
+}
+
+.bg-primary,
+.badge-primary {
+  background-color: $accent-color !important;
+  color: $body-color !important;
+}
+
+.bg-secondary,
+.badge-secondary {
+  background-color: $body-bg !important;
+  color: $body-color !important;
+}
+
+.bg-success,
+.badge-success {
+  background-color: $green !important;
+  color: $body-color !important;
+}
+
+.bg-warning,
+.badge-warning {
+  background-color: $yellow !important;
+  color: $body-color !important;
+}
+
+.bg-danger,
+.badge-danger {
+  background-color: $red !important;
+  color: $body-color !important;
+}
+
+.bg-info,
+.badge-info {
+  background-color: $cyan !important;
+  color: $body-color !important;
+}
+
+// ===========================
+// NAV TABS / PANEL TABSETS
+// ===========================
+.nav-tabs {
+  gap: 4px;
+  padding: 0.4rem 0.4rem calc(0.4rem + 2px);
+  font-weight: 500;
+  border: $_em-border-width solid $body-color;
+  border-radius: 0.5rem;
+
+  .nav-link {
+    border-width: $_em-border-width;
+    border-radius: 0.375rem;
+    color: $body-color;
+
+    &.active,
+    &:hover {
+      border: $_em-border-width solid $body-color;
+    }
+
+    &.active {
+      background-color: $accent-color;
+      color: $body-color;
+    }
+  }
+}
+
+.tab-content {
+  padding: $_space-md;
+  margin-top: $_space-md;
+  border: $_em-border-width solid $body-color;
+  border-radius: 0.5rem;
+}
+
+.panel-tabset {
+  .nav-tabs {
+    gap: 4px;
+    padding: 0.4rem 0.4rem calc(0.4rem + 2px);
+    font-weight: 500;
+    border: $_em-border-width solid $body-color;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    margin-bottom: 0;
+
+    .nav-item {
+      margin: 0;
+    }
+
+    .nav-link {
+      border: $_em-border-width solid transparent;
+      border-radius: 0.375rem;
+      padding: 0.5rem 1rem;
+      font-weight: 500;
+      color: $body-color;
+      background-color: transparent;
+      transition: $_em-transition;
+      margin: 0;
+
+      &:hover {
+        border-color: $body-color;
+      }
+
+      &.active {
+        background-color: $accent-color;
+        border-color: $body-color;
+        color: $body-color;
+      }
+    }
+  }
+
+  .tab-content {
+    padding: $_space-md;
+    margin-top: $_space-md;
+    border: $_em-border-width solid $body-color;
+    border-radius: 0.5rem;
+
+    > .tab-pane {
+      > :first-child {
+        margin-top: 0;
+      }
+
+      > :last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.nav-pills {
+  gap: 4px;
+  font-weight: 500;
+
+  .nav-link {
+    border: $_em-border-width solid $body-color;
+    border-radius: 0.375rem;
+  }
+}
+
+// ===========================
+// em CARDS
+// ===========================
+.card {
+  border: $_em-border-width solid $body-color !important;
+  border-radius: 0.5rem !important;
+
+  .card-header {
+    background-color: $accent-color;
+    border-bottom: $_em-border-width solid $body-color;
+    font-weight: 500;
+  }
+
+  .card-footer {
+    border-top: $_em-border-width solid $body-color;
+  }
+}
+
+// ===========================
+// CALLOUT STYLING
+// ===========================
+.callout {
+  border: none !important;
+  border-left: 4px solid !important;
+  border-radius: 4px !important;
+  page-break-inside: avoid;
+  break-inside: avoid;
+
+  &.callout-note {
+    background-color: mix($callout-color-note, $body-bg, 15%) !important;
+    border-left-color: $callout-color-note !important;
+  }
+
+  &.callout-tip {
+    background-color: mix($callout-color-tip, $body-bg, 15%) !important;
+    border-left-color: $callout-color-tip !important;
+  }
+
+  &.callout-warning {
+    background-color: mix($callout-color-warning, $body-bg, 15%) !important;
+    border-left-color: $callout-color-warning !important;
+  }
+
+  &.callout-important {
+    background-color: mix($callout-color-important, $body-bg, 15%) !important;
+    border-left-color: $callout-color-important !important;
+  }
+
+  &.callout-caution {
+    background-color: mix($callout-color-caution, $body-bg, 15%) !important;
+    border-left-color: $callout-color-caution !important;
+  }
+
+  .callout-title-container {
+    font-weight: 600;
+  }
+
+  &.callout-titled .callout-body> :last-child:not(.sourceCode),
+  &.callout-titled .callout-body>div> :last-child:not(.sourceCode) {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  &.callout-style-default .callout-body {
+    padding-left: .5em;
+    padding-right: .5em;
+    padding-bottom: .5em;
+  }
+}
+
+
+
+// ===========================
+// em TABLES
+// ===========================
+.table {
+  border: $_em-border-width solid $body-color;
+
+  thead {
+    background-color: $accent-color;
+
+    th {
+      font-weight: 700;
+      border-bottom: $_em-border-width solid $body-color;
+      border-right: 1px solid $body-color;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $body-color;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      border-right: 1px solid $body-color;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+}
+
+// ===========================
+// em INPUTS
+// ===========================
+.form-control,
+.form-select {
+  border: $_em-border-width solid $body-color;
+  border-radius: 0.375rem;
+  transition: $_em-transition;
+
+  &:focus {
+    border-color: $body-color;
+    box-shadow: none;
+  }
+}
+
+// ===========================
+// em PROGRESS
+// ===========================
+.progress {
+  border: $_em-border-width solid $body-color;
+  border-radius: 0.375rem;
+
+  .progress-bar {
+    border-right: $_em-border-width solid $body-color;
+  }
+}
+
+// ===========================
+// em BLOCKQUOTE
+// ===========================
+blockquote {
+  border: $_em-border-width solid $body-color;
+  border-left: 6px solid $accent-color;
+  border-radius: 0.5rem;
+  box-shadow: $_em-shadow;
+  padding: $_space-lg;
+  font-style: normal;
+  margin: 1.5em 0;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ===========================
+// em PAGINATION
+// ===========================
+.pagination {
+  .page-link {
+    border: $_em-border-width solid $body-color;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    color: $body-color;
+    transition: $_em-transition;
+    margin: 0 0.15em;
+
+    &:hover {
+      background-color: transparent;
+      color: $body-color;
+    }
+
+    &.active {
+      background-color: $accent-color;
+      border-color: $body-color;
+      color: $body-color;
+    }
+  }
+}
+
+// ===========================
+// em DROPDOWN
+// ===========================
+.dropdown-menu {
+  border: $_em-border-width solid $body-color;
+  border-radius: 0.375rem;
+  box-shadow: $_em-shadow;
+}
+
+.dropdown-header {
+  font-weight: 700;
+}
+
+.dropdown-item {
+  &:hover,
+  &:focus {
+    background-color: $accent-color;
+    color: $body-color;
+  }
+}
+
+// ===========================
+// em BREADCRUMB
+// ===========================
+.breadcrumb {
+  font-weight: 500;
+  border: $_em-border-width solid $body-color;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+
+  a {
+    color: $body-color;
+  }
+}
+
+// ===========================
+// em MODAL
+// ===========================
+.modal-content {
+  border: $_em-border-width solid $body-color;
+  box-shadow: $_em-shadow;
+}
+
+// ===========================
+// em TOAST
+// ===========================
+.toast {
+  border: $_em-border-width solid $body-color;
+  box-shadow: $_em-shadow;
+}
+
+// ===========================
+// em ACCORDION
+// ===========================
+.accordion {
+  .accordion-item {
+    border: $_em-border-width solid $body-color;
+    margin-bottom: -$_em-border-width;
+
+    &:first-child {
+      border-radius: 0.5rem 0.5rem 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 0.5rem 0.5rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .accordion-button {
+    font-weight: 500;
+
+    &:not(.collapsed) {
+      background-color: $accent-color;
+      color: $body-color;
+    }
+
+    &:focus {
+      box-shadow: none;
+      border-color: $body-color;
+    }
+  }
+}
+
+// ===========================
+// em LIST GROUP
+// ===========================
+.list-group-item {
+  border: $_em-border-width solid $body-color;
+  margin-bottom: -$_em-border-width;
+
+  &:first-child {
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 0.5rem 0.5rem;
+    margin-bottom: 0;
+  }
+
+  &.active {
+    background-color: $accent-color;
+    border-color: $body-color;
+    color: $body-color;
+  }
+}
+
+// ===========================
+// SEARCH
+// ===========================
+.sidebar-search .aa-Form {
+  background-color: transparent;
+  border: $_em-border-width solid $sidebar-fg;
+  border-radius: 0.375rem;
+  color: $sidebar-fg;
+
+  .aa-Input {
+    color: $sidebar-fg;
+
+    &::placeholder {
+      color: $sidebar-fg;
+      opacity: 0.5;
+    }
+  }
+}
+
+// ===========================
+// HR
+// ===========================
+hr {
+  border: none;
+  border-top: $_em-border-width solid $body-color;
+  opacity: 1;
+}
+
+// ===========================
+// VERTICAL RULE
+// ===========================
+.vr {
+  width: $_em-border-width;
+  background-color: $body-color;
+}
+
+// ===========================
+// SELECTION
+// ===========================
+::selection {
+  background-color: $accent-color;
+  color: $body-color;
+}
+
+// ===========================
+// POPOVER
+// ===========================
+.popover {
+  border: $_em-border-width solid $body-color;
+  box-shadow: $_em-shadow;
+}
+
+// ===========================
+// TOOLTIP
+// ===========================
+.tooltip {
+  .tooltip-inner {
+    border: $_em-border-width solid $body-color;
+  }
+}
+
+// ===========================
+// REDUCED MOTION
+// ===========================
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// ===========================
+// em CODE BLOCKS
+// ===========================
+div.sourceCode {
+  border: var(--em-border-width) solid var(--em-border-color);
+  border-radius: 0.5rem;
+  box-shadow: 3px 3px 0 0 var(--em-border-color);
+  background-color: var(--em-code-bg);
+}
+
+pre.sourceCode {
+  //border-left: 6px solid var(--em-accent);
+  border-radius: 0;
+  background-color: var(--em-code-bg);
+  padding: $_space-lg;
+
+  // Line wrapping
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+// Ensure code inside pre also wraps
+pre.sourceCode code {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+// Code output
+.cell-output pre {
+  padding: $_space-lg;
+  background-color: var(--em-code-bg);
+  color: var(--em-code-fg);
+  border: $_em-border-width solid $body-color;
+  border-radius: $_radius-md;
+  box-shadow: none;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+// Dark mode
+[data-bs-theme="dark"],
+.quarto-dark {
+  .cell-output pre {
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: none;
+    background-color: var(--em-code-bg);
+    color: var(--em-code-fg);
+  }
+}
+
+code span.kw { color: var(--em-code-keyword); }  // Keywords
+code span.dt { color: var(--em-code-type); }     // Data types
+code span.st { color: var(--em-code-string); }   // Strings
+code span.co { color: var(--em-code-comment); font-style: italic; }  // Comments
+code span.fu { color: var(--em-code-function); } // Functions
+code span.op { color: var(--em-code-operator); } // Operators
+code span.cn { color: var(--em-code-constant); } // Constants
+code span.va { color: var(--em-code-variable); } // Variables
+code span.cf { color: var(--em-code-keyword); }  // Control flow
+code span.bu { color: var(--em-code-type); }     // Built-in
+code span.al { color: var(--em-code-error); }    // Alert
+code span.er { color: var(--em-code-error); }    // Error
+code span.dv { color: var(--em-code-number); }   // Decimal values
+code span.bn { color: var(--em-code-number); }   // Base-n numbers
+code span.fl { color: var(--em-code-number); }   // Floats
+code span.ch { color: var(--em-code-string); }   // Characters
+code span.ss { color: var(--em-code-string); }   // Special string
+code span.an { color: var(--em-code-comment); }  // Annotation
+code span.im { color: var(--em-code-keyword); }  // Import
+code span.wa { color: var(--em-code-warning); }  // Warning
+code span.in { color: var(--em-code-comment); }  // Information
+code span.sc { color: var(--em-code-string); }   // Special char
+code span.at { color: var(--em-code-attribute); } // Attribute
+code span.pp { color: var(--em-code-keyword); }  // Preprocessor
+code span.ex { color: var(--em-code-function); } // Extension
+code span.ot { color: var(--em-code-keyword); }  // Other
+
+// Inline code
+
+// ===========================
+// CODE ENHANCEMENTS
+// ===========================
+code:not(.sourceCode) {
+  color: $body-color !important;
+  background-color: body-mix(90%) !important;
+}
+
+p code:not(.sourceCode),
+li code:not(.sourceCode),
+td code:not(.sourceCode),
+span code:not(.sourceCode),
+div code:not(.sourceCode),
+h1 code:not(.sourceCode),
+h2 code:not(.sourceCode),
+h3 code:not(.sourceCode),
+h4 code:not(.sourceCode),
+h5 code:not(.sourceCode),
+h6 code:not(.sourceCode) {
+  padding: 0.15em 0.4em;
+  margin: 0 0.1em;
+  border-radius: $_radius-sm;
+  transition: all $_anim-fast $_easing-standard;
+  border: 1px solid rgba($body-color, 0.12);
+  font-size: 0.9em;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  box-shadow: 0 1px 2px rgba($body-color, 0.05);
+
+  &:hover {
+    border-color: rgba($accent-color, 0.3);
+    box-shadow: $_shadow-sm;
+    transform: translateY(-1px);
+  }
+}
+
+a>code:not(.sourceCode) {
+  transition: $_link-transition;
+  &:hover { box-shadow: $_shadow-sm; }
+}
+
+h1 code:not(.sourceCode),
+h2 code:not(.sourceCode),
+h3 code:not(.sourceCode) {
+  font-size: 0.85em;
+  padding: 0.2em 0.5em;
+  font-weight: 600;
+}
+
+h4 code:not(.sourceCode),
+h5 code:not(.sourceCode),
+h6 code:not(.sourceCode) {
+  font-size: 0.88em;
+  padding: 0.18em 0.45em;
+  font-weight: 600;
+}
+
+nav p code:not(.sourceCode),
+nav li code:not(.sourceCode),
+nav td code:not(.sourceCode),
+nav div code:not(.sourceCode),
+nav span code:not(.sourceCode) {
+  padding: 0.15em 0.4em;
+  border-radius: $_radius-sm;
+  border: 1px solid rgba($body-color, 0.12);
+}
+
+.code-copy-button {
+  transition: $_em-transition;
+
+  &:hover {
+    color: var(--em-accent);
+  }
+}
+

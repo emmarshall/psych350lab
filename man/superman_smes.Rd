@@ -3,30 +3,23 @@
 \docType{data}
 \name{superman_smes}
 \alias{superman_smes}
-\title{Superman SMES Dataset (Simulated)}
+\title{Superman SMES Data}
 \format{
-A tibble with 47 rows and 5 variables:
+A data frame with 47 rows and 5 variables:
 \describe{
-\item{num}{Participant number}
-\item{height_gap}{Height gap category (1, 2, or 3)}
-\item{emotional_impact}{Emotional impact score (4-20)}
-\item{aesthetic_appeal}{Aesthetic appeal score (3-15)}
-\item{cognitive_engagement}{Cognitive engagement score (0-7)}
+\item{num}{Unique participant number}
+\item{height_gap}{Height gap category: Minimal (1), Average (2), Big (3)}
+\item{emotional_impact}{Emotional Impact subscale (sum of 4 items, range 4-20)}
+\item{aesthetic_appeal}{Aesthetic Appeal subscale (sum of 3 items, range 3-15)}
+\item{cognitive_engagement}{Cognitive Engagement subscale (mean of 4 items, range 0-7)}
 }
-}
-\source{
-Simulated from psych350lab::superman height_gap distribution.
 }
 \usage{
 superman_smes
 }
 \description{
-A simulated dataset based on the Superman media data, designed for
-use in between-groups ANOVA exercises with three height gap groups.
-}
-\examples{
-data(superman_smes)
-head(superman_smes)
-
+Simulated data for 47 participants rating Superman media on the
+Subjective Media Experience Scale (SMES), grouped by height gap
+between the Superman and Lois Lane actors.
 }
 \keyword{datasets}

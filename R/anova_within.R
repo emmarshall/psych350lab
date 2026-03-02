@@ -1,9 +1,8 @@
 #' Within-Groups (Repeated Measures) ANOVA
 #'
-#' Performs a one-way repeated measures ANOVA comparing two conditions
-#' measured on the same participants.
+#' Performs a repeated measures ANOVA for two conditions.
 #'
-#' @param data A data frame or tibble in wide format.
+#' @param data A data frame or tibble.
 #' @param dv1 Character string. Name of the first condition's variable.
 #' @param dv2 Character string. Name of the second condition's variable.
 #' @param id_var Character string or `NULL`. Name of the subject ID variable.
@@ -42,13 +41,12 @@ wg_anova_answers <- function(data, dv1, dv2, id_var = NULL) {
       names_to = "condition",
       values_to = "score"
     ) |>
-    dplyr::filter(!is.na(.data$score))
-
-  long_data <- long_data |>
-    dplyr::rename(subject = dplyr::all_of(id_var))
-
-  long_data$subject <- as.factor(long_data$subject)
-  long_data$condition <- as.factor(long_data$condition)
+    dplyr::filter(!is.na(score)) |>
+    dplyr::rename(subject = dplyr::all_of(id_var)) |>
+    dplyr::mutate(
+      subject = as.factor(subject),
+      condition = as.factor(condition)
+    )
 
   aov_model <- stats::aov(score ~ condition + Error(subject / condition),
                           data = long_data)
@@ -57,23 +55,22 @@ wg_anova_answers <- function(data, dv1, dv2, id_var = NULL) {
   within_summary <- aov_summary$`Error: subject:condition`[[1]]
 
   f_stat <- if (length(within_summary$`F value`) > 0) within_summary$`F value`[1] else NA
-
   p_value <- if (length(within_summary$`Pr(>F)`) > 0) within_summary$`Pr(>F)`[1] else NA
   df_effect <- if (length(within_summary$Df) > 0) within_summary$Df[1] else NA
   df_error <- if (length(within_summary$Df) > 1) within_summary$Df[2] else NA
   mse <- if (length(within_summary$`Mean Sq`) > 1) within_summary$`Mean Sq`[2] else NA
 
+  # Modern .by grouping (dplyr 1.1+)
   desc_stats <- long_data |>
-    dplyr::group_by(.data$condition) |>
     dplyr::summarise(
-      mean = mean(.data$score, na.rm = TRUE),
-      sd = sd(.data$score, na.rm = TRUE),
+      mean = mean(score, na.rm = TRUE),
+      sd = stats::sd(score, na.rm = TRUE),
       n = dplyr::n(),
-      .groups = "drop"
+      .by = condition
     ) |>
     dplyr::mutate(
-      sem = .data$sd / sqrt(.data$n),
-      dplyr::across(c("mean", "sd", "sem"), ~ round(., 2))
+      sem = sd / sqrt(n),
+      dplyr::across(c(mean, sd, sem), \(x) round(x, 2))
     )
 
   results_list <- list(

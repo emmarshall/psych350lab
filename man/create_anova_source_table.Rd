@@ -2,13 +2,13 @@
 % Please edit documentation in R/anova_tables.R
 \name{create_anova_source_table}
 \alias{create_anova_source_table}
-\title{APA ANOVA Summary Table}
+\title{APA ANOVA Source Table}
 \usage{
 create_anova_source_table(
   anova_results_list = NULL,
   iv_name = "Independent Variable",
   dv_name = "Dependent Variable",
-  Key = TRUE,
+  KEY = TRUE,
   table_title = NULL
 )
 }
@@ -19,7 +19,7 @@ create_anova_source_table(
 
 \item{dv_name}{Character. Display name for the dependent variable.}
 
-\item{Key}{Logical. If \code{TRUE} (default), fill with computed values.
+\item{KEY}{Logical. If \code{TRUE} (default), fill with computed values.
 If \code{FALSE}, create a blank template.}
 
 \item{table_title}{Character or \code{NULL}. Optional table caption.}
@@ -28,7 +28,7 @@ If \code{FALSE}, create a blank template.}
 A \code{\link[flextable:flextable]{flextable::flextable()}} object.
 }
 \description{
-Creates an APA-formatted ANOVA summary table showing Source, SS, df, MS, F,
+Creates an APA-formatted ANOVA source table showing Source, df, MS, F,
 and p for a between-groups ANOVA. This provides the full ANOVA source table
 rather than just descriptive statistics.
 }

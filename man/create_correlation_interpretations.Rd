@@ -11,7 +11,7 @@ create_correlation_interpretations(
 )
 }
 \arguments{
-\item{reg_results_list}{Output from \code{regression_answers()}.}
+\item{reg_results_list}{Output from \code{linear_reg_answers()}.}
 
 \item{interpretations}{Named list or \code{NULL}. Custom interpretations.}
 
@@ -29,7 +29,7 @@ either filled (answer key with red HTML) or blank. Requires \code{tinytable}.
 data(superman)
 sm <- superman[!is.na(superman$rt_critics_score) &
                     !is.na(superman$rt_audience_score), ]
-result <- regression_answers(
+result <- linear_reg_answers(
   data = sm,
   criterion = "rt_critics_score",
   quant_predictors = c("clark_height_in", "rt_audience_score"),

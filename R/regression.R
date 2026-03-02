@@ -1,8 +1,15 @@
-#' Multiple Regression Analysis
+# =============================================================================
+# regression.R
+# Multiple Linear Regression Analysis
+# =============================================================================
+# Updated for dplyr 1.2.0+
+# =============================================================================
+
+#' Multiple Linear Regression Analysis
 #'
-#' Performs a multiple regression analysis with separate handling of quantitative
-#' and binary predictors, including univariate, bivariate, and multivariate results
-#' with interpretation categories (a-d).
+#' Performs a multiple linear regression analysis with separate handling of
+#' quantitative and binary predictors, including univariate, bivariate, and
+#' multivariate results with interpretation categories (a-d).
 #'
 #' @param data A data frame or tibble.
 #' @param criterion Character string. Name of the criterion (dependent) variable.
@@ -35,10 +42,10 @@
 #'
 #' @examples
 #' data(superman)
-#' sm <- superman[!is.na(superman$rt_critics_score) &
-#'                     !is.na(superman$rt_audience_score), ]
+#' sm <- superman |>
+#'   dplyr::filter(!is.na(rt_critics_score), !is.na(rt_audience_score))
 #'
-#' result <- regression_answers(
+#' result <- linear_reg_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
 #'   quant_predictors = c("clark_height_in", "rt_audience_score"),
@@ -49,7 +56,7 @@
 #' result$Regression_Weights
 #'
 #' @export
-regression_answers <- function(data, criterion,
+linear_reg_answers <- function(data, criterion,
                                quant_predictors = NULL,
                                binary_predictors = NULL,
                                quant_labels = NULL,
@@ -63,16 +70,18 @@ regression_answers <- function(data, criterion,
   }
 
   # Handle NULL cases
-  if (is.null(quant_predictors)) quant_predictors <- character(0)
-  if (is.null(binary_predictors)) binary_predictors <- character(0)
-  if (is.null(quant_labels)) quant_labels <- quant_predictors
-  if (is.null(binary_labels)) binary_labels <- binary_predictors
+  quant_predictors <- quant_predictors %||% character(0)
+  binary_predictors <- binary_predictors %||% character(0)
+  quant_labels <- quant_labels %||% quant_predictors
+  binary_labels <- binary_labels %||% binary_predictors
 
   # Combine predictors in order: quantitative first, then binary
   predictors <- c(quant_predictors, binary_predictors)
   predictor_labels <- c(quant_labels, binary_labels)
-  predictor_types <- c(rep("Quant", length(quant_predictors)),
-                       rep("Binary", length(binary_predictors)))
+  predictor_types <- c(
+    rep("Quant", length(quant_predictors)),
+    rep("Binary", length(binary_predictors))
+  )
   names(predictor_types) <- predictors
 
   # Clean data - remove NAs
@@ -113,48 +122,47 @@ regression_answers <- function(data, criterion,
   k <- length(predictors)
 
   # Set default criterion label if not provided
-  if (is.null(criterion_label)) {
-    criterion_label <- criterion
-  }
+  criterion_label <- criterion_label %||% criterion
 
   # =========================================================================
   # DETECT AND VALIDATE VARIABLE CHARACTERISTICS
   # =========================================================================
 
-  detect_variable_info <- function(x, var_name, expected_type) {
+  .detect_variable_info <- function(x, var_name, expected_type) {
     unique_vals <- unique(x[!is.na(x)])
     n_unique <- length(unique_vals)
 
     if (expected_type == "Binary" && n_unique > 2) {
-      warning(paste0("Variable '", var_name, "' specified as Binary but has ",
-                     n_unique, " unique values. Treating as Binary anyway."))
+      warning(
+        "Variable '", var_name, "' specified as Binary but has ",
+        n_unique, " unique values. Treating as Binary anyway."
+      )
     }
 
     if (expected_type == "Quant" && n_unique == 2) {
-      warning(paste0("Variable '", var_name, "' specified as Quant but has only 2 unique values. ",
-                     "Consider specifying as Binary."))
+      warning(
+        "Variable '", var_name, "' specified as Quant but has only 2 unique values. ",
+        "Consider specifying as Binary."
+      )
     }
 
-    return(list(
+    list(
       type = expected_type,
       levels = sort(unique_vals),
       n_levels = n_unique,
       min = min(unique_vals),
       max = max(unique_vals)
-    ))
-  }
-
-  # Get info for all predictors
-  detected_info <- list()
-  for (i in seq_along(predictors)) {
-    p <- predictors[i]
-    detected_info[[p]] <- detect_variable_info(
-      analysis_df[[p]], p, predictor_types[i]
     )
   }
 
+  # Get info for all predictors
+  detected_info <- purrr::map(
+    stats::setNames(predictors, predictors),
+    \(p) .detect_variable_info(analysis_df[[p]], p, predictor_types[p])
+  )
+
   # Criterion info
-  criterion_info <- detect_variable_info(analysis_df[[criterion]], criterion, "Quant")
+  criterion_info <- .detect_variable_info(analysis_df[[criterion]], criterion, "Quant")
 
   # =========================================================================
   # UNIVARIATE ANALYSIS
@@ -235,26 +243,28 @@ regression_answers <- function(data, criterion,
     p <- predictors[i]
     p_type <- predictor_types[i]
 
-    cor_test <- stats::cor.test(analysis_df[[criterion]], analysis_df[[p]],
-                                method = "pearson",
-                                use = "complete.obs")
-
+    cor_test <- stats::cor.test(analysis_df[[p]], analysis_df[[criterion]])
     r_value <- cor_test$estimate
     p_value <- cor_test$p.value
     p_value_formatted <- format_p_value(p_value)
 
+    if (verbose) {
+      cat(p, "with", criterion, ":\n")
+      cat("  r =", round(r_value, 3), "\n")
+      cat("  p =", round(p_value, 4), "\n")
+      cat("  Type:", p_type, "\n\n")
+    }
+
     if (p_type == "Binary") {
       univar_info <- univariate_list[[p]]
-      mean_low <- univar_info$criterion_mean_low
-      mean_high <- univar_info$criterion_mean_high
 
-      if (r_value > 0) {
-        higher_group <- "high"
-        direction_desc <- "Higher coded group has higher scores"
-      } else {
-        higher_group <- "low"
-        direction_desc <- "Lower coded group has higher scores"
-      }
+      direction_desc <- dplyr::if_else(
+        r_value > 0,
+        paste0("Higher coded group (", univar_info$high_level,
+               ") has higher ", criterion_label, " scores"),
+        paste0("Lower coded group (", univar_info$low_level,
+               ") has higher ", criterion_label, " scores")
+      )
 
       bivariate_list[[p]] <- list(
         label = predictor_labels[i],
@@ -263,14 +273,12 @@ regression_answers <- function(data, criterion,
         p_value = round(p_value, 3),
         p_value_formatted = p_value_formatted,
         significant = p_value < 0.05,
-        direction = ifelse(r_value > 0, "positive", "negative"),
-        higher_group = higher_group,
+        direction = dplyr::if_else(r_value > 0, "positive", "negative"),
         direction_desc = direction_desc,
-        mean_difference = round(mean_high - mean_low, 3),
         low_level = univar_info$low_level,
         high_level = univar_info$high_level,
-        criterion_mean_low = mean_low,
-        criterion_mean_high = mean_high
+        criterion_mean_low = univar_info$criterion_mean_low,
+        criterion_mean_high = univar_info$criterion_mean_high
       )
 
     } else {
@@ -281,10 +289,12 @@ regression_answers <- function(data, criterion,
         p_value = round(p_value, 3),
         p_value_formatted = p_value_formatted,
         significant = p_value < 0.05,
-        direction = ifelse(r_value > 0, "positive", "negative"),
-        direction_desc = ifelse(r_value > 0,
-                                "As predictor increases, criterion increases",
-                                "As predictor increases, criterion decreases")
+        direction = dplyr::if_else(r_value > 0, "positive", "negative"),
+        direction_desc = dplyr::if_else(
+          r_value > 0,
+          "As predictor increases, criterion increases",
+          "As predictor increases, criterion decreases"
+        )
       )
     }
   }
@@ -328,28 +338,28 @@ regression_answers <- function(data, criterion,
     b_sig <- b_pvalue < 0.05
 
     # Determine interpretation category
-    if (!r_sig && !b_sig) {
-      category <- "a"
-      category_desc <- "Neither r nor b significant"
-    } else if (r_sig && b_sig && sign(r_val) == sign(b)) {
-      category <- "b"
-      category_desc <- "r & b both sig & same sign"
-    } else if (r_sig && !b_sig) {
-      category <- "c"
-      category_desc <- "r sig but not b"
-    } else {
-      category <- "d"
-      category_desc <- "suppressor effect"
-    }
+    category <- dplyr::case_when(
+      !r_sig && !b_sig ~ "a",
+      r_sig && b_sig && sign(r_val) == sign(b) ~ "b",
+      r_sig && !b_sig ~ "c",
+      .default = "d"
+    )
+
+    category_desc <- dplyr::case_when(
+      category == "a" ~ "Neither r nor b significant",
+      category == "b" ~ "r & b both sig & same sign",
+      category == "c" ~ "r sig but not b",
+      category == "d" ~ "suppressor effect"
+    )
 
     if (p_type == "Binary") {
       univar_info <- univariate_list[[p]]
 
-      if (b > 0) {
-        direction_desc <- "Higher coded group has higher criterion scores"
-      } else {
-        direction_desc <- "Higher coded group has lower criterion scores"
-      }
+      direction_desc <- dplyr::if_else(
+        b > 0,
+        "Higher coded group has higher criterion scores",
+        "Higher coded group has lower criterion scores"
+      )
 
       regression_weights[[p]] <- list(
         label = predictor_labels[i],
@@ -362,18 +372,18 @@ regression_answers <- function(data, criterion,
         significant = b_sig,
         category = category,
         category_desc = category_desc,
-        direction = ifelse(b > 0, "positive", "negative"),
+        direction = dplyr::if_else(b > 0, "positive", "negative"),
         direction_desc = direction_desc,
         low_level = univar_info$low_level,
         high_level = univar_info$high_level
       )
 
     } else {
-      if (b > 0) {
-        direction_desc <- "As predictor increases, criterion increases (controlling for others)"
-      } else {
-        direction_desc <- "As predictor increases, criterion decreases (controlling for others)"
-      }
+      direction_desc <- dplyr::if_else(
+        b > 0,
+        "As predictor increases, criterion increases (controlling for others)",
+        "As predictor increases, criterion decreases (controlling for others)"
+      )
 
       regression_weights[[p]] <- list(
         label = predictor_labels[i],
@@ -386,7 +396,7 @@ regression_answers <- function(data, criterion,
         significant = b_sig,
         category = category,
         category_desc = category_desc,
-        direction = ifelse(b > 0, "positive", "negative"),
+        direction = dplyr::if_else(b > 0, "positive", "negative"),
         direction_desc = direction_desc
       )
     }
@@ -432,13 +442,14 @@ regression_answers <- function(data, criterion,
     Raw_Model = model
   )
 
-  results_list$Variable_Types <- data.frame(
+  results_list$Variable_Types <- tibble::tibble(
     variable = c(criterion, predictors),
     label = c(criterion_label, predictor_labels),
     type = c(criterion_info$type, predictor_types),
-    n_unique = c(criterion_info$n_levels,
-                 sapply(detected_info, function(x) x$n_levels)),
-    stringsAsFactors = FALSE
+    n_unique = c(
+      criterion_info$n_levels,
+      purrr::map_int(detected_info, \(x) x$n_levels)
+    )
   )
 
   invisible(results_list)

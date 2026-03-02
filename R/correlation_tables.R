@@ -1,3 +1,37 @@
+# =============================================================================
+# correlation_tables.R
+# Correlation Tables for Word/PDF Output (Flextable)
+# =============================================================================
+# Updated for dplyr 1.2.0+ with modern tidyverse patterns
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Internal helper: Format correlation cell with significance stars
+# -----------------------------------------------------------------------------
+
+#' Format correlation cell with significance stars (internal)
+#' @param r Numeric correlation coefficient
+#' @param p Numeric p-value
+#' @return Character string with formatted correlation and stars
+#' @noRd
+.format_cor_cell <- function(r, p) {
+  if (is.na(r)) return("\u2014")
+
+  stars <- dplyr::case_when(
+    p < .001 ~ "***",
+    p < .01  ~ "**",
+    p < .05  ~ "*",
+    .default = ""
+  )
+
+  paste0(sprintf("%.2f", r), stars)
+}
+
+
+# =============================================================================
+# CORRELATION RESULTS TABLE
+# =============================================================================
+
 #' Correlation Results Summary Table
 #'
 #' Creates a flextable showing correlation results alongside descriptive
@@ -24,11 +58,11 @@ create_corr_table <- function(rh_name, vars, corr_results_list) {
 
   p_value <- corr_results_list$Correlation$p_value
 
-  if (p_value < 0.05) {
-    decision <- "Reject the H0 null hypothesis"
-  } else {
-    decision <- "Retain the H0 null hypothesis"
-  }
+  decision <- dplyr::if_else(
+    p_value < 0.05,
+    "Reject the H0 null hypothesis",
+    "Retain the H0 null hypothesis"
+  )
 
   combined_data <- tibble::tibble(
     ` ` = c(
@@ -69,6 +103,10 @@ create_corr_table <- function(rh_name, vars, corr_results_list) {
 }
 
 
+# =============================================================================
+# FORMAT CORRELATION RESULTS (TEXT)
+# =============================================================================
+
 #' Format Correlation Results for Fill-in-the-Blank
 #'
 #' Returns a formatted text string of correlation results, either filled
@@ -103,13 +141,8 @@ format_corr_results <- function(rh_name, vars, corr_results_list, Key = TRUE) {
   p_value <- corr_results_list$Correlation$p_value
   df <- corr_results_list$Correlation$df
 
-  if (p_value < 0.05) {
-    h0_decision <- "Reject H0"
-    rh_support <- "Yes"
-  } else {
-    h0_decision <- "Retain H0"
-    rh_support <- "No"
-  }
+  h0_decision <- dplyr::if_else(p_value < 0.05, "Reject H0", "Retain H0")
+  rh_support <- dplyr::if_else(p_value < 0.05, "Yes", "No")
 
   if (Key) {
     output <- paste0(
@@ -152,6 +185,10 @@ format_corr_results <- function(rh_name, vars, corr_results_list, Key = TRUE) {
   return(output)
 }
 
+
+# =============================================================================
+# APA CORRELATION MATRIX TABLE
+# =============================================================================
 
 #' APA Correlation Matrix Table (from raw data)
 #'
@@ -197,18 +234,6 @@ create_apa_corr_table <- function(data, vars, var_labels = NULL,
   # Calculate descriptive statistics
   desc_stats <- psych::describe(cor_vars)
 
-  # Format correlation cell with significance stars
-  format_cor_cell <- function(r, p) {
-    if (is.na(r)) {
-      return("\u2014")
-    } else {
-      stars <- ifelse(p < .001, "***",
-                      ifelse(p < .01, "**",
-                             ifelse(p < .05, "*", "")))
-      return(paste0(sprintf("%.2f", r), stars))
-    }
-  }
-
   # Build the data frame
   table_df <- data.frame(
     Variable = var_labels,
@@ -219,11 +244,11 @@ create_apa_corr_table <- function(data, vars, var_labels = NULL,
 
   # Add correlation columns (lower triangle only, with dash on diagonal and above)
   for (i in seq_along(var_labels)) {
-    new_col <- sapply(seq_along(var_labels), function(j) {
+    new_col <- purrr::map_chr(seq_along(var_labels), \(j) {
       if (j >= i) {
         "\u2014"
       } else {
-        format_cor_cell(r_vals[j, i], p_vals[j, i])
+        .format_cor_cell(r_vals[j, i], p_vals[j, i])
       }
     })
     table_df[[paste0(i)]] <- new_col
@@ -259,6 +284,10 @@ create_apa_corr_table <- function(data, vars, var_labels = NULL,
   return(apa_table)
 }
 
+
+# =============================================================================
+# APA CORRELATION TABLE (BLANK OR FILLED)
+# =============================================================================
 
 #' APA Correlation Table (Blank or Filled)
 #'
@@ -301,20 +330,20 @@ create_corr_apa_table <- function(data = NULL, vars = NULL, var_labels = NULL,
                                   table_title = "Means, Standard Deviations, and Correlations") {
 
   # Determine number of variables
-  if (!is.null(vars)) {
-    n_vars <- length(vars)
+  n_vars <- if (!is.null(vars)) {
+    length(vars)
   } else if (!is.null(var_labels)) {
-    n_vars <- length(var_labels)
+    length(var_labels)
   } else {
-    n_vars <- 3 # Default
+    3L # Default
   }
 
   # Create variable labels if not provided
   if (is.null(var_labels)) {
-    if (!is.null(vars)) {
-      var_labels <- paste0(seq_len(n_vars), ". ", vars)
+    var_labels <- if (!is.null(vars)) {
+      paste0(seq_len(n_vars), ". ", vars)
     } else {
-      var_labels <- paste0(seq_len(n_vars), ". Variable ", seq_len(n_vars))
+      paste0(seq_len(n_vars), ". Variable ", seq_len(n_vars))
     }
   }
 
@@ -323,14 +352,11 @@ create_corr_apa_table <- function(data = NULL, vars = NULL, var_labels = NULL,
     # FILLED TABLE - Calculate correlations and descriptives
     # =============================================
 
-    # Extract and convert to numeric
+    # Extract and convert to numeric, replace -99 with NA
     cor_data <- data |>
       dplyr::select(dplyr::all_of(vars)) |>
-      dplyr::mutate(dplyr::across(dplyr::everything(), as.numeric))
-
-    # Replace -99 with NA (common SPSS missing code)
-    cor_data <- cor_data |>
-      dplyr::mutate(dplyr::across(dplyr::everything(), ~ dplyr::na_if(., -99)))
+      dplyr::mutate(dplyr::across(dplyr::everything(), as.numeric)) |>
+      dplyr::mutate(dplyr::across(dplyr::everything(), \(x) dplyr::na_if(x, -99)))
 
     # Calculate correlation matrix using psych
     cor_matrix <- psych::corr.test(cor_data, use = "pairwise.complete.obs")
@@ -339,46 +365,33 @@ create_corr_apa_table <- function(data = NULL, vars = NULL, var_labels = NULL,
 
     # Calculate descriptives for each variable
     desc_stats <- cor_data |>
-      dplyr::summarise(dplyr::across(dplyr::everything(),
-                                     list(mean = ~ mean(., na.rm = TRUE),
-                                          sd = ~ stats::sd(., na.rm = TRUE),
-                                          n = ~ sum(!is.na(.)))))
+      dplyr::summarise(dplyr::across(dplyr::everything(), list(
+        mean = \(x) mean(x, na.rm = TRUE),
+        sd   = \(x) stats::sd(x, na.rm = TRUE),
+        n    = \(x) sum(!is.na(x))
+      )))
 
     # Extract means, SDs, and ns
     means <- desc_stats |>
       dplyr::select(dplyr::ends_with("_mean")) |>
-      as.numeric() |>
+      unlist() |>
       round(2)
 
     sds <- desc_stats |>
       dplyr::select(dplyr::ends_with("_sd")) |>
-      as.numeric() |>
+      unlist() |>
       round(2)
 
     ns <- desc_stats |>
       dplyr::select(dplyr::ends_with("_n")) |>
-      as.numeric()
-
-    # Format correlation cells with significance stars
-    format_cor_cell <- function(r, p) {
-      if (is.na(r)) {
-        return("\u2014")
-      } else {
-        stars <- ifelse(p < .001, "***",
-                        ifelse(p < .01, "**",
-                               ifelse(p < .05, "*", "")))
-        return(paste0(sprintf("%.2f", r), stars))
-      }
-    }
+      unlist()
 
     # Build correlation columns (upper triangle, shown below diagonal)
-    # Column i shows correlations of variable i with variables i+1, i+2, etc.
-    # Cells at or below the diagonal show a dash
     cor_cols <- list()
     for (i in seq_len(n_vars - 1)) {
-      cor_col <- sapply(seq_len(n_vars), function(j) {
+      cor_col <- purrr::map_chr(seq_len(n_vars), \(j) {
         if (j > i) {
-          format_cor_cell(r_vals[i, j], p_vals[i, j])
+          .format_cor_cell(r_vals[i, j], p_vals[i, j])
         } else {
           "\u2014"
         }
@@ -409,12 +422,9 @@ create_corr_apa_table <- function(data = NULL, vars = NULL, var_labels = NULL,
     # Create empty correlation columns with dashes on/below diagonal
     cor_cols <- list()
     for (i in seq_len(n_vars - 1)) {
-      cor_col <- rep("", n_vars)
-      for (j in seq_len(n_vars)) {
-        if (j <= i) {
-          cor_col[j] <- "\u2014"
-        }
-      }
+      cor_col <- purrr::map_chr(seq_len(n_vars), \(j) {
+        if (j <= i) "\u2014" else ""
+      })
       cor_cols[[paste0(i)]] <- cor_col
     }
 
@@ -448,24 +458,18 @@ create_corr_apa_table <- function(data = NULL, vars = NULL, var_labels = NULL,
       SD = "SD",
       n = "n"
     ) |>
-    # Add spanning header row: blank over Variable, "Descriptive Statistics"
-    # over M/SD/n, "Correlations" over numbered columns
     flextable::add_header_row(
       values = c("", "Descriptive Statistics", "Correlations"),
       colwidths = c(1, 3, n_vars - 1)
     ) |>
-    # APA-style borders
     flextable::border_remove() |>
     flextable::hline_top(part = "header", border = officer::fp_border(width = 2)) |>
     flextable::hline(i = 1, part = "header", border = officer::fp_border(width = 1)) |>
     flextable::hline_bottom(part = "header", border = officer::fp_border(width = 2)) |>
     flextable::hline_bottom(part = "body", border = officer::fp_border(width = 2)) |>
-    # Alignment
     flextable::align(align = "center", part = "all") |>
     flextable::align(j = "Variable", align = "left", part = "all") |>
-    # Font size
     flextable::fontsize(size = 11, part = "all") |>
-    # Footer with significance key
     flextable::add_footer_lines("Note. *p < .05. **p < .01. ***p < .001.") |>
     flextable::fontsize(part = "footer", size = 10) |>
     flextable::align(part = "footer", align = "left")

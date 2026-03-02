@@ -9,7 +9,7 @@ format_wg_anova_results(
   vars,
   anova_results_list,
   condition_labels = NULL,
-  Key = TRUE
+  KEY = TRUE
 )
 }
 \arguments{
@@ -22,21 +22,21 @@ format_wg_anova_results(
 \item{condition_labels}{Character vector or \code{NULL}. Display labels for conditions.
 Must have 2 elements.}
 
-\item{Key}{Logical. If \code{TRUE} (default), show answers; if \code{FALSE}, show blanks.}
+\item{KEY}{Logical. If \code{TRUE} (default), show answers; if \code{FALSE}, show blanks.}
 }
 \value{
 A character string with formatted results.
 }
 \description{
 Returns formatted repeated measures ANOVA results as either a filled-in
-answer key or a blank student worksheet.
+answer KEY or a blank student worksheet.
 }
 \examples{
 data(superman)
 result <- wg_anova_answers(superman,
   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 
-# Answer key
+# Answer KEY
 cat(format_wg_anova_results("RH1",
   c("rt_critics_score", "rt_audience_score"), result,
   condition_labels = c("Critics", "Audience")))
@@ -44,6 +44,6 @@ cat(format_wg_anova_results("RH1",
 # Blank version
 cat(format_wg_anova_results("RH1",
   c("rt_critics_score", "rt_audience_score"), result,
-  condition_labels = c("Critics", "Audience"), Key = FALSE))
+  condition_labels = c("Critics", "Audience"), KEY = FALSE))
 
 }

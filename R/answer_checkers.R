@@ -3,14 +3,24 @@
 # Interactive Homework Checker Functions for Webexercises (tinytable)
 # =============================================================================
 # These functions create tinytable-based interactive widgets using
-# fitb() for fill-in-the-blank and mcq() for multiple choice.
+# webexercises::fitb() for fill-in-the-blank and webexercises::mcq() for multiple choice.
 # They require the 'tinytable' and 'webexercises' packages (Suggests).
+#
+# Updated for dplyr 1.2.0
 # =============================================================================
 
 
 # -----------------------------------------------------------------------------
-# Internal helpers for regression checkers
+# INTERNAL HELPERS
 # -----------------------------------------------------------------------------
+
+#' Create chi-square symbol using unicode package
+#' @keywords internal
+#' @noRd
+.chi_sq_symbol <- function() {
+
+  paste0(intToUtf8(0x03C7), intToUtf8(0x00B2))
+}
 
 #' Convert a p-value to significance stars
 #'
@@ -19,11 +29,13 @@
 #' @keywords internal
 #' @export
 p_to_stars <- function(p) {
+
   if (p < 0.001) return("***")
-  if (p < 0.01)  return("**")
-  if (p < 0.05)  return("*")
-  return("ns")
+  if (p < 0.01) return("**")
+  if (p < 0.05) return("*")
+  "ns"
 }
+
 
 #' Create a significance-level MCQ widget
 #'
@@ -38,83 +50,235 @@ sig_mcq <- function(p_value) {
   if (!requireNamespace("webexercises", quietly = TRUE)) {
     stop("Package 'webexercises' is required.")
   }
+
   stars <- p_to_stars(p_value)
-  if (stars == "ns") {
-    return(webexercises::mcq(c(answer = "ns", "*", "**", "***")))
-  } else if (stars == "*") {
-    return(webexercises::mcq(c("ns", answer = "*", "**", "***")))
-  } else if (stars == "**") {
-    return(webexercises::mcq(c("ns", "*", answer = "**", "***")))
+
+  mcq_options <- list(
+    "ns"  = c(answer = "ns", "*", "**", "***"),
+    "*"   = c("ns", answer = "*", "**", "***"),
+    "**"  = c("ns", "*", answer = "**", "***"),
+    "***" = c("ns", "*", "**", answer = "***")
+  )
+
+  webexercises::mcq(mcq_options[[stars]])
+}
+
+
+#' Create reject/retain H0 MCQ based on p-value
+#'
+#' @param p_value Numeric p-value.
+#' @param alpha Numeric significance level. Default 0.05.
+#' @return HTML string from [webexercises::mcq()].
+#' @keywords internal
+#' @noRd
+.make_reject_retain_mcq <- function(p_value, alpha = 0.05) {
+  if (!requireNamespace("webexercises", quietly = TRUE)) {
+    stop("Package 'webexercises' is required.")
+  }
+
+  if (p_value < alpha) {
+    webexercises::mcq(c(
+      "Retain the H0 null hypothesis",
+      answer = "Reject the H0 null hypothesis"
+    ))
   } else {
-    return(webexercises::mcq(c("ns", "*", "**", answer = "***")))
+    webexercises::mcq(c(
+      answer = "Retain the H0 null hypothesis",
+      "Reject the H0 null hypothesis"
+    ))
   }
 }
 
-#' Interactive Descriptive Statistics Checker (Webexercise)
+
+#' Create posthoc needed MCQ based on p-value
 #'
-#' Creates a tibble with fill-in-the-blank inputs for mean, SD, and SEM,
-#' plus a multiple choice dropdown for whether the mean is interpretable.
-#' Designed for use in Quarto HTML homework checkers. Pass the result to
-#' \code{tinytable::tt()} with \code{format_tt(escape = FALSE)} inside
-#' a chunk with \code{results: asis} and \code{echo: false}.
+#' @param p_value Numeric p-value.
+#' @param test_type Character. Type of test ("omnibus_f", "interaction", "chi_square").
+#' @param alpha Numeric significance level. Default 0.05.
+#' @return HTML string from [webexercises::mcq()].
+#' @keywords internal
+#' @noRd
+.make_posthoc_mcq <- function(p_value, test_type = "omnibus_f", alpha = 0.05) {
+  if (!requireNamespace("webexercises", quietly = TRUE)) {
+    stop("Package 'webexercises' is required.")
+  }
+
+  options <- switch(test_type,
+                    "omnibus_f" = c(
+                      no = "No - a nonsignificant Omnibus F-test",
+                      yes = "Yes - significant Omnibus F-test"
+                    ),
+                    "interaction" = c(
+                      no = "No - a nonsignificant interaction",
+                      yes = "Yes - significant interaction"
+                    ),
+                    "chi_square" = c(
+                      no = "No - a nonsignificant Omnibus Chi-Square test",
+                      yes = "Yes - significant Omnibus Chi-Square test"
+                    ),
+                    c(no = "No", yes = "Yes")
+  )
+
+  if (p_value < alpha) {
+    webexercises::mcq(c(options["no"], answer = options["yes"]))
+  } else {
+    webexercises::mcq(c(answer = options["no"], options["yes"]))
+  }
+}
+
+
+#' Create error type MCQ based on significance
+#'
+#' @param is_significant Logical. Whether the result is significant.
+#' @return HTML string from [webexercises::mcq()].
+#' @keywords internal
+#' @noRd
+.make_error_type_mcq <- function(is_significant) {
+  if (!requireNamespace("webexercises", quietly = TRUE)) {
+    stop("Package 'webexercises' is required.")
+  }
+
+  if (is_significant) {
+    webexercises::mcq(c(answer = "Type I & III", "Type II"))
+  } else {
+    webexercises::mcq(c("Type I & III", answer = "Type II"))
+  }
+}
+
+
+#' Create power problem MCQ based on power assessment
+#'
+#' @param power_text Character. Power problem description from results.
+#' @return HTML string from [webexercises::mcq()].
+#' @keywords internal
+#' @noRd
+.make_power_mcq <- function(power_text) {
+  if (!requireNamespace("webexercises", quietly = TRUE)) {
+    stop("Package 'webexercises' is required.")
+  }
+
+  options <- c(
+    "No - rejecting H0: means there was sufficient power",
+    "No - effect is \"too small to be interesting,\" (r < .10)",
+    "Yes - The effect is \"large enough to be interesting,\" (r > .10)"
+  )
+
+  if (grepl("rejecting H0", power_text)) {
+    names(options) <- c("answer", "", "")
+  } else if (grepl("too small", power_text)) {
+    names(options) <- c("", "answer", "")
+  } else {
+    names(options) <- c("", "", "answer")
+  }
+
+  webexercises::mcq(options)
+}
+
+
+#' Format p-value for display
+#'
+#' @param p_value Numeric p-value.
+#' @return Character formatted p-value.
+#' @keywords internal
+#' @noRd
+.format_p_display <- function(p_value) {
+  if (is.na(p_value) || p_value < 0.001) ".001" else p_value
+}
+
+
+#' Safely extract scalar value for fitb
+#'
+#' @param value Value to check and convert.
+#' @param default Default value if NA or empty.
+#' @return Scalar value safe for webexercises::fitb().
+#' @keywords internal
+#' @noRd
+.safe_fitb_value <- function(value, default = "NA") {
+  if (is.null(value) || length(value) == 0 || (length(value) == 1 && is.na(value))) {
+    default
+
+  } else {
+    value[[1]]
+  }
+}
+
+
+#' Check and load required packages
+#'
+#' @param packages Character vector of package names.
+#' @keywords internal
+#' @noRd
+.check_packages <- function(packages = c("tinytable", "webexercises")) {
+  for (pkg in packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      stop(
+        "Package '", pkg, "' is required. ",
+        "Install with install.packages('", pkg, "')"
+      )
+    }
+  }
+}
+
+
+# =============================================================================
+# DESCRIPTIVE STATISTICS CHECKER
+# =============================================================================
+
+#' Interactive Descriptive Statistics Homework Checker
+#'
+#' Creates a [tinytable::tt()] table with fill-in-the-blank and multiple
+#' choice inputs for checking descriptive statistics results. Requires the
+#' **tinytable** and **webexercises** packages.
 #'
 #' @param vars Character vector. Variable names to include, in display order.
-#' @param stats_data A data frame with columns \code{variable}, \code{mean},
-#'   \code{sd}, and \code{sem}. Typically the output of
-#'   \code{compute_summary_stats()}.
-#' @param label Character vector or \code{NULL}. Variables that are IDs/labels.
-#' @param quantitative Character vector or \code{NULL}. Continuous variables.
-#' @param binary Character vector or \code{NULL}. Dichotomous variables.
-#' @param multi_category Character vector or \code{NULL}. Nominal variables
-#'   with 3+ levels.
+#' @param desc_results_list Output from [descriptives_answers()]. Must contain
+#'   `$Descriptives` (a tibble with columns `variable`, `mean`, `sd`, `n`, `sem`).
+#' @param var_labels Named character vector or `NULL`. Optional display labels,
 #'
-#' @return A tibble with columns Variable, Mean, SD, SEM, and Interpretable
-#'   containing HTML strings from webexercises.
+#'   e.g. `c(clark_height_in = "Clark Height")`.
+#' @param label Character vector or `NULL`. Variables that are IDs/labels
+#'   (mean is NOT interpretable).
+#' @param quantitative Character vector or `NULL`. Continuous variables
+#'   (mean IS interpretable).
+#' @param binary Character vector or `NULL`. Dichotomous variables
+#'   (mean IS interpretable).
+#' @param multi_category Character vector or `NULL`. Nominal variables with
+#'   3+ levels (mean is NOT interpretable).
+#'
+#' @return A tinytable object with embedded webexercise elements.
 #'
 #' @examples
 #' \dontrun{
 #' data(superman)
-#' library(dplyr)
-#'
-#' walkthrough <- superman |>
-#'   select(num, year, type, clark_height_in, clark_grp,
-#'          height_diff, height_gap) |>
-#'   filter(year > 1975)
-#'
-#' stats <- compute_summary_stats(walkthrough)
-#'
-#' tbl <- create_univariate_checker(
-#'   vars       = names(walkthrough),
-#'   stats_data = stats,
-#'   label          = "num",
-#'   binary         = "clark_grp",
-#'   multi_category = c("type", "height_gap")
+#' result <- descriptives_answers(superman,
+#'   vars = c("year", "clark_height_in", "height_diff"))
+#' create_descriptives_checker(
+#'   vars = c("year", "clark_height_in", "height_diff"),
+#'   desc_results_list = result,
+#'   quantitative = c("clark_height_in", "height_diff"),
+#'   label = "year"
 #' )
 #' }
 #'
 #' @export
-create_univariate_checker <- function(vars,
-                                      stats_data,
-                                      label          = NULL,
-                                      quantitative   = NULL,
-                                      binary         = NULL,
-                                      multi_category = NULL) {
+create_descriptives_checker <- function(vars,
+                                        desc_results_list,
+                                        var_labels = NULL,
+                                        label = NULL,
+                                        quantitative = NULL,
+                                        binary = NULL,
+                                        multi_category = NULL) {
 
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required. ",
-         "Install with install.packages('webexercises')")
-  }
+  .check_packages()
 
-  # Build the type lookup from the category parameters
+  desc_stats <- desc_results_list$Descriptives
+
+  # Build type lookup from category parameters
   var_type_map <- c(
-    stats::setNames(rep("label",
-                        length(label)), label),
-    stats::setNames(rep("quantitative",
-                        length(quantitative)), quantitative),
-    stats::setNames(rep("binary",
-                        length(binary)), binary),
-    stats::setNames(rep("multi_category",
-                        length(multi_category)), multi_category)
+    stats::setNames(rep("label", length(label)), label),
+    stats::setNames(rep("quantitative", length(quantitative)), quantitative),
+    stats::setNames(rep("binary", length(binary)), binary),
+    stats::setNames(rep("multi_category", length(multi_category)), multi_category)
   )
 
   # MCQ answer text for each type
@@ -132,6 +296,7 @@ create_univariate_checker <- function(vars,
     "No - this is a multiple-category variable"
   )
 
+  # Helper to build MCQ
   build_mcq <- function(correct_type) {
     correct <- answer_text[correct_type]
     opts <- all_options
@@ -139,38 +304,58 @@ create_univariate_checker <- function(vars,
     webexercises::mcq(opts)
   }
 
-  stats_data |>
-    dplyr::filter(.data$variable %in% vars) |>
-    dplyr::slice(match(vars, .data$variable)) |>
-    dplyr::mutate(
-      Mean_input = purrr::map_chr(
-        .data$mean, ~webexercises::fitb(.x)
-      ),
-      SD_input = purrr::map_chr(
-        .data$sd, ~webexercises::fitb(.x)
-      ),
-      SEM_input = purrr::map_chr(
-        .data$sem, ~webexercises::fitb(.x)
-      ),
-      Interpretable_input = purrr::map_chr(
-        .data$variable, function(v) {
-          vtype <- if (v %in% names(var_type_map)) {
-            var_type_map[v]
-          } else {
-            "quantitative"
-          }
-          build_mcq(vtype)
-        }
+  # Helper to get display label
+  get_label <- function(v) {
+    if (!is.null(var_labels) && v %in% names(var_labels)) {
+      return(unname(var_labels[v]))
+    }
+    v
+  }
+
+  # Build all rows using purrr::map
+  rows_list <- purrr::map(vars, \(v) {
+    # Filter to get the matching row
+    var_stats <- desc_stats |>
+      dplyr::filter(.data$variable == v)
+
+    # Check if variable was found
+    if (nrow(var_stats) == 0) {
+      stop(
+        "Variable '", v, "' not found in desc_results_list$Descriptives. ",
+        "Available variables: ", paste(desc_stats$variable, collapse = ", ")
       )
-    ) |>
-    dplyr::select(
-      Variable         = "variable",
-      Mean             = "Mean_input",
-      SD               = "SD_input",
-      SEM              = "SEM_input",
-      `Interpretable?` = "Interpretable_input"
+    }
+
+    # Extract scalar values safely using dplyr::pull()
+    mean_val <- .safe_fitb_value(dplyr::pull(var_stats, "mean"))
+    sd_val <- .safe_fitb_value(dplyr::pull(var_stats, "sd"))
+    sem_val <- .safe_fitb_value(dplyr::pull(var_stats, "sem"))
+
+    # Determine variable type (default to quantitative)
+    vtype <- if (v %in% names(var_type_map)) var_type_map[[v]] else "quantitative"
+
+    tibble::tibble(
+      Variable = get_label(v),
+      Mean = webexercises::fitb(mean_val),
+      SD = webexercises::fitb(sd_val),
+      SEM = webexercises::fitb(sem_val),
+      `Interpretable?` = build_mcq(vtype)
+    )
+  })
+
+  # Combine all rows
+  table_data <- dplyr::bind_rows(rows_list)
+
+  # Create tinytable and apply styling
+  table_data |>
+    tinytable::tt() |>
+    tinytable::format_tt(escape = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class = "table table-striped table-hover table-sm",
+      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
     )
 }
+
 
 # =============================================================================
 # CORRELATION CHECKER
@@ -201,27 +386,28 @@ create_univariate_checker <- function(vars,
 #' @export
 create_corr_checker <- function(rh_name, vars, corr_results_list) {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required. Install with install.packages('webexercises')")
+  .check_packages()
 
   desc_stats <- corr_results_list$Descriptives
-  var1_stats <- desc_stats[desc_stats$variable == vars[1], ]
-  var2_stats <- desc_stats[desc_stats$variable == vars[2], ]
-  p_value    <- corr_results_list$Correlation$p_value
 
-  if (p_value < 0.05) {
-    reject_retain_mcq <- webexercises::mcq(c(
-      "Retain the H0 null hypothesis",
-      answer = "Reject the H0 null hypothesis"
-    ))
-  } else {
-    reject_retain_mcq <- webexercises::mcq(c(
-      answer = "Retain the H0 null hypothesis",
-      "Reject the H0 null hypothesis"
-    ))
-  }
+  # Filter and extract scalar values using pull()
+  var1_stats <- desc_stats |>
+    dplyr::filter(.data$variable == vars[1])
+  var2_stats <- desc_stats |>
+    dplyr::filter(.data$variable == vars[2])
+
+  # Extract scalars safely
+  var1_mean <- .safe_fitb_value(dplyr::pull(var1_stats, "mean"))
+  var1_sd <- .safe_fitb_value(dplyr::pull(var1_stats, "sd"))
+  var1_n <- .safe_fitb_value(dplyr::pull(var1_stats, "n"))
+
+  var2_mean <- .safe_fitb_value(dplyr::pull(var2_stats, "mean"))
+  var2_sd <- .safe_fitb_value(dplyr::pull(var2_stats, "sd"))
+  var2_n <- .safe_fitb_value(dplyr::pull(var2_stats, "n"))
+
+  p_value <- corr_results_list$Correlation$p_value
+
+  reject_retain_mcq <- .make_reject_retain_mcq(p_value)
 
   corr_table_data <- tibble::tibble(
     ` `  = paste("Correlation:", rh_name),
@@ -235,9 +421,9 @@ create_corr_checker <- function(rh_name, vars, corr_results_list) {
 
   desc_table1_data <- tibble::tibble(
     ` `    = paste("Variable 1:", vars[1]),
-    Mean   = webexercises::fitb(var1_stats$mean),
-    SD     = webexercises::fitb(var1_stats$sd),
-    N      = webexercises::fitb(var1_stats$n),
+    Mean   = webexercises::fitb(var1_mean),
+    SD     = webexercises::fitb(var1_sd),
+    N      = webexercises::fitb(var1_n),
     `  `   = ""
   )
   desc_table1 <- tinytable::tt(desc_table1_data) |>
@@ -245,22 +431,20 @@ create_corr_checker <- function(rh_name, vars, corr_results_list) {
 
   desc_table2_data <- tibble::tibble(
     ` `    = paste("Variable 2:", vars[2]),
-    Mean   = webexercises::fitb(var2_stats$mean),
-    SD     = webexercises::fitb(var2_stats$sd),
-    N      = webexercises::fitb(var2_stats$n),
+    Mean   = webexercises::fitb(var2_mean),
+    SD     = webexercises::fitb(var2_sd),
+    N      = webexercises::fitb(var2_n),
     `   `  = ""
   )
   desc_table2 <- tinytable::tt(desc_table2_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  combined <- tinytable::rbind2(corr_table, desc_table1, use_names = FALSE) |>
+  tinytable::rbind2(corr_table, desc_table1, use_names = FALSE) |>
     tinytable::rbind2(desc_table2, use_names = FALSE) |>
     tinytable::style_tt(
       bootstrap_class    = "table table-striped table-hover table-sm",
       bootstrap_css_rule = "width: 80%; margin-left: auto; margin-right: auto;"
     )
-
-  return(combined)
 }
 
 
@@ -274,51 +458,31 @@ create_corr_checker <- function(rh_name, vars, corr_results_list) {
 #' for checking a 2 x 2 chi-square test of independence.
 #'
 #' @param rh_name Character. Research hypothesis label.
-#' @param vars Character vector of length 2. Variable names (for reference).
-#' @param chi_results_list Output from [chi_square_answers()].
-#' @param var1_labels Character vector of length 2. Labels for variable 1
-#'   levels. Default `c("1", "2")`.
-#' @param var2_labels Character vector of length 2. Labels for variable 2
-#'   levels. Default `c("1", "2")`.
+#' @param chi_results_list Output from chi-square analysis function.
+#' @param var1_labels Character vector of length 2. Labels for variable 1.
+#' @param var2_labels Character vector of length 2. Labels for variable 2.
 #'
 #' @return A tinytable object with embedded webexercise elements.
 #'
-#' @examples
-#' \dontrun{
-#' data(superman)
-#' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
-#' create_chi_checker("RH1", c("clark_grp", "tomatometer"), result,
-#'   var1_labels = c("Under 6ft", "6ft+"),
-#'   var2_labels = c("Rotten", "Fresh"))
-#' }
-#'
 #' @export
-create_chi_checker <- function(rh_name, vars, chi_results_list,
-                               var1_labels = c("1", "2"),
-                               var2_labels = c("1", "2")) {
+create_chisq_checker <- function(rh_name, chi_results_list,
+                                 var1_labels, var2_labels) {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
+  .check_packages()
 
-  chi_sq   <- chi_results_list$ChiSquare$chi_sq
-  p_value  <- chi_results_list$ChiSquare$p_value
-  df       <- chi_results_list$ChiSquare$df
+  chi_sq    <- chi_results_list$ChiSquare$chi_sq
+  p_value   <- chi_results_list$ChiSquare$p_value
+  df        <- chi_results_list$ChiSquare$df
   var1_desc <- chi_results_list$Var1_Descriptives
   var2_desc <- chi_results_list$Var2_Descriptives
 
-  if (p_value < 0.05) {
-    reject_retain_mcq <- webexercises::mcq(c(
-      "Retain the H0 null hypothesis",
-      answer = "Reject the H0 null hypothesis"
-    ))
-  } else {
-    reject_retain_mcq <- webexercises::mcq(c(
-      answer = "Retain the H0 null hypothesis",
-      "Reject the H0 null hypothesis"
-    ))
-  }
+  # Extract scalar values safely
+  var1_n1 <- .safe_fitb_value(var1_desc$n[1])
+  var1_n2 <- .safe_fitb_value(var1_desc$n[2])
+  var2_n1 <- .safe_fitb_value(var2_desc$n[1])
+  var2_n2 <- .safe_fitb_value(var2_desc$n[2])
+
+  reject_retain_mcq <- .make_reject_retain_mcq(p_value)
 
   chi_table_data <- tibble::tibble(
     ` `  = paste("Chi-Square:", rh_name),
@@ -337,29 +501,328 @@ create_chi_checker <- function(rh_name, vars, chi_results_list,
       paste("Number of", var1_labels[2], "in the sample")
     ),
     `n ` = c(
-      webexercises::fitb(var1_desc$n[1]),
-      webexercises::fitb(var1_desc$n[2])
+      webexercises::fitb(var1_n1),
+      webexercises::fitb(var1_n2)
     ),
     `  ` = c(
       paste("Number of", var2_labels[1], "in the sample"),
       paste("Number of", var2_labels[2], "in the sample")
     ),
     `n  ` = c(
-      webexercises::fitb(var2_desc$n[1]),
-      webexercises::fitb(var2_desc$n[2])
+      webexercises::fitb(var2_n1),
+      webexercises::fitb(var2_n2)
     ),
     `   ` = ""
   )
   desc_table <- tinytable::tt(desc_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  combined <- tinytable::rbind2(chi_table, desc_table, use_names = FALSE) |>
+  tinytable::rbind2(chi_table, desc_table, use_names = FALSE) |>
     tinytable::style_tt(
       bootstrap_class    = "table table-striped table-hover table-sm",
       bootstrap_css_rule = "width: 80%; margin-left: auto; margin-right: auto;"
     )
+}
 
-  return(combined)
+
+# =============================================================================
+# K-GROUP CHI-SQUARE OMNIBUS CHECKER
+# =============================================================================
+
+#' Interactive Chi-Square Omnibus Homework Checker
+#'
+#' Creates a tinytable with embedded webexercises elements
+#' for checking chi-square omnibus statistics and sample descriptives.
+#'
+#' @param rh_name Character. Research hypothesis label.
+#' @param chisq_results_list Output from [chi_square_kgroup_answers()].
+#' @param var1_labels Character vector or NULL. Labels for var1 levels.
+#' @param var2_labels Character vector or NULL. Labels for var2 levels.
+#'
+#' @return A tinytable object with embedded webexercise elements.
+#'
+#' @examples
+#' \dontrun{
+#' result <- chi_square_kgroup_answers(data, "group", "outcome")
+#' create_chisq_omnibus_table("RH1", result)
+#' }
+#'
+#' @export
+create_chisq_omnibus_table <- function(rh_name, chisq_results_list,
+                                       var1_labels = NULL,
+                                       var2_labels = NULL) {
+
+  .check_packages()
+
+  chi_sq <- chisq_results_list$ChiSquare$chi_sq
+  p_value <- chisq_results_list$ChiSquare$p_value
+  df <- chisq_results_list$ChiSquare$df
+  total_n <- chisq_results_list$Sample_Size
+
+  var1_desc <- chisq_results_list$Var1_Descriptives
+  var2_desc <- chisq_results_list$Var2_Descriptives
+
+  if (is.null(var1_labels)) var1_labels <- var1_desc$level_label
+  if (is.null(var2_labels)) var2_labels <- var2_desc$level_label
+
+  #use unicode to fix chr
+  posthoc_mcq <- if (p_value < 0.05) {
+    webexercises::mcq(c(
+      paste0("No \u2013 a nonsignificant Omnibus ", .chi_sq_symbol(), " test"),
+      answer = paste0("Yes \u2013 significant Omnibus ", .chi_sq_symbol(), " test")
+    ))
+  } else {
+    webexercises::mcq(c(
+      answer = paste0("No \u2013 a nonsignificant Omnibus ", .chi_sq_symbol(), " test"),
+      paste0("Yes \u2013 significant Omnibus ", .chi_sq_symbol(), " test")
+    ))
+  }
+
+  chisq_table_data <- tibble::tibble(
+    ` ` = paste("Chi-Square:", rh_name),
+    chi2 = webexercises::fitb(chi_sq),
+    p = webexercises::fitb(p_value),
+    df = webexercises::fitb(df),
+    N = webexercises::fitb(total_n),
+    `  ` = "",
+    `Do we need to perform pairwise comparisons?` = posthoc_mcq
+  )
+  names(chisq_table_data)[2] <- .chi_sq_symbol()
+
+  chisq_table <- tinytable::tt(chisq_table_data) |>
+    tinytable::format_tt(escape = FALSE)
+
+  n_var1 <- nrow(var1_desc)
+  n_var2 <- nrow(var2_desc)
+
+  # Extract values safely
+  var1_col1 <- purrr::map_chr(seq_len(n_var1), \(i) {
+    paste("Number of", var1_labels[i], "in sample")
+  })
+  var1_col2 <- purrr::map_chr(seq_len(n_var1), \(i) {
+    webexercises::fitb(.safe_fitb_value(var1_desc$n[i]))
+  })
+  var2_col1 <- purrr::map_chr(seq_len(n_var2), \(i) {
+    paste("Number of", var2_labels[i], "in sample")
+  })
+  var2_col2 <- purrr::map_chr(seq_len(n_var2), \(i) {
+    webexercises::fitb(.safe_fitb_value(var2_desc$n[i]))
+  })
+
+  desc_table_data <- tibble::tibble(
+    ` ` = c(var1_col1[1], var2_col1[1]),
+    `  ` = c(var1_col2[1], var2_col2[1]),
+    `   ` = c(if (n_var1 >= 2) var1_col1[2] else "", if (n_var2 >= 2) var2_col1[2] else ""),
+    `    ` = c(if (n_var1 >= 2) var1_col2[2] else "", if (n_var2 >= 2) var2_col2[2] else ""),
+    `     ` = c(if (n_var1 >= 3) var1_col1[3] else "", ""),
+    `      ` = c(if (n_var1 >= 3) var1_col2[3] else "", ""),
+    `       ` = ""
+  )
+
+  desc_table <- tinytable::tt(desc_table_data) |>
+    tinytable::format_tt(escape = FALSE)
+
+  tinytable::rbind2(chisq_table, desc_table, use_names = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class = "table table-striped table-hover table-sm",
+      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
+    )
+}
+
+
+#' Interactive Chi-Square Pairwise Comparisons Homework Checker
+#'
+#' Creates a tinytable with embedded webexercises elements
+#' for checking chi-square pairwise comparisons including percentages,
+#' chi-square values, effect sizes, and power assessments.
+#'
+#' @param chisq_results_list Output from [chi_square_kgroup_answers()].
+#' @param var1_labels Character vector or NULL. Labels for var1 levels.
+#' @param var2_labels Character vector or NULL. Labels for var2 levels.
+#'
+#' @return A tinytable object with embedded webexercise elements.
+#'
+#' @examples
+#' \dontrun{
+#' result <- chi_square_kgroup_answers(data, "group", "outcome")
+#' create_chisq_pairwise_table(result)
+#' }
+#'
+#' @export
+create_chisq_pairwise_table <- function(chisq_results_list,
+                                        var1_labels = NULL,
+                                        var2_labels = NULL) {
+
+  .check_packages()
+
+  pairwise <- chisq_results_list$Pairwise
+  n_pairwise <- length(pairwise)
+
+  if (n_pairwise == 0) stop("No pairwise comparisons found in results")
+
+  pct_label <- chisq_results_list$pct_var2_label
+  if (is.null(pct_label)) pct_label <- "comparison"
+
+  if (!is.null(var1_labels)) {
+    original_labels <- chisq_results_list$var1_labels
+    for (i in seq_len(n_pairwise)) {
+      comparison_name <- pairwise[[i]]$comparison
+      if (!is.null(original_labels)) {
+        for (j in seq_along(original_labels)) {
+          comparison_name <- gsub(original_labels[j], var1_labels[j],
+                                  comparison_name, fixed = TRUE)
+        }
+        pairwise[[i]]$comparison <- comparison_name
+      }
+    }
+  }
+
+  chi_crit <- chisq_results_list$ChiCrit
+
+  # Using unicode function to get symbol
+  chi_crit_data <- tibble::tibble(
+    ` ` = paste0(.chi_sq_symbol(), " critical"),
+    `  ` = webexercises::fitb(chi_crit),
+    `   ` = "",
+    `    ` = "",
+    `     ` = "",
+    `      ` = ""
+  )
+
+  chi_crit_table <- tinytable::tt(chi_crit_data) |>
+    tinytable::format_tt(escape = FALSE)
+
+  pct_column_name <- paste0("% ", pct_label)
+
+  pairwise_table_data <- tibble::tibble(
+    ` ` = purrr::map_chr(seq_len(n_pairwise), \(i) pairwise[[i]]$comparison),
+    !!pct_column_name := purrr::map_chr(seq_len(n_pairwise), \(i) {
+      paste0(
+        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$pct1)), "% vs ",
+        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$pct2)), "%"
+      )
+    }),
+    #use unicode package to fix chr
+    chi2_result = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      paste0(
+        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$chi_sq)), " ",
+        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$chi_result))
+      )
+    }),
+    `Type of Error` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      is_sig <- pairwise[[i]]$chi_result != "="
+      .make_error_type_mcq(is_sig)
+    }),
+    `Effect Size (r)` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$effect_size))
+    }),
+    `Power Problem?` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      .make_power_mcq(pairwise[[i]]$power_problem)
+    })
+  )
+
+  names(pairwise_table_data)[names(pairwise_table_data) == "chi2_result"] <- paste0(.chi_sq_symbol(), " Result")
+
+
+  pairwise_table <- tinytable::tt(pairwise_table_data) |>
+    tinytable::format_tt(escape = FALSE)
+
+  tinytable::rbind2(chi_crit_table, pairwise_table, use_names = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class = "table table-striped table-hover table-sm",
+      bootstrap_css_rule = "width: 95%; margin-left: auto; margin-right: auto;"
+    )
+}
+
+
+# =============================================================================
+# CHI-SQUARE PAIRWISE CHECKER
+# =============================================================================
+
+#' Interactive Chi-Square Pairwise Comparisons Homework Checker
+#'
+#' Creates a [tinytable::tt()] table for checking chi-square pairwise
+#' comparisons including percentages, chi-square values, effect sizes,
+#' and power assessments.
+#'
+#' @param chisq_results_list Output from chi-square kgroup analysis.
+#' @param var1_labels Character vector or `NULL`. Optional relabelling.
+#' @param var2_labels Character vector or `NULL`. Optional relabelling.
+#'
+#' @return A tinytable object with embedded webexercise elements.
+#'
+#' @export
+create_chisq_pairwise_checker <- function(chisq_results_list,
+                                          var1_labels = NULL,
+                                          var2_labels = NULL) {
+
+  .check_packages()
+
+  pairwise   <- chisq_results_list$Pairwise
+  n_pairwise <- length(pairwise)
+  if (n_pairwise == 0) stop("No pairwise comparisons found in results")
+
+  pct_label <- chisq_results_list$pct_var2_label
+  if (is.null(pct_label)) pct_label <- "comparison"
+
+  # Relabel comparisons if needed
+  if (!is.null(var1_labels)) {
+    original_labels <- chisq_results_list$var1_labels
+    for (i in seq_len(n_pairwise)) {
+      cname <- pairwise[[i]]$comparison
+      if (!is.null(original_labels)) {
+        for (j in seq_along(original_labels)) {
+          cname <- gsub(original_labels[j], var1_labels[j], cname, fixed = TRUE)
+        }
+        pairwise[[i]]$comparison <- cname
+      }
+    }
+  }
+
+  chi_crit <- chisq_results_list$ChiCrit
+
+  chi_crit_data <- tibble::tibble(
+    ` `   = "Chi-Square critical",
+    `  `  = webexercises::fitb(chi_crit),
+    `   ` = "", `    ` = "", `     ` = "", `      ` = ""
+  )
+  chi_crit_table <- tinytable::tt(chi_crit_data) |>
+    tinytable::format_tt(escape = FALSE)
+
+  pairwise_table_data <- tibble::tibble(
+    ` ` = purrr::map_chr(seq_len(n_pairwise), \(i) pairwise[[i]]$comparison),
+    `% comparison` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      paste0(
+        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$pct1)), "% vs ",
+        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$pct2)), "%"
+      )
+    }),
+    chi2_result = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      paste0(
+        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$chi_sq)), " ",
+        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$chi_result))
+      )
+    }),
+    `Type of Error` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      is_sig <- pairwise[[i]]$chi_result != "="
+      .make_error_type_mcq(is_sig)
+    }),
+    `Effect Size (r)` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$effect_size))
+    }),
+    `Power Problem?` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      .make_power_mcq(pairwise[[i]]$power_problem)
+    })
+  )
+  names(pairwise_table_data)[3] <- "\u03C7\u00B2 Result"
+  pairwise_table <- tinytable::tt(pairwise_table_data) |>
+    tinytable::format_tt(escape = FALSE)
+
+  tinytable::rbind2(chi_crit_table, pairwise_table, use_names = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class    = "table table-striped table-hover table-sm",
+      bootstrap_css_rule = "width: 95%; margin-left: auto; margin-right: auto;"
+    )
 }
 
 
@@ -395,10 +858,7 @@ create_chi_checker <- function(rh_name, vars, chi_results_list,
 create_bg_anova_checker <- function(rh_name, vars, anova_results_list,
                                     group_labels = NULL) {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
+  .check_packages()
 
   anova_type_mcq <- webexercises::mcq(c(
     answer = "Between-Groups (BG)",
@@ -411,88 +871,77 @@ create_bg_anova_checker <- function(rh_name, vars, anova_results_list,
   df_within  <- anova_results_list$ANOVA$df_within
   mse        <- anova_results_list$ANOVA$mse
 
-  if (is.na(p_value) || p_value < 0.001) {
-    p_value_display <- ".001"
-  } else {
-    p_value_display <- p_value
-  }
+  p_value_display <- .format_p_display(p_value)
 
   desc_stats <- anova_results_list$Descriptives
   if (is.null(group_labels)) group_labels <- as.character(desc_stats$iv)
 
-  if (p_value < 0.05) {
-    reject_retain_mcq <- webexercises::mcq(c(
-      "Retain the H0 null hypothesis",
-      answer = "Reject the H0 null hypothesis"
-    ))
-  } else {
-    reject_retain_mcq <- webexercises::mcq(c(
-      answer = "Retain the H0 null hypothesis",
-      "Reject the H0 null hypothesis"
-    ))
-  }
+  reject_retain_mcq <- .make_reject_retain_mcq(p_value)
 
   type_table_data <- tibble::tibble(
-    ` `      = paste("ANOVA Type:", rh_name),
-    `Type`   = anova_type_mcq,
-    `  ` = "", `   ` = "", `    ` = "", `     ` = "", `      ` = ""
+    ` `    = paste("ANOVA Type:", rh_name),
+    `Type` = anova_type_mcq,
+    `  ` = "", `   ` = "", `    ` = "", `     ` = ""
   )
   type_table <- tinytable::tt(type_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
   anova_table_data <- tibble::tibble(
-    ` `              = paste("ANOVA:", rh_name),
-    F                = webexercises::fitb(f_stat),
-    p                = webexercises::fitb(p_value_display),
-    `df (between)`   = webexercises::fitb(df_between),
-    `df (within)`    = webexercises::fitb(df_within),
-    MSE              = webexercises::fitb(mse),
-    `Reject or Retain?` = reject_retain_mcq
+    ` `           = paste("BG ANOVA:", rh_name),
+    F             = webexercises::fitb(f_stat),
+    p             = webexercises::fitb(p_value_display),
+    `df(between)` = webexercises::fitb(df_between),
+    `df(within)`  = webexercises::fitb(df_within),
+    MSE           = webexercises::fitb(mse)
   )
   anova_table <- tinytable::tt(anova_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  desc_table1_data <- tibble::tibble(
-    ` `  = paste("Group 1:", group_labels[1]),
-    Mean = webexercises::fitb(desc_stats$mean[1]),
-    SD   = webexercises::fitb(desc_stats$sd[1]),
-    N    = webexercises::fitb(desc_stats$n[1]),
-    `  ` = "", `   ` = "", `    ` = ""
+  decision_table_data <- tibble::tibble(
+    ` ` = "Decision:",
+    `Reject or Retain H0?` = reject_retain_mcq,
+    `  ` = "", `   ` = "", `    ` = "", `     ` = ""
   )
-  desc_table1 <- tinytable::tt(desc_table1_data) |>
+  decision_table <- tinytable::tt(decision_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  desc_table2_data <- tibble::tibble(
-    ` `  = paste("Group 2:", group_labels[2]),
-    Mean = webexercises::fitb(desc_stats$mean[2]),
-    SD   = webexercises::fitb(desc_stats$sd[2]),
-    N    = webexercises::fitb(desc_stats$n[2]),
-    `  ` = "", `   ` = "", `    ` = ""
+  # Extract scalar values safely for descriptives
+  desc_table_data <- tibble::tibble(
+    ` `  = group_labels,
+    Mean = purrr::map_chr(seq_along(group_labels), \(i) {
+      webexercises::fitb(.safe_fitb_value(desc_stats$mean[i]))
+    }),
+    SD   = purrr::map_chr(seq_along(group_labels), \(i) {
+      webexercises::fitb(.safe_fitb_value(desc_stats$sd[i]))
+    }),
+    n    = purrr::map_chr(seq_along(group_labels), \(i) {
+      webexercises::fitb(.safe_fitb_value(desc_stats$n[i]))
+    }),
+    `  ` = rep("", length(group_labels)),
+    `   ` = rep("", length(group_labels))
   )
-  desc_table2 <- tinytable::tt(desc_table2_data) |>
+  desc_table <- tinytable::tt(desc_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  combined <- tinytable::rbind2(type_table, anova_table, use_names = FALSE) |>
-    tinytable::rbind2(desc_table1, use_names = FALSE) |>
-    tinytable::rbind2(desc_table2, use_names = FALSE) |>
+  tinytable::rbind2(type_table, anova_table, use_names = FALSE) |>
+    tinytable::rbind2(decision_table, use_names = FALSE) |>
+    tinytable::rbind2(desc_table, use_names = FALSE) |>
     tinytable::style_tt(
       bootstrap_class    = "table table-striped table-hover table-sm",
-      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
+      bootstrap_css_rule = "width: 85%; margin-left: auto; margin-right: auto;"
     )
-
-  return(combined)
 }
 
 
 # =============================================================================
-# WITHIN-GROUPS ANOVA CHECKER (2-group)
+# WITHIN-GROUPS ANOVA CHECKER (2-condition)
 # =============================================================================
 
-#' Interactive Within-Groups ANOVA Homework Checker (2-Group)
+#' Interactive Within-Groups ANOVA Homework Checker (2-Condition)
 #'
-#' Creates a [tinytable::tt()] table for checking a 2-condition
-#' within-groups (repeated measures) ANOVA. Includes ANOVA type
-#' identification, F-test statistics, and condition descriptives.
+#' Creates a [tinytable::tt()] table for checking a 2-condition WG ANOVA.
+#' Includes ANOVA type identification, F-test statistics, and condition
+#' descriptives.
 #'
 #' @param rh_name Character. Research hypothesis label.
 #' @param vars Character vector. Variable names (for reference).
@@ -518,39 +967,28 @@ create_bg_anova_checker <- function(rh_name, vars, anova_results_list,
 create_wg_anova_checker <- function(rh_name, vars, anova_results_list,
                                     condition_labels = NULL) {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
+  .check_packages()
 
   anova_type_mcq <- webexercises::mcq(c(
     "Between-Groups (BG)",
     answer = "Within-Groups (WG)"
   ))
 
-  f_stat    <- anova_results_list$ANOVA$F
+  f_stat    <- .safe_fitb_value(anova_results_list$ANOVA$F, "___")
   p_value   <- anova_results_list$ANOVA$p_value
-  df_effect <- anova_results_list$ANOVA$df_effect
-  df_error  <- anova_results_list$ANOVA$df_error
-  mse       <- anova_results_list$ANOVA$mse
+  df_effect <- .safe_fitb_value(anova_results_list$ANOVA$df_effect, "___")
+  df_error  <- .safe_fitb_value(anova_results_list$ANOVA$df_error, "___")
+  mse       <- .safe_fitb_value(anova_results_list$ANOVA$mse, "___")
 
-  if (is.na(p_value) || p_value < 0.001) {
-    p_value_display <- ".001"
-  } else {
-    p_value_display <- p_value
-  }
+  p_value_display <- .format_p_display(p_value)
 
   desc_stats <- anova_results_list$Descriptives
-  if (is.null(condition_labels)) condition_labels <- as.character(desc_stats$condition)
+  if (is.null(condition_labels)) {
+    condition_labels <- as.character(desc_stats$condition)
+  }
 
-  # Handle NA values
-  f_stat          <- if (is.na(f_stat) || length(f_stat) == 0) "___" else f_stat
-  p_value_display <- if (is.na(p_value_display) || length(p_value_display) == 0) "___" else p_value_display
-  df_effect       <- if (is.na(df_effect) || length(df_effect) == 0) "___" else df_effect
-  df_error        <- if (is.na(df_error) || length(df_error) == 0) "___" else df_error
-  mse             <- if (is.na(mse) || length(mse) == 0) "___" else mse
-
-  if (!is.na(as.numeric(p_value)) && length(p_value) > 0 && as.numeric(p_value) < 0.05) {
+  # Create reject/retain MCQ
+  if (!is.na(p_value) && length(p_value) > 0 && p_value < 0.05) {
     reject_retain_mcq <- webexercises::mcq(c(
       "Retain the H0 null hypothesis",
       answer = "Reject the H0 null hypothesis"
@@ -565,52 +1003,54 @@ create_wg_anova_checker <- function(rh_name, vars, anova_results_list,
   type_table_data <- tibble::tibble(
     ` `    = paste("ANOVA Type:", rh_name),
     `Type` = anova_type_mcq,
-    `  ` = "", `   ` = "", `    ` = "", `     ` = "", `      ` = ""
+    `  ` = "", `   ` = "", `    ` = "", `     ` = ""
   )
   type_table <- tinytable::tt(type_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
   anova_table_data <- tibble::tibble(
-    ` `            = paste("ANOVA:", rh_name),
-    F              = webexercises::fitb(f_stat),
-    p              = webexercises::fitb(p_value_display),
-    `df (effect)`  = webexercises::fitb(df_effect),
-    `df (error)`   = webexercises::fitb(df_error),
-    MSE            = webexercises::fitb(mse),
-    `Reject or Retain?` = reject_retain_mcq
+    ` `          = paste("WG ANOVA:", rh_name),
+    F            = webexercises::fitb(f_stat),
+    p            = webexercises::fitb(p_value_display),
+    `df(effect)` = webexercises::fitb(df_effect),
+    `df(error)`  = webexercises::fitb(df_error),
+    MSE          = webexercises::fitb(mse)
   )
   anova_table <- tinytable::tt(anova_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  desc_table1_data <- tibble::tibble(
-    ` `  = paste("Condition 1:", condition_labels[1]),
-    Mean = webexercises::fitb(desc_stats$mean[1]),
-    SD   = webexercises::fitb(desc_stats$sd[1]),
-    N    = webexercises::fitb(desc_stats$n[1]),
-    `  ` = "", `   ` = "", `    ` = ""
+  decision_table_data <- tibble::tibble(
+    ` ` = "Decision:",
+    `Reject or Retain H0?` = reject_retain_mcq,
+    `  ` = "", `   ` = "", `    ` = "", `     ` = ""
   )
-  desc_table1 <- tinytable::tt(desc_table1_data) |>
+  decision_table <- tinytable::tt(decision_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  desc_table2_data <- tibble::tibble(
-    ` `  = paste("Condition 2:", condition_labels[2]),
-    Mean = webexercises::fitb(desc_stats$mean[2]),
-    SD   = webexercises::fitb(desc_stats$sd[2]),
-    N    = webexercises::fitb(desc_stats$n[2]),
-    `  ` = "", `   ` = "", `    ` = ""
+  desc_table_data <- tibble::tibble(
+    ` `  = condition_labels,
+    Mean = purrr::map_chr(seq_along(condition_labels), \(i) {
+      webexercises::fitb(.safe_fitb_value(desc_stats$mean[i]))
+    }),
+    SD   = purrr::map_chr(seq_along(condition_labels), \(i) {
+      webexercises::fitb(.safe_fitb_value(desc_stats$sd[i]))
+    }),
+    n    = purrr::map_chr(seq_along(condition_labels), \(i) {
+      webexercises::fitb(.safe_fitb_value(desc_stats$n[i]))
+    }),
+    `  ` = rep("", length(condition_labels)),
+    `   ` = rep("", length(condition_labels))
   )
-  desc_table2 <- tinytable::tt(desc_table2_data) |>
+  desc_table <- tinytable::tt(desc_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  combined <- tinytable::rbind2(type_table, anova_table, use_names = FALSE) |>
-    tinytable::rbind2(desc_table1, use_names = FALSE) |>
-    tinytable::rbind2(desc_table2, use_names = FALSE) |>
+  tinytable::rbind2(type_table, anova_table, use_names = FALSE) |>
+    tinytable::rbind2(decision_table, use_names = FALSE) |>
+    tinytable::rbind2(desc_table, use_names = FALSE) |>
     tinytable::style_tt(
       bootstrap_class    = "table table-striped table-hover table-sm",
-      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
+      bootstrap_css_rule = "width: 85%; margin-left: auto; margin-right: auto;"
     )
-
-  return(combined)
 }
 
 
@@ -618,14 +1058,13 @@ create_wg_anova_checker <- function(rh_name, vars, anova_results_list,
 # K-GROUP ANOVA OMNIBUS CHECKER
 # =============================================================================
 
-#' Interactive K-Group ANOVA Omnibus Homework Checker
+#' Interactive k-Group ANOVA Omnibus Homework Checker
 #'
-#' Creates a [tinytable::tt()] table for checking omnibus ANOVA statistics,
-#' sample information, and per-group descriptives from a multi-group
-#' between-groups ANOVA.
+#' Creates a [tinytable::tt()] table for checking omnibus F-test statistics
+#' and group descriptives for a k-group one way between-subjects ANOVA.
 #'
 #' @param rh_name Character. Research hypothesis label.
-#' @param anova_results_list Output from `anova_multigroup_answers()`. Must
+#' @param anova_results_list Output from `anova_kgroup_answers()`. Must
 #'   contain `$ANOVA` (with `F`, `p_value`, `df_between`, `df_within`, `mse`,
 #'   `total_n`, `k`, `mean_n`) and `$Descriptives` (with `group_label`,
 #'   `mean`, `sd`, `n`).
@@ -635,7 +1074,7 @@ create_wg_anova_checker <- function(rh_name, vars, anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' result <- anova_multigroup_answers(data, dv = "sentence",
+#' result <- anova_kgroup_answers(data, dv = "sentence",
 #'   iv = "attract",
 #'   group_labels = c("Beautiful", "Average", "Unattractive"))
 #' create_anova_omnibus_checker("RH1", result)
@@ -645,10 +1084,7 @@ create_wg_anova_checker <- function(rh_name, vars, anova_results_list,
 create_anova_omnibus_checker <- function(rh_name, anova_results_list,
                                          group_labels = NULL) {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
+  .check_packages()
 
   f_stat     <- anova_results_list$ANOVA$F
   p_value    <- anova_results_list$ANOVA$p_value
@@ -663,17 +1099,7 @@ create_anova_omnibus_checker <- function(rh_name, anova_results_list,
   n_groups   <- nrow(desc_stats)
   if (is.null(group_labels)) group_labels <- desc_stats$group_label
 
-  if (p_value < 0.05) {
-    posthoc_mcq <- webexercises::mcq(c(
-      "No - a nonsignificant Omnibus F-test",
-      answer = "Yes - significant Omnibus F-test"
-    ))
-  } else {
-    posthoc_mcq <- webexercises::mcq(c(
-      answer = "No - a nonsignificant Omnibus F-test",
-      "Yes - significant Omnibus F-test"
-    ))
-  }
+  posthoc_mcq <- .make_posthoc_mcq(p_value, "omnibus_f")
 
   anova_table_data <- tibble::tibble(
     ` `            = paste("BG ANOVA:", rh_name),
@@ -688,10 +1114,10 @@ create_anova_omnibus_checker <- function(rh_name, anova_results_list,
     tinytable::format_tt(escape = FALSE)
 
   sample_table_data <- tibble::tibble(
-    ` `          = "",
-    `N`          = webexercises::fitb(total_n),
-    k            = webexercises::fitb(k),
-    `average n`  = webexercises::fitb(mean_n),
+    ` `         = "",
+    `N`         = webexercises::fitb(total_n),
+    k           = webexercises::fitb(k),
+    `average n` = webexercises::fitb(mean_n),
     `  ` = "", `   ` = "", `    ` = ""
   )
   sample_table <- tinytable::tt(sample_table_data) |>
@@ -699,9 +1125,15 @@ create_anova_omnibus_checker <- function(rh_name, anova_results_list,
 
   desc_table_data <- tibble::tibble(
     ` `  = group_labels,
-    Mean = sapply(seq_len(n_groups), function(i) webexercises::fitb(desc_stats$mean[i])),
-    SD   = sapply(seq_len(n_groups), function(i) webexercises::fitb(desc_stats$sd[i])),
-    n    = sapply(seq_len(n_groups), function(i) webexercises::fitb(desc_stats$n[i])),
+    Mean = purrr::map_chr(seq_len(n_groups), \(i) {
+      webexercises::fitb(.safe_fitb_value(desc_stats$mean[i]))
+    }),
+    SD   = purrr::map_chr(seq_len(n_groups), \(i) {
+      webexercises::fitb(.safe_fitb_value(desc_stats$sd[i]))
+    }),
+    n    = purrr::map_chr(seq_len(n_groups), \(i) {
+      webexercises::fitb(.safe_fitb_value(desc_stats$n[i]))
+    }),
     `  ` = rep("", n_groups),
     `   ` = rep("", n_groups),
     `    ` = rep("", n_groups)
@@ -709,14 +1141,12 @@ create_anova_omnibus_checker <- function(rh_name, anova_results_list,
   desc_table <- tinytable::tt(desc_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  combined <- tinytable::rbind2(anova_table, sample_table, use_names = FALSE) |>
+  tinytable::rbind2(anova_table, sample_table, use_names = FALSE) |>
     tinytable::rbind2(desc_table, use_names = FALSE) |>
     tinytable::style_tt(
       bootstrap_class    = "table table-striped table-hover table-sm",
       bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
     )
-
-  return(combined)
 }
 
 
@@ -724,32 +1154,33 @@ create_anova_omnibus_checker <- function(rh_name, anova_results_list,
 # K-GROUP ANOVA LSD PAIRWISE CHECKER
 # =============================================================================
 
-#' Interactive K-Group ANOVA LSD Pairwise Homework Checker
+#' Interactive LSD Pairwise Comparisons Homework Checker
 #'
-#' Creates a [tinytable::tt()] table for checking LSD MMD value, pairwise
-#' mean differences, comparison results, error types, effect sizes, and
-#' power assessments.
+#' Creates a tinytable with embedded webexercises elements
+#' for checking LSD pairwise comparison results.
 #'
-#' @param anova_results_list Output from `anova_multigroup_answers()`.
-#' @param group_labels Character vector or `NULL`. Optional relabelling of
-#'   comparison group names.
+#' @param anova_results_list Output from [anova_kgroup_answers()].
+#' @param group_labels Character vector or NULL. Display labels for groups.
 #'
 #' @return A tinytable object with embedded webexercise elements.
+#'
+#' @examples
+#' \dontrun{
+#' result <- anova_kgroup_answers(data, "dv", "iv")
+#' create_lsd_pairwise_table(result)
+#' }
 #'
 #' @export
 create_lsd_pairwise_checker <- function(anova_results_list,
                                         group_labels = NULL) {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
+  .check_packages()
 
   lsd_mmd    <- anova_results_list$LSD$lsd_mmd
   pairwise   <- anova_results_list$Pairwise
   n_pairwise <- length(pairwise)
 
-  # Relabel if needed
+  # Relabel comparisons if needed
   if (!is.null(group_labels)) {
     original_labels <- anova_results_list$group_labels
     for (i in seq_len(n_pairwise)) {
@@ -764,276 +1195,40 @@ create_lsd_pairwise_checker <- function(anova_results_list,
   }
 
   lsd_mmd_data <- tibble::tibble(
-    ` `    = "LSDmmd",
-    `  `   = webexercises::fitb(lsd_mmd),
+    ` `   = "LSDmmd",
+    `  `  = webexercises::fitb(lsd_mmd),
     `   ` = "", `    ` = "", `     ` = "", `      ` = ""
   )
   lsd_mmd_table <- tinytable::tt(lsd_mmd_data) |>
     tinytable::format_tt(escape = FALSE)
 
   pairwise_table_data <- tibble::tibble(
-    ` ` = sapply(seq_len(n_pairwise), function(i) pairwise[[i]]$comparison),
-    `Mean Difference` = sapply(seq_len(n_pairwise), function(i)
-      webexercises::fitb(pairwise[[i]]$mean_diff)),
-    `LSD Result` = sapply(seq_len(n_pairwise), function(i)
-      webexercises::fitb(pairwise[[i]]$lsd_result)),
-    `Type of Error` = sapply(seq_len(n_pairwise), function(i) {
+    ` ` = purrr::map_chr(seq_len(n_pairwise), \(i) pairwise[[i]]$comparison),
+    `Mean Difference` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$mean_diff))
+    }),
+    `LSD Result` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$lsd_result))
+    }),
+    `Type of Error` = purrr::map_chr(seq_len(n_pairwise), \(i) {
       is_sig <- pairwise[[i]]$lsd_result != "="
-      if (is_sig) {
-        webexercises::mcq(c(answer = "Type I & III", "Type II"))
-      } else {
-        webexercises::mcq(c("Type I & III", answer = "Type II"))
-      }
+      .make_error_type_mcq(is_sig)
     }),
-    `Effect Size (r)` = sapply(seq_len(n_pairwise), function(i)
-      webexercises::fitb(pairwise[[i]]$effect_size)),
-    `Power Problem?` = sapply(seq_len(n_pairwise), function(i) {
-      power <- pairwise[[i]]$power_problem
-      if (grepl("rejecting H0", power)) {
-        webexercises::mcq(c(
-          answer = "No - rejecting H0: means there was sufficient power",
-          "No - effect is \"too small to be interesting,\" (r < .10)",
-          "Yes - The effect is \"large enough to be interesting,\" (r > .10)"
-        ))
-      } else if (grepl("too small", power)) {
-        webexercises::mcq(c(
-          "No - rejecting H0: means there was sufficient power",
-          answer = "No - effect is \"too small to be interesting,\" (r < .10)",
-          "Yes - The effect is \"large enough to be interesting,\" (r > .10)"
-        ))
-      } else {
-        webexercises::mcq(c(
-          "No - rejecting H0: means there was sufficient power",
-          "No - effect is \"too small to be interesting,\" (r < .10)",
-          answer = "Yes - The effect is \"large enough to be interesting,\" (r > .10)"
-        ))
-      }
+    `Effect Size (r)` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$effect_size))
+    }),
+    `Power Problem?` = purrr::map_chr(seq_len(n_pairwise), \(i) {
+      .make_power_mcq(pairwise[[i]]$power_problem)
     })
   )
   pairwise_table <- tinytable::tt(pairwise_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  combined <- tinytable::rbind2(lsd_mmd_table, pairwise_table, use_names = FALSE) |>
+  tinytable::rbind2(lsd_mmd_table, pairwise_table, use_names = FALSE) |>
     tinytable::style_tt(
       bootstrap_class    = "table table-striped table-hover table-sm",
       bootstrap_css_rule = "width: 95%; margin-left: auto; margin-right: auto;"
     )
-
-  return(combined)
-}
-
-
-# =============================================================================
-# K-GROUP CHI-SQUARE OMNIBUS CHECKER
-# =============================================================================
-
-#' Interactive K-Group Chi-Square Omnibus Homework Checker
-#'
-#' Creates a [tinytable::tt()] table for checking omnibus chi-square
-#' statistics and sample descriptives for a multi-group analysis.
-#'
-#' @param rh_name Character. Research hypothesis label.
-#' @param chisq_results_list Output from `chi_square_multigroup_answers()`.
-#' @param var1_labels Character vector or `NULL`. Labels for variable 1 levels.
-#' @param var2_labels Character vector or `NULL`. Labels for variable 2 levels.
-#'
-#' @return A tinytable object with embedded webexercise elements.
-#'
-#' @export
-create_chisq_omnibus_checker <- function(rh_name, chisq_results_list,
-                                         var1_labels = NULL,
-                                         var2_labels = NULL) {
-
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
-
-  chi_sq  <- chisq_results_list$ChiSquare$chi_sq
-  p_value <- chisq_results_list$ChiSquare$p_value
-  df      <- chisq_results_list$ChiSquare$df
-  total_n <- chisq_results_list$Sample_Size
-
-  var1_desc <- chisq_results_list$Var1_Descriptives
-  var2_desc <- chisq_results_list$Var2_Descriptives
-
-  if (is.null(var1_labels)) var1_labels <- var1_desc$level_label
-  if (is.null(var2_labels)) var2_labels <- var2_desc$level_label
-
-  if (p_value < 0.05) {
-    posthoc_mcq <- webexercises::mcq(c(
-      "No - a nonsignificant Omnibus Chi-Square test",
-      answer = "Yes - significant Omnibus Chi-Square test"
-    ))
-  } else {
-    posthoc_mcq <- webexercises::mcq(c(
-      answer = "No - a nonsignificant Omnibus Chi-Square test",
-      "Yes - significant Omnibus Chi-Square test"
-    ))
-  }
-
-  chisq_table_data <- tibble::tibble(
-    ` `  = paste("Chi-Square:", rh_name),
-    chi2 = webexercises::fitb(chi_sq),
-    p    = webexercises::fitb(p_value),
-    df   = webexercises::fitb(df),
-    N    = webexercises::fitb(total_n),
-    `  ` = "",
-    `Do we need to perform pairwise comparisons?` = posthoc_mcq
-  )
-  names(chisq_table_data)[2] <- "\u03C7\u00B2"
-  chisq_table <- tinytable::tt(chisq_table_data) |>
-    tinytable::format_tt(escape = FALSE)
-
-  n_var1 <- nrow(var1_desc)
-  n_var2 <- nrow(var2_desc)
-
-  var1_col1 <- sapply(seq_len(n_var1), function(i)
-    paste("Number of", var1_labels[i], "in sample"))
-  var1_col2 <- sapply(seq_len(n_var1), function(i)
-    webexercises::fitb(var1_desc$n[i]))
-  var2_col1 <- sapply(seq_len(n_var2), function(i)
-    paste("Number of", var2_labels[i], "in sample"))
-  var2_col2 <- sapply(seq_len(n_var2), function(i)
-    webexercises::fitb(var2_desc$n[i]))
-
-  desc_table_data <- tibble::tibble(
-    ` `      = c(var1_col1[1], var2_col1[1]),
-    `  `     = c(var1_col2[1], var2_col2[1]),
-    `   `    = c(if (n_var1 >= 2) var1_col1[2] else "",
-                 if (n_var2 >= 2) var2_col1[2] else ""),
-    `    `   = c(if (n_var1 >= 2) var1_col2[2] else "",
-                 if (n_var2 >= 2) var2_col2[2] else ""),
-    `     `  = c(if (n_var1 >= 3) var1_col1[3] else "", ""),
-    `      ` = c(if (n_var1 >= 3) var1_col2[3] else "", ""),
-    `       ` = ""
-  )
-  desc_table <- tinytable::tt(desc_table_data) |>
-    tinytable::format_tt(escape = FALSE)
-
-  combined <- tinytable::rbind2(chisq_table, desc_table, use_names = FALSE) |>
-    tinytable::style_tt(
-      bootstrap_class    = "table table-striped table-hover table-sm",
-      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
-    )
-
-  return(combined)
-}
-
-
-# =============================================================================
-# K-GROUP CHI-SQUARE PAIRWISE CHECKER
-# =============================================================================
-
-#' Interactive K-Group Chi-Square Pairwise Homework Checker
-#'
-#' Creates a [tinytable::tt()] table for checking pairwise chi-square
-#' comparisons including critical value, percentages, chi-square results,
-#' error types, effect sizes, and power assessments.
-#'
-#' @param chisq_results_list Output from `chi_square_multigroup_answers()`.
-#' @param var1_labels Character vector or `NULL`. Optional relabelling.
-#' @param var2_labels Character vector or `NULL`. Optional relabelling.
-#'
-#' @return A tinytable object with embedded webexercise elements.
-#'
-#' @export
-create_chisq_pairwise_checker <- function(chisq_results_list,
-                                          var1_labels = NULL,
-                                          var2_labels = NULL) {
-
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
-
-  pairwise   <- chisq_results_list$Pairwise
-  n_pairwise <- length(pairwise)
-  if (n_pairwise == 0) stop("No pairwise comparisons found in results")
-
-  pct_label <- chisq_results_list$pct_var2_label
-  if (is.null(pct_label)) pct_label <- "comparison"
-
-  # Relabel
-  if (!is.null(var1_labels)) {
-    original_labels <- chisq_results_list$var1_labels
-    for (i in seq_len(n_pairwise)) {
-      cname <- pairwise[[i]]$comparison
-      if (!is.null(original_labels)) {
-        for (j in seq_along(original_labels)) {
-          cname <- gsub(original_labels[j], var1_labels[j], cname, fixed = TRUE)
-        }
-        pairwise[[i]]$comparison <- cname
-      }
-    }
-  }
-
-  chi_crit <- chisq_results_list$ChiCrit
-
-  chi_crit_data <- tibble::tibble(
-    ` `    = "Chi-Square critical",
-    `  `   = webexercises::fitb(chi_crit),
-    `   ` = "", `    ` = "", `     ` = "", `      ` = ""
-  )
-  chi_crit_table <- tinytable::tt(chi_crit_data) |>
-    tinytable::format_tt(escape = FALSE)
-
-  pct_column_name <- paste0("% ", pct_label)
-
-  pairwise_table_data <- tibble::tibble(
-    ` ` = sapply(seq_len(n_pairwise), function(i) pairwise[[i]]$comparison),
-    `% comparison` = sapply(seq_len(n_pairwise), function(i) {
-      paste0(webexercises::fitb(pairwise[[i]]$pct1), "% vs ",
-             webexercises::fitb(pairwise[[i]]$pct2), "%")
-    }),
-    chi2_result = sapply(seq_len(n_pairwise), function(i) {
-      paste0(webexercises::fitb(pairwise[[i]]$chi_sq), " ",
-             webexercises::fitb(pairwise[[i]]$chi_result))
-    }),
-    `Type of Error` = sapply(seq_len(n_pairwise), function(i) {
-      is_sig <- pairwise[[i]]$chi_result != "="
-      if (is_sig) {
-        webexercises::mcq(c(answer = "Type I & III", "Type II"))
-      } else {
-        webexercises::mcq(c("Type I & III", answer = "Type II"))
-      }
-    }),
-    `Effect Size (r)` = sapply(seq_len(n_pairwise), function(i)
-      webexercises::fitb(pairwise[[i]]$effect_size)),
-    `Power Problem?` = sapply(seq_len(n_pairwise), function(i) {
-      power <- pairwise[[i]]$power_problem
-      if (grepl("rejecting H0", power)) {
-        webexercises::mcq(c(
-          answer = "No - rejecting H0: means there was sufficient power",
-          "No - effect is \"too small to be interesting,\" (r < .10)",
-          "Yes - The effect is \"large enough to be interesting,\" (r > .10)"
-        ))
-      } else if (grepl("too small", power)) {
-        webexercises::mcq(c(
-          "No - rejecting H0: means there was sufficient power",
-          answer = "No - effect is \"too small to be interesting,\" (r < .10)",
-          "Yes - The effect is \"large enough to be interesting,\" (r > .10)"
-        ))
-      } else {
-        webexercises::mcq(c(
-          "No - rejecting H0: means there was sufficient power",
-          "No - effect is \"too small to be interesting,\" (r < .10)",
-          answer = "Yes - The effect is \"large enough to be interesting,\" (r > .10)"
-        ))
-      }
-    })
-  )
-  names(pairwise_table_data)[3] <- "\u03C7\u00B2 Result"
-  pairwise_table <- tinytable::tt(pairwise_table_data) |>
-    tinytable::format_tt(escape = FALSE)
-
-  combined <- tinytable::rbind2(chi_crit_table, pairwise_table, use_names = FALSE) |>
-    tinytable::style_tt(
-      bootstrap_class    = "table table-striped table-hover table-sm",
-      bootstrap_css_rule = "width: 95%; margin-left: auto; margin-right: auto;"
-    )
-
-  return(combined)
 }
 
 
@@ -1069,10 +1264,7 @@ create_factorial_anova_checker <- function(rh_name, anova_results_list,
                                            iv1_name = "IV1",
                                            iv2_name = "IV2") {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
+  .check_packages()
 
   f_iv1          <- anova_results_list$ANOVA$MainEffect_IV1$F
   p_iv1          <- anova_results_list$ANOVA$MainEffect_IV1$p_value
@@ -1089,21 +1281,12 @@ create_factorial_anova_checker <- function(rh_name, anova_results_list,
   mean_n         <- anova_results_list$ANOVA$mean_n
   lsd_mmd        <- anova_results_list$LSD$lsd_mmd
 
+  # Format p-values
   p_iv1_fmt         <- ifelse(p_iv1 < 0.001, "<.001", sprintf("%.2f", p_iv1))
   p_iv2_fmt         <- ifelse(p_iv2 < 0.001, "<.001", sprintf("%.2f", p_iv2))
   p_interaction_fmt <- ifelse(p_interaction < 0.001, "<.001", sprintf("%.2f", p_interaction))
 
-  if (p_interaction < 0.05) {
-    posthoc_mcq <- webexercises::mcq(c(
-      "No - a nonsignificant interaction",
-      answer = "Yes - significant interaction"
-    ))
-  } else {
-    posthoc_mcq <- webexercises::mcq(c(
-      answer = "No - a nonsignificant interaction",
-      "Yes - significant interaction"
-    ))
-  }
+  posthoc_mcq <- .make_posthoc_mcq(p_interaction, "interaction")
 
   interaction_data <- tibble::tibble(
     ` `            = paste("Interaction:", iv1_name, "x", iv2_name),
@@ -1118,12 +1301,12 @@ create_factorial_anova_checker <- function(rh_name, anova_results_list,
     tinytable::format_tt(escape = FALSE)
 
   lsd_data <- tibble::tibble(
-    ` `                = "Components for LSDmmd:",
-    `# of conditions`  = webexercises::fitb(k),
-    `average n`        = webexercises::fitb(mean_n),
-    `df error`         = webexercises::fitb(df_within),
-    `MSe`              = webexercises::fitb(mse),
-    `LSDmmd`           = webexercises::fitb(lsd_mmd),
+    ` `               = "Components for LSDmmd:",
+    `# of conditions` = webexercises::fitb(k),
+    `average n`       = webexercises::fitb(mean_n),
+    `df error`        = webexercises::fitb(df_within),
+    `MSe`             = webexercises::fitb(mse),
+    `LSDmmd`          = webexercises::fitb(lsd_mmd),
     `   ` = ""
   )
   lsd_table <- tinytable::tt(lsd_data) |>
@@ -1153,15 +1336,13 @@ create_factorial_anova_checker <- function(rh_name, anova_results_list,
   iv2_table <- tinytable::tt(iv2_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  combined <- tinytable::rbind2(interaction_table, lsd_table, use_names = FALSE) |>
+  tinytable::rbind2(interaction_table, lsd_table, use_names = FALSE) |>
     tinytable::rbind2(iv1_table, use_names = FALSE) |>
     tinytable::rbind2(iv2_table, use_names = FALSE) |>
     tinytable::style_tt(
       bootstrap_class    = "table table-striped table-hover table-sm",
       bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
     )
-
-  return(combined)
 }
 
 
@@ -1191,10 +1372,7 @@ create_factorial_desc_checker <- function(anova_results_list,
                                           iv1_labels = NULL,
                                           iv2_labels = NULL) {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
+  .check_packages()
 
   desc_stats <- anova_results_list$Descriptives
   emm_iv1    <- anova_results_list$EMMs$IV1
@@ -1203,75 +1381,50 @@ create_factorial_desc_checker <- function(anova_results_list,
   if (!is.null(anova_results_list$FactorLevels)) {
     iv1_levels_actual <- anova_results_list$FactorLevels$iv1_levels
     iv2_levels_actual <- anova_results_list$FactorLevels$iv2_levels
-    final_iv1_labels  <- anova_results_list$FactorLevels$iv1_labels
-    final_iv2_labels  <- anova_results_list$FactorLevels$iv2_labels
+    final_iv1_labels  <- if (!is.null(iv1_labels)) iv1_labels else anova_results_list$FactorLevels$iv1_labels
+    final_iv2_labels  <- if (!is.null(iv2_labels)) iv2_labels else anova_results_list$FactorLevels$iv2_labels
   } else {
     stop("FactorLevels not found. Please re-run anova_factorial_answers().")
   }
 
-  n_iv1 <- length(final_iv1_labels)
-  n_iv2 <- length(final_iv2_labels)
-
-  row_labels <- final_iv1_labels
-
-  # Cell means columns
-  col_data <- list()
-  for (j in seq_len(n_iv2)) {
-    col_values <- c()
-    for (i in seq_len(n_iv1)) {
-      cell_idx <- which(desc_stats$iv1_level == iv1_levels_actual[i] &
-                          desc_stats$iv2_level == iv2_levels_actual[j])
-      if (length(cell_idx) > 0) {
-        col_values <- c(col_values, webexercises::fitb(desc_stats$mean[cell_idx[1]]))
-      } else {
-        col_values <- c(col_values, "")
-      }
-    }
-    col_data[[j]] <- col_values
-  }
-
-  # EMM column for IV1
-  emm_iv1_values <- c()
-  for (i in seq_len(n_iv1)) {
-    emm_row <- which(emm_iv1$iv1_label == final_iv1_labels[i])
-    if (length(emm_row) > 0) {
-      emm_iv1_values <- c(emm_iv1_values,
-                          webexercises::fitb(round(as.numeric(emm_iv1$mean[emm_row[1]]), 2)))
-    } else {
-      emm_iv1_values <- c(emm_iv1_values, webexercises::fitb("ERROR"))
-    }
-  }
-
-  # Footer row: EMMs for IV2
-  row_labels <- c(row_labels, paste0("EMM: ", iv2_name))
-  for (j in seq_len(n_iv2)) {
-    emm_row <- which(emm_iv2$iv2_label == final_iv2_labels[j])
-    if (length(emm_row) > 0) {
-      col_data[[j]] <- c(col_data[[j]],
-                         webexercises::fitb(round(as.numeric(emm_iv2$mean[emm_row[1]]), 2)))
-    } else {
-      col_data[[j]] <- c(col_data[[j]], webexercises::fitb("ERROR"))
-    }
-  }
-  emm_iv1_values <- c(emm_iv1_values, "")
-
-  table_data <- tibble::tibble(
-    ` `    = row_labels,
-    `  `   = col_data[[1]],
-    `   `  = col_data[[2]],
-    `    ` = emm_iv1_values
+  # Get cell means for each combination
+  cell_data <- tibble::tibble(
+    ` ` = final_iv1_labels,
+    col1 = purrr::map_chr(seq_along(final_iv1_labels), \(i) {
+      cell <- desc_stats |>
+        dplyr::filter(.data$iv1 == iv1_levels_actual[i],
+                      .data$iv2 == iv2_levels_actual[1])
+      webexercises::fitb(.safe_fitb_value(dplyr::pull(cell, "mean")))
+    }),
+    col2 = purrr::map_chr(seq_along(final_iv1_labels), \(i) {
+      cell <- desc_stats |>
+        dplyr::filter(.data$iv1 == iv1_levels_actual[i],
+                      .data$iv2 == iv2_levels_actual[2])
+      webexercises::fitb(.safe_fitb_value(dplyr::pull(cell, "mean")))
+    }),
+    `EMM` = purrr::map_chr(seq_along(final_iv1_labels), \(i) {
+      webexercises::fitb(.safe_fitb_value(emm_iv1$emm[i]))
+    })
   )
-  colnames(table_data) <- c(iv1_name, final_iv2_labels[1], final_iv2_labels[2],
-                            paste0("EMM: ", iv1_name))
+  names(cell_data)[2:3] <- final_iv2_labels
 
-  desc_table <- tinytable::tt(table_data) |>
+  # Add EMM row for IV2
+  emm_row <- tibble::tibble(
+    ` ` = "EMM",
+    col1 = webexercises::fitb(.safe_fitb_value(emm_iv2$emm[1])),
+    col2 = webexercises::fitb(.safe_fitb_value(emm_iv2$emm[2])),
+    `EMM` = ""
+  )
+  names(emm_row)[2:3] <- final_iv2_labels
+
+  full_data <- dplyr::bind_rows(cell_data, emm_row)
+
+  tinytable::tt(full_data) |>
     tinytable::format_tt(escape = FALSE) |>
     tinytable::style_tt(
-      bootstrap_class    = "table table-striped table-hover table-sm",
-      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
+      bootstrap_class    = "table table-bordered table-sm",
+      bootstrap_css_rule = "width: 70%; margin-left: auto; margin-right: auto;"
     )
-
-  return(desc_table)
 }
 
 
@@ -1281,16 +1434,16 @@ create_factorial_desc_checker <- function(anova_results_list,
 
 #' Interactive Regression Model Summary Homework Checker
 #'
-#' Creates a [tinytable::tt()] table for checking overall regression model
-#' statistics including R, R-squared, F, df, p, and a model significance MCQ.
+#' Creates a [tinytable::tt()] table for checking regression model
+#' statistics including R, R-squared, F, df, and model significance.
 #'
-#' @param reg_results_list Output from [regression_answers()].
+#' @param reg_results_list Output from [linear_reg_answers()].
 #'
 #' @return A tinytable object with embedded webexercise elements.
 #'
 #' @examples
 #' \dontrun{
-#' result <- regression_answers(data, criterion = "dv",
+#' result <- linear_reg_answers(data, criterion = "dv",
 #'   quant_predictors = c("x1", "x2"),
 #'   quant_labels = c("Pred 1", "Pred 2"),
 #'   criterion_label = "Outcome")
@@ -1300,22 +1453,19 @@ create_factorial_desc_checker <- function(anova_results_list,
 #' @export
 create_regression_model_checker <- function(reg_results_list) {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
+  .check_packages()
 
-  r              <- reg_results_list$Model$R
-  r_sq           <- reg_results_list$Model$R_squared
-  f_stat         <- reg_results_list$Model$F
-  df1            <- reg_results_list$Model$df1
-  df2            <- reg_results_list$Model$df2
-  p_val_fmt      <- reg_results_list$Model$p_value_formatted
+  r         <- reg_results_list$Model$R
+  r_sq      <- reg_results_list$Model$R_squared
+  f_stat    <- reg_results_list$Model$F
+  df1       <- reg_results_list$Model$df1
+  df2       <- reg_results_list$Model$df2
+  p_val_fmt <- reg_results_list$Model$p_value_formatted
 
-  if (reg_results_list$Model$p_value < 0.05) {
-    model_works_mcq <- webexercises::mcq(c(answer = "Yes", "No"))
+  model_works_mcq <- if (reg_results_list$Model$p_value < 0.05) {
+    webexercises::mcq(c(answer = "Yes", "No"))
   } else {
-    model_works_mcq <- webexercises::mcq(c("Yes", answer = "No"))
+    webexercises::mcq(c("Yes", answer = "No"))
   }
 
   model_table <- tibble::tibble(
@@ -1329,16 +1479,16 @@ create_regression_model_checker <- function(reg_results_list) {
   )
   names(model_table)[3] <- "R\u00B2"
 
-  result_table <- tinytable::tt(model_table) |>
+  tinytable::tt(model_table) |>
     tinytable::format_tt(escape = FALSE) |>
-    tinytable::style_tt(j = 5,
-                        bootstrap_css = "min-width: 120px; white-space: nowrap;") |>
+    tinytable::style_tt(
+      j = 5,
+      bootstrap_css = "min-width: 120px; white-space: nowrap;"
+    ) |>
     tinytable::style_tt(
       bootstrap_class    = "table table-bordered table-sm",
       bootstrap_css_rule = "width: 95%; margin-left: auto; margin-right: auto;"
     )
-
-  return(result_table)
 }
 
 
@@ -1352,7 +1502,7 @@ create_regression_model_checker <- function(reg_results_list) {
 #' statistics including variable type, bivariate r, regression weight b,
 #' significance levels, and bivariate/multivariate result categories.
 #'
-#' @param reg_results_list Output from [regression_answers()].
+#' @param reg_results_list Output from [linear_reg_answers()].
 #' @param show_legend Logical. If `TRUE` (default), prints a collapsible
 #'   significance key and result category legend above the table.
 #'
@@ -1362,27 +1512,14 @@ create_regression_model_checker <- function(reg_results_list) {
 create_regression_predictor_checker <- function(reg_results_list,
                                                 show_legend = TRUE) {
 
-  if (!requireNamespace("tinytable", quietly = TRUE))
-    stop("Package 'tinytable' is required.")
-  if (!requireNamespace("webexercises", quietly = TRUE))
-    stop("Package 'webexercises' is required.")
+  .check_packages()
 
-  predictors      <- reg_results_list$Labels$predictors
+  predictors       <- reg_results_list$Labels$predictors
   predictor_labels <- reg_results_list$Labels$predictor_labels
   predictor_types  <- reg_results_list$Labels$predictor_types
 
-  predictor_rows <- tibble::tibble(
-    `Predictor` = character(),
-    `Type`      = character(),
-    `r`         = character(),
-    `r sig`     = character(),
-    `b`         = character(),
-    `b sig`     = character(),
-    `Result`    = character()
-  )
-
-  for (i in seq_along(predictors)) {
-    p    <- predictors[i]
+  predictor_rows <- purrr::map_dfr(seq_along(predictors), \(i) {
+    p     <- predictors[i]
     bivar <- reg_results_list$Bivariate[[p]]
     regwt <- reg_results_list$Regression_Weights[[p]]
 
@@ -1390,10 +1527,10 @@ create_regression_predictor_checker <- function(reg_results_list,
     if (is.na(p_type)) p_type <- predictor_types[p]
 
     # Type MCQ
-    if (p_type == "Binary") {
-      type_mcq <- webexercises::mcq(c(answer = "Binary", "Quant"))
+    type_mcq <- if (p_type == "Binary") {
+      webexercises::mcq(c(answer = "Binary", "Quant"))
     } else {
-      type_mcq <- webexercises::mcq(c("Binary", answer = "Quant"))
+      webexercises::mcq(c("Binary", answer = "Quant"))
     }
 
     r_sig_mcq <- sig_mcq(bivar$p_value)
@@ -1401,17 +1538,15 @@ create_regression_predictor_checker <- function(reg_results_list,
 
     # Category MCQ
     cat_choice <- regwt$category
-    if (cat_choice == "a") {
-      category_mcq <- webexercises::mcq(c(answer = "a", "b", "c", "d"))
-    } else if (cat_choice == "b") {
-      category_mcq <- webexercises::mcq(c("a", answer = "b", "c", "d"))
-    } else if (cat_choice == "c") {
-      category_mcq <- webexercises::mcq(c("a", "b", answer = "c", "d"))
-    } else {
-      category_mcq <- webexercises::mcq(c("a", "b", "c", answer = "d"))
-    }
+    category_mcq <- switch(cat_choice,
+                           "a" = webexercises::mcq(c(answer = "a", "b", "c", "d")),
+                           "b" = webexercises::mcq(c("a", answer = "b", "c", "d")),
+                           "c" = webexercises::mcq(c("a", "b", answer = "c", "d")),
+                           "d" = webexercises::mcq(c("a", "b", "c", answer = "d")),
+                           webexercises::mcq(c("a", "b", "c", "d"))
+    )
 
-    new_row <- tibble::tibble(
+    tibble::tibble(
       `Predictor` = predictor_labels[i],
       `Type`      = type_mcq,
       `r`         = webexercises::fitb(bivar$r),
@@ -1420,9 +1555,7 @@ create_regression_predictor_checker <- function(reg_results_list,
       `b sig`     = b_sig_mcq,
       `Result`    = category_mcq
     )
-
-    predictor_rows <- dplyr::bind_rows(predictor_rows, new_row)
-  }
+  })
 
   if (show_legend) {
     cat(webexercises::hide("Click here for significance key"))
@@ -1440,12 +1573,10 @@ create_regression_predictor_checker <- function(reg_results_list,
     cat("\n\n")
   }
 
-  result_table <- tinytable::tt(predictor_rows) |>
+  tinytable::tt(predictor_rows) |>
     tinytable::format_tt(escape = FALSE) |>
     tinytable::style_tt(
       bootstrap_class    = "table table-striped table-bordered table-sm",
       bootstrap_css_rule = "width: 95%; margin-left: auto; margin-right: auto;"
     )
-
-  return(result_table)
 }

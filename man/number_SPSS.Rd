@@ -26,7 +26,7 @@ number_SPSS(c(1000, 25000, 100))
 
 # Use with ggplot2 axis labels
 library(ggplot2)
-ggplot(mtcars, aes(x = hp, y = mpg)) +
+ggplot(superman, aes(x = clark_height, y = lois_height)) +
   geom_point() +
   scale_x_continuous(labels = number_SPSS) +
   theme_SPSS()

@@ -33,7 +33,7 @@ corr_answers <- function(data, var1, var2) {
   desc_stats_separate <- tibble::tibble(
     variable = c(var1, var2),
     mean = c(mean(vector1, na.rm = TRUE), mean(vector2, na.rm = TRUE)),
-    sd = c(sd(vector1, na.rm = TRUE), sd(vector2, na.rm = TRUE)),
+    sd = c(stats::sd(vector1, na.rm = TRUE), stats::sd(vector2, na.rm = TRUE)),
     n = c(sum(!is.na(vector1)), sum(!is.na(vector2)))
   ) |>
     dplyr::mutate(
@@ -75,4 +75,3 @@ corr_answers <- function(data, var1, var2) {
 
   invisible(results_list)
 }
-

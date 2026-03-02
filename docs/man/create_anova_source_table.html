@@ -314,13 +314,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Articles</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating Homework Checkers with psych350lab</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
@@ -933,7 +950,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <code id="anova_results_list">anova_results_list</code>
 </td>
 <td>
-Output from <code><a href="https://emmarshall.github.io/psych350lab/reference/bg_anova_answers.html">bg_anova_answers()</a></code>.
+Output from <code><a href="https://emmarshall.github.io/psych350lab/man/bg_anova_answers.html">bg_anova_answers()</a></code>.
 </td>
 </tr>
 <tr>
@@ -975,42 +992,42 @@ Character or <code>NULL</code>. Optional table caption.
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://emmarshall.github.io/psych350lab">"psych350lab"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">superman</span><span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/bg_anova_answers.html">bg_anova_answers</a></span><span class="op">(</span><span class="va">superman</span>, iv <span class="op">=</span> <span class="st">"clark_grp"</span>, dv <span class="op">=</span> <span class="st">"rt_critics_score"</span><span class="op">)</span></span>
-<span><span class="va">ft</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/create_anova_source_table.html">create_anova_source_table</a></span><span class="op">(</span><span class="va">result</span>,</span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/bg_anova_answers.html">bg_anova_answers</a></span><span class="op">(</span><span class="va">superman</span>, iv <span class="op">=</span> <span class="st">"clark_grp"</span>, dv <span class="op">=</span> <span class="st">"rt_critics_score"</span><span class="op">)</span></span>
+<span><span class="va">ft</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_anova_source_table.html">create_anova_source_table</a></span><span class="op">(</span><span class="va">result</span>,</span>
 <span>  iv_name <span class="op">=</span> <span class="st">"Height Group"</span>, dv_name <span class="op">=</span> <span class="st">"Critics Score"</span><span class="op">)</span></span>
 <span><span class="va">ft</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="tabwid tabwid_left">
-<style>.cl-c6547918{table-layout:auto;}.cl-c651ed6a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c6530560{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c6530561{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c6531410{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c653141a{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c653141b{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c653141c{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c653141d{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c653141e{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c653141f{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c6531424{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-c6547918">
+<style>.cl-687386d6{table-layout:auto;}.cl-6870f06a{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-68720e64{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-68720e65{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-68721cce{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-68721ccf{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-68721cd0{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-68721cd8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-68721cd9{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-68721cda{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-68721cdb{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-68721cdc{background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-687386d6">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-c6531410"><p class="cl-c6530560"><span class="cl-c651ed6a">Source</span></p></th>
-<th class="cl-c653141a"><p class="cl-c6530561"><span class="cl-c651ed6a">df</span></p></th>
-<th class="cl-c653141a"><p class="cl-c6530561"><span class="cl-c651ed6a">MS</span></p></th>
-<th class="cl-c653141a"><p class="cl-c6530561"><span class="cl-c651ed6a">F</span></p></th>
-<th class="cl-c653141a"><p class="cl-c6530561"><span class="cl-c651ed6a">p</span></p></th>
+<th class="cl-68721cce"><p class="cl-68720e64"><span class="cl-6870f06a">Source</span></p></th>
+<th class="cl-68721ccf"><p class="cl-68720e65"><span class="cl-6870f06a">df</span></p></th>
+<th class="cl-68721ccf"><p class="cl-68720e65"><span class="cl-6870f06a">MS</span></p></th>
+<th class="cl-68721ccf"><p class="cl-68720e65"><span class="cl-6870f06a">F</span></p></th>
+<th class="cl-68721ccf"><p class="cl-68720e65"><span class="cl-6870f06a">p</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-c653141b"><p class="cl-c6530560"><span class="cl-c651ed6a">Between Groups (Height Group)</span></p></td>
-<td class="cl-c653141c"><p class="cl-c6530561"><span class="cl-c651ed6a">1</span></p></td>
-<td class="cl-c653141c"><p class="cl-c6530561"><span class="cl-c651ed6a"></span></p></td>
-<td class="cl-c653141c"><p class="cl-c6530561"><span class="cl-c651ed6a">1.5</span></p></td>
-<td class="cl-c653141c"><p class="cl-c6530561"><span class="cl-c651ed6a">0.267</span></p></td>
+<td class="cl-68721cd0"><p class="cl-68720e64"><span class="cl-6870f06a">Between Groups (Height Group)</span></p></td>
+<td class="cl-68721cd8"><p class="cl-68720e65"><span class="cl-6870f06a">1</span></p></td>
+<td class="cl-68721cd8"><p class="cl-68720e65"><span class="cl-6870f06a"></span></p></td>
+<td class="cl-68721cd8"><p class="cl-68720e65"><span class="cl-6870f06a">1.5</span></p></td>
+<td class="cl-68721cd8"><p class="cl-68720e65"><span class="cl-6870f06a">0.267</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-c653141d"><p class="cl-c6530560"><span class="cl-c651ed6a">Within Groups (Error)</span></p></td>
-<td class="cl-c653141e"><p class="cl-c6530561"><span class="cl-c651ed6a">6</span></p></td>
-<td class="cl-c653141e"><p class="cl-c6530561"><span class="cl-c651ed6a">103.47</span></p></td>
-<td class="cl-c653141e"><p class="cl-c6530561"><span class="cl-c651ed6a"></span></p></td>
-<td class="cl-c653141e"><p class="cl-c6530561"><span class="cl-c651ed6a"></span></p></td>
+<td class="cl-68721cd9"><p class="cl-68720e64"><span class="cl-6870f06a">Within Groups (Error)</span></p></td>
+<td class="cl-68721cda"><p class="cl-68720e65"><span class="cl-6870f06a">6</span></p></td>
+<td class="cl-68721cda"><p class="cl-68720e65"><span class="cl-6870f06a">103.47</span></p></td>
+<td class="cl-68721cda"><p class="cl-68720e65"><span class="cl-6870f06a"></span></p></td>
+<td class="cl-68721cda"><p class="cl-68720e65"><span class="cl-6870f06a"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-c653141f"><p class="cl-c6530560"><span class="cl-c651ed6a">Total</span></p></td>
-<td class="cl-c6531424"><p class="cl-c6530561"><span class="cl-c651ed6a">7</span></p></td>
-<td class="cl-c6531424"><p class="cl-c6530561"><span class="cl-c651ed6a"></span></p></td>
-<td class="cl-c6531424"><p class="cl-c6530561"><span class="cl-c651ed6a"></span></p></td>
-<td class="cl-c6531424"><p class="cl-c6530561"><span class="cl-c651ed6a"></span></p></td>
+<td class="cl-68721cdb"><p class="cl-68720e64"><span class="cl-6870f06a">Total</span></p></td>
+<td class="cl-68721cdc"><p class="cl-68720e65"><span class="cl-6870f06a">7</span></p></td>
+<td class="cl-68721cdc"><p class="cl-68720e65"><span class="cl-6870f06a"></span></p></td>
+<td class="cl-68721cdc"><p class="cl-68720e65"><span class="cl-6870f06a"></span></p></td>
+<td class="cl-68721cdc"><p class="cl-68720e65"><span class="cl-6870f06a"></span></p></td>
 </tr>
 </tbody>
 </table>

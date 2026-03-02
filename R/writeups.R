@@ -742,7 +742,7 @@ apa_factorial_writeup <- function(anova_results_list,
 #'
 #' Generates an APA-style paragraph for a multiple regression analysis.
 #'
-#' @param reg_results_list Output from \code{regression_answers()}.
+#' @param reg_results_list Output from \code{linear_reg_answers()}.
 #' @param include_correlations Logical. Include bivariate info. Default `TRUE`.
 #' @param include_coefficients Logical. Include individual predictors. Default `TRUE`.
 #'
@@ -752,7 +752,7 @@ apa_factorial_writeup <- function(anova_results_list,
 #' data(superman)
 #' sm <- superman[!is.na(superman$rt_critics_score) &
 #'                     !is.na(superman$rt_audience_score), ]
-#' result <- regression_answers(
+#' result <- linear_reg_answers(
 #'   data = sm,
 #'   criterion = "rt_critics_score",
 #'   quant_predictors = c("clark_height_in", "rt_audience_score"),
@@ -840,3 +840,1098 @@ apa_regression_writeup <- function(reg_results_list,
 
   return(writeup)
 }
+
+
+anova_descriptives_KEY <- function(anova_results_list,
+                                   group_labels = NULL,
+                                   KEY = TRUE) {
+  desc_stats <- anova_results_list$Descriptives
+  n_groups <- nrow(desc_stats)
+
+  if (is.null(group_labels)) {
+    group_labels <- desc_stats$group_label
+  }
+
+  if (KEY) {
+    desc_data <- data.frame(
+      ` ` = c("Mean", "Std"),
+      stringsAsFactors = FALSE,
+      check.names = FALSE
+    )
+
+    for (i in 1:n_groups) {
+      desc_data[[group_labels[i]]] <- c(
+        as.character(desc_stats$mean[i]),
+        as.character(desc_stats$sd[i])
+      )
+    }
+  } else {
+    desc_data <- data.frame(
+      ` ` = c("Mean", "Std"),
+      stringsAsFactors = FALSE,
+      check.names = FALSE
+    )
+
+    for (i in 1:n_groups) {
+      desc_data[[group_labels[i]]] <- c("", "")
+    }
+  }
+
+  desc_data <- tibble::as_tibble(desc_data)
+
+  ft <- flextable::flextable(desc_data) |>
+    flextable::set_header_labels(` ` = "") |>
+    flextable::theme_box() |>
+    flextable::align(align = "center", part = "all") |>
+    flextable::align(j = 1, align = "left", part = "all") |>
+    flextable::autofit()
+
+  if (KEY) {
+    ft <- ft |> flextable::color(j = 2:(n_groups + 1), color = "#d00000", part = "body")
+  }
+
+  return(ft)
+}
+
+
+#' ANOVA Statistics Text Output (Answer KEY)
+#'
+#' Creates formatted text output for ANOVA statistics, either filled
+#' (answer KEY) or blank (student worksheet).
+#'
+#' @param anova_results_list Output from [anova_kgroup_answers()].
+#' @param KEY Logical. If TRUE (default), show answers; if FALSE, show blanks.
+#' @param highlight Logical. If TRUE and KEY is TRUE, wrap answers in
+#'   highlight formatting for Quarto/Word output.
+#'
+#' @return A character string with formatted ANOVA results.
+#'
+#' @examples
+#' \dontrun{
+#' result <- anova_kgroup_answers(data, "dv", "iv")
+#' cat(anova_statistics_KEY(result, KEY = TRUE))
+#' }
+#'
+#' @export
+anova_statistics_KEY <- function(anova_results_list,
+                                 KEY = TRUE,
+                                 highlight = FALSE) {
+  f_stat <- anova_results_list$ANOVA$F
+  p_value <- anova_results_list$ANOVA$p_value
+  df_between <- anova_results_list$ANOVA$df_between
+  df_within <- anova_results_list$ANOVA$df_within
+  mse <- anova_results_list$ANOVA$mse
+  total_n <- anova_results_list$ANOVA$total_n
+  k <- anova_results_list$ANOVA$k
+  mean_n <- anova_results_list$ANOVA$mean_n
+
+  has_lsd <- !is.null(anova_results_list$LSD$lsd_mmd) && !is.na(anova_results_list$LSD$lsd_mmd)
+  if (has_lsd) {
+    lsd_mmd <- anova_results_list$LSD$lsd_mmd
+  }
+
+  hl <- function(text) {
+    if (highlight && KEY) {
+      paste0("[", text, "]{custom-style=\"highlight-yellow\"}")
+    } else {
+      as.character(text)
+    }
+  }
+
+  if(p_value < 0.05) {
+    posthoc_answer <- paste0("Yes ", .en_dash(), " we know there's a mean difference, but we don't know which groups are different from which others.")
+  } else {
+    posthoc_answer <- paste0("No ", .en_dash(), " a nonsignificant Omnibus F-test")
+  }
+
+  if (KEY) {
+    anova_text <- paste0(
+      "F = ", hl(f_stat), "    df = ", hl(df_between), " , ", hl(df_within),
+      "    MSE = ", hl(mse), "    p = ", hl(p_value),
+      "    N = ", hl(total_n), "    k = ", hl(k), "    n = ", hl(mean_n), "\n\n",
+      "Do we need to perform LSD pairwise comparisons to test the RH? Why or why not? ",
+      hl(posthoc_answer)
+    )
+
+    if (has_lsd) {
+      anova_text <- paste0(anova_text, "\n\nLSDmmd = ", hl(lsd_mmd),
+                           "  Based on the LSDmmd, use <, > & = signs to show the results of each pairwise comparison.")
+    }
+  } else {
+    anova_text <- paste0(
+      "F = ____           df = ____ , ____            MSE = ____           p = ____            N = ____        k = ____         n = ____\n\n",
+      "## LSD, Pairwise Comparisons & RH: Testing\n\n",
+      "\n\nDo we need to perform LSD pairwise comparisons to test the RH? Why or why not? ____________"
+    )
+
+    if (has_lsd) {
+      anova_text <- paste0(anova_text, "\n\nLSDmmd = ____\n\n Based on the LSDmmd, use <, > & = signs to show the results of each pairwise comparison.")
+    }
+  }
+
+  return(anova_text)
+}
+
+
+
+
+#' LSD Pairwise Comparisons Table (Answer KEY)
+#'
+#' Creates a flextable showing LSD pairwise comparison results with
+#' comparisons as columns.
+#'
+#' @param anova_results_list Output from [anova_kgroup_answers()].
+#' @param KEY Logical. If TRUE (default), fill with values; if FALSE, blank.
+#' @param group_labels Character vector or NULL. Display labels for groups.
+#'
+#' @return A [flextable::flextable()] object.
+#'
+#' @examples
+#' \dontrun{
+#' result <- anova_kgroup_answers(data, "dv", "iv")
+#' lsd_pairwise_KEY(result, KEY = TRUE)
+#' }
+#'
+#' @export
+lsd_pairwise_KEY <- function(anova_results_list, KEY = TRUE, group_labels = NULL) {
+  pairwise <- anova_results_list$Pairwise
+  n_pairwise <- length(pairwise)
+
+  if (KEY) {
+    pairwise_data <- data.frame(
+      ` ` = c(
+        "Pairwise comparison \u2192",
+        "Mean difference \u2192",
+        "LSD result \u2192",
+        "Type of Stat Error risked \u2192",
+        "Pairwise effect size (r) \u2192",
+        "Power Problem? \u2192"
+      ),
+      stringsAsFactors = FALSE,
+      check.names = FALSE
+    )
+
+    for (i in 1:n_pairwise) {
+      comparison_name <- pairwise[[i]]$comparison
+      if (!is.null(group_labels)) {
+        original_labels <- anova_results_list$group_labels
+        if (!is.null(original_labels)) {
+          for (j in seq_along(original_labels)) {
+            comparison_name <- gsub(original_labels[j], group_labels[j],
+                                    comparison_name, fixed = TRUE)
+          }
+        }
+      }
+
+      power_text <- pairwise[[i]]$power_problem
+      if (grepl("rejecting H0", power_text)) {
+        power_code <- "*"
+      } else if (grepl("too small", power_text)) {
+        power_code <- "**"
+      } else {
+        power_code <- "***"
+      }
+
+      col_name <- paste0("Comp", i)
+      pairwise_data[[col_name]] <- c(
+        comparison_name,
+        as.character(pairwise[[i]]$mean_diff),
+        pairwise[[i]]$lsd_result,
+        pairwise[[i]]$error_type,
+        as.character(pairwise[[i]]$effect_size),
+        power_code
+      )
+    }
+  } else {
+    pairwise_data <- data.frame(
+      ` ` = c(
+        "Pairwise comparison \u2192",
+        "Mean difference \u2192",
+        "LSD result \u2192",
+        "Type of Stat Error risked \u2192",
+        "Pairwise effect size (r) \u2192",
+        "Power Problem? \u2192"
+      ),
+      stringsAsFactors = FALSE,
+      check.names = FALSE
+    )
+
+    for (i in 1:n_pairwise) {
+      comparison_name <- pairwise[[i]]$comparison
+      if (!is.null(group_labels)) {
+        original_labels <- anova_results_list$group_labels
+        if (!is.null(original_labels)) {
+          for (j in seq_along(original_labels)) {
+            comparison_name <- gsub(original_labels[j], group_labels[j],
+                                    comparison_name, fixed = TRUE)
+          }
+        }
+      }
+
+      col_name <- paste0("Comp", i)
+      pairwise_data[[col_name]] <- c(
+        comparison_name,
+        "",
+        "",
+        "",
+        "",
+        ""
+      )
+    }
+  }
+
+  pairwise_data <- tibble::as_tibble(pairwise_data)
+
+  ft <- flextable::flextable(pairwise_data) |>
+    flextable::theme_box() |>
+    flextable::align(align = "center", part = "all") |>
+    flextable::align(j = 1, align = "left", part = "all") |>
+    flextable::delete_part(part = "header") |>
+    flextable::hline_top(border = officer::fp_border(width = 1), part = "body") |>
+    flextable::autofit()
+
+  if (KEY) {
+    ft <- ft |> flextable::color(i = 2:6, j = 2:(n_pairwise + 1), color = "#d00000", part = "body")
+  }
+
+  caption_text <- paste0("*   No ", .en_dash(), " rejecting H0: means there was sufficient power\n",
+    "**  No ", .en_dash(), " effect is \"too small to be interesting,\" (r < .10) so being nonsignificant doesn't indicate a power problem\n",
+    "*** Yes ", .en_dash(), " The effect is \"large enough to be interesting,\" (r > .10) so being nonsignificant indicates there likely is a power problem"
+  )
+
+  ft <- flextable::add_footer_lines(ft, values = caption_text) |>
+    flextable::align(align = "left", part = "footer") |>
+    flextable::fontsize(size = 9, part = "footer") |>
+    flextable::merge_at(part = "footer", i = 1) |>
+    flextable::hline(part = "footer", border = officer::fp_border(width = 0))
+
+  return(ft)
+}
+
+
+#' Research Hypothesis Support Text (ANOVA)
+#'
+#' Creates formatted text evaluating whether research hypotheses are
+#' supported based on pairwise comparison results.
+#'
+#' @param anova_results_list Output from [anova_kgroup_answers()].
+#' @param hypotheses_list A list of hypothesis specifications. Each element
+#'   should have `group1`, `group2`, `direction` (">", "<", or "="), and `text`.
+#' @param group_labels Character vector or NULL. Display labels for groups.
+#' @param KEY Logical. If TRUE (default), show answers; if FALSE, show blanks.
+#' @param highlight Logical. If TRUE and KEY is TRUE, wrap answers in
+#'   highlight formatting.
+#'
+#' @return A character string with formatted RH evaluation.
+#'
+#' @examples
+#' \dontrun{
+#' hypotheses <- list(
+#'   list(group1 = "High", group2 = "Low", direction = ">",
+#'        text = "High group will score higher than Low group")
+#' )
+#' create_rh_support_text(result, hypotheses, KEY = TRUE)
+#' }
+#'
+#' @export
+create_rh_support_text <- function(anova_results_list,
+                                   hypotheses_list,
+                                   group_labels = NULL,
+                                   KEY = TRUE,
+                                   highlight = FALSE) {
+
+  if (is.null(group_labels)) {
+    group_labels <- anova_results_list$Descriptives$group_label
+  }
+
+  pairwise <- anova_results_list$Pairwise
+
+  hl <- function(text) {
+    if (highlight && KEY) {
+      paste0("[", text, "]{custom-style=\"highlight-yellow\"}")
+    } else {
+      as.character(text)
+    }
+  }
+
+  check_hypothesis <- function(hyp) {
+    group1 <- hyp$group1
+    group2 <- hyp$group2
+    expected_direction <- hyp$direction
+
+    comp_name1 <- paste(group1, "vs", group2)
+    comp_name2 <- paste(group2, "vs", group1)
+
+    comp_result <- NULL
+    is_reversed <- FALSE
+    for (comp in pairwise) {
+      if (comp$comparison == comp_name1) {
+        comp_result <- comp
+        is_reversed <- FALSE
+        break
+      } else if (comp$comparison == comp_name2) {
+        comp_result <- comp
+        is_reversed <- TRUE
+        break
+      }
+    }
+
+    if (is.null(comp_result)) {
+      return(list(supported = "Unknown", text = "Comparison not found"))
+    }
+
+    actual_result <- comp_result$lsd_result
+
+    supported <- FALSE
+    result_text <- ""
+
+    if (!is_reversed) {
+      if (expected_direction == ">" && actual_result == ">") {
+        supported <- TRUE
+        result_text <- paste0(hl("Fully supported"), " -- ", group1, " significantly greater than ", group2, " by LSD")
+      } else if (expected_direction == "<" && actual_result == "<") {
+        supported <- TRUE
+        result_text <- paste0(hl("Fully supported"), " -- ", group1, " significantly less than ", group2, " by LSD")
+      } else if (expected_direction == "=" && actual_result == "=") {
+        supported <- TRUE
+        result_text <- paste0(hl("Fully supported"), " -- ", group1, " not significantly different than ", group2, " by LSD")
+      } else if (expected_direction == ">" && actual_result == "<") {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", group1, " significantly less than ", group2, " by LSD")
+      } else if (expected_direction == "<" && actual_result == ">") {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", group1, " significantly greater than ", group2, " by LSD")
+      } else if (expected_direction != "=" && actual_result == "=") {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", group1, " not significantly different than ", group2, " by LSD")
+      } else {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", group1, " not significantly different than ", group2, " by LSD")
+      }
+    } else {
+      if (expected_direction == "<" && actual_result == ">") {
+        supported <- TRUE
+        result_text <- paste0(hl("Fully supported"), " -- ", group1, " significantly less than ", group2, " by LSD")
+      } else if (expected_direction == ">" && actual_result == "<") {
+        supported <- TRUE
+        result_text <- paste0(hl("Fully supported"), " -- ", group1, " significantly greater than ", group2, " by LSD")
+      } else if (expected_direction == "=" && actual_result == "=") {
+        supported <- TRUE
+        result_text <- paste0(hl("Fully supported"), " -- ", group1, " not significantly different than ", group2, " by LSD")
+      } else if (expected_direction == ">" && actual_result == ">") {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", group1, " significantly less than ", group2, " by LSD")
+      } else if (expected_direction == "<" && actual_result == "<") {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", group1, " significantly greater than ", group2, " by LSD")
+      } else if (expected_direction != "=" && actual_result == "=") {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", group1, " not significantly different than ", group2, " by LSD")
+      } else {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", group1, " not significantly different than ", group2, " by LSD")
+      }
+    }
+
+    return(list(supported = supported, text = result_text))
+  }
+
+  output <- "## RH: Testing\n\n"
+  n_supported <- 0
+  n_total <- length(hypotheses_list)
+
+  for (i in 1:length(hypotheses_list)) {
+    hyp <- hypotheses_list[[i]]
+    rh_num <- paste0("RH", i)
+
+    output <- paste0(output, rh_num, ": ", hyp$text, "\n\n")
+    output <- paste0(output, "     Is this RH: fully, partially or not supported? Explain your answer.\n   ")
+
+    if (KEY) {
+      result <- check_hypothesis(hyp)
+      output <- paste0(output, result$text, "\n\n")
+
+      if (result$supported == TRUE) {
+        n_supported <- n_supported + 1
+      }
+    } else {
+      output <- paste0(output, "____________\n\n")
+    }
+  }
+
+  output <- paste0(output, "Overall, is this set of RH: fully, partially or not supported? ")
+
+  if (KEY) {
+    if (n_supported == n_total) {
+      overall <- paste0(hl("Fully supported"), " -- all ", n_total, " pairwise comparisons met RH.")
+    } else if (n_supported > 0) {
+      overall <- paste0(hl("Partially supported"), " -- ", n_supported, " of ", n_total, " pairwise comparisons met RH.")
+    } else {
+      overall <- paste0(hl("Not supported"), " -- 0 of ", n_total, " pairwise comparisons met RH.")
+    }
+    output <- paste0(output, overall, "\n")
+  } else {
+    output <- paste0(output, "____________\n")
+  }
+
+  return(output)
+}
+
+
+
+
+
+#' APA Write-Up for K-Group Between-Groups ANOVA
+#'
+#' Generates an APA-style paragraph reporting a one-way ANOVA with
+#' post-hoc comparisons.
+#'
+#' @param anova_results_list Output from [anova_kgroup_answers()].
+#' @param dv_name Character. Display name for the dependent variable.
+#' @param iv_name Character. Display name for the independent variable.
+#' @param group_labels Character vector or NULL. Display labels for groups.
+#' @param hypothesis_text Character or NULL. Custom hypothesis statement.
+#' @param posthoc_tests Character. Name of post-hoc test used. Default "LSD".
+#' @param report_mse Logical. Include MSE in output. Default TRUE.
+#' @param report_eta_sq Logical. Include eta-squared effect size. Default FALSE.
+#'
+#' @return A character string with APA-formatted results.
+#'
+#' @examples
+#' \dontrun{
+#' result <- anova_kgroup_answers(data, "score", "condition")
+#' writeup <- apa_kgroup_bg_writeup(result, "Score", "Condition")
+#' cat(writeup)
+#' }
+#'
+#' @export
+apa_kgroup_bg_writeup <- function(anova_results_list,
+                                  dv_name,
+                                  iv_name,
+                                  group_labels = NULL,
+                                  hypothesis_text = NULL,
+                                  posthoc_tests = "LSD",
+                                  report_mse = TRUE,
+                                  report_eta_sq = FALSE) {
+
+  f_val <- anova_results_list$ANOVA$F
+  p_val <- anova_results_list$ANOVA$p_value
+  df_between <- anova_results_list$ANOVA$df_between
+  df_within <- anova_results_list$ANOVA$df_within
+  mse <- anova_results_list$ANOVA$mse
+
+  desc_stats <- anova_results_list$Descriptives
+
+  if (is.null(group_labels)) {
+    group_labels <- desc_stats$group_label
+  }
+
+  group_means <- desc_stats$mean
+  group_sds <- desc_stats$sd
+  group_ns <- desc_stats$n
+
+  pairwise <- anova_results_list$Pairwise
+
+  if (report_eta_sq) {
+    ss_between <- f_val * mse * df_between
+    ss_total <- ss_between + (mse * df_within)
+    eta_sq <- ss_between / ss_total
+  }
+
+  if (p_val < 0.001) {
+    p_text <- "< .001"
+  } else {
+    p_text <- paste0("= ", sub("^0", "", sprintf("%.3f", p_val)))
+  }
+
+  if (p_val < 0.05) {
+    f_sentence <- glue::glue(
+      "There was a significant difference in {dv_name} across {iv_name}, ",
+      "*F*({df_between},{df_within}) = {f_val}"
+    )
+  } else {
+    f_sentence <- glue::glue(
+      "There was no significant difference in {dv_name} across {iv_name}, ",
+      "*F*({df_between},{df_within}) = {f_val}"
+    )
+  }
+
+  if (report_mse) {
+    f_sentence <- paste0(f_sentence, glue::glue(", MS~e~ = {mse}"))
+  }
+
+  if (report_eta_sq) {
+    f_sentence <- paste0(f_sentence, paste0(", ", .eta_sq_symbol(), " = ", round(eta_sq, 2)))
+  }
+
+  f_sentence <- paste0(f_sentence, glue::glue(", *p* {p_text}. "))
+
+  if (p_val < 0.05) {
+    f_sentence <- paste0(f_sentence, glue::glue("{posthoc_tests} was used as a follow-up test. "))
+  }
+
+  writeup <- f_sentence
+
+  if (p_val < 0.05 && !is.null(pairwise) && length(pairwise) > 0) {
+
+    sig_comps <- list()
+    nonsig_comps <- list()
+
+    for (i in 1:length(pairwise)) {
+      comp <- pairwise[[i]]
+      if (comp$lsd_result != "=") {
+        sig_comps[[length(sig_comps) + 1]] <- comp
+      } else {
+        nonsig_comps[[length(nonsig_comps) + 1]] <- comp
+      }
+    }
+
+    if (length(sig_comps) > 0) {
+
+      if (!is.null(hypothesis_text)) {
+        writeup <- paste0(writeup, hypothesis_text, " ")
+      }
+
+      group_comparisons <- list()
+
+      for (comp in sig_comps) {
+        groups <- trimws(strsplit(comp$comparison, " vs ")[[1]])
+        group1 <- groups[1]
+        group2 <- groups[2]
+
+        idx1 <- which(group_labels == group1)
+        idx2 <- which(group_labels == group2)
+
+        if (length(idx1) == 0 || length(idx2) == 0) {
+          next
+        }
+
+        mean1 <- group_means[idx1]
+        mean2 <- group_means[idx2]
+        sd1 <- group_sds[idx1]
+        sd2 <- group_sds[idx2]
+
+        if (mean1 > mean2) {
+          higher_group <- group1
+          higher_idx <- idx1
+          lower_group <- group2
+          lower_idx <- idx2
+        } else {
+          higher_group <- group2
+          higher_idx <- idx2
+          lower_group <- group1
+          lower_idx <- idx1
+        }
+
+        if (is.null(group_comparisons[[higher_group]])) {
+          group_comparisons[[higher_group]] <- list(
+            mean = group_means[higher_idx],
+            sd = group_sds[higher_idx],
+            lower_than = list()
+          )
+        }
+
+        group_comparisons[[higher_group]]$lower_than[[length(group_comparisons[[higher_group]]$lower_than) + 1]] <- list(
+          name = lower_group,
+          mean = group_means[lower_idx],
+          sd = group_sds[lower_idx]
+        )
+      }
+
+      comp_texts <- c()
+      for (group_name in names(group_comparisons)) {
+        group_info <- group_comparisons[[group_name]]
+
+        lower_parts <- c()
+        for (lower in group_info$lower_than) {
+          lower_parts <- c(lower_parts,
+                           glue::glue("{lower$name} (*M* = {lower$mean}, *SD* = {lower$sd})"))
+        }
+
+        if (length(lower_parts) == 1) {
+          lower_text <- lower_parts[1]
+        } else if (length(lower_parts) == 2) {
+          lower_text <- paste(lower_parts[1], "and", lower_parts[2])
+        } else {
+          lower_text <- paste(paste(lower_parts[-length(lower_parts)], collapse = ", "),
+                              "and", lower_parts[length(lower_parts)])
+        }
+
+        comp_texts <- c(comp_texts,
+                        glue::glue("{group_name} (*M* = {group_info$mean}, *SD* = {group_info$sd}) ",
+                             "was rated as significantly higher than {lower_text}"))
+      }
+
+      if (length(comp_texts) == 1) {
+        writeup <- paste0(writeup, comp_texts[1], ". ")
+      } else {
+        writeup <- paste0(writeup, paste(comp_texts, collapse = " and "), ". ")
+      }
+    }
+
+    if (length(nonsig_comps) > 0) {
+      nonsig_pairs <- c()
+
+      for (comp in nonsig_comps) {
+        groups <- trimws(strsplit(comp$comparison, " vs ")[[1]])
+        nonsig_pairs <- c(nonsig_pairs, paste(groups[1], "and", groups[2]))
+      }
+
+      writeup <- paste0(writeup, "Contrary to hypothesis, ")
+
+      if (length(nonsig_pairs) == 1) {
+        writeup <- paste0(writeup, nonsig_pairs[1], " were not significantly different.")
+      } else if (length(nonsig_pairs) == 2) {
+        writeup <- paste0(writeup, nonsig_pairs[1], " and ", nonsig_pairs[2],
+                          " were not significantly different.")
+      } else {
+        writeup <- paste0(writeup, paste(nonsig_pairs[-length(nonsig_pairs)], collapse = ", "),
+                          ", and ", nonsig_pairs[length(nonsig_pairs)],
+                          " were not significantly different.")
+      }
+    }
+
+  } else if (p_val >= 0.05) {
+    desc_parts <- c()
+    for (i in 1:length(group_labels)) {
+      desc_parts <- c(desc_parts,
+                      glue::glue("{group_labels[i]} (*M* = {group_means[i]}, *SD* = {group_sds[i]})"))
+    }
+    desc_text <- paste(desc_parts, collapse = ", ")
+    writeup <- paste0(writeup, "Group means were: ", desc_text, ".")
+  }
+
+  return(writeup)
+}
+
+# RH support text
+
+
+
+
+
+
+
+
+
+#' Chi-Square Pairwise Results Table (Answer KEY)
+#'
+#' Creates a flextable showing pairwise chi-square comparison results.
+#'
+#' @param chi_results_list Output from [chi_square_kgroup_answers()].
+#' @param KEY Logical. If TRUE (default), fill with values; if FALSE, blank.
+#' @param comparison_var_label Character or NULL. Label for the percentage
+#'   comparison variable.
+#'
+#' @return A [flextable::flextable()] object.
+#'
+#' @examples
+#' \dontrun{
+#' result <- chi_square_kgroup_answers(data, "group", "outcome")
+#' chisq_pairwise_KEY(result, KEY = TRUE)
+#' }
+#'
+#' @export
+chisq_pairwise_KEY <- function(chi_results_list,
+                               KEY = TRUE,
+                               comparison_var_label = NULL) {
+
+  pairwise <- chi_results_list$Pairwise
+  n_pairwise <- length(pairwise)
+
+  if (is.null(comparison_var_label)) {
+    comparison_var_label <- chi_results_list$pct_var2_label
+  }
+
+  if (!is.null(comparison_var_label)) {
+    pct_row_label <- paste0("% ", comparison_var_label, " \u2192")
+  } else {
+    pct_row_label <- "% comparison \u2192"
+  }
+
+  if (KEY) {
+    pairwise_data <- data.frame(
+      ` ` = c(
+        "Pairwise comparison \u2192",
+        pct_row_label,
+        paste0(.chi_sq_symbol(), " result \u2192"),
+        "Type of Stat Error risked \u2192",
+        "Pairwise effect size (r) \u2192",
+        "Power Problem? \u2192"
+      ),
+      stringsAsFactors = FALSE,
+      check.names = FALSE
+    )
+
+    for (i in 1:n_pairwise) {
+      power_text <- pairwise[[i]]$power_problem
+      if (grepl("rejecting H0", power_text)) {
+        power_code <- "*"
+      } else if (grepl("too small", power_text)) {
+        power_code <- "**"
+      } else {
+        power_code <- "***"
+      }
+
+      col_name <- paste0("Comp", i)
+      pairwise_data[[col_name]] <- c(
+        pairwise[[i]]$comparison,
+        paste0(pairwise[[i]]$pct1, "% vs ", pairwise[[i]]$pct2, "%"),
+        paste0(pairwise[[i]]$chi_sq, " ", pairwise[[i]]$chi_result),  # <-- Updated line
+        pairwise[[i]]$error_type,
+        as.character(pairwise[[i]]$effect_size),
+        power_code
+      )
+    }
+  } else {
+    pairwise_data <- data.frame(
+      ` ` = c(
+        "Pairwise comparison \u2192",
+        pct_row_label,
+        paste0(.chi_sq_symbol(), " result \u2192"),
+        "Type of Stat Error risked \u2192",
+        "Pairwise effect size (r) \u2192",
+        "Power Problem? \u2192"
+      ),
+      stringsAsFactors = FALSE,
+      check.names = FALSE
+    )
+
+    for (i in 1:n_pairwise) {
+      col_name <- paste0("Comp", i)
+      pairwise_data[[col_name]] <- c(
+        pairwise[[i]]$comparison,
+        "",
+        "",
+        "",
+        "",
+        ""
+      )
+    }
+  }
+
+  pairwise_data <- tibble::as_tibble(pairwise_data)
+
+  ft <- flextable::flextable(pairwise_data) |>
+    flextable::theme_box() |>
+    flextable::align(align = "center", part = "all") |>
+    flextable::align(j = 1, align = "left", part = "all") |>
+    flextable::delete_part(part = "header") |>
+    flextable::hline_top(border = officer::fp_border(width = 1), part = "body") |>
+    flextable::autofit()
+
+  if (KEY) {
+    ft <- ft |> flextable::color(i = 2:6, j = 2:(n_pairwise + 1), color = "#d00000", part = "body")
+  }
+
+  caption_text <- paste0(
+    "*   No \u2013 rejecting H0: means there was sufficient power\n",
+    "**  No \u2013 effect is \"too small to be interesting,\" (r < .10) so being nonsignificant doesn't indicate a power problem\n",
+    "*** Yes \u2013 The effect is \"large enough to be interesting,\" (r > .10) so being nonsignificant indicates there likely is a power problem"
+  )
+
+  ft <- flextable::add_footer_lines(ft, values = caption_text) |>
+    flextable::align(align = "left", part = "footer") |>
+    flextable::fontsize(size = 9, part = "footer") |>
+    flextable::merge_at(part = "footer", i = 1) |>
+    flextable::hline(part = "footer", border = officer::fp_border(width = 0))
+
+  return(ft)
+}
+
+
+
+
+
+
+
+
+
+#' Research Hypothesis Support Text (Chi-Square)
+#'
+#' Creates formatted text evaluating whether research hypotheses are
+#' supported based on pairwise chi-square comparison results.
+#'
+#' @param chi_results_list Output from [chi_square_kgroup_answers()].
+#' @param hypotheses_list A list of hypothesis specifications. Each element
+#'   should have `group1`, `group2`, `direction` (">", "<", or "="), and `text`.
+#' @param var1_labels Character vector or NULL. Labels for var1 levels.
+#' @param var2_labels Character vector or NULL. Labels for var2 levels.
+#' @param KEY Logical. If TRUE (default), show answers; if FALSE, show blanks.
+#' @param highlight Logical. If TRUE and KEY is TRUE, wrap answers in
+#'   highlight formatting.
+#'
+#' @return A character string with formatted RH evaluation.
+#'
+#' @examples
+#' \dontrun{
+#' hypotheses <- list(
+#'   list(group1 = "Young", group2 = "Old", direction = ">",
+#'        text = "Young will have higher percentage than Old")
+#' )
+#' create_chi_rh_support_text(result, hypotheses, KEY = TRUE)
+#' }
+#'
+#' @export
+create_chi_rh_support_text <- function(chi_results_list,
+                                       hypotheses_list,
+                                       var1_labels = NULL,
+                                       var2_labels = NULL,
+                                       KEY = TRUE,
+                                       highlight = FALSE) {
+
+  if (is.null(var1_labels)) {
+    var1_labels <- chi_results_list$Var1_Descriptives$level_label
+  }
+  if (is.null(var2_labels)) {
+    var2_labels <- chi_results_list$Var2_Descriptives$level_label
+  }
+
+  pairwise <- chi_results_list$Pairwise
+
+  hl <- function(text) {
+    if (highlight && KEY) {
+      paste0("[", text, "]{custom-style=\"highlight-yellow\"}")
+    } else {
+      as.character(text)
+    }
+  }
+
+  check_hypothesis <- function(hyp) {
+    group1 <- hyp$group1
+    group2 <- hyp$group2
+    expected_direction <- hyp$direction
+
+    comp_name1 <- paste(group1, "vs", group2)
+    comp_name2 <- paste(group2, "vs", group1)
+
+    comp_result <- NULL
+    is_reversed <- FALSE
+    for (comp in pairwise) {
+      if (comp$comparison == comp_name1) {
+        comp_result <- comp
+        is_reversed <- FALSE
+        break
+      } else if (comp$comparison == comp_name2) {
+        comp_result <- comp
+        is_reversed <- TRUE
+        break
+      }
+    }
+
+    if (is.null(comp_result)) {
+      return(list(supported = "Unknown", text = "Comparison not found"))
+    }
+
+    if (is_reversed) {
+      pct1 <- comp_result$pct2
+      pct2 <- comp_result$pct1
+      actual_result <- comp_result$chi_result
+      if (actual_result == ">") {
+        actual_result <- "<"
+      } else if (actual_result == "<") {
+        actual_result <- ">"
+      }
+    } else {
+      pct1 <- comp_result$pct1
+      pct2 <- comp_result$pct2
+      actual_result <- comp_result$chi_result
+    }
+
+    supported <- FALSE
+    result_text <- ""
+
+    if (expected_direction == ">") {
+      if (actual_result == ">" && pct1 > pct2) {
+        supported <- TRUE
+        result_text <- paste0(hl("Fully supported"), " -- ", pct1, "% significantly greater than ", pct2, "%")
+      } else if (actual_result == "<" || (actual_result == ">" && pct1 < pct2)) {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", pct1, "% significantly less than ", pct2, "%")
+      } else {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", pct1, "% not significantly different than ", pct2, "%")
+      }
+    } else if (expected_direction == "<") {
+      if (actual_result == "<" && pct1 < pct2) {
+        supported <- TRUE
+        result_text <- paste0(hl("Fully supported"), " -- ", pct1, "% significantly less than ", pct2, "%")
+      } else if (actual_result == ">" || (actual_result == "<" && pct1 > pct2)) {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", pct1, "% significantly greater than ", pct2, "%")
+      } else {
+        supported <- FALSE
+        result_text <- paste0(hl("Not supported"), " -- ", pct1, "% not significantly different than ", pct2, "%")
+      }
+    } else if (expected_direction == "=") {
+      if (actual_result == "=") {
+        supported <- TRUE
+        result_text <- paste0(hl("Fully supported"), " -- ", pct1, "% not significantly different than ", pct2, "%")
+      } else {
+        supported <- FALSE
+        if (pct1 > pct2) {
+          result_text <- paste0(hl("Not supported"), " -- ", pct1, "% significantly greater than ", pct2, "%")
+        } else {
+          result_text <- paste0(hl("Not supported"), " -- ", pct1, "% significantly less than ", pct2, "%")
+        }
+      }
+    }
+
+    return(list(supported = supported, text = result_text))
+  }
+
+  output <- "## RH: Testing\n\n"
+  n_supported <- 0
+  n_total <- length(hypotheses_list)
+
+  for (i in 1:length(hypotheses_list)) {
+    hyp <- hypotheses_list[[i]]
+    rh_num <- paste0("RH", i)
+
+    output <- paste0(output, rh_num, ": ", hyp$text, "\n\n")
+    output <- paste0(output, "     Is this RH: fully, partially or not supported? Explain your answer.\n   ")
+
+    if (KEY) {
+      result <- check_hypothesis(hyp)
+      output <- paste0(output, result$text, "\n\n")
+
+      if (result$supported == TRUE) {
+        n_supported <- n_supported + 1
+      }
+    } else {
+      output <- paste0(output, "____________\n\n")
+    }
+  }
+
+  output <- paste0(output, "Overall, is this set of RH: fully, partially or not supported? ")
+
+  if (KEY) {
+    if (n_supported == n_total) {
+      overall <- paste0(hl("Fully supported"), " -- all ", n_total, " pairwise comparisons met RH.")
+    } else if (n_supported > 0) {
+      overall <- paste0(hl("Partially supported"), " -- ", n_supported, " of ", n_total, " pairwise comparisons met RH.")
+    } else {
+      overall <- paste0(hl("Not supported"), " -- 0 of ", n_total, " pairwise comparisons met RH.")
+    }
+    output <- paste0(output, overall, "\n")
+  } else {
+    output <- paste0(output, "____________\n")
+  }
+
+  return(output)
+}
+
+
+
+
+
+
+
+
+
+#' APA Write-Up for K-Group Chi-Square Test
+#'
+#' Generates an APA-style paragraph reporting a chi-square test of
+#' independence with multiple groups.
+#'
+#' @param chi_results_list Output from [chi_square_kgroup_answers()].
+#' @param var1_name Character. Display name for variable 1.
+#' @param var2_name Character. Display name for variable 2.
+#' @param var1_labels Character vector or NULL. Labels for var1 levels.
+#' @param var2_labels Character vector of length 2. Labels for var2 levels.
+#' @param hypothesis_text Character or NULL. Custom hypothesis statement.
+#' @param conclusion_intro Character or NULL. Custom conclusion introduction
+#'   (e.g., "As hypothesized" or "Contrary to our hypothesis").
+#' @param subject Character or NULL. Subject description for the sentence
+#'   (e.g., "Participants").
+#'
+#' @return A character string with APA-formatted results.
+#'
+#' @examples
+#' \dontrun{
+#' result <- chi_square_kgroup_answers(data, "age_group", "outcome")
+#' writeup <- apa_kgroup_chi_writeup(result, "Age Group", "Outcome")
+#' cat(writeup)
+#' }
+#'
+#' @export
+apa_kgroup_chi_writeup <- function(chi_results_list,
+                                   var1_name,
+                                   var2_name,
+                                   var1_labels = NULL,
+                                   var2_labels = c("Level A", "Level B"),
+                                   hypothesis_text = NULL,
+                                   conclusion_intro = NULL,
+                                   subject = NULL) {
+
+  chi_sq <- chi_results_list$ChiSquare$chi_sq
+  p <- chi_results_list$ChiSquare$p_value
+  df <- chi_results_list$ChiSquare$df
+
+  cont_table <- chi_results_list$ContingencyTable
+  var1_desc <- chi_results_list$Var1_Descriptives
+
+  if (is.null(var1_labels)) {
+    var1_labels <- var1_desc$level_label
+  }
+
+  pct_var2_level <- chi_results_list$pct_var2_level
+  if (is.null(pct_var2_level)) {
+    pct_var2_level <- 2
+  }
+
+  p_text <- sub("^0", "", sprintf("%.3f", p))
+
+  desc_parts <- c()
+  for (i in 1:nrow(var1_desc)) {
+    group_total <- var1_desc$n[i]
+    group_count <- cont_table[i, pct_var2_level]
+    group_pct <- round((group_count / group_total) * 100, 2)
+
+    desc_parts <- c(desc_parts,
+                    glue::glue("{var1_labels[i]} (*n* = {group_total}; {group_pct}%)"))
+  }
+
+  if (length(desc_parts) == 2) {
+    desc_text <- paste(desc_parts, collapse = " and ")
+  } else {
+    desc_text <- paste(desc_parts, collapse = ", ")
+  }
+
+  if (p < 0.05) {
+    sig_phrase <- "a significant relationship"
+    equality_phrase <- "differed in their"
+  } else {
+    sig_phrase <- "no significant relationship"
+    equality_phrase <- "were equally"
+  }
+
+  if (is.null(hypothesis_text)) {
+    hypothesis_text <- glue::glue("We hypothesized a relationship between {var1_name} and {var2_name}.")
+  }
+
+  if (is.null(conclusion_intro)) {
+    conclusion_intro <- ifelse(p < 0.05,
+                               "As hypothesized",
+                               "Contrary to our hypothesis")
+  }
+
+  if (is.null(subject)) {
+    subject_phrase <- ""
+    from_phrase <- "both"
+  } else {
+    subject_phrase <- paste(subject, "from")
+    from_phrase <- "both"
+  }
+
+  writeup <- glue::glue(
+    "{hypothesis_text} A two-way chi-square test found {sig_phrase} between ",
+    "{var1_name} and {var2_name}, {.chi_sq_symbol()}({df}) = {chi_sq}, *p* = {p_text}. ",
+    "{conclusion_intro}, {subject_phrase} {from_phrase} {desc_text} {equality_phrase} likely to be {var2_labels[pct_var2_level]}."
+  )
+
+  return(writeup)
+}
+
+
+

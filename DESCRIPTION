@@ -1,12 +1,13 @@
-URL: https://emmarshall.github.io/psych350lab
 Package: psych350lab
 Type: Package
 Title: R Package Companion to PSYCH 350 at University of Nebraska-Lincoln
 Version: 0.1.0
 Date: 2026
-Authors@R: as.person(c(
-    "Emma Marshall <em.marshall47@gmail.com> [aut, cre]"
-  ))
+Authors@R: 
+    person(given = "Emma",
+           family = "Marshall",
+           email = "emmarshall47@pm.me",
+           role = c("aut", "cre"))
 Description: A collection of statistical analysis and APA-style reporting functions 
     designed for behavioral science courses. Includes functions for correlations, 
     chi-square tests, between- and within-groups ANOVA, factorial ANOVA, and 
@@ -15,8 +16,6 @@ Description: A collection of statistical analysis and APA-style reporting functi
     for demonstrations.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 LazyData: true
 Depends: 
     R (>= 4.1.0)
@@ -26,6 +25,7 @@ Imports:
     haven,
     here,
     glue,
+    stats,
     flextable,
     officer,
     ggplot2,
@@ -33,17 +33,13 @@ Imports:
     psych,
     jmv,
     tibble,
-    purrr,
-    rlang
+    purrr
 Suggests:
-    knitr,
-    rmarkdown,
-    pkgdown,
     webexercises,
     tinytable,
     htmltools,
     car,
-    gt,
-    testthat (>= 3.0.0)
-VignetteBuilder: knitr
-Config/testthat/edition: 3
+    gt
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+URL: https://emmarshall.github.io/psych350lab

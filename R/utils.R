@@ -55,6 +55,39 @@ get_spss_data <- function(file_path, check_filter = TRUE, verbose = FALSE) {
   return(tibble::as_tibble(data_clean))
 }
 
+#' Convert variable to factor for categorical analysis
+#'
+#' Internal helper that handles numeric codes, character strings, and factors
+#' consistently for chi-square and other categorical analyses.
+#'
+#' @param x A vector (numeric, character, or factor)
+#' @param remove_missing_codes Logical. If TRUE, converts -99 to NA for numeric input
+#'
+#' @return A factor
+#' @noRd
+.prepare_categorical <- function(x, remove_missing_codes = TRUE) {
+  # Already a factor - return as-is
+  if (is.factor(x)) {
+    return(x)
+  }
+
+  # Numeric input (legacy format with codes like 1, 2, 3)
+  if (is.numeric(x)) {
+    if (remove_missing_codes) {
+      x[x == -99] <- NA
+    }
+    return(as.factor(x))
+  }
+
+  # Character input (e.g., "Rotten", "Fresh")
+  if (is.character(x)) {
+    return(as.factor(x))
+  }
+
+  # Fallback
+  as.factor(x)
+}
+
 
 #' Format a p-value for APA style
 #'
@@ -73,13 +106,43 @@ get_spss_data <- function(file_path, check_filter = TRUE, verbose = FALSE) {
 #'
 #' @export
 format_p_value <- function(p, digits = 3) {
-  if (is.na(p)) {
-    return(NA_character_)
-  } else if (p < 0.001) {
-    return("< .001")
-  } else {
-    formatted <- sprintf(paste0("%.", digits, "f"), p)
-    formatted <- sub("^0\\.", ".", formatted)
-    return(formatted)
-  }
+  dplyr::case_when(
+    is.na(p) ~ NA_character_,
+    p < 0.001 ~ "< .001",
+    .default = sub("^0\\.", ".", sprintf(paste0("%.", digits, "f"), p))
+  )
+}
+
+# -----------------------------------------------------------------------------
+# INTERNAL HELPERS
+# -----------------------------------------------------------------------------
+
+#' Create chi-square symbol using unicode
+#' @keywords internal
+#' @noRd
+.chi_sq_symbol <- function() {
+
+  paste0(intToUtf8(0x03C7), intToUtf8(0x00B2))
+}
+
+#' Create eta-squared symbol using unicode
+#' @keywords internal
+#' @noRd
+.eta_sq_symbol <- function() {
+
+  paste0(intToUtf8(0x03B7), intToUtf8(0x00B2))
+}
+
+#' Create en-dash using unicode
+#' @keywords internal
+#' @noRd
+.en_dash <- function() {
+  intToUtf8(0x2013)
+}
+
+#' Create R-squared symbol using unicode
+#' @keywords internal
+#' @noRd
+.r_sq_symbol <- function() {
+  paste0("R", intToUtf8(0x00B2))
 }

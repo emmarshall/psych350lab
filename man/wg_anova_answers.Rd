@@ -7,7 +7,7 @@
 wg_anova_answers(data, dv1, dv2, id_var = NULL)
 }
 \arguments{
-\item{data}{A data frame or tibble in wide format.}
+\item{data}{A data frame or tibble.}
 
 \item{dv1}{Character string. Name of the first condition's variable.}
 
@@ -25,8 +25,7 @@ A list with elements:
 }
 }
 \description{
-Performs a one-way repeated measures ANOVA comparing two conditions
-measured on the same participants.
+Performs a repeated measures ANOVA for two conditions.
 }
 \examples{
 data(superman)

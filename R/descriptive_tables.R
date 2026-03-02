@@ -11,7 +11,7 @@
 #'
 #' @param vars Character vector. Variable names to include, in display order.
 #' @param stats_data A data frame with columns `variable`, `mean`, `sd`, and
-#'   `sem` — typically the output of [compute_summary_stats()].
+#'   `sem` \\u2014 typically the output of [compute_summary_stats()].
 #' @param label Character vector or `NULL`. Variables that are IDs/labels.
 #' @param quantitative Character vector or `NULL`. Continuous variables.
 #' @param binary Character vector or `NULL`. Dichotomous variables.
@@ -73,7 +73,7 @@ create_answer_table <- function(vars,
       dplyr::filter(.data$variable %in% vars) |>
       dplyr::slice(match(vars, .data$variable)) |>
       dplyr::mutate(
-        Interpretable = purrr::map_chr(.data$variable, function(v) {
+        Interpretable = purrr::map_chr(variable, \(v) {
           vtype <- if (v %in% names(var_type_map)) var_type_map[v] else "quantitative"
           answer_text[vtype]
         })
@@ -232,10 +232,10 @@ create_descriptive_table <- function(data           = NULL,
 
         # Compute frequencies and percentages
         freq_data <- data |>
-          dplyr::count(!!rlang::sym(var), name = "freq") |>
-          dplyr::filter(!is.na(!!rlang::sym(var))) |>
+          dplyr::count(.data[[var]], name = "freq") |>
+          dplyr::filter(!is.na(.data[[var]])) |>
           dplyr::mutate(
-            pct = round((.data$freq / sum(.data$freq)) * 100, 1)
+            pct = round((freq / sum(freq)) * 100, 1)
           )
 
         # One row per level

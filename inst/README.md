@@ -18,6 +18,28 @@ GitHub installations seamlessly.
 
 ### Install from GitHub (recommended)
 
+To install you need to first set up GitHub authentication first.
+
+#### Step 1: Configure GitHub credentials (one-time setup)
+
+``` r
+# Install required packages if needed
+install.packages(c("gitcreds", "usethis"))
+
+# Check if credentials are already configured
+gitcreds::gitcreds_get()
+
+# If not configured, create a Personal Access Token:
+usethis::create_github_token()  
+# This opens GitHub with the correct scopes pre-selected.
+# Generate the token, copy it, then run:
+
+gitcreds::gitcreds_set()
+# Paste your token when prompted
+```
+
+#### Step 2: Install the package
+
 ``` r
 pak::pak("emmarshall/psych350lab")
 ```
@@ -33,6 +55,18 @@ pak::pak("local::path/to/psych350lab_0.1.0.tar.gz")
 
 # From a local directory
 pak::pak("local::path/to/psych350lab")
+```
+
+### Troubleshooting authentication
+
+If you encounter authentication errors:
+
+``` r
+# Check your current GitHub configuration
+usethis::git_sitrep()
+
+# Reset and reconfigure credentials
+gitcreds::gitcreds_set()
 ```
 
 ## Overview

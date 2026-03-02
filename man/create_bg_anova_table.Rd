@@ -8,54 +8,53 @@ create_bg_anova_table(
   anova_results_list = NULL,
   iv_name = "Independent Variable",
   dv_name = "Dependent Variable",
-  iv_labels = NULL,
-  Key = TRUE,
-  table_title = NULL
+  group_labels = NULL,
+  KEY = TRUE,
+  table_title = NULL,
+  table_number = NULL
 )
 }
 \arguments{
-\item{anova_results_list}{Output from \code{\link[=bg_anova_answers]{bg_anova_answers()}} or \code{NULL}
-(for blank table).}
+\item{anova_results_list}{Output from \code{\link[=bg_anova_answers]{bg_anova_answers()}},
+\code{\link[=anova_kgroup_answers]{anova_kgroup_answers()}}, or \code{\link[=anova_factorial_answers]{anova_factorial_answers()}}. Can be \code{NULL}
+for a blank table template.}
 
-\item{iv_name}{Character. Display name for the independent variable.
-Used as the row header label.}
+\item{iv_name}{Character. Display name for the independent variable.}
 
-\item{dv_name}{Character. Display name for the dependent variable.
-Used in the table title if provided.}
+\item{dv_name}{Character. Display name for the dependent variable.}
 
-\item{iv_labels}{Character vector or \code{NULL}. Display labels for IV levels.
-If \code{NULL} and \code{Key = TRUE}, uses factor levels from the results.
-If \code{NULL} and \code{Key = FALSE}, defaults to "Group 1", "Group 2".}
+\item{group_labels}{Character vector or \code{NULL}. Display labels for groups.
+If \code{NULL} and \code{KEY = TRUE}, labels are extracted from the results.
+If \code{NULL} and \code{KEY = FALSE}, defaults to "Group 1", "Group 2", "Group 3".}
 
-\item{Key}{Logical. If \code{TRUE} (default), fill with computed values.
+\item{KEY}{Logical. If \code{TRUE} (default), fill with computed values.
 If \code{FALSE}, create a blank template.}
 
 \item{table_title}{Character or \code{NULL}. Optional table caption.}
+
+\item{table_number}{Integer or \code{NULL}. Optional table number.}
 }
 \value{
 A \code{\link[flextable:flextable]{flextable::flextable()}} object.
 }
 \description{
-Creates an APA-formatted descriptive statistics table for a between-groups
-ANOVA, showing mean, SD, and n for each group. Can be filled (answer key)
-or blank (student worksheet).
+Creates an APA-formatted descriptive statistics table for between-groups
+ANOVA designs, showing mean and SD for each group. Compatible with output
+from \code{\link[=bg_anova_answers]{bg_anova_answers()}}, \code{\link[=anova_kgroup_answers]{anova_kgroup_answers()}}, and
+\code{\link[=anova_factorial_answers]{anova_factorial_answers()}}.
 }
 \examples{
+# Two-group design (bg_anova_answers)
 data(superman)
-result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
-
-# Filled table
-ft <- create_bg_anova_table(result,
+result_2g <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
+create_bg_anova_table(result_2g,
   iv_name = "Height Group", dv_name = "Critics Score",
-  iv_labels = c("Under 6ft", "6ft+"),
-  table_title = "Table 1. Descriptive Statistics for Critics Score by Height Group")
-ft
+  group_labels = c("Under 6ft", "6ft+"))
 
-# Blank table
-ft_blank <- create_bg_anova_table(
-  iv_name = "Height Group", dv_name = "Critics Score",
-  iv_labels = c("Under 6ft", "6ft+"),
-  Key = FALSE)
-ft_blank
+# Blank template
+create_bg_anova_table(NULL,
+  iv_name = "Condition", dv_name = "Score",
+  group_labels = c("Low", "Medium", "High"),
+  KEY = FALSE)
 
 }

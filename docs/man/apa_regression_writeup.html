@@ -313,13 +313,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Articles</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Creating Homework Checkers with psych350lab</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Reference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
@@ -930,7 +947,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <code id="reg_results_list">reg_results_list</code>
 </td>
 <td>
-Output from <code><a href="https://emmarshall.github.io/psych350lab/reference/linear_reg_answers.html">linear_reg_answers()</a></code>.
+Output from <code><a href="https://emmarshall.github.io/psych350lab/man/linear_reg_answers.html">linear_reg_answers()</a></code>.
 </td>
 </tr>
 <tr>
@@ -958,14 +975,14 @@ Logical. Include individual predictors. Default <code>TRUE</code>.
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">superman</span><span class="op">)</span></span>
 <span><span class="va">sm</span> <span class="op">&lt;-</span> <span class="va">superman</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">superman</span><span class="op">$</span><span class="va">rt_critics_score</span><span class="op">)</span> <span class="op">&amp;</span></span>
 <span>                    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">superman</span><span class="op">$</span><span class="va">rt_audience_score</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/linear_reg_answers.html">linear_reg_answers</a></span><span class="op">(</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/linear_reg_answers.html">linear_reg_answers</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sm</span>,</span>
 <span>  criterion <span class="op">=</span> <span class="st">"rt_critics_score"</span>,</span>
 <span>  quant_predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"clark_height_in"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span>,</span>
 <span>  quant_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Clark Height (in)"</span>, <span class="st">"Audience Score"</span><span class="op">)</span>,</span>
 <span>  criterion_label <span class="op">=</span> <span class="st">"Critics Score"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">writeup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/reference/apa_regression_writeup.html">apa_regression_writeup</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="va">writeup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/apa_regression_writeup.html">apa_regression_writeup</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="va">writeup</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>A multiple regression analysis was conducted to predict Critics Score from Clark Height (in), Audience Score (*N* = 8). The overall model was not statistically significant, *R*² = 0.373, *F*(2, 5) = 1.49, *p* = .311. Clark Height (in), Audience Score were not significant predictors.</code></pre>

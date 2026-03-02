@@ -2,16 +2,6 @@
 output: github_document
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
-
-
 # psych350lab <img src="man/figures/logo.png" align="right" height="139" />
 
 <!-- badges: start -->
@@ -25,20 +15,51 @@ knitr::opts_chunk$set(
 You can install **psych350lab** using the [`pak`](https://pak.r-lib.org/) package, which handles both CRAN and GitHub installations seamlessly.
 
 ### Install from GitHub (recommended)
-```{r, eval = FALSE}
+
+To install you need to first set up GitHub authentication first.
+
+#### Step 1: Configure GitHub credentials (one-time setup)
+```r
+# Install required packages if needed
+install.packages(c("gitcreds", "usethis"))
+
+# Check if credentials are already configured
+gitcreds::gitcreds_get()
+
+# If not configured, create a Personal Access Token:
+usethis::create_github_token()  
+# This opens GitHub with the correct scopes pre-selected.
+# Generate the token, copy it, then run:
+
+gitcreds::gitcreds_set()
+# Paste your token when prompted
+```
+
+#### Step 2: Install the package
+```r
 pak::pak("emmarshall/psych350lab")
 ```
 
 ### Install from a local source
 
 If you have a local copy of the package (e.g., a `.tar.gz` file or a cloned repo), you can install it with:
-
-```{r, eval = FALSE}
+```r
 # From a .tar.gz file
 pak::pak("local::path/to/psych350lab_0.1.0.tar.gz")
 
 # From a local directory
 pak::pak("local::path/to/psych350lab")
+```
+
+### Troubleshooting authentication
+
+If you encounter authentication errors:
+```{r, eval = FALSE}
+# Check your current GitHub configuration
+usethis::git_sitrep()
+
+# Reset and reconfigure credentials
+gitcreds::gitcreds_set()
 ```
 
 ## Overview
@@ -125,7 +146,7 @@ The package is organized around several core analysis workflows, each with a com
 ## Quick Examples
 
 ### Correlation
-```{r, eval = FALSE}
+```r
 library(psych350lab)
 data(superman_data)
 
@@ -138,7 +159,7 @@ create_corr_table("RH1", c("clark_height_in", "rt_critics_score"), result)
 ```
 
 ### Between-Groups ANOVA
-```{r, eval = FALSE}
+```r
 result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
 result$ANOVA
 result$Descriptives
@@ -149,7 +170,7 @@ cat(format_bg_anova_results("RH1", c("clark_grp", "rt_critics_score"),
 ```
 
 ### Multiple Regression
-```{r, eval = FALSE}
+```r
 sm <- superman_data[!is.na(superman_data$rt_critics_score) &
                     !is.na(superman_data$rt_audience_score), ]
 
@@ -169,7 +190,7 @@ create_regression_combined_table(result, KEY = TRUE)
 ```
 
 ### SPSS-Style Plot
-```{r, eval = FALSE}
+```r
 library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, fill = factor(cyl))) +
@@ -182,7 +203,7 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, fill = factor(cyl))) +
 ## Answer Key vs. Student Worksheet
 
 Most table and formatting functions include a `Key` (or `KEY`) argument. Set `Key = TRUE` for a filled answer key, or `Key = FALSE` for a blank student worksheet — making it easy to generate both versions from the same code.
-```{r, eval = FALSE}
+```r
 # Answer key
 cat(format_bg_anova_results("RH1", vars, result, iv_labels = labels, Key = TRUE))
 
@@ -193,7 +214,7 @@ cat(format_bg_anova_results("RH1", vars, result, iv_labels = labels, Key = FALSE
 ## Interactive Webexercises (Quarto)
 
 Several functions generate interactive fill-in-the-blank and multiple-choice tables powered by [`webexercises`](https://psyteachr.github.io/webexercises/) and [`tinytable`](https://vincentarelbundock.github.io/tinytable/). These are designed for use in Quarto HTML documents:
-```{r, eval = FALSE}
+```r
 # In a Quarto document
 create_model_summary_checker(result)
 create_predictor_checker(result)
@@ -202,7 +223,7 @@ create_predictor_checker(result)
 ## Sample Data
 
 The package includes `superman_data`, a dataset used throughout the examples and course materials.
-```{r, eval = FALSE}
+```r
 data(superman_data)
 str(superman_data)
 ```
