@@ -1,0 +1,54 @@
+meta:
+  name: emwbrand
+
+color:
+  palette:
+    # Core accent colors
+    coral: "#ff6361"
+    coral-light: "#ff8583"
+    coral-dark: "#e5504e"
+
+    # em-inspired colors (matching SCSS)
+    lime: "#a2e436"
+    blue: "#072e3c"
+    green: "#68d391"
+    yellow: "#ffecb3"
+    red: "#f56565"
+    orange: "#fa984a"
+
+    # Callout colors
+    callout-note: "#072e3c"
+    callout-tip: "#68d391"
+    callout-warning: "#ffecb3"
+    callout-important: "#f56565"
+    callout-caution: "#fa984a"
+
+  background:
+    dark: "#333333"
+    light: "#fafafa"
+
+  foreground:
+    dark: "#fafafa"
+    light: "#333333"
+
+  primary:
+    dark: coral-light
+    light: coral
+
+  secondary: coral-dark
+  success: green
+  info: blue
+  warning: yellow
+  danger: red
+
+typography:
+  fonts:
+    - family: Sora
+      source: google
+    - family: Fira Code
+      source: google
+  base: Sora
+  headings: Sora
+  monospace: Fira Code
+  link:
+    color: primary
