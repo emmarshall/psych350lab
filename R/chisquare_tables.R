@@ -795,45 +795,50 @@ chisq_pairwise_KEY <- function(chi_results_list,
     flextable::hline(part = "footer", border = officer::fp_border(width = 0))
 }
 
-#' APA-Style K-Group Chi-Square Crosstabulation Table
+#' APA-Style Chi-Square Crosstabulation Table
 #'
 #' Creates an APA-formatted crosstabulation table with counts,
-#' percentages, and chi-square results in footer.
+#' percentages, and chi-square results in footer. Works with both
+#' 2x2 tables and tables with 3+ row levels.
 #'
-#' @param chi_results_list Output from [chi_square_kgroup_answers()] or
-#'   NULL for blank table.
+#' @param chi_results_list Output from [chi_square_answers()] (for 2x2 tables)
+#'   or [chi_square_kgroup_answers()] (for 3+ row levels), or NULL for blank table.
 #' @param var1_name Character. Display name for the row variable.
 #' @param var2_name Character. Display name for the column variable.
 #' @param var1_labels Character vector or NULL. Labels for row levels.
+#'   If NULL and KEY = TRUE, labels are extracted from chi_results_list.
 #' @param var2_labels Character vector of length 2. Labels for column levels.
 #' @param KEY Logical. If TRUE (default), fill with values; if FALSE, blank.
 #' @param include_percentages Logical. If TRUE (default), include row
-#'   percentages alongside counts.
-#' @param table_title Character or NULL. Optional table caption.
-#' @param table_number Integer or NULL. Optional table number.
+#'   percentages alongside counts (e.g., "15 (62.5%)").
+#' @param table_title Character or NULL. Optional table caption (italicized).
+#' @param table_number Integer or NULL. Optional table number (bold).
 #'
 #' @return A [flextable::flextable()] object.
 #'
-#' @examples
-#' \dontrun{
-#' result <- chi_square_kgroup_answers(data, "age_group", "outcome")
-#' create_kgroup_chi_crosstabs_table(result, "Age Group", "Outcome")
-#' }
+#' @seealso [chi_square_answers()], [chi_square_kgroup_answers()]
 #'
 #' @export
-create_kgroup_chi_crosstabs_table <- function(chi_results_list = NULL,
-                                              var1_name = "Variable 1",
-                                              var2_name = "Variable 2",
-                                              var1_labels = NULL,
-                                              var2_labels = c("Group 1", "Group 2"),
-                                              KEY = TRUE,
-                                              include_percentages = TRUE,
-                                              table_title = NULL,
-                                              table_number = NULL) {
+create_apa_chi_crosstabs_table <- function(chi_results_list = NULL,
+                                           var1_name = "Variable 1",
+                                           var2_name = "Variable 2",
+                                           var1_labels = NULL,
+                                           var2_labels = c("Group 1", "Group 2"),
+                                           KEY = TRUE,
+                                           include_percentages = TRUE,
+                                           table_title = NULL,
+                                           table_number = NULL) {
 
   if (KEY && !is.null(chi_results_list)) {
     if (is.null(var1_labels)) {
-      var1_labels <- chi_results_list$Var1_Descriptives$level_label
+      if (!is.null(chi_results_list$Var1_Descriptives$level_label)) {
+        var1_labels <- chi_results_list$Var1_Descriptives$level_label
+      } else {
+        var1_labels <- rownames(chi_results_list$ContingencyTable)
+        if (is.null(var1_labels)) {
+          var1_labels <- paste("Level", 1:nrow(chi_results_list$ContingencyTable))
+        }
+      }
     }
 
     cont_table <- chi_results_list$ContingencyTable
@@ -879,11 +884,11 @@ create_kgroup_chi_crosstabs_table <- function(chi_results_list = NULL,
       p_text <- sprintf("= %.3f", p_value)
     }
 
-    footer_text <- paste0("Note. \\u03C7\\u00B2(", df, ") = ", chi_sq, ", p ", p_text, ".")
+    footer_text <- paste0("Note. \u03C7\u00B2(", df, ") = ", chi_sq, ", p ", p_text, ".")
 
   } else {
     if (is.null(var1_labels)) {
-      var1_labels <- c("Level 1", "Level 2", "Level 3")
+      var1_labels <- c("Level 1", "Level 2")
     }
 
     n_groups <- length(var1_labels)
@@ -898,14 +903,16 @@ create_kgroup_chi_crosstabs_table <- function(chi_results_list = NULL,
 
     names(data) <- c(" ", var2_labels[1], var2_labels[2], "Total")
 
-    footer_text <- "Note. Fill in cell counts. * p < .05. ** p < .01."
+    footer_text <- NULL
   }
 
+  # Build base flextable
   apa_table <- data |>
     flextable::flextable() |>
     flextable::set_table_properties(layout = "autofit", align = "left") |>
     flextable::set_header_labels(" " = var1_name)
 
+  # Add spanning header for column variable (var2_name)
   apa_table <- apa_table |>
     flextable::add_header_row(
       values = c("", var2_name, ""),
@@ -913,36 +920,95 @@ create_kgroup_chi_crosstabs_table <- function(chi_results_list = NULL,
       top = TRUE
     )
 
-  if (!is.null(table_number) && !is.null(table_title)) {
-    apa_table <- apa_table |>
-      flextable::add_header_lines(values = table_title, top = TRUE) |>
-      flextable::add_header_lines(values = paste0("Table ", table_number), top = TRUE)
-  } else if (!is.null(table_title)) {
+  # Count header rows before adding title/number
+  # Currently: row 1 = var2_name spanning, row 2 = column headers
+
+  # Determine which rows are which after adding title info
+  has_number <- !is.null(table_number)
+  has_title <- !is.null(table_title)
+
+  # Add title row (italicized) - this goes ABOVE the line
+  if (has_title) {
     apa_table <- apa_table |>
       flextable::add_header_lines(values = table_title, top = TRUE)
   }
 
-  n_header_rows <- flextable::nrow_part(apa_table, part = "header")
-  title_rows <- if (!is.null(table_number)) 2 else if (!is.null(table_title)) 1 else 0
+  # Add table number row (bold) - this goes at the very top, ABOVE the line
+  if (has_number) {
+    apa_table <- apa_table |>
+      flextable::add_header_lines(values = paste0("Table ", table_number), top = TRUE)
+  }
 
+  # Calculate header row positions
+  n_header_rows <- flextable::nrow_part(apa_table, part = "header")
+
+  # Number of "above the line" rows (table number + title)
+  above_line_rows <- sum(c(has_number, has_title))
+
+  # The first row inside the table (below the top border) is the var2_name spanning row
+  # which is at position (above_line_rows + 1)
+
+  # Apply borders
   apa_table <- apa_table |>
-    flextable::border_remove() |>
-    flextable::hline(i = title_rows, part = "header", border = officer::fp_border(width = 2)) |>
-    flextable::hline(i = n_header_rows - 1, part = "header", border = officer::fp_border(width = 1)) |>
-    flextable::hline_bottom(part = "header", border = officer::fp_border(width = 2)) |>
-    flextable::hline_bottom(part = "body", border = officer::fp_border(width = 2)) |>
+    flextable::border_remove()
+
+  # Top border - goes AFTER the title rows (above var2_name spanning header)
+  if (above_line_rows > 0) {
+    apa_table <- apa_table |>
+      flextable::hline(i = above_line_rows, part = "header", border = officer::fp_border(width = 2))
+  } else {
+    apa_table <- apa_table |>
+      flextable::hline_top(part = "header", border = officer::fp_border(width = 2))
+  }
+
+  # Border below var2_name spanning row (separates spanning header from column headers)
+  apa_table <- apa_table |>
+    flextable::hline(i = n_header_rows - 1, part = "header", border = officer::fp_border(width = 1))
+
+  # Border at bottom of header (below column headers)
+  apa_table <- apa_table |>
+    flextable::hline_bottom(part = "header", border = officer::fp_border(width = 1))
+
+  # Bottom border of table body
+  apa_table <- apa_table |>
+    flextable::hline_bottom(part = "body", border = officer::fp_border(width = 2))
+
+  # Apply formatting to title rows
+  if (has_number && has_title) {
+    # Row 1 = Table number (bold), Row 2 = Title (italic)
+    apa_table <- apa_table |>
+      flextable::bold(i = 1, part = "header") |>
+      flextable::italic(i = 2, part = "header")
+  } else if (has_number) {
+    # Row 1 = Table number (bold)
+    apa_table <- apa_table |>
+      flextable::bold(i = 1, part = "header")
+  } else if (has_title) {
+    # Row 1 = Title (italic)
+    apa_table <- apa_table |>
+      flextable::italic(i = 1, part = "header")
+  }
+
+  # Alignment
+  apa_table <- apa_table |>
     flextable::align(align = "center", part = "all") |>
     flextable::align(j = 1, align = "left", part = "body") |>
-    flextable::align(j = 1, align = "left", part = "header", i = (title_rows + 1):n_header_rows) |>
-    flextable::align(j = 1, align = "left", part = "header", i = 1:title_rows) |>
-    flextable::fontsize(size = 11, part = "all") |>
-    flextable::italic(i = 1, part = "header") |>
-    flextable::italic(i = 2, part = "header")
+    flextable::align(j = 1, align = "left", part = "header")
 
+  # Font sizes
   apa_table <- apa_table |>
-    flextable::add_footer_lines(footer_text) |>
-    flextable::fontsize(part = "footer", size = 10) |>
-    flextable::align(part = "footer", align = "left")
+    flextable::fontsize(size = 11, part = "all")
+
+  # Add footer if present
+  if (!is.null(footer_text)) {
+    apa_table <- apa_table |>
+      flextable::add_footer_lines(footer_text) |>
+      flextable::fontsize(part = "footer", size = 10) |>
+      flextable::align(part = "footer", align = "left")
+  }
 
   return(apa_table)
 }
+
+
+

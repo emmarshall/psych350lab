@@ -57,20 +57,22 @@ chi_square_answers <- function(data, var1, var2) {
   observed <- as.data.frame.matrix(contingency_table)
   expected <- as.data.frame.matrix(chi_test$expected)
 
-  var1_counts <- table(vector1)
-  var2_counts <- table(vector2)
+  var1_counts <- sort(table(vector1))
+  var2_counts <- sort(table(vector2))
 
   var1_desc <- tibble::tibble(
     variable = var1,
     level = names(var1_counts),
     n = as.numeric(var1_counts)
-  )
+  )  |>
+    dplyr::arrange(level)  # ADD THIS
 
   var2_desc <- tibble::tibble(
     variable = var2,
     level = names(var2_counts),
     n = as.numeric(var2_counts)
-  )
+  )  |>
+    dplyr::arrange(level)  # ADD THIS
 
   p_value_formatted <- if (chi_test$p.value < 0.001) {
     0.001

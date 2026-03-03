@@ -12,6 +12,9 @@ contributes:
       filters:
           - webexercises.lua
       theme: [default, custom.scss]
-      css: webex.css
+      css:
+        - webex.css
+      include-after-body:
+        - webex.js
       footer: |
               <a href="https://emmawmarshall.com">theme by me</a>

@@ -46,7 +46,8 @@ wg_anova_answers <- function(data, dv1, dv2, id_var = NULL) {
     dplyr::mutate(
       subject = as.factor(subject),
       condition = as.factor(condition)
-    )
+    )  |>
+    dplyr::arrange(condition)  # ADD THIS LINE - ensures alphabetical order
 
   aov_model <- stats::aov(score ~ condition + Error(subject / condition),
                           data = long_data)

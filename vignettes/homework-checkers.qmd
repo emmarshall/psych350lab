@@ -153,8 +153,7 @@ anova_result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_sc
 create_bg_anova_checker(
   rh_name = "RH1",
   vars = c("clark_grp", "rt_critics_score"),
-  anova_results_list = anova_result,
-  group_labels = c("Under 6ft", "6ft+")
+  anova_results_list = anova_result
 )
 ```
 
@@ -177,8 +176,7 @@ wg_result <- wg_anova_answers(
 create_wg_anova_checker(
   rh_name = "RH1",
   vars = c("rt_critics_score", "rt_audience_score"),
-  anova_results_list = wg_result,
-  condition_labels = c("Critics", "Audience")
+  anova_results_list = wg_result
 )
 ```
 

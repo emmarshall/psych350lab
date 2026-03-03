@@ -85,7 +85,8 @@ desc_list <- lapply(split(analysis_df$dv, analysis_df$iv), function(x) {
 desc_stats <- do.call(rbind, desc_list)
 desc_stats$iv <- rownames(desc_stats)
 rownames(desc_stats) <- NULL
-desc_stats <- tibble::as_tibble(desc_stats)
+desc_stats <- tibble::as_tibble(desc_stats) |>
+  dplyr::arrange(iv)  # ADD THIS TO KEEP LEVELS
 
 if (!is.null(group_labels)) {
   desc_stats$group_label <- group_labels

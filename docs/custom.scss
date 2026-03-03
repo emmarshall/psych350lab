@@ -16,13 +16,14 @@ $lime: #a2e436 !default;
 $blue: #072e3c !default;
 $green: #68d391 !default;
 $yellow: #ffecb3 !default;
-$red: #f56565 !default;
+$red: #ff6361 !default;
+
 
 // Callout colours
 $callout-color-note: #072e3c !default;
 $callout-color-tip: #68d391 !default;
 $callout-color-warning: #ffecb3 !default;
-$callout-color-important: #f56565 !default;
+$callout-color-important: #ff6361 !default;
 $callout-color-caution: #fa984a !default;
 
 /*-- scss:rules --*/
@@ -793,17 +794,17 @@ main h1 {
 }
 
 main h2 {
-  margin-bottom: 1.25em;
+  margin-bottom: 1.3em;
 }
 
 main h3 {
-  margin-bottom: 1em;
+  margin-bottom: 1.25em;
 }
 
 main h4,
 main h5,
 main h6 {
-  margin-bottom: 0.95em;
+  margin-bottom: 1.1em;
 }
 
 // Remove ALL link styling from heading anchors

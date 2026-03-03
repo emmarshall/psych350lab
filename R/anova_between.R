@@ -49,7 +49,9 @@ bg_anova_answers <- function(data, iv, dv) {
     dplyr::mutate(
       sem = sd / sqrt(n),
       dplyr::across(c(mean, sd, sem), \(x) round(x, 2))
-    )
+    ) |>
+    dplyr::arrange(iv)  # ADD THIS LINE - ensures alphabetical order
+
 
   results_list <- list(
     ANOVA = list(
