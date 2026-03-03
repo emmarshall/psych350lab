@@ -1,11 +1,12 @@
 #' Between-Groups One-Way ANOVA
 #'
 #' Performs a one-way between-groups ANOVA with descriptive statistics
-#' for each group level.
+#' for each group level. Uses listwise deletion (matches SPSS/JAMOVI).
 #'
 #' @param data A data frame or tibble.
 #' @param iv Character string. Name of the independent variable (grouping factor).
 #' @param dv Character string. Name of the dependent (continuous) variable.
+#' @param digits Integer. Number of decimal places for rounding (default: 2).
 #'
 #' @return A list with elements:
 #' \describe{
@@ -21,45 +22,49 @@
 #' result$Descriptives
 #'
 #' @export
-bg_anova_answers <- function(data, iv, dv) {
+bg_anova_answers <- function(data, iv, dv, digits = 2) {
 
-  dv_vector <- as.numeric(data[[dv]])
-  iv_vector <- as.factor(data[[iv]])
+  # CRITICAL: Listwise deletion - remove rows where EITHER iv OR dv is missing
+  # This matches SPSS/JAMOVI default behavior
+  analysis_df <- data |>
+    dplyr::transmute(
+      dv = as.numeric(.data[[dv]]),
+      iv = as.factor(.data[[iv]])
+    ) |>
+    dplyr::filter(!is.na(dv) & !is.na(iv))
 
-  analysis_df <- data.frame(dv = dv_vector, iv = iv_vector) |>
-    dplyr::filter(!is.na(dv), !is.na(iv))
-
+  # Run ANOVA
   anova_model <- stats::aov(dv ~ iv, data = analysis_df)
-  anova_summary <- summary(anova_model)
+  anova_summary <- summary(anova_model)[[1]]
 
-  f_stat <- anova_summary[[1]]$`F value`[1]
-  p_value <- anova_summary[[1]]$`Pr(>F)`[1]
-  df_between <- anova_summary[[1]]$Df[1]
-  df_within <- anova_summary[[1]]$Df[2]
-  mse <- anova_summary[[1]]$`Mean Sq`[2]
+  # Extract ANOVA statistics
+  f_stat <- anova_summary$`F value`[1]
+  p_value <- anova_summary$`Pr(>F)`[1]
+  df_between <- anova_summary$Df[1]
+  df_within <- anova_summary$Df[2]
+  mse <- anova_summary$`Mean Sq`[2]
 
-  # Modern .by grouping (dplyr 1.1+)
+  # Calculate descriptive statistics using modern .by syntax
   desc_stats <- analysis_df |>
     dplyr::summarise(
-      mean = mean(dv, na.rm = TRUE),
-      sd = stats::sd(dv, na.rm = TRUE),
+      mean = mean(dv),
+      sd = stats::sd(dv),
       n = dplyr::n(),
       .by = iv
     ) |>
     dplyr::mutate(
       sem = sd / sqrt(n),
-      dplyr::across(c(mean, sd, sem), \(x) round(x, 2))
+      dplyr::across(c(mean, sd, sem), \(x) round(x, digits))
     ) |>
-    dplyr::arrange(iv)  # ADD THIS LINE - ensures alphabetical order
-
+    dplyr::arrange(iv)
 
   results_list <- list(
     ANOVA = list(
-      F = round(f_stat, 2),
+      F = round(f_stat, digits),
       p_value = round(p_value, 3),
       df_between = df_between,
       df_within = df_within,
-      mse = round(mse, 2),
+      mse = round(mse, digits),
       method = "One-way ANOVA"
     ),
     Descriptives = desc_stats,

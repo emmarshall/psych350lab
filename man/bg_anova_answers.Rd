@@ -4,7 +4,7 @@
 \alias{bg_anova_answers}
 \title{Between-Groups One-Way ANOVA}
 \usage{
-bg_anova_answers(data, iv, dv)
+bg_anova_answers(data, iv, dv, digits = 2)
 }
 \arguments{
 \item{data}{A data frame or tibble.}
@@ -12,6 +12,8 @@ bg_anova_answers(data, iv, dv)
 \item{iv}{Character string. Name of the independent variable (grouping factor).}
 
 \item{dv}{Character string. Name of the dependent (continuous) variable.}
+
+\item{digits}{Integer. Number of decimal places for rounding (default: 2).}
 }
 \value{
 A list with elements:
@@ -23,7 +25,7 @@ A list with elements:
 }
 \description{
 Performs a one-way between-groups ANOVA with descriptive statistics
-for each group level.
+for each group level. Uses listwise deletion (matches SPSS/JAMOVI).
 }
 \examples{
 data(superman)

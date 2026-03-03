@@ -932,9 +932,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/anova_descriptives_KEY.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/bg_anova_answers.html">bg_anova_answers</a></li></ol></nav></header><section id="between-groups-one-way-anova" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="between-groups-one-way-anova">Between-Groups One-Way ANOVA</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>Performs a one-way between-groups ANOVA with descriptive statistics for each group level.</p>
+<p>Performs a one-way between-groups ANOVA with descriptive statistics for each group level. Uses listwise deletion (matches SPSS/JAMOVI).</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
-<pre><code class="language-R">bg_anova_answers(data, iv, dv)
+<pre><code class="language-R">bg_anova_answers(data, iv, dv, digits = 2)
 </code></pre>
 </section><section id="arguments" class="level3"><h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
 <table role="presentation">
@@ -960,6 +960,14 @@ Character string. Name of the independent variable (grouping factor).
 </td>
 <td>
 Character string. Name of the dependent (continuous) variable.
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="digits">digits</code>
+</td>
+<td>
+Integer. Number of decimal places for rounding (default: 2).
 </td>
 </tr>
 </tbody></table></section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>

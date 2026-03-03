@@ -4,7 +4,7 @@
 \alias{wg_anova_answers}
 \title{Within-Groups (Repeated Measures) ANOVA}
 \usage{
-wg_anova_answers(data, dv1, dv2, id_var = NULL)
+wg_anova_answers(data, dv1, dv2, id_var = NULL, digits = 2)
 }
 \arguments{
 \item{data}{A data frame or tibble.}
@@ -15,17 +15,21 @@ wg_anova_answers(data, dv1, dv2, id_var = NULL)
 
 \item{id_var}{Character string or \code{NULL}. Name of the subject ID variable.
 If \code{NULL}, row numbers are used as subject IDs.}
+
+\item{digits}{Integer. Number of decimal places for rounding (default: 2).}
 }
 \value{
 A list with elements:
 \describe{
 \item{ANOVA}{A list with \code{F}, \code{p_value}, \code{df_effect}, \code{df_error}, \code{mse}, and \code{method}.}
 \item{Descriptives}{A tibble with \code{condition}, \code{mean}, \code{sd}, \code{n}, and \code{sem}.}
-\item{Sample_Size}{Number of unique participants.}
+\item{Sample_Size}{Number of unique participants with complete data.}
 }
 }
 \description{
 Performs a repeated measures ANOVA for two conditions.
+Uses listwise deletion (matches SPSS/JAMOVI) - subjects missing on
+either condition are excluded from the analysis.
 }
 \examples{
 data(superman)

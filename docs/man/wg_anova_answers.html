@@ -932,9 +932,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/anova_descriptives_KEY.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/wg_anova_answers.html">wg_anova_answers</a></li></ol></nav></header><section id="within-groups-repeated-measures-anova" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="within-groups-repeated-measures-anova">Within-Groups (Repeated Measures) ANOVA</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>Performs a repeated measures ANOVA for two conditions.</p>
+<p>Performs a repeated measures ANOVA for two conditions. Uses listwise deletion (matches SPSS/JAMOVI) - subjects missing on either condition are excluded from the analysis.</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
-<pre><code class="language-R">wg_anova_answers(data, dv1, dv2, id_var = NULL)
+<pre><code class="language-R">wg_anova_answers(data, dv1, dv2, id_var = NULL, digits = 2)
 </code></pre>
 </section><section id="arguments" class="level3"><h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
 <table role="presentation">
@@ -970,6 +970,14 @@ Character string. Name of the second condition’s variable.
 Character string or <code>NULL</code>. Name of the subject ID variable. If <code>NULL</code>, row numbers are used as subject IDs.
 </td>
 </tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="digits">digits</code>
+</td>
+<td>
+Integer. Number of decimal places for rounding (default: 2).
+</td>
+</tr>
 </tbody></table></section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
 <p>A list with elements:</p>
 <dl>
@@ -989,7 +997,7 @@ A tibble with <code>condition</code>, <code>mean</code>, <code>sd</code>, <code>
 Sample_Size
 </dt>
 <dd>
-Number of unique participants.
+Number of unique participants with complete data.
 </dd>
 </dl></section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
 <div class="cell">
