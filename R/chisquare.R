@@ -32,11 +32,9 @@
 #' @export
 chi_square_answers <- function(data, var1, var2) {
 
-  # Convert to factors (handles numeric, character, and factor input)
   vector1 <- .prepare_categorical(data[[var1]])
   vector2 <- .prepare_categorical(data[[var2]])
 
-  # Remove missing values
   valid_cases <- !is.na(vector1) & !is.na(vector2)
   vector1 <- droplevels(vector1[valid_cases])
   vector2 <- droplevels(vector2[valid_cases])
@@ -57,22 +55,24 @@ chi_square_answers <- function(data, var1, var2) {
   observed <- as.data.frame.matrix(contingency_table)
   expected <- as.data.frame.matrix(chi_test$expected)
 
-  var1_counts <- sort(table(vector1))
-  var2_counts <- sort(table(vector2))
+  # Use ordering from contingency table to ensure alignment
+  var1_levels <- rownames(contingency_table)
+  var2_levels <- colnames(contingency_table)
+
+  var1_counts <- rowSums(contingency_table)
+  var2_counts <- colSums(contingency_table)
 
   var1_desc <- tibble::tibble(
     variable = var1,
-    level = names(var1_counts),
+    level = var1_levels,
     n = as.numeric(var1_counts)
-  )  |>
-    dplyr::arrange(level)  # ADD THIS
+  )
 
   var2_desc <- tibble::tibble(
     variable = var2,
-    level = names(var2_counts),
+    level = var2_levels,
     n = as.numeric(var2_counts)
-  )  |>
-    dplyr::arrange(level)  # ADD THIS
+  )
 
   p_value_formatted <- if (chi_test$p.value < 0.001) {
     0.001
@@ -99,6 +99,7 @@ chi_square_answers <- function(data, var1, var2) {
 
   invisible(results_list)
 }
+
 
 #' Chi-Square Effect Size from 2x2 Table
 #'
@@ -175,19 +176,16 @@ pr_chi_to_r <- function(a, b, c, d) {
 #'
 #' @export
 chi_square_kgroup_answers <- function(data, var1, var2,
-                                          var1_labels = NULL,
-                                          var2_labels = NULL,
-                                          pct_var2_level = 2) {
+                                      var1_labels = NULL,
+                                      var2_labels = NULL,
+                                      pct_var2_level = 2) {
 
   if (!var1 %in% names(data)) stop(paste("Variable", var1, "not found in dataset"))
-
   if (!var2 %in% names(data)) stop(paste("Variable", var2, "not found in dataset"))
 
-  # Convert to factors (handles numeric, character, and factor input)
   vector1 <- .prepare_categorical(data[[var1]])
   vector2 <- .prepare_categorical(data[[var2]])
 
-  # Remove missing values
   valid_cases <- !is.na(vector1) & !is.na(vector2)
   vector1 <- droplevels(vector1[valid_cases])
   vector2 <- droplevels(vector2[valid_cases])
@@ -198,7 +196,6 @@ chi_square_kgroup_answers <- function(data, var1, var2,
 
   contingency_table <- table(vector1, vector2)
 
-  # Remove empty rows/columns
   if (any(rowSums(contingency_table) == 0) || any(colSums(contingency_table) == 0)) {
     contingency_table <- contingency_table[rowSums(contingency_table) > 0, , drop = FALSE]
     contingency_table <- contingency_table[, colSums(contingency_table) > 0, drop = FALSE]
@@ -208,47 +205,63 @@ chi_square_kgroup_answers <- function(data, var1, var2,
     stop("var2 must have exactly 2 levels for pairwise chi-square comparisons")
   }
 
-  # Omnibus chi-square test
   chi_test <- stats::chisq.test(contingency_table, correct = FALSE)
   chi_sq <- chi_test$statistic
   p_value <- chi_test$p.value
   df <- chi_test$parameter
   total_n <- sum(contingency_table)
 
-  # Descriptives
-  var1_counts <- table(vector1)
-  var2_counts <- table(vector2)
+  # Use ordering from contingency table
+  var1_levels <- rownames(contingency_table)
+  var2_levels <- colnames(contingency_table)
+
+  var1_counts <- rowSums(contingency_table)
+  var2_counts <- colSums(contingency_table)
+
+  n_var1 <- length(var1_levels)
+
+  # Create labels that match contingency table order
+  if (is.null(var1_labels)) {
+    use_var1_labels <- var1_levels
+  } else if (length(var1_labels) == n_var1) {
+    use_var1_labels <- var1_labels
+  } else {
+    warning("var1_labels length doesn't match number of levels, using level names")
+    use_var1_labels <- var1_levels
+  }
+
+  if (is.null(var2_labels)) {
+    use_var2_labels <- var2_levels
+  } else if (length(var2_labels) == 2) {
+    use_var2_labels <- var2_labels
+  } else {
+    warning("var2_labels length doesn't match number of levels, using level names")
+    use_var2_labels <- var2_levels
+  }
 
   var1_desc <- tibble::tibble(
     variable = var1,
-    level = names(var1_counts),
-    level_label = if (!is.null(var1_labels)) var1_labels else names(var1_counts),
+    level = var1_levels,
+    level_label = use_var1_labels,
     n = as.numeric(var1_counts)
   )
 
   var2_desc <- tibble::tibble(
     variable = var2,
-    level = names(var2_counts),
-    level_label = if (!is.null(var2_labels)) var2_labels else names(var2_counts),
+    level = var2_levels,
+    level_label = use_var2_labels,
     n = as.numeric(var2_counts)
   )
 
   # Pairwise comparisons
-  var1_levels <- rownames(contingency_table)
-  n_var1 <- length(var1_levels)
   pairwise_results <- list()
   comparison_counter <- 1
   chi_crit <- 3.84
 
   for (i in 1:(n_var1 - 1)) {
     for (j in (i + 1):n_var1) {
-      if (!is.null(var1_labels)) {
-        row1_label <- var1_labels[i]
-        row2_label <- var1_labels[j]
-      } else {
-        row1_label <- var1_levels[i]
-        row2_label <- var1_levels[j]
-      }
+      row1_label <- use_var1_labels[i]
+      row2_label <- use_var1_labels[j]
 
       pairwise_table <- contingency_table[c(i, j), , drop = FALSE]
 
@@ -263,7 +276,6 @@ chi_square_kgroup_answers <- function(data, var1, var2,
       pairwise_chi_stat <- pairwise_results_calc$chi_square
       effect_size <- pairwise_results_calc$r_effect_size
 
-      # Calculate percentages based on specified var2 level
       if (pct_var2_level == 1) {
         pct_row1 <- (a / (a + b)) * 100
         pct_row2 <- (c / (c + d)) * 100
@@ -309,11 +321,7 @@ chi_square_kgroup_answers <- function(data, var1, var2,
     }
   }
 
-  pct_label <- if (!is.null(var2_labels)) {
-    var2_labels[pct_var2_level]
-  } else {
-    paste("Level", pct_var2_level)
-  }
+  pct_label <- use_var2_labels[pct_var2_level]
 
   results_list <- list(
     ChiSquare = list(
