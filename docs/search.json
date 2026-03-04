@@ -4,7 +4,7 @@
     "href": "CITATION.html",
     "title": "Citation",
     "section": "",
-    "text": "Citation\nTo cite package ‘psych350lab’ in publications use:\n\nMarshall E (2026). psych350lab: R Package Companion to PSYCH 350 at University of Nebraska-Lincoln. R package version 0.1.0, https://emmarshall.github.io/psych350lab.",
+    "text": "Citation\nTo cite package ‘psych350lab’ in publications use:\n\nMarshall E (2026). psych350lab: R Package Companion to PSYCH 350 at University of Nebraska-Lincoln. R package version 0.1.0, commit 12f1e1c223be1388b51f64fc5197a9632de36298, https://github.com/emmarshall/psych350lab.",
     "crumbs": [
       "Citation"
     ]
