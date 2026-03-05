@@ -2,32 +2,13 @@
 #'
 #' Performs a chi-square test of independence on two categorical variables,
 #' returning observed and expected frequencies, proportions, and
-#' descriptive counts.
+#' descriptive counts. All numeric values stored unrounded.
 #'
 #' @param data A data frame or tibble.
 #' @param var1 Character string. Name of the first categorical variable (rows).
-#'   Can be numeric codes, character strings, or factors.
 #' @param var2 Character string. Name of the second categorical variable (columns).
-#'   Can be numeric codes, character strings, or factors.
 #'
-#' @return A list with elements:
-#' \describe{
-#'   \item{ChiSquare}{A list with `chi_sq`, `p_value`, `p_value_raw`, `df`, and `method`.}
-#'   \item{ContingencyTable}{The raw contingency table.}
-#'   \item{Observed}{Observed frequencies as a data frame.}
-#'   \item{Expected}{Expected frequencies as a data frame.}
-#'   \item{Proportions}{Cell proportions.}
-#'   \item{Var1_Descriptives}{Counts for each level of var1.}
-#'   \item{Var2_Descriptives}{Counts for each level of var2.}
-#'   \item{Sample_Size}{Total number of valid cases.}
-#' }
-#'
-#' @examples
-#' data(superman)
-#' # Chi-square test of clark_grp by tomatometer
-#' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
-#' result$ChiSquare
-#' result$ContingencyTable
+#' @return A list with elements (all numeric values unrounded).
 #'
 #' @export
 chi_square_answers <- function(data, var1, var2) {
@@ -55,7 +36,6 @@ chi_square_answers <- function(data, var1, var2) {
   observed <- as.data.frame.matrix(contingency_table)
   expected <- as.data.frame.matrix(chi_test$expected)
 
-  # Use ordering from contingency table to ensure alignment
   var1_levels <- rownames(contingency_table)
   var2_levels <- colnames(contingency_table)
 
@@ -74,18 +54,12 @@ chi_square_answers <- function(data, var1, var2) {
     n = as.numeric(var2_counts)
   )
 
-  p_value_formatted <- if (chi_test$p.value < 0.001) {
-    0.001
-  } else {
-    round(chi_test$p.value, 3)
-  }
-
+  # NO ROUNDING - store raw values
   results_list <- list(
     ChiSquare = list(
-      chi_sq = round(chi_test$statistic, 2),
-      p_value = p_value_formatted,
-      p_value_raw = chi_test$p.value,
-      df = chi_test$parameter,
+      chi_sq = as.numeric(chi_test$statistic),
+      p_value = chi_test$p.value,
+      df = as.integer(chi_test$parameter),
       method = chi_test$method
     ),
     ContingencyTable = contingency_table,
@@ -101,78 +75,22 @@ chi_square_answers <- function(data, var1, var2) {
 }
 
 
-#' Chi-Square Effect Size from 2x2 Table
-#'
-#' Computes chi-square statistic, p-value, and r effect size from cell frequencies.
-#'
-#' @param a Cell frequency (row 1, col 1)
-#' @param b Cell frequency (row 1, col 2)
-#' @param c Cell frequency (row 2, col 1)
-#' @param d Cell frequency (row 2, col 2)
-#'
-#' @return A list with `chi_square`, `p_value`, and `r_effect_size`.
-#'
-#' @examples
-#' pr_chi_to_r(10, 20, 30, 40)
-#'
-#' @export
-pr_chi_to_r <- function(a, b, c, d) {
-  n <- a + b + c + d
-  chi_sq <- (n * (a * d - b * c)^2) / ((a + b) * (c + d) * (a + c) * (b + d))
-  p_val <- stats::pchisq(chi_sq, df = 1, lower.tail = FALSE)
-  r_effect <- sqrt(chi_sq / n)
-
-  list(
-    chi_square = chi_sq,
-    p_value = p_val,
-    r_effect_size = r_effect
-  )
-}
-
-
 #' k-Group Chi-Square Test with Pairwise Comparisons
 #'
 #' Performs a chi-square test of independence on two categorical variables
 #' where var1 has 3+ levels and var2 has exactly 2 levels, then conducts
 #' all pairwise chi-square comparisons with effect sizes.
+#' All numeric values stored unrounded.
 #'
 #' @param data A data frame or tibble.
 #' @param var1 Character string. Name of the multi-level categorical variable (rows).
-#'   Can be numeric codes, character strings, or factors.
 #' @param var2 Character string. Name of the binary categorical variable (columns).
-#'   Must have exactly 2 levels. Can be numeric codes, character strings, or factors.
 #' @param var1_labels Character vector or NULL. Display labels for var1 levels.
 #' @param var2_labels Character vector or NULL. Display labels for var2 levels.
 #' @param pct_var2_level Integer. Which level of var2 to use for percentage
 #'   comparisons (1 or 2). Default is 2.
 #'
-#' @return A list with elements:
-#' \describe{
-#'   \item{ChiSquare}{Omnibus chi-square results: `chi_sq`, `p_value`, `df`.}
-#'   \item{ContingencyTable}{The raw contingency table.}
-#'   \item{Var1_Descriptives}{Counts for each level of var1.}
-#'   \item{Var2_Descriptives}{Counts for each level of var2.}
-#'   \item{Sample_Size}{Total number of valid cases.}
-#'   \item{ChiCrit}{Critical chi-square value (3.84 for df=1, alpha=.05).}
-#'   \item{Pairwise}{List of pairwise comparison results.}
-#'   \item{var1_labels}{Labels used for var1 levels.}
-#'   \item{var2_labels}{Labels used for var2 levels.}
-#'   \item{pct_var2_level}{Which var2 level was used for percentages.}
-#'   \item{pct_var2_label}{Label for the percentage comparison level.}
-#' }
-#'
-#' @examples
-#' data(superman)
-#' # Compare height_gap (3 levels) by tomatometer (2 levels)
-#' result <- chi_square_kgroup_answers(
-#'   superman,
-#'   var1 = "height_gap",
-#'   var2 = "tomatometer",
-#'   var1_labels = c("Minimal", "Average", "Big"),
-#'   var2_labels = c("Rotten", "Fresh")
-#' )
-#' result$ChiSquare
-#' result$Pairwise
+#' @return A list with elements (all numeric values unrounded).
 #'
 #' @export
 chi_square_kgroup_answers <- function(data, var1, var2,
@@ -211,7 +129,6 @@ chi_square_kgroup_answers <- function(data, var1, var2,
   df <- chi_test$parameter
   total_n <- sum(contingency_table)
 
-  # Use ordering from contingency table
   var1_levels <- rownames(contingency_table)
   var2_levels <- colnames(contingency_table)
 
@@ -253,7 +170,7 @@ chi_square_kgroup_answers <- function(data, var1, var2,
     n = as.numeric(var2_counts)
   )
 
-  # Pairwise comparisons
+  # Pairwise comparisons - NO ROUNDING
   pairwise_results <- list()
   comparison_counter <- 1
   chi_crit <- 3.84
@@ -304,16 +221,17 @@ chi_square_kgroup_answers <- function(data, var1, var2,
         }
       }
 
+      # NO ROUNDING - store raw values
       pairwise_results[[comparison_counter]] <- list(
         comparison = paste(row1_label, "vs", row2_label),
         group1_label = row1_label,
         group2_label = row2_label,
-        pct1 = round(pct_row1, 2),
-        pct2 = round(pct_row2, 2),
-        chi_sq = round(pairwise_chi_stat, 2),
+        pct1 = pct_row1,
+        pct2 = pct_row2,
+        chi_sq = pairwise_chi_stat,
         chi_result = chi_result,
         error_type = error_type,
-        effect_size = round(effect_size, 2),
+        effect_size = effect_size,
         power_problem = power_problem,
         cell_freqs = list(a = a, b = b, c = c, d = d)
       )
@@ -323,11 +241,12 @@ chi_square_kgroup_answers <- function(data, var1, var2,
 
   pct_label <- use_var2_labels[pct_var2_level]
 
+  # NO ROUNDING in final output
   results_list <- list(
     ChiSquare = list(
-      chi_sq = round(chi_sq, 2),
-      p_value = round(p_value, 3),
-      df = df
+      chi_sq = as.numeric(chi_sq),
+      p_value = p_value,
+      df = as.integer(df)
     ),
     ContingencyTable = contingency_table,
     Var1_Descriptives = var1_desc,
@@ -343,6 +262,7 @@ chi_square_kgroup_answers <- function(data, var1, var2,
 
   invisible(results_list)
 }
+
 
 #' Chi-Square Effect Size from 2x2 Table
 #'

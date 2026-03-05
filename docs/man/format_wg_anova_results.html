@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.27">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>format_wg_anova_results – psych350lab</title>
 <style>
 code{white-space: pre-wrap;}
@@ -17,42 +20,8 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
+
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
@@ -75,7 +44,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-33ad8e3470424c659cd96ff6886cea3d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-9291fb68f63017f61098342f7067d42f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-33ad8e3470424c659cd96ff6886cea3d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-33ad8e3470424c659cd96ff6886cea3d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -102,7 +72,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+
+
 </head>
+
 <body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
@@ -268,10 +241,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../logo.png" alt="" class="navbar-logo light-content"><img src="../logo.png" alt="" class="navbar-logo dark-content"></a>
+    <img src="../logo.png" alt="" class="navbar-logo light-content">
+    <img src="../logo.png" alt="" class="navbar-logo dark-content">
+    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">psych350lab</span>
     </a>
@@ -282,18 +259,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-<li class="nav-item compact">
+  <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/emmarshall/psych350lab"> <i class="bi bi-github" role="img" aria-label="psych350lab GitHub">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
-</div> <!-- /navcollapse -->
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
-    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -301,11 +280,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="sidebar-menu-container"> 
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
@@ -319,15 +302,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Creating Homework Checkers with psych350lab</span></a>
+  <a href="../vignettes/lab06.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 06: Data Entry &amp; Univariate Stats</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/lab07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 7: Bivariate Analyses: Correlations and Chi-Squares</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/Sample-worksheet.docx" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lab 06</span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
@@ -336,8 +331,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">anova_descriptives_KEY</span></a>
@@ -357,14 +352,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/anova_multigroup_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_multigroup_answers</span></a>
+  <a href="../man/anova_statistics_KEY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_statistics_KEY</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/anova_statistics_KEY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_statistics_KEY</span></a>
+  <a href="../man/apa_2x2_bg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_2x2_bg_factorial_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_2x2_mixed_factorial_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_2x2_mixed_factorial_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_2x2_wg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_2x2_wg_factorial_writeup</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -387,14 +394,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/apa_factorial_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_factorial_writeup</span></a>
+  <a href="../man/apa_inline_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_anova</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/apa_kgroup_bg_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_kgroup_bg_writeup</span></a>
+  <a href="../man/apa_inline_chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_chi2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_F.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_F</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_r</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_kgroup_anova_writeup</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -405,8 +436,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/apa_regression_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_regression_writeup</span></a>
+  <a href="../man/apa_planned_comparisons_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_planned_comparisons_writeup</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -417,14 +448,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/bg_anova_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">bg_anova_answers</span></a>
+  <a href="../man/apa_wg_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_wg_kgroup_anova_writeup</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/check_factor_alignment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">check_factor_alignment</span></a>
+  <a href="../man/apa_wg_simple_contrasts_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_wg_simple_contrasts_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/bg_anova_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">bg_anova_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -477,14 +514,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_anova_descriptives_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_anova_descriptives_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_anova_source_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_anova_source_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../man/create_apa_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">create_apa_chi_crosstabs_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_corr_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_corr_table</span></a>
+  <a href="../man/create_apa_regression_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_regression_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -521,12 +570,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../man/create_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">create_chi_crosstabs_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_chi_rh_support_text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_chi_rh_support_text</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -615,12 +658,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../man/create_factorial_desc_checker.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">create_factorial_desc_checker</span></a>
   </div>
@@ -641,18 +678,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../man/create_lsd_pairwise_checker.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">create_lsd_pairwise_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_model_summary_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_model_summary_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_predictor_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_predictor_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -711,12 +736,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/descriptives_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">descriptives_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../man/factorial_interaction_results.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">factorial_interaction_results</span></a>
   </div>
@@ -753,8 +772,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../man/format_chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_chi2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../man/format_corr_results.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">format_corr_results</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_df.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_df</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_effect_size_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_effect_size_anova</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_effect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_effect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_F.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_F</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -765,8 +814,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../man/format_int.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_int</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_mse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_mse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_n.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_n</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../man/format_p_value.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">format_p_value</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_r</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_stat</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_t</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -779,6 +870,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../man/get_spss_data.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">get_spss_data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/highlight_text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">highlight_text</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/key_or_blank.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">key_or_blank</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -821,6 +924,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../man/lsd_pairwise_KEY.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">lsd_pairwise_KEY</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/md_format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">md_format</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -873,18 +982,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/superman_smes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">superman_smes</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/superman.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">superman</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="../man/theme_SPSS.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">theme_SPSS</span></a>
   </div>
@@ -895,8 +992,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">wg_anova_answers</span></a>
   </div>
 </li>
-      </ul>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/worksheet_value.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">worksheet_value</span></a>
+  </div>
 </li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../LICENSE.html" class="sidebar-item-text sidebar-link">
@@ -910,54 +1013,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-<li>
-<a href="#format-within-groups-anova-results-for-fill-in-the-blank" id="toc-format-within-groups-anova-results-for-fill-in-the-blank" class="nav-link active" data-scroll-target="#format-within-groups-anova-results-for-fill-in-the-blank">Format Within-Groups ANOVA Results for Fill-in-the-Blank</a>
+  <li><a href="#format-within-groups-anova-results-for-fill-in-the-blank-output" id="toc-format-within-groups-anova-results-for-fill-in-the-blank-output" class="nav-link active" data-scroll-target="#format-within-groups-anova-results-for-fill-in-the-blank-output">Format within-groups ANOVA results for fill-in-the-blank output</a>
   <ul class="collapse">
-<li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
+  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
   <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
   <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
   <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value">Value</a></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  </ul></li>
   </ul>
-</li>
-  </ul><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="undefined"><i class="bi bi-link-45deg"></i></a></li></ul></div></nav>
+<div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="undefined"><i class="bi bi-link-45deg"></i></a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/anova_descriptives_KEY.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/format_wg_anova_results.html">format_wg_anova_results</a></li></ol></nav></header><section id="format-within-groups-anova-results-for-fill-in-the-blank" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="format-within-groups-anova-results-for-fill-in-the-blank">Format Within-Groups ANOVA Results for Fill-in-the-Blank</h2>
-<section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>Returns formatted repeated measures ANOVA results as either a filled-in answer KEY or a blank student worksheet.</p>
-</section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/anova_descriptives_KEY.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/format_wg_anova_results.html">format_wg_anova_results</a></li></ol></nav></header>
+
+
+
+
+
+<section id="format-within-groups-anova-results-for-fill-in-the-blank-output" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="format-within-groups-anova-results-for-fill-in-the-blank-output">Format within-groups ANOVA results for fill-in-the-blank output</h2>
+<section id="description" class="level3">
+<h3 class="anchored" data-anchor-id="description">Description</h3>
+<p>Format within-groups ANOVA results for fill-in-the-blank output</p>
+</section>
+<section id="usage" class="level3">
+<h3 class="anchored" data-anchor-id="usage">Usage</h3>
 <pre><code class="language-R">format_wg_anova_results(
   rh_name,
-  vars,
+  dv_name,
   anova_results_list,
   condition_labels = NULL,
-  KEY = TRUE
+  KEY = TRUE,
+  digits = 2
 )
 </code></pre>
-</section><section id="arguments" class="level3"><h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
+</section>
+<section id="arguments" class="level3">
+<h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
 <table role="presentation">
 <tbody><tr>
 <td style="white-space: collapse; font-family: monospace; vertical-align: top">
 <code id="rh_name">rh_name</code>
 </td>
 <td>
-Character. Research hypothesis name/label.
+Name/number of research hypothesis.
 </td>
 </tr>
 <tr>
 <td style="white-space: collapse; font-family: monospace; vertical-align: top">
-<code id="vars">vars</code>
+<code id="dv_name">dv_name</code>
 </td>
 <td>
-Character vector. Variable names (for display purposes).
+Display name for the DV/measure.
 </td>
 </tr>
 <tr>
@@ -965,7 +1081,7 @@ Character vector. Variable names (for display purposes).
 <code id="anova_results_list">anova_results_list</code>
 </td>
 <td>
-Output from <code><a href="https://emmarshall.github.io/psych350lab/man/wg_anova_answers.html">wg_anova_answers()</a></code>.
+A results list from <code>wg_anova_answers()</code>.
 </td>
 </tr>
 <tr>
@@ -973,7 +1089,7 @@ Output from <code><a href="https://emmarshall.github.io/psych350lab/man/wg_anova
 <code id="condition_labels">condition_labels</code>
 </td>
 <td>
-Character vector or <code>NULL</code>. Display labels for conditions. Must have 2 elements.
+Labels for conditions/time points.
 </td>
 </tr>
 <tr>
@@ -981,65 +1097,29 @@ Character vector or <code>NULL</code>. Display labels for conditions. Must have 
 <code id="KEY">KEY</code>
 </td>
 <td>
-Logical. If <code>TRUE</code> (default), show answers; if <code>FALSE</code>, show blanks.
+If TRUE, show answers; if FALSE, show blanks.
 </td>
 </tr>
-</tbody></table></section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
-<p>A character string with formatted results.</p>
-</section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://emmarshall.github.io/psych350lab">"psych350lab"</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">superman</span><span class="op">)</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/wg_anova_answers.html">wg_anova_answers</a></span><span class="op">(</span><span class="va">superman</span>,</span>
-<span>  dv1 <span class="op">=</span> <span class="st">"rt_critics_score"</span>, dv2 <span class="op">=</span> <span class="st">"rt_audience_score"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Answer KEY</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_wg_anova_results.html">format_wg_anova_results</a></span><span class="op">(</span><span class="st">"RH1"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"rt_critics_score"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span>, <span class="va">result</span>,</span>
-<span>  condition_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Critics"</span>, <span class="st">"Audience"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#### RH1 Results
-
-**Within-Groups ANOVA**
-
-For Critics:    n = 8    Mean = 80.38    SD = 10.53
-
-For Audience:    n = 8    Mean = 79.38    SD = 10.53
-
-F = 0.09    df = 1, 7    p = 0.771    MSE = 43.86
-
-State the H0: There is no difference in scores between Critics and Audience
-
-Retain or reject H0? Retain H0
-
-Support research hypothesis? No</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Blank version</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_wg_anova_results.html">format_wg_anova_results</a></span><span class="op">(</span><span class="st">"RH1"</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"rt_critics_score"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span>, <span class="va">result</span>,</span>
-<span>  condition_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Critics"</span>, <span class="st">"Audience"</span><span class="op">)</span>, KEY <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#### RH1 Results
-
-**Within-Groups ANOVA**
-
-For Critics:    n = ___    Mean = ___    SD = ___
-
-For Audience:    n = ___    Mean = ___    SD = ___
-
-F = ___    df = ___, ___    p = ___    MSE = ___
-
-**State the H0:**
-
-**Retain or reject H0?**
-
-**Support research hypothesis?**</code></pre>
-</div>
-</div>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="digits">digits</code>
+</td>
+<td>
+Number of decimal places (default 2).
+</td>
+</tr>
+</tbody></table>
+</section>
+<section id="value" class="level3">
+<h3 class="anchored" data-anchor-id="value">Value</h3>
+<p>Character string of formatted results.</p>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
     if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1453,6 +1533,7 @@ F = ___    df = ___, ___    p = ___    MSE = ___
   });
   </script>
 </div> <!-- /content -->
+
 
 
 

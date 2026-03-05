@@ -10,15 +10,15 @@
 #'
 #' @return A list with three elements:
 #' \describe{
-#'   \item{Correlation}{A list containing `r`, `p_value`, `p_value_raw`, `df`,
-#'     `CI_low`, `CI_high`, and `method`.}
+#'   \item{Correlation}{A list containing `r`, `p_value`, `df`,
+#'     `CI_low`, `CI_high`, and `method`. All numeric values are unrounded.}
 #'   \item{Descriptives}{A tibble with `variable`, `mean`, `sd`, `n`, and `sem`
-#'     for each variable (using all available cases per variable).}
+#'     for each variable (using all available cases per variable). Unrounded.}
 #'   \item{Sample_Size}{The number of complete pairs used in the correlation.}
 #' }
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 #' result$Correlation$r
 #' result$Descriptives
@@ -29,7 +29,7 @@ corr_answers <- function(data, var1, var2) {
   vector1 <- as.numeric(data[[var1]])
   vector2 <- as.numeric(data[[var2]])
 
-  # Descriptives per variable (all available cases)
+  # Descriptives per variable (all available cases) - NO ROUNDING
   desc_stats_separate <- tibble::tibble(
     variable = c(var1, var2),
     mean = c(mean(vector1, na.rm = TRUE), mean(vector2, na.rm = TRUE)),
@@ -37,8 +37,8 @@ corr_answers <- function(data, var1, var2) {
     n = c(sum(!is.na(vector1)), sum(!is.na(vector2)))
   ) |>
     dplyr::mutate(
-      sem = .data$sd / sqrt(.data$n),
-      dplyr::across(c("mean", "sd", "sem"), ~ round(., 2))
+      sem = .data$sd / sqrt(.data$n)
+      # NO rounding here - let display functions handle it
     )
 
   # Filter to complete pairs
@@ -53,20 +53,14 @@ corr_answers <- function(data, var1, var2) {
 
   cor_test <- stats::cor.test(vector1, vector2, method = "pearson")
 
-  p_value_formatted <- if (cor_test$p.value < 0.001) {
-    0.001
-  } else {
-    round(cor_test$p.value, 3)
-  }
-
+  # Store raw values - NO ROUNDING
   results_list <- list(
     Correlation = list(
-      r = round(cor_test$estimate, 2),
-      p_value = p_value_formatted,
-      p_value_raw = cor_test$p.value,
+      r = as.numeric(cor_test$estimate),
+      p_value = cor_test$p.value,
       df = cor_test$parameter,
-      CI_low = round(cor_test$conf.int[1], 2),
-      CI_high = round(cor_test$conf.int[2], 2),
+      CI_low = cor_test$conf.int[1],
+      CI_high = cor_test$conf.int[2],
       method = cor_test$method
     ),
     Descriptives = desc_stats_separate,

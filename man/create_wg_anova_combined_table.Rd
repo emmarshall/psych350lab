@@ -32,7 +32,7 @@ test results with descriptive statistics for each condition.
 Useful for compact reporting or worksheets.
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 result <- wg_anova_answers(superman,
   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 ft <- create_wg_anova_combined_table(result,

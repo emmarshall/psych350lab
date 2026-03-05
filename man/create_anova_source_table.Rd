@@ -33,7 +33,7 @@ and p for a between-groups ANOVA. This provides the full ANOVA source table
 rather than just descriptive statistics.
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 ft <- create_anova_source_table(result,
   iv_name = "Height Group", dv_name = "Critics Score")

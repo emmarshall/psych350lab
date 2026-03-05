@@ -1,0 +1,233 @@
+---
+title: "Lab 7: Bivariate Analyses: Correlations and Chi-Squares"
+format:
+  hwchecker-html: default
+learning_01: |
+  Practice using SPSS to perform Pearson's correlation and Chi-Square analyses.
+execute: 
+  echo: false
+---
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+#| echo: false
+
+library(dplyr)
+library(webexercises)
+library(psych350data)
+library(psych350lab)
+library(glue)
+
+data(superman, package = "psych350data")
+superman <- prep_data(superman, "superman", keep_labels = TRUE)
+
+data(hot_ones, package = "psych350data")
+hot_ones <- prep_data(hot_ones, "hot_ones", keep_labels = TRUE)
+```
+
+::: instructions
+## Instructions
+
+For today's lab you will need to complete the `{{< meta title >}} Worksheet.`
+
+
+### Learning Objectives
+
+1.  {{< meta learning_01 >}}
+
+### Download Data Files
+
+[{{< fa file-arrow-down >}} Superman Data (.sav)](../datasets/superman/superman_data.sav){.btn .btn-primary download="superman_data.sav"}
+[{{< fa file-arrow-down >}} Hot Ones Data (.sav)](../datasets/hotones/hot_ones_data.sav){.btn .btn-primary download="hot_ones_data.sav"}
+
+:::
+
+::: vspace
+:::
+
+
+:::: panel-tabset
+
+::: {.content-hidden} 
+
+### Today's Assignment
+
+[{{< fa file-word title="Word document" >}} Download Lab](https://canvas.unl.edu/courses/205040/pages/lab-syllabus-and-schedule){.btn-primary .btn role="button"}
+
+## Lab Slides
+
+Either click on the slide area below or click [here](slides.qmd) to view it in fullscreen.
+
+Use your keypad to navigate the slides.
+
+::: {.container style="position: relative;overflow: hidden;width: 100%;min-height:600px;"}
+<iframe src="slides.html" style="position=absolute;top: 0;left: 0;bottom: 0;right: 0;width: 100%;min-height:600px;">
+
+</iframe>
+:::
+
+:::
+
+## Homework checker
+```{r}
+#| label: practice-checker
+#| results: asis
+#| echo: false
+
+library(glue)
+
+# SAMPLE QUESTION
+cat("\n**How to use the Homework Checker!**\n\n")
+
+cat("\n\n")
+cat("1. Type your answer into each blank box. Round to 2 decimal places where appropriate. \n")
+cat("2. Select your choice from the dropdown menu for interpretability\n")
+cat("3. The box will turn **green** if your answer is correct\n")
+cat("4. The box will turn **red** if your answer is incorrect - try again!\n")
+cat("5. Do not forget to take a screenshot of the correct answers to include on your lab worksheet!\n\n")
+
+
+```
+
+
+```{r}
+#| label: create-tables
+#| results: asis
+#| echo: false
+
+###########################################
+# WALKTHROUGH SECTION CORR
+###########################################
+
+superman_data <- superman |>
+  mutate(lbd_likes_thou = ldb_likes / 1000)
+
+RH1 <- corr_answers(
+  data = superman_data,
+  var1 = "height_diff",
+  var2 = "lbd_likes_thou"
+)
+
+RH1_vars <- c("height_diff", "lbd_likes_thou")
+RH1_table <- create_corr_checker("RH1", RH1_vars, RH1)
+
+cat("\n## **Walkthrough Answers**\n\n")
+cat("\n### Enter the descriptives and Pearson's correlation statistics for RH1:\n\n")
+RH1_table
+
+###########################################
+# WALKTHROUGH SECTION CHISQ
+###########################################
+
+# After prep_data(): clark_grp is 1 = Under 6ft, 2 = 6ft or taller
+#                    tomatometer is 1 = Rotten, 2 = Fresh
+# Numeric ordering: clark_grp rows = 1, 2; tomatometer cols = 1, 2
+RH2 <- chi_square_answers(
+  data = superman_data,
+  var1 = "clark_grp",
+  var2 = "tomatometer"
+)
+
+RH2_table <- create_chisq_checker(
+  rh_name = "RH2",
+  chi_results_list = RH2,
+  var1_labels = c("Under 6ft", "6ft or taller"),
+  var2_labels = c("Rotten", "Fresh")
+)
+
+cat("\n### Enter the frequencies and Pearson's chi-square statistics for RH2:\n\n")
+RH2_table
+
+###########################################
+# YOUR TURN SECTION CORR
+###########################################
+
+# After prep_data(): occupation is numeric, result is 1 = Succeeded
+hotones_data <- hot_ones |>
+  mutate(
+    total_SHU_mil = (SHU_1 + SHU_2 + SHU_3 + SHU_4 + SHU_5 +
+                    SHU_6 + SHU_7 + SHU_8 + SHU_9 + SHU_10) / 1000000,
+    engagement = comments / views,
+    actor = case_when(
+      is.na(occupation) ~ NA_real_,
+      occupation %in% c(3, 4, 7) ~ 1,
+      TRUE ~ 0
+    ),
+    popular = if_else(likes <= 125000, 1, 2),
+    age = if_else(age == -99, NA_real_, age),
+    age_grp = if_else(age < 35, 1, 2)
+  ) |>
+  filter(result == 1)
+
+RH3 <- corr_answers(
+  data = hotones_data,
+  var1 = "total_SHU_mil",
+  var2 = "views"
+)
+
+RH3_vars <- c("total_SHU_mil", "views")
+RH3_table <- create_corr_checker("RH3", RH3_vars, RH3)
+
+cat("\n## **Your Turn Answers**\n\n")
+cat("\n### Enter the descriptives and Pearson's correlation statistics for RH3:\n\n")
+RH3_table
+
+RH4 <- corr_answers(
+  data = hotones_data,
+  var1 = "total_SHU_mil",
+  var2 = "engagement"
+)
+
+RH4_vars <- c("total_SHU_mil", "engagement")
+RH4_table <- create_corr_checker("RH4", RH4_vars, RH4)
+
+cat("\n### Enter the descriptives and Pearson's correlation statistics for RH4:\n\n")
+RH4_table
+
+###########################################
+# YOUR TURN SECTION CHISQ
+###########################################
+
+# actor: 0 = Non-Actor, 1 = Actor (numeric ordering: 0, 1)
+# popular: 1 = Less Popular, 2 = More Popular (numeric ordering: 1, 2)
+RH5 <- chi_square_answers(
+  data = hotones_data,
+  var1 = "actor",
+  var2 = "popular"
+)
+
+RH5_table <- create_chisq_checker(
+  rh_name = "RH5",
+  chi_results_list = RH5,
+  var1_labels = c("Non-Actor", "Actor"),
+  var2_labels = c("Less Popular (≤125k)", "More Popular (>125k)")
+)
+
+cat("\n### Enter the frequencies and Pearson's chi-square statistics for RH5:\n\n")
+RH5_table
+
+hotones_rh6 <- hotones_data |>
+  filter(!is.na(age) & !is.na(likes))
+
+RH6 <- chi_square_answers(
+  data = hotones_rh6,
+  var1 = "age_grp",
+  var2 = "popular"
+)
+
+RH6_table <- create_chisq_checker(
+  rh_name = "RH6",
+  chi_results_list = RH6,
+  var1_labels = c("Under 35", "35 and Over"),
+  var2_labels = c("Less Popular (≤125k)", "More Popular (>125k)")
+)
+
+cat("\n### Enter the frequencies and Pearson's chi-square statistics for RH6:\n\n")
+RH6_table
+```
+```
+
+
+::::
+

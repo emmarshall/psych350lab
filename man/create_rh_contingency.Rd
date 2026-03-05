@@ -43,7 +43,7 @@ or a blank template for student worksheets.
 }
 \examples{
 \dontrun{
-data(superman)
+data(superman, package = "psych350data")
 result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 
 # Filled version

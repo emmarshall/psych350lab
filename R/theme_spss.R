@@ -19,6 +19,7 @@
 #' @return A ggplot2 [ggplot2::theme()] object (complete theme).
 #'
 #' @examples
+#' \dontrun{
 #' library(ggplot2)
 #'
 #' # Basic usage with modern style
@@ -35,7 +36,7 @@
 #' ggplot(superman, aes(x = factor(type), y = lois_height)) +
 #'   geom_boxplot() +
 #'   theme_SPSS(scale.x = "discrete")
-#'
+#' }
 #' @import ggplot2
 #' @export
 theme_SPSS <- function(base_size = 14,
@@ -308,11 +309,13 @@ SPSS_pal <- function(version = "modern", direction = 1) {
 #' @return A ggplot2 discrete scale object.
 #'
 #' @examples
+#' \dontrun{
 #' library(ggplot2)
 #' ggplot(superman, aes(x = clark_height, y = lois_height, color = factor(type))) +
 #'   geom_point(size = 3) +
 #'   scale_color_SPSS() +
 #'   theme_SPSS()
+#' }
 #'
 #' @export
 scale_color_SPSS <- function(..., version = "modern", direction = 1) {
@@ -333,11 +336,13 @@ scale_color_SPSS <- function(..., version = "modern", direction = 1) {
 #' @return A ggplot2 discrete scale object.
 #'
 #' @examples
+#' \dontrun{
 #' library(ggplot2)
 #' ggplot(superman, aes(x = factor(type), fill = factor(type))) +
 #'   geom_bar() +
 #'   scale_fill_SPSS() +
 #'   theme_SPSS(scale.x = "discrete")
+#' }
 #'
 #' @export
 scale_fill_SPSS <- function(..., version = "modern", direction = 1) {
@@ -361,12 +366,14 @@ scale_fill_SPSS <- function(..., version = "modern", direction = 1) {
 #' number_SPSS(c(1000, 25000, 100))
 #' # Returns: "1000" "25000" "100"
 #'
+#' \dontrun{
 #' # Use with ggplot2 axis labels
 #' library(ggplot2)
 #' ggplot(superman, aes(x = clark_height, y = lois_height)) +
 #'   geom_point() +
 #'   scale_x_continuous(labels = number_SPSS) +
 #'   theme_SPSS()
+#' }
 #'
 #' @export
 number_SPSS <- function(x, big.mark = "", ...) {

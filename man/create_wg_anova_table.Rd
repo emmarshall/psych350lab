@@ -37,7 +37,7 @@ measures ANOVA, showing mean, SD, and n for each condition. Can be
 filled (answer KEY) or blank (student worksheet).
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 result <- wg_anova_answers(superman,
   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 

@@ -9,35 +9,15 @@ chi_square_answers(data, var1, var2)
 \arguments{
 \item{data}{A data frame or tibble.}
 
-\item{var1}{Character string. Name of the first categorical variable (rows).
-Can be numeric codes, character strings, or factors.}
+\item{var1}{Character string. Name of the first categorical variable (rows).}
 
-\item{var2}{Character string. Name of the second categorical variable (columns).
-Can be numeric codes, character strings, or factors.}
+\item{var2}{Character string. Name of the second categorical variable (columns).}
 }
 \value{
-A list with elements:
-\describe{
-\item{ChiSquare}{A list with \code{chi_sq}, \code{p_value}, \code{p_value_raw}, \code{df}, and \code{method}.}
-\item{ContingencyTable}{The raw contingency table.}
-\item{Observed}{Observed frequencies as a data frame.}
-\item{Expected}{Expected frequencies as a data frame.}
-\item{Proportions}{Cell proportions.}
-\item{Var1_Descriptives}{Counts for each level of var1.}
-\item{Var2_Descriptives}{Counts for each level of var2.}
-\item{Sample_Size}{Total number of valid cases.}
-}
+A list with elements (all numeric values unrounded).
 }
 \description{
 Performs a chi-square test of independence on two categorical variables,
 returning observed and expected frequencies, proportions, and
-descriptive counts.
-}
-\examples{
-data(superman)
-# Chi-square test of clark_grp by tomatometer
-result <- chi_square_answers(superman, "clark_grp", "tomatometer")
-result$ChiSquare
-result$ContingencyTable
-
+descriptive counts. All numeric values stored unrounded.
 }

@@ -36,7 +36,7 @@ rows 2-3 show frequency counts per variable level.
 }
 \examples{
 \dontrun{
-data(superman)
+data(superman, package = "psych350data")
 result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 ft <- create_chi_combined_table("RH1", c("clark_grp", "tomatometer"),
   result,

@@ -5,8 +5,6 @@
 \title{Chi-Square Effect Size from 2x2 Table}
 \usage{
 pr_chi_to_r(a, b, c, d)
-
-pr_chi_to_r(a, b, c, d)
 }
 \arguments{
 \item{a}{Integer. Cell frequency (row 1, col 1).}
@@ -19,18 +17,12 @@ pr_chi_to_r(a, b, c, d)
 }
 \value{
 A list with \code{chi_square}, \code{p_value}, and \code{r_effect_size}.
-
-A list with \code{chi_square}, \code{p_value}, and \code{r_effect_size}.
 }
 \description{
-Computes chi-square statistic, p-value, and r effect size from cell frequencies.
-
 Computes chi-square statistic, p-value, and r effect size from
 cell frequencies of a 2x2 contingency table.
 }
 \examples{
-pr_chi_to_r(10, 20, 30, 40)
-
 pr_chi_to_r(10, 20, 30, 40)
 
 }

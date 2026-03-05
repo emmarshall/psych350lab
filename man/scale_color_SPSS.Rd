@@ -21,10 +21,12 @@ Applies the SPSS color palette as a discrete color scale for points,
 lines, and other geoms that use the \code{color} aesthetic.
 }
 \examples{
+\dontrun{
 library(ggplot2)
 ggplot(superman, aes(x = clark_height, y = lois_height, color = factor(type))) +
   geom_point(size = 3) +
   scale_color_SPSS() +
   theme_SPSS()
+}
 
 }

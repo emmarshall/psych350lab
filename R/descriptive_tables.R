@@ -1,28 +1,28 @@
 # =============================================================================
-# Answer Key Table & APA Descriptive Table (Blank / Filled)
+# Answer KEY Table & APA Descriptive Table (Blank / Filled)
 # =============================================================================
 
-#' Descriptive Statistics Answer Key Table
+#' Descriptive Statistics Answer KEY Table
 #'
 #' Creates a flextable showing the correct Mean, SD, SEM, and interpretability
-#' for each variable. Used as a printable answer key for the worksheet
+#' for each variable. Used as a printable answer KEY for the worksheet
 #' (Word/PDF output). For the interactive HTML checker version, use
 #' \code{create_stats_table()} instead.
 #'
 #' @param vars Character vector. Variable names to include, in display order.
 #' @param stats_data A data frame with columns `variable`, `mean`, `sd`, and
-#'   `sem` \\u2014 typically the output of [compute_summary_stats()].
+#'   `sem` -- typically the output of [compute_summary_stats()].
 #' @param label Character vector or `NULL`. Variables that are IDs/labels.
 #' @param quantitative Character vector or `NULL`. Continuous variables.
 #' @param binary Character vector or `NULL`. Dichotomous variables.
 #' @param multi_category Character vector or `NULL`. Nominal variables (3+ levels).
-#' @param Key Logical. If `TRUE` (default), fill with computed values.
+#' @param KEY Logical. If `TRUE` (default), fill with computed values.
 #'   If `FALSE`, create a blank template with empty cells.
 #'
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' library(dplyr)
 #'
 #' my_data <- superman |>
@@ -32,7 +32,7 @@
 #'
 #' stats <- compute_summary_stats(my_data)
 #'
-#' # Answer key
+#' # Answer KEY
 #' create_answer_table(
 #'   vars = names(my_data), stats_data = stats,
 #'   label = "num", binary = "clark_grp",
@@ -41,7 +41,7 @@
 #'
 #' # Blank version
 #' create_answer_table(
-#'   vars = names(my_data), stats_data = stats, Key = FALSE
+#'   vars = names(my_data), stats_data = stats, KEY = FALSE
 #' )
 #'
 #' @export
@@ -51,7 +51,7 @@ create_answer_table <- function(vars,
                                 quantitative   = NULL,
                                 binary         = NULL,
                                 multi_category = NULL,
-                                Key            = TRUE) {
+                                KEY            = TRUE) {
 
   # Build type lookup
   answer_text <- c(
@@ -68,7 +68,7 @@ create_answer_table <- function(vars,
     stats::setNames(rep("multi_category", length(multi_category)), multi_category)
   )
 
-  if (Key) {
+  if (KEY) {
     table_data <- stats_data |>
       dplyr::filter(.data$variable %in% vars) |>
       dplyr::slice(match(vars, .data$variable)) |>
@@ -108,234 +108,174 @@ create_answer_table <- function(vars,
 }
 
 
-#' APA Descriptive Statistics Table (Table 1 Style)
+#' APA Descriptive Statistics Table
 #'
-#' Creates an APA-formatted descriptive statistics table showing M(SD) for
-#' continuous variables and frequency counts with percentages for categorical
-#' variables. Can produce either a filled answer key or a blank student
-#' worksheet.
+#' Creates an APA-formatted descriptive statistics table. Continuous variables
+#' show M(SD) and n; categorical variables show level frequencies and
+#' percentages. Produces either a filled answer KEY or blank student worksheet.
 #'
-#' @param data A data frame containing the raw data. Required when
-#'   \code{Key = TRUE} to compute frequencies for categorical variables.
-#'   Can be \code{NULL} when \code{Key = FALSE}.
-#' @param continuous Character vector or \code{NULL}. Names of continuous
-#'   variables. These show M(SD) and n.
-#' @param categorical Character vector or \code{NULL}. Names of categorical
-#'   variables. These show level labels and counts with percentages.
-#' @param stats_data A data frame with columns \code{variable}, \code{mean},
-#'   \code{sd}, \code{n}. Typically the output of
-#'   \code{compute_summary_stats()}. Required when \code{Key = TRUE}.
-#' @param var_labels Named character vector or \code{NULL}. Optional display
-#'   labels, e.g. \code{c(height_diff = "Height Difference")}.
-#' @param Key Logical. If \code{TRUE} (default), fill with computed values.
-#'   If \code{FALSE}, create a blank template.
-#' @param table_title Character or \code{NULL}. Optional title printed above
-#'   the table.
-#' @param footnote Character or \code{NULL}. Footnote text. If \code{NULL},
-#'   a default APA-style note is used.
-#' @param digits Integer. Decimal places for M and SD. Default is 2.
+#' @param data A data frame. Required when `KEY = TRUE`.
+#' @param continuous Character vector or `NULL`. Continuous variable names.
+#' @param categorical Character vector or `NULL`. Categorical variable names.
+#' @param stats_data Output from [compute_summary_stats()]. Required when
+#'   `KEY = TRUE`.
+#' @param var_labels Named character vector or `NULL`. Display labels,
+#'   e.g. `c(height_diff = "Height Difference")`.
+#' @param KEY Logical. If `TRUE` (default), fill with computed values.
+#'   If `FALSE`, create a blank worksheet template.
+#' @param table_title Character or `NULL`. Optional caption.
+#' @param footnote Character or `NULL`. Footer note. Defaults to APA-style
+#'   M/SD/N explanation.
+#' @param digits Integer. Decimal places for M and SD. Default 2.
 #'
-#' @return A \code{\link[flextable]{flextable}} object.
-#'
-#' @examples
-#' data(superman)
-#'
-#' my_data <- superman[!is.na(superman$height_diff),
-#'   c("clark_height_in", "height_diff", "clark_grp", "height_gap")]
-#'
-#' stats <- compute_summary_stats(my_data)
-#'
-#' # Filled answer key
-#' create_descriptive_table(
-#'   data        = my_data,
-#'   continuous  = c("height_diff"),
-#'   categorical = c("clark_grp", "height_gap"),
-#'   stats_data  = stats,
-#'   Key = TRUE
-#' )
-#'
-#' # Blank worksheet
-#' create_descriptive_table(
-#'   data        = my_data,
-#'   continuous  = c("height_diff"),
-#'   categorical = c("clark_grp", "height_gap"),
-#'   Key = FALSE
-#' )
-#'
+#' @return A flextable object.
 #' @export
-create_descriptive_table <- function(data           = NULL,
-                                     continuous     = NULL,
-                                     categorical    = NULL,
-                                     stats_data     = NULL,
-                                     var_labels     = NULL,
-                                     Key            = TRUE,
-                                     table_title    = NULL,
-                                     footnote       = NULL,
-                                     digits         = 2) {
+create_descriptive_table <- function(data        = NULL,
+                                     show_sem    = NULL,
+                                     continuous  = NULL,
+                                     categorical = NULL,
+                                     stats_data  = NULL,
+                                     var_labels  = NULL,
+                                     KEY         = TRUE,
+                                     table_title = NULL,
+                                     footnote    = NULL,
+                                     digits      = 2) {
 
-  # Default footnote
+  if (KEY && is.null(data))       stop("`data` is required when KEY = TRUE.")
+  if (KEY && is.null(stats_data)) stop("`stats_data` is required when KEY = TRUE.")
+
   if (is.null(footnote)) {
-    footnote <- paste0(
-      "Note. M = Mean; SD = Standard Deviation; ",
-      "N = Sample Size. See APA manual p. 210."
-    )
+    footnote <- "Note. M = Mean; SD = Standard Deviation; N = Sample Size."
   }
 
-  # Helper: get display label for a variable
   get_label <- function(v) {
-    if (!is.null(var_labels) && v %in% names(var_labels)) {
-      return(unname(var_labels[v]))
-    }
-    return(v)
+    if (!is.null(var_labels) && v %in% names(var_labels)) unname(var_labels[v]) else v
   }
+
+  # Helper: resolve display levels for a categorical variable.
+  # Prefers _label column (from prep_data keep_labels = TRUE), then
+  # factor levels, then sorted unique values.
+  get_levels <- function(data, var) {
+    label_col <- paste0(var, "_label")
+    if (!is.null(data) && label_col %in% names(data)) {
+      sort(unique(stats::na.omit(data[[label_col]])))
+    } else if (!is.null(data) && is.factor(data[[var]])) {
+      levels(data[[var]])
+    } else if (!is.null(data) && var %in% names(data)) {
+      sort(unique(stats::na.omit(data[[var]])))
+    } else {
+      paste("Level", 1:3)
+    }
+  }
+
+  fmt <- function(x) format(round(x, digits), nsmall = digits)
 
   table_rows <- list()
 
-  if (Key) {
-    # ==== FILLED TABLE ====
-    if (is.null(data)) {
-      stop("`data` is required when Key = TRUE.")
-    }
-    if (is.null(stats_data)) {
-      stop("`stats_data` is required when Key = TRUE.")
-    }
+  if (KEY) {
 
-    # -- Continuous variables: M(SD) | n --
+    # Continuous: M(SD) | n
     if (!is.null(continuous)) {
       cont_stats <- stats_data |>
         dplyr::filter(.data$variable %in% continuous) |>
         dplyr::slice(match(continuous, .data$variable))
 
       for (i in seq_len(nrow(cont_stats))) {
-        m_val  <- format(round(cont_stats$mean[i], digits), nsmall = digits)
-        sd_val <- format(round(cont_stats$sd[i], digits), nsmall = digits)
-
         table_rows[[length(table_rows) + 1]] <- data.frame(
           Variable = get_label(cont_stats$variable[i]),
-          M_SD     = paste0(m_val, " (", sd_val, ")"),
-          N_Pct    = as.character(cont_stats$n[i]),
-          stringsAsFactors = FALSE
+          `M(SD)`  = paste0(fmt(cont_stats$mean[i]), " (", fmt(cont_stats$sd[i]), ")"),
+          `N(%)`   = as.character(cont_stats$n[i]),
+          check.names = FALSE, stringsAsFactors = FALSE
         )
       }
     }
 
-    # -- Categorical variables: header row + level rows with n(%) --
+    # Categorical: header row + one row per level with n(%)
     if (!is.null(categorical)) {
       for (var in categorical) {
-        # Variable header row
         table_rows[[length(table_rows) + 1]] <- data.frame(
-          Variable = get_label(var),
-          M_SD     = "",
-          N_Pct    = "",
-          stringsAsFactors = FALSE
+          Variable = get_label(var), `M(SD)` = "", `N(%)` = "",
+          check.names = FALSE, stringsAsFactors = FALSE
         )
 
-        # Compute frequencies and percentages
         freq_data <- data |>
           dplyr::count(.data[[var]], name = "freq") |>
           dplyr::filter(!is.na(.data[[var]])) |>
-          dplyr::mutate(
-            pct = round((freq / sum(freq)) * 100, 1)
-          )
+          dplyr::mutate(pct = round((freq / sum(freq)) * 100, 1))
 
-        # One row per level
+        # Use label column for display if available
+        label_col <- paste0(var, "_label")
+        if (label_col %in% names(data)) {
+          level_labels <- data |>
+            dplyr::distinct(.data[[var]], .data[[label_col]]) |>
+            dplyr::filter(!is.na(.data[[var]])) |>
+            dplyr::arrange(.data[[var]])
+          freq_data <- freq_data |>
+            dplyr::left_join(level_labels, by = var)
+          display_col <- label_col
+        } else {
+          display_col <- var
+        }
+
         for (j in seq_len(nrow(freq_data))) {
           table_rows[[length(table_rows) + 1]] <- data.frame(
-            Variable = "
-",
-M_SD     = paste0("Level ", freq_data[[var]][j]),
-N_Pct    = paste0(freq_data$freq[j],
-                  " (", freq_data$pct[j], "%)"),
-stringsAsFactors = FALSE
+            Variable = paste0("  ", freq_data[[display_col]][j]),
+            `M(SD)`  = "",
+            `N(%)`   = paste0(freq_data$freq[j], " (", freq_data$pct[j], "%)"),
+            check.names = FALSE, stringsAsFactors = FALSE
           )
         }
       }
     }
 
   } else {
-    # ==== BLANK TABLE ====
 
-    # -- Continuous: placeholder rows --
+    # Blank continuous rows
     if (!is.null(continuous)) {
       for (var in continuous) {
         table_rows[[length(table_rows) + 1]] <- data.frame(
-          Variable = get_label(var),
-          M_SD     = "xx(xx)",
-          N_Pct    = "freq",
-          stringsAsFactors = FALSE
+          Variable = get_label(var), `M(SD)` = "___", `N(%)` = "___",
+          check.names = FALSE, stringsAsFactors = FALSE
         )
       }
     }
 
-    # -- Categorical: header + generic level rows --
+    # Blank categorical rows
     if (!is.null(categorical)) {
       for (var in categorical) {
         table_rows[[length(table_rows) + 1]] <- data.frame(
-          Variable = get_label(var),
-          M_SD     = "",
-          N_Pct    = "",
-          stringsAsFactors = FALSE
+          Variable = get_label(var), `M(SD)` = "", `N(%)` = "",
+          check.names = FALSE, stringsAsFactors = FALSE
         )
 
-        # Determine number of level placeholder rows
-        if (!is.null(data) && var %in% names(data)) {
-          n_levels <- length(unique(stats::na.omit(data[[var]])))
-        } else {
-          n_levels <- 3
-        }
+        levels_vec <- get_levels(data, var)
 
-        for (j in seq_len(n_levels)) {
+        for (lv in levels_vec) {
           table_rows[[length(table_rows) + 1]] <- data.frame(
-            Variable = "",
-            M_SD     = paste0("Level ", j),
-            N_Pct    = "freq(%)",
-            stringsAsFactors = FALSE
+            Variable = paste0("  ", lv), `M(SD)` = "", `N(%)` = "___",
+            check.names = FALSE, stringsAsFactors = FALSE
           )
         }
       }
     }
   }
 
-  # ==== COMBINE ROWS ====
   table_data <- dplyr::bind_rows(table_rows)
 
-  # ==== BUILD FLEXTABLE ====
-  apa_table <- table_data |>
-    flextable::flextable() |>
-    flextable::set_header_labels(
-      Variable = "Variable",
-      M_SD     = "M(SD)",
-      N_Pct    = "N(%)"
-    ) |>
-    flextable::align(j = 1, align = "left", part = "body") |>
-    flextable::align(j = 2:3, align = "center", part = "body") |>
-    flextable::align(align = "center", part = "header") |>
-    flextable::align(j = 1, align = "left", part = "header") |>
-    flextable::font(fontname = "Times New Roman", part = "all") |>
-    flextable::fontsize(size = 12, part = "all") |>
-    flextable::italic(j = 2, italic = TRUE, part = "header") |>
-    flextable::border_remove() |>
-    flextable::hline_top(
-      part   = "header",
-      border = officer::fp_border(width = 2)
-    ) |>
-    flextable::hline_bottom(
-      part   = "header",
-      border = officer::fp_border(width = 1)
-    ) |>
-    flextable::hline_bottom(
-      part   = "body",
-      border = officer::fp_border(width = 2)
-    ) |>
+  ft <- flextable::flextable(table_data) |>
+    apa_style_table() |>
+    flextable::align(j = 2:3, align = "center", part = "all") |>
+    flextable::align(j = 1, align = "left", part = "all") |>
     flextable::width(j = 1, width = 2.5) |>
     flextable::width(j = 2, width = 1.5) |>
     flextable::width(j = 3, width = 1.5) |>
-    flextable::padding(padding = 3, part = "all") |>
-    flextable::set_table_properties(layout = "autofit", width = 1) |>
     flextable::add_footer_lines(footnote) |>
     flextable::italic(italic = TRUE, part = "footer") |>
-    flextable::align(align = "left", part = "footer") |>
-    flextable::fontsize(size = 12, part = "footer")
+    flextable::align(align = "left", part = "footer")
 
-  return(apa_table)
+  if (!is.null(table_title)) {
+    ft <- flextable::set_caption(ft, caption = table_title)
+  }
+
+  ft
 }

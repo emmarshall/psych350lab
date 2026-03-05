@@ -33,44 +33,11 @@ linear_reg_answers(
 \item{verbose}{Logical. Print diagnostic information. Default is \code{FALSE}.}
 }
 \value{
-A list with elements:
-\describe{
-\item{Model}{Overall model statistics (R, R-squared, F, df, p).}
-\item{Univariate}{Descriptive statistics for each variable.}
-\item{Bivariate}{Correlation results for each predictor with criterion.}
-\item{Regression_Weights}{Regression coefficients with interpretation categories.}
-\item{Labels}{Variable names, labels, and types.}
-\item{Raw_Model}{The raw \code{lm} model object.}
-\item{Variable_Types}{Summary data frame of variable types.}
-}
+A list with elements (all numeric values unrounded).
 }
 \description{
 Performs a multiple linear regression analysis with separate handling of
 quantitative and binary predictors, including univariate, bivariate, and
 multivariate results with interpretation categories (a-d).
-}
-\details{
-Interpretation categories for each predictor:
-\itemize{
-\item \strong{a}: Neither r nor b significant
-\item \strong{b}: r and b both significant with same sign
-\item \strong{c}: r significant but not b
-\item \strong{d}: Suppressor effect
-}
-}
-\examples{
-data(superman)
-sm <- superman |>
-  dplyr::filter(!is.na(rt_critics_score), !is.na(rt_audience_score))
-
-result <- linear_reg_answers(
-  data = sm,
-  criterion = "rt_critics_score",
-  quant_predictors = c("clark_height_in", "rt_audience_score"),
-  quant_labels = c("Clark Height (in)", "Audience Score"),
-  criterion_label = "Critics Score"
-)
-result$Model
-result$Regression_Weights
-
+All numeric values stored unrounded.
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/answer_checkers.R
 \name{create_corr_checker}
 \alias{create_corr_checker}
-\title{Interactive Correlation Homework Checker}
+\title{Interactive Pearson Correlation Homework Checker}
 \usage{
 create_corr_checker(rh_name, vars, corr_results_list)
 }
@@ -26,7 +26,7 @@ statistics. Requires the \strong{tinytable} and \strong{webexercises} packages.
 }
 \examples{
 \dontrun{
-data(superman)
+data(superman, package = "psych350data")
 result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 create_corr_checker("RH1", c("Clark Height", "Critics Score"), result)
 }

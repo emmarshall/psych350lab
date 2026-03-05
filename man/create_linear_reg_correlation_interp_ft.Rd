@@ -28,7 +28,7 @@ correlation interpretation. Auto-generates interpretations or uses
 custom-provided ones. Answer key uses red text.
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 sm <- superman |>
   dplyr::filter(!is.na(rt_critics_score), !is.na(rt_audience_score))
 result <- linear_reg_answers(

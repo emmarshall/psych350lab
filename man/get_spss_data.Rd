@@ -7,14 +7,12 @@
 get_spss_data(file_path, check_filter = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{file_path}{Character string. Path to the \code{.sav} file, relative to
-the project root (resolved via \code{\link[here:here]{here::here()}}).}
+\item{file_path}{Character string. Path to the \code{.sav} file.}
 
 \item{check_filter}{Logical. If \code{TRUE}, checks for and applies any active
 SPSS filter variable. Default is \code{TRUE}.}
 
-\item{verbose}{Logical. If \code{TRUE}, prints diagnostic information about
-missing data and filtering. Default is \code{FALSE}.}
+\item{verbose}{Logical. If \code{TRUE}, prints diagnostic information.}
 }
 \value{
 A tibble with numeric values and no SPSS labels.
@@ -22,10 +20,4 @@ A tibble with numeric values and no SPSS labels.
 \description{
 Reads an SPSS \code{.sav} file, converts user-missing values to \code{NA},
 and removes all labels.
-}
-\examples{
-\dontrun{
-data <- get_spss_data("data/superman.sav")
-}
-
 }

@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
@@ -139,276 +139,7 @@ create_factorial_anova_stats_table <- function(rh_name, anova_results_list,
 }
 
 
-#' Factorial ANOVA Checker (Interactive Webexercise)
-#'
-#' Creates a compact interactive checker table for factorial ANOVA results
-#' with the LSD calculation row placed directly after the interaction row.
-#'
-#' @param rh_name Character. Research hypothesis name/label.
-#' @param anova_results_list Output from [anova_factorial_answers()].
-#' @param iv1_name Character. Display name for IV1.
-#' @param iv2_name Character. Display name for IV2.
-#'
-#' @return A tinytable object with embedded webexercise elements.
-#'
-#' @examples
-#' \dontrun{
-#' data(superman)
-#' sm <- superman
-#' sm$era <- ifelse(sm$year >= 2000, 2, 1)
-#' result <- anova_factorial_answers(sm, dv = "clark_height_in",
-#'   iv1 = "clark_grp", iv2 = "era",
-#'   iv1_labels = c("Under 6ft", "6ft+"),
-#'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' create_factorial_checker("RH1", result,
-#'   iv1_name = "Height Group", iv2_name = "Era")
-#' }
-#'
-#' @export
-create_factorial_checker <- function(rh_name, anova_results_list,
-                                     iv1_name = "IV1", iv2_name = "IV2") {
 
-  if (!requireNamespace("tinytable", quietly = TRUE)) {
-    stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
-  }
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required. Install with install.packages('webexercises')")
-  }
-
-  # Extract ANOVA stats
-  f_iv1 <- anova_results_list$ANOVA$MainEffect_IV1$F
-  p_iv1 <- anova_results_list$ANOVA$MainEffect_IV1$p_value
-  df_iv1 <- anova_results_list$ANOVA$MainEffect_IV1$df
-
-  f_iv2 <- anova_results_list$ANOVA$MainEffect_IV2$F
-  p_iv2 <- anova_results_list$ANOVA$MainEffect_IV2$p_value
-  df_iv2 <- anova_results_list$ANOVA$MainEffect_IV2$df
-
-  f_interaction <- anova_results_list$ANOVA$Interaction$F
-  p_interaction <- anova_results_list$ANOVA$Interaction$p_value
-  df_interaction <- anova_results_list$ANOVA$Interaction$df
-
-  df_within <- anova_results_list$ANOVA$df_within
-  mse <- anova_results_list$ANOVA$mse
-  k <- anova_results_list$ANOVA$k
-  mean_n <- anova_results_list$ANOVA$mean_n
-  lsd_mmd <- anova_results_list$LSD$lsd_mmd
-
-  # Format p-values
-  p_iv1_fmt <- ifelse(p_iv1 < 0.001, "<.001", sprintf("%.2f", p_iv1))
-  p_iv2_fmt <- ifelse(p_iv2 < 0.001, "<.001", sprintf("%.2f", p_iv2))
-  p_interaction_fmt <- ifelse(p_interaction < 0.001, "<.001", sprintf("%.2f", p_interaction))
-
-  # Determine correct answer for LSD question
-  if (p_interaction < 0.05) {
-    posthoc_mcq <- webexercises::mcq(c(
-      "No \u2014 a nonsignificant interaction",
-      answer = "Yes \u2014 significant interaction"
-    ))
-  } else {
-    posthoc_mcq <- webexercises::mcq(c(
-      answer = "No \u2014 a nonsignificant interaction",
-      "Yes \u2014 significant interaction"
-    ))
-  }
-
-  # Table 1: Interaction
-  interaction_table_data <- tibble::tibble(
-    ` ` = paste("Interaction:", iv1_name, "\u00D7", iv2_name),
-    F = webexercises::fitb(f_interaction),
-    p = webexercises::fitb(p_interaction_fmt),
-    `df (between)` = webexercises::fitb(df_interaction),
-    `df (within)` = webexercises::fitb(df_within),
-    MSE = webexercises::fitb(mse),
-    `Do we need to perform LSD pairwise comparisons?` = posthoc_mcq
-  )
-
-  interaction_table <- tinytable::tt(interaction_table_data) |>
-    tinytable::format_tt(escape = FALSE)
-
-  # Table 2: LSD Calculation Parameters (placed right after interaction)
-  lsd_calc_table_data <- tibble::tibble(
-    ` ` = "Components for LSDmmd:",
-    `# of conditions` = webexercises::fitb(k),
-    `average n` = webexercises::fitb(mean_n),
-    `df error` = webexercises::fitb(df_within),
-    `MSe` = webexercises::fitb(mse),
-    `LSDmmd` = webexercises::fitb(lsd_mmd),
-    `   ` = ""
-  )
-
-  lsd_calc_table <- tinytable::tt(lsd_calc_table_data) |>
-    tinytable::format_tt(escape = FALSE)
-
-  # Table 3: Main Effect IV1
-  iv1_table_data <- tibble::tibble(
-    ` ` = paste("Main Effect:", iv1_name),
-    F = webexercises::fitb(f_iv1),
-    p = webexercises::fitb(p_iv1_fmt),
-    `df (between)` = webexercises::fitb(df_iv1),
-    `df (within)` = webexercises::fitb(df_within),
-    MSE = webexercises::fitb(mse),
-    `  ` = ""
-  )
-
-  iv1_table <- tinytable::tt(iv1_table_data) |>
-    tinytable::format_tt(escape = FALSE)
-
-  # Table 4: Main Effect IV2
-  iv2_table_data <- tibble::tibble(
-    ` ` = paste("Main Effect:", iv2_name),
-    F = webexercises::fitb(f_iv2),
-    p = webexercises::fitb(p_iv2_fmt),
-    `df (between)` = webexercises::fitb(df_iv2),
-    `df (within)` = webexercises::fitb(df_within),
-    MSE = webexercises::fitb(mse),
-    `   ` = ""
-  )
-
-  iv2_table <- tinytable::tt(iv2_table_data) |>
-    tinytable::format_tt(escape = FALSE)
-
-  # Combine: Interaction -> LSD -> ME IV1 -> ME IV2
-  combined_table <- tinytable::rbind2(interaction_table, lsd_calc_table, use_names = FALSE) |>
-    tinytable::rbind2(iv1_table, use_names = FALSE) |>
-    tinytable::rbind2(iv2_table, use_names = FALSE) |>
-    tinytable::style_tt(bootstrap_class = "table table-striped table-hover table-sm",
-                        bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;")
-
-  return(combined_table)
-}
-
-
-#' Factorial Descriptives Checker (Interactive Webexercise Grid)
-#'
-#' Creates an interactive grid table showing cell means and estimated marginal
-#' means for a factorial ANOVA, with fill-in-the-blank inputs.
-#'
-#' @param anova_results_list Output from [anova_factorial_answers()].
-#' @param iv1_name Character. Display name for IV1.
-#' @param iv2_name Character. Display name for IV2.
-#' @param iv1_labels Character vector or `NULL`. Override labels for IV1 levels.
-#' @param iv2_labels Character vector or `NULL`. Override labels for IV2 levels.
-#'
-#' @return A tinytable object with embedded webexercise elements.
-#'
-#' @examples
-#' \dontrun{
-#' data(superman)
-#' sm <- superman
-#' sm$era <- ifelse(sm$year >= 2000, 2, 1)
-#' result <- anova_factorial_answers(sm, dv = "clark_height_in",
-#'   iv1 = "clark_grp", iv2 = "era",
-#'   iv1_labels = c("Under 6ft", "6ft+"),
-#'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' create_factorial_desc_checker(result,
-#'   iv1_name = "Height Group", iv2_name = "Era")
-#' }
-#'
-#' @export
-create_factorial_desc_checker <- function(anova_results_list,
-                                          iv1_name = "IV1",
-                                          iv2_name = "IV2",
-                                          iv1_labels = NULL,
-                                          iv2_labels = NULL) {
-
-  if (!requireNamespace("tinytable", quietly = TRUE)) {
-    stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
-  }
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required. Install with install.packages('webexercises')")
-  }
-
-  # Get descriptives and EMMs
-  desc_stats <- anova_results_list$Descriptives
-  emm_iv1 <- anova_results_list$EMMs$IV1
-  emm_iv2 <- anova_results_list$EMMs$IV2
-
-  # Use labels from FactorLevels (defines correct order)
-  if (!is.null(anova_results_list$FactorLevels)) {
-    iv1_levels_actual <- anova_results_list$FactorLevels$iv1_levels
-    iv2_levels_actual <- anova_results_list$FactorLevels$iv2_levels
-    final_iv1_labels <- anova_results_list$FactorLevels$iv1_labels
-    final_iv2_labels <- anova_results_list$FactorLevels$iv2_labels
-  } else {
-    stop("FactorLevels not found. Please re-run anova_factorial_answers() with the updated function.")
-  }
-
-  # Override with user-provided labels if given
-  if (!is.null(iv1_labels)) final_iv1_labels <- iv1_labels
-  if (!is.null(iv2_labels)) final_iv2_labels <- iv2_labels
-
-  n_iv1 <- length(final_iv1_labels)
-  n_iv2 <- length(final_iv2_labels)
-
-  # Build row labels
-  row_labels <- final_iv1_labels
-
-  # Build columns for IV2 cell means
-  col_data <- list()
-  for (j in seq_len(n_iv2)) {
-    col_values <- c()
-    for (i in seq_len(n_iv1)) {
-      cell_idx <- which(desc_stats$iv1_level == iv1_levels_actual[i] &
-                          desc_stats$iv2_level == iv2_levels_actual[j])
-
-      if (length(cell_idx) > 0) {
-        col_values <- c(col_values, webexercises::fitb(desc_stats$mean[cell_idx[1]]))
-      } else {
-        col_values <- c(col_values, "")
-      }
-    }
-    col_data[[j]] <- col_values
-  }
-
-  # Add EMM column for IV1
-  emm_iv1_values <- c()
-  for (i in seq_len(n_iv1)) {
-    emm_row <- which(emm_iv1$iv1_label == final_iv1_labels[i])
-    if (length(emm_row) > 0) {
-      emm_iv1_values <- c(emm_iv1_values,
-                          webexercises::fitb(round(as.numeric(emm_iv1$mean[emm_row[1]]), 2)))
-    } else {
-      emm_iv1_values <- c(emm_iv1_values, webexercises::fitb("ERROR"))
-    }
-  }
-
-  # Add footer row for IV2 marginal means
-  row_labels <- c(row_labels, paste0("EMM: ", iv2_name))
-
-  for (j in seq_len(n_iv2)) {
-    emm_row <- which(emm_iv2$iv2_label == final_iv2_labels[j])
-    if (length(emm_row) > 0) {
-      col_data[[j]] <- c(col_data[[j]],
-                         webexercises::fitb(round(as.numeric(emm_iv2$mean[emm_row[1]]), 2)))
-    } else {
-      col_data[[j]] <- c(col_data[[j]], webexercises::fitb("ERROR"))
-    }
-  }
-
-  # Add empty cell in EMM column for footer row
-  emm_iv1_values <- c(emm_iv1_values, "")
-
-  # Build final tibble
-  table_data <- tibble::tibble(
-    ` ` = row_labels,
-    `  ` = col_data[[1]],
-    `   ` = col_data[[2]],
-    `    ` = emm_iv1_values
-  )
-
-  # Set proper column names
-  colnames(table_data) <- c(iv1_name, final_iv2_labels[1], final_iv2_labels[2],
-                            paste0("EMM: ", iv1_name))
-
-  # Create table
-  desc_table <- tinytable::tt(table_data) |>
-    tinytable::format_tt(escape = FALSE) |>
-    tinytable::style_tt(bootstrap_class = "table table-striped table-hover table-sm",
-                        bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;")
-
-  return(desc_table)
-}
 
 
 #' Factorial ANOVA Table with Cell Comparisons
@@ -428,7 +159,7 @@ create_factorial_desc_checker <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
@@ -656,7 +387,7 @@ factorial_table_with_comparisons <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
@@ -748,7 +479,7 @@ factorial_interaction_results <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
@@ -906,7 +637,7 @@ factorial_main_effect_results <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",
@@ -1030,7 +761,7 @@ create_factorial_apa_desc_table <- function(anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman
 #' sm$era <- ifelse(sm$year >= 2000, 2, 1)
 #' result <- anova_factorial_answers(sm, dv = "clark_height_in",

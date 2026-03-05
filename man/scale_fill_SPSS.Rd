@@ -21,10 +21,12 @@ Applies the SPSS color palette as a discrete fill scale for bar charts,
 histograms, and other geoms that use the \code{fill} aesthetic.
 }
 \examples{
+\dontrun{
 library(ggplot2)
 ggplot(superman, aes(x = factor(type), fill = factor(type))) +
   geom_bar() +
   scale_fill_SPSS() +
   theme_SPSS(scale.x = "discrete")
+}
 
 }

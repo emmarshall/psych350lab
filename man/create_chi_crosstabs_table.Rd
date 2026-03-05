@@ -48,7 +48,7 @@ the footer. Can produce either a filled answer KEY or a blank template.
 }
 \examples{
 \dontrun{
-data(superman)
+data(superman, package = "psych350data")
 result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 
 # Filled table with percentages

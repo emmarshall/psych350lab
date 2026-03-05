@@ -1,6 +1,5 @@
 # =============================================================================
-# anova_tables.R
-# APA-Style ANOVA Tables and Formatted Results
+# ANOVA Tables and Formatted Results for exporting to docx
 # =============================================================================
 # Creates publication-ready ANOVA tables using flextable.
 # Supports both between-groups and within-groups (repeated measures) designs.
@@ -8,32 +7,6 @@
 #
 # Updated for dplyr 1.2.0 (February 2026)
 # =============================================================================
-
-
-# -----------------------------------------------------------------------------
-# INTERNAL HELPERS
-# -----------------------------------------------------------------------------
-
-#' Format p-value for APA style
-#' @noRd
-.format_p_anova <- function(p_value) {
-  if (p_value < 0.001) "< .001" else sprintf("%.3f", p_value)
-}
-
-
-#' Determine H0 decision based on p-value
-#' @noRd
-.get_h0_decision <- function(p_value, alpha = 0.05) {
-  if (p_value < alpha) "Reject H0" else "Retain H0"
-}
-
-
-#' Determine research hypothesis support
-#' @noRd
-.get_rh_support <- function(p_value, alpha = 0.05) {
-  if (p_value < alpha) "Yes" else "No"
-}
-
 
 #' Detect ANOVA type from results structure
 #' @noRd
@@ -76,172 +49,6 @@
 # FORMAT FUNCTIONS (Fill-in-the-Blank Style)
 # =============================================================================
 
-#' Format Between-Groups ANOVA Results for Fill-in-the-Blank
-#'
-#' Returns formatted between-groups ANOVA results as either a filled-in
-#' answer KEY or a blank student worksheet.
-#'
-#' @param rh_name Character. Research hypothesis name/label.
-#' @param vars Character vector. Variable names (for display purposes).
-#' @param anova_results_list Output from [bg_anova_answers()].
-#' @param iv_labels Character vector or `NULL`. Display labels for IV levels.
-#'   Must have the same number of elements as groups in the ANOVA.
-#' @param KEY Logical. If `TRUE` (default), show answers; if `FALSE`, show blanks.
-#'
-#' @return A character string with formatted results.
-#'
-#' @examples
-#' data(superman)
-#' result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
-#'
-#' # Answer KEY
-#' cat(format_bg_anova_results("RH1", c("clark_grp", "rt_critics_score"),
-#'   result, iv_labels = c("Under 6ft", "6ft+")))
-#'
-#' # Blank version
-#' cat(format_bg_anova_results("RH1", c("clark_grp", "rt_critics_score"),
-#'   result, iv_labels = c("Under 6ft", "6ft+"), KEY = FALSE))
-#'
-#' @export
-format_bg_anova_results <- function(rh_name, vars, anova_results_list,
-                                    iv_labels = NULL, KEY = TRUE) {
-
-  if (!KEY) {
-    # Blank version for student worksheets
-    output <- glue::glue("
-#### {rh_name} Results
-
-**Between-Groups ANOVA**
-
-For {iv_labels[1]}:    n = ___    Mean = ___    SD = ___
-
-For {iv_labels[2]}:    n = ___    Mean = ___    SD = ___
-
-F = ___    df = ___, ___    p = ___    MSE = ___
-
-**State the H0:**
-
-**Retain or reject H0?**
-
-**Support research hypothesis?**
-")
-  } else {
-    # Answer KEY version
-    desc <- anova_results_list$Descriptives
-    anova <- anova_results_list$ANOVA
-
-    # Format p-value and decisions using helpers
-    p_text <- .format_p_anova(anova$p_value)
-    h0_decision <- .get_h0_decision(anova$p_value)
-    rh_support <- .get_rh_support(anova$p_value)
-
-    output <- glue::glue("
-#### {rh_name} Results
-
-**Between-Groups ANOVA**
-
-For {iv_labels[1]}:    n = {desc$n[1]}    Mean = {desc$mean[1]}    SD = {desc$sd[1]}
-
-For {iv_labels[2]}:    n = {desc$n[2]}    Mean = {desc$mean[2]}    SD = {desc$sd[2]}
-
-F = {anova$F}    df = {anova$df_between}, {anova$df_within}    p = {p_text}    MSE = {anova$mse}
-
-State the H0: There is no difference in {vars[2]} between {iv_labels[1]} and {iv_labels[2]}
-
-Retain or reject H0? {h0_decision}
-
-Support research hypothesis? {rh_support}
-")
-  }
-
-  return(as.character(output))
-}
-
-
-#' Format Within-Groups ANOVA Results for Fill-in-the-Blank
-#'
-#' Returns formatted repeated measures ANOVA results as either a filled-in
-#' answer KEY or a blank student worksheet.
-#'
-#' @param rh_name Character. Research hypothesis name/label.
-#' @param vars Character vector. Variable names (for display purposes).
-#' @param anova_results_list Output from [wg_anova_answers()].
-#' @param condition_labels Character vector or `NULL`. Display labels for conditions.
-#'   Must have 2 elements.
-#' @param KEY Logical. If `TRUE` (default), show answers; if `FALSE`, show blanks.
-#'
-#' @return A character string with formatted results.
-#'
-#' @examples
-#' data(superman)
-#' result <- wg_anova_answers(superman,
-#'   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
-#'
-#' # Answer KEY
-#' cat(format_wg_anova_results("RH1",
-#'   c("rt_critics_score", "rt_audience_score"), result,
-#'   condition_labels = c("Critics", "Audience")))
-#'
-#' # Blank version
-#' cat(format_wg_anova_results("RH1",
-#'   c("rt_critics_score", "rt_audience_score"), result,
-#'   condition_labels = c("Critics", "Audience"), KEY = FALSE))
-#'
-#' @export
-format_wg_anova_results <- function(rh_name, vars, anova_results_list,
-                                    condition_labels = NULL, KEY = TRUE) {
-
-  if (!KEY) {
-    # Blank version for student worksheets
-    output <- glue::glue("
-#### {rh_name} Results
-
-**Within-Groups ANOVA**
-
-For {condition_labels[1]}:    n = ___    Mean = ___    SD = ___
-
-For {condition_labels[2]}:    n = ___    Mean = ___    SD = ___
-
-F = ___    df = ___, ___    p = ___    MSE = ___
-
-**State the H0:**
-
-**Retain or reject H0?**
-
-**Support research hypothesis?**
-")
-  } else {
-    # Answer KEY version
-    desc <- anova_results_list$Descriptives
-    anova <- anova_results_list$ANOVA
-
-    # Format p-value and decisions using helpers
-    p_text <- .format_p_anova(anova$p_value)
-    h0_decision <- .get_h0_decision(anova$p_value)
-    rh_support <- .get_rh_support(anova$p_value)
-
-    output <- glue::glue("
-#### {rh_name} Results
-
-**Within-Groups ANOVA**
-
-For {condition_labels[1]}:    n = {desc$n[1]}    Mean = {desc$mean[1]}    SD = {desc$sd[1]}
-
-For {condition_labels[2]}:    n = {desc$n[2]}    Mean = {desc$mean[2]}    SD = {desc$sd[2]}
-
-F = {anova$F}    df = {anova$df_effect}, {anova$df_error}    p = {p_text}    MSE = {anova$mse}
-
-State the H0: There is no difference in scores between {condition_labels[1]} and {condition_labels[2]}
-
-Retain or reject H0? {h0_decision}
-
-Support research hypothesis? {rh_support}
-")
-  }
-
-  return(as.character(output))
-}
-
 
 # =============================================================================
 # DESCRIPTIVE STATISTICS TABLES
@@ -271,7 +78,7 @@ Support research hypothesis? {rh_support}
 #'
 #' @examples
 #' # Two-group design (bg_anova_answers)
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result_2g <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 #' create_bg_anova_table(result_2g,
 #'   iv_name = "Height Group", dv_name = "Critics Score",
@@ -310,7 +117,7 @@ create_bg_anova_table <- function(anova_results_list = NULL,
 
     for (i in seq_along(group_labels)) {
       data[[group_labels[i]]] <- c(
-        sprintf("%.2f", desc_stats$mean[i]),
+        format_stat(desc_stats$mean[i]),
         sprintf("%.2f", desc_stats$sd[i])
       )
     }
@@ -426,7 +233,7 @@ create_bg_anova_table <- function(anova_results_list = NULL,
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- wg_anova_answers(superman,
 #'   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 #'
@@ -533,7 +340,7 @@ create_wg_anova_table <- function(anova_results_list = NULL,
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 #' ft <- create_anova_source_table(result,
 #'   iv_name = "Height Group", dv_name = "Critics Score")
@@ -632,7 +439,7 @@ create_anova_source_table <- function(anova_results_list = NULL,
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 #' ft <- create_bg_anova_combined_table(result,
 #'   rh_name = "RH1",
@@ -738,7 +545,7 @@ create_bg_anova_combined_table <- function(anova_results_list,
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- wg_anova_answers(superman,
 #'   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 #' ft <- create_wg_anova_combined_table(result,

@@ -4,12 +4,14 @@
 \alias{format_p_value}
 \title{Format a p-value for APA style}
 \usage{
-format_p_value(p, digits = 3)
+format_p_value(p, digits = 3, include_p = FALSE)
 }
 \arguments{
 \item{p}{Numeric. The p-value to format.}
 
 \item{digits}{Integer. Number of decimal places. Default is 3.}
+
+\item{include_p}{Logical. If TRUE, prefix with "p = " or "p < ". Default FALSE.}
 }
 \value{
 A character string with the formatted p-value.
@@ -21,6 +23,6 @@ displayed as "< .001", and leading zeros are removed.
 \examples{
 format_p_value(0.023)
 format_p_value(0.0004)
-format_p_value(0.150)
+format_p_value(0.150, include_p = TRUE)
 
 }

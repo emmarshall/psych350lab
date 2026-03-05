@@ -24,11 +24,13 @@ defaults. Useful for axis labels in combination with \code{\link[=theme_SPSS]{th
 number_SPSS(c(1000, 25000, 100))
 # Returns: "1000" "25000" "100"
 
+\dontrun{
 # Use with ggplot2 axis labels
 library(ggplot2)
 ggplot(superman, aes(x = clark_height, y = lois_height)) +
   geom_point() +
   scale_x_continuous(labels = number_SPSS) +
   theme_SPSS()
+}
 
 }

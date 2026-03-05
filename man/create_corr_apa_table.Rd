@@ -8,19 +8,19 @@ create_corr_apa_table(
   data = NULL,
   vars = NULL,
   var_labels = NULL,
-  Key = TRUE,
+  KEY = TRUE,
   table_title = "Means, Standard Deviations, and Correlations"
 )
 }
 \arguments{
-\item{data}{A data frame or \code{NULL} (for blank table when \code{Key = FALSE}).}
+\item{data}{A data frame or \code{NULL} (for blank table when \code{KEY = FALSE}).}
 
 \item{vars}{Character vector or \code{NULL}. Variable names to include.}
 
 \item{var_labels}{Character vector or \code{NULL}. Display labels for variables.
 If \code{NULL}, labels are auto-generated.}
 
-\item{Key}{Logical. If \code{TRUE} and data/vars are provided, compute and fill
+\item{KEY}{Logical. If \code{TRUE} and data/vars are provided, compute and fill
 values. If \code{FALSE}, create blank template.}
 
 \item{table_title}{Character. Table caption text.}
@@ -30,25 +30,25 @@ A \code{\link[flextable:flextable]{flextable::flextable()}} object.
 }
 \description{
 Creates a correlation matrix table that can be either filled with computed
-values (answer key) or blank (student worksheet). Unlike \code{\link[=create_apa_corr_table]{create_apa_corr_table()}},
-this function supports a \code{Key} toggle and can produce empty templates.
+values (answer KEY) or blank (student worksheet). Supports a \code{KEY} toggle
+and can produce empty templates.
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 
-# Filled answer key table
-ft_key <- create_corr_apa_table(
+# Filled answer KEY table
+ft_KEY <- create_corr_apa_table(
   data = superman,
   vars = c("clark_height_in", "rt_critics_score", "rt_audience_score"),
   var_labels = c("1. Clark Height", "2. Critics Score", "3. Audience Score"),
-  Key = TRUE
+  KEY = TRUE
 )
-ft_key
+ft_KEY
 
 # Blank student worksheet table
 ft_blank <- create_corr_apa_table(
   var_labels = c("1. Clark Height", "2. Critics Score", "3. Audience Score"),
-  Key = FALSE
+  KEY = FALSE
 )
 ft_blank
 

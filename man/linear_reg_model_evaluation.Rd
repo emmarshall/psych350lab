@@ -29,7 +29,7 @@ Returns formatted text for evaluating the multiple linear regression model:
 Either filled (answer key) or blank (worksheet).
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 sm <- superman |>
   dplyr::filter(!is.na(rt_critics_score), !is.na(rt_audience_score))
 result <- linear_reg_answers(

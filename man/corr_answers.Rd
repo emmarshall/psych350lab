@@ -16,10 +16,10 @@ corr_answers(data, var1, var2)
 \value{
 A list with three elements:
 \describe{
-\item{Correlation}{A list containing \code{r}, \code{p_value}, \code{p_value_raw}, \code{df},
-\code{CI_low}, \code{CI_high}, and \code{method}.}
+\item{Correlation}{A list containing \code{r}, \code{p_value}, \code{df},
+\code{CI_low}, \code{CI_high}, and \code{method}. All numeric values are unrounded.}
 \item{Descriptives}{A tibble with \code{variable}, \code{mean}, \code{sd}, \code{n}, and \code{sem}
-for each variable (using all available cases per variable).}
+for each variable (using all available cases per variable). Unrounded.}
 \item{Sample_Size}{The number of complete pairs used in the correlation.}
 }
 }
@@ -29,7 +29,7 @@ statistics computed separately for each variable (matching SPSS/Jamovi behavior)
 and inferential statistics for complete pairs.
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 result$Correlation$r
 result$Descriptives

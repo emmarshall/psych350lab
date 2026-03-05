@@ -21,7 +21,7 @@ Creates a flextable showing correlation results alongside descriptive
 statistics in a compact format suitable for quick review.
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 ft <- create_corr_table("RH1", c("clark_height_in", "rt_critics_score"), result)
 ft

@@ -36,38 +36,10 @@ anova_factorial_answers(
 \item{interaction_label}{Character string. Optional label for the interaction.}
 }
 \value{
-A list with elements:
-\describe{
-\item{ANOVA}{Main effects, interaction F-tests, df, MSE, etc.}
-\item{Descriptives}{Cell means, SDs, and ns with labels.}
-\item{EMMs}{Estimated marginal means for IV1 and IV2.}
-\item{LSD}{LSD and HSD minimum mean difference values.}
-\item{Pairwise}{Reserved for pairwise comparison results.}
-\item{FactorLevels}{Level ordering and label mappings.}
-}
+A list with elements (all numeric values unrounded).
 }
 \description{
 Performs a 2x2 factorial ANOVA using the \code{jmv} package, returning main effects,
 interaction, estimated marginal means, descriptive statistics for all cells,
-and LSD/HSD post-hoc values.
-}
-\examples{
-data(superman)
-# Create a binary predictor for demonstration
-sm <- superman
-sm$era <- ifelse(sm$year >= 2000, 2, 1)
-
-\dontrun{
-result <- anova_factorial_answers(
-  data = sm,
-  dv = "clark_height_in",
-  iv1 = "clark_grp",
-  iv2 = "era",
-  iv1_labels = c("Under 6ft", "6ft+"),
-  iv2_labels = c("Pre-2000", "Post-2000")
-)
-result$ANOVA
-result$Descriptives
-}
-
+and LSD/HSD post-hoc values. All numeric values stored unrounded.
 }

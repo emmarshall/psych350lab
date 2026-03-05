@@ -1,5 +1,4 @@
 # =============================================================================
-# regression.R
 # Multiple Linear Regression Analysis
 # =============================================================================
 # Updated for dplyr 1.2.0+
@@ -10,6 +9,7 @@
 #' Performs a multiple linear regression analysis with separate handling of
 #' quantitative and binary predictors, including univariate, bivariate, and
 #' multivariate results with interpretation categories (a-d).
+#' All numeric values stored unrounded.
 #'
 #' @param data A data frame or tibble.
 #' @param criterion Character string. Name of the criterion (dependent) variable.
@@ -20,40 +20,7 @@
 #' @param criterion_label Character string or `NULL`. Display label for the criterion.
 #' @param verbose Logical. Print diagnostic information. Default is `FALSE`.
 #'
-#' @return A list with elements:
-#' \describe{
-#'   \item{Model}{Overall model statistics (R, R-squared, F, df, p).}
-#'   \item{Univariate}{Descriptive statistics for each variable.}
-#'   \item{Bivariate}{Correlation results for each predictor with criterion.}
-#'   \item{Regression_Weights}{Regression coefficients with interpretation categories.}
-#'   \item{Labels}{Variable names, labels, and types.}
-#'   \item{Raw_Model}{The raw `lm` model object.}
-#'   \item{Variable_Types}{Summary data frame of variable types.}
-#' }
-#'
-#' @details
-#' Interpretation categories for each predictor:
-#' \itemize{
-#'   \item **a**: Neither r nor b significant
-#'   \item **b**: r and b both significant with same sign
-#'   \item **c**: r significant but not b
-#'   \item **d**: Suppressor effect
-#' }
-#'
-#' @examples
-#' data(superman)
-#' sm <- superman |>
-#'   dplyr::filter(!is.na(rt_critics_score), !is.na(rt_audience_score))
-#'
-#' result <- linear_reg_answers(
-#'   data = sm,
-#'   criterion = "rt_critics_score",
-#'   quant_predictors = c("clark_height_in", "rt_audience_score"),
-#'   quant_labels = c("Clark Height (in)", "Audience Score"),
-#'   criterion_label = "Critics Score"
-#' )
-#' result$Model
-#' result$Regression_Weights
+#' @return A list with elements (all numeric values unrounded).
 #'
 #' @export
 linear_reg_answers <- function(data, criterion,
@@ -165,7 +132,7 @@ linear_reg_answers <- function(data, criterion,
   criterion_info <- .detect_variable_info(analysis_df[[criterion]], criterion, "Quant")
 
   # =========================================================================
-  # UNIVARIATE ANALYSIS
+  # UNIVARIATE ANALYSIS - NO ROUNDING
   # =========================================================================
 
   univariate_list <- list()
@@ -174,10 +141,10 @@ linear_reg_answers <- function(data, criterion,
   univariate_list[[criterion]] <- list(
     label = criterion_label,
     type = criterion_info$type,
-    mean = round(mean(analysis_df[[criterion]], na.rm = TRUE), 3),
-    sd = round(stats::sd(analysis_df[[criterion]], na.rm = TRUE), 3),
-    min = round(min(analysis_df[[criterion]], na.rm = TRUE), 3),
-    max = round(max(analysis_df[[criterion]], na.rm = TRUE), 3),
+    mean = mean(analysis_df[[criterion]], na.rm = TRUE),
+    sd = stats::sd(analysis_df[[criterion]], na.rm = TRUE),
+    min = min(analysis_df[[criterion]], na.rm = TRUE),
+    max = max(analysis_df[[criterion]], na.rm = TRUE),
     n = n,
     n_unique = criterion_info$n_levels
   )
@@ -208,18 +175,18 @@ linear_reg_answers <- function(data, criterion,
         high_level = high_level,
         n_low = as.numeric(freq_table[as.character(low_level)]),
         n_high = as.numeric(freq_table[as.character(high_level)]),
-        criterion_mean_low = round(mean_low, 3),
-        criterion_mean_high = round(mean_high, 3),
+        criterion_mean_low = mean_low,
+        criterion_mean_high = mean_high,
         n = n
       )
     } else {
       univariate_list[[p]] <- list(
         label = predictor_labels[i],
         type = "Quant",
-        mean = round(mean(analysis_df[[p]], na.rm = TRUE), 3),
-        sd = round(stats::sd(analysis_df[[p]], na.rm = TRUE), 3),
-        min = round(min(analysis_df[[p]], na.rm = TRUE), 3),
-        max = round(max(analysis_df[[p]], na.rm = TRUE), 3),
+        mean = mean(analysis_df[[p]], na.rm = TRUE),
+        sd = stats::sd(analysis_df[[p]], na.rm = TRUE),
+        min = min(analysis_df[[p]], na.rm = TRUE),
+        max = max(analysis_df[[p]], na.rm = TRUE),
         n = n,
         n_unique = type_info$n_levels
       )
@@ -227,7 +194,7 @@ linear_reg_answers <- function(data, criterion,
   }
 
   # =========================================================================
-  # BIVARIATE ANALYSIS
+  # BIVARIATE ANALYSIS - NO ROUNDING
   # =========================================================================
 
   if (verbose) {
@@ -246,7 +213,6 @@ linear_reg_answers <- function(data, criterion,
     cor_test <- stats::cor.test(analysis_df[[p]], analysis_df[[criterion]])
     r_value <- cor_test$estimate
     p_value <- cor_test$p.value
-    p_value_formatted <- format_p_value(p_value)
 
     if (verbose) {
       cat(p, "with", criterion, ":\n")
@@ -269,9 +235,8 @@ linear_reg_answers <- function(data, criterion,
       bivariate_list[[p]] <- list(
         label = predictor_labels[i],
         type = "Binary",
-        r = round(r_value, 3),
-        p_value = round(p_value, 3),
-        p_value_formatted = p_value_formatted,
+        r = as.numeric(r_value),
+        p_value = p_value,
         significant = p_value < 0.05,
         direction = dplyr::if_else(r_value > 0, "positive", "negative"),
         direction_desc = direction_desc,
@@ -285,9 +250,8 @@ linear_reg_answers <- function(data, criterion,
       bivariate_list[[p]] <- list(
         label = predictor_labels[i],
         type = "Quant",
-        r = round(r_value, 3),
-        p_value = round(p_value, 3),
-        p_value_formatted = p_value_formatted,
+        r = as.numeric(r_value),
+        p_value = p_value,
         significant = p_value < 0.05,
         direction = dplyr::if_else(r_value > 0, "positive", "negative"),
         direction_desc = dplyr::if_else(
@@ -300,7 +264,7 @@ linear_reg_answers <- function(data, criterion,
   }
 
   # =========================================================================
-  # MULTIVARIATE ANALYSIS
+  # MULTIVARIATE ANALYSIS - NO ROUNDING
   # =========================================================================
 
   formula_str <- paste(criterion, "~", paste(predictors, collapse = " + "))
@@ -309,15 +273,13 @@ linear_reg_answers <- function(data, criterion,
   model <- stats::lm(model_formula, data = analysis_df)
   model_summary <- summary(model)
 
-  r_squared <- round(model_summary$r.squared, 3)
-  r <- round(sqrt(model_summary$r.squared), 3)
-  adj_r_squared <- round(model_summary$adj.r.squared, 3)
-  f_stat <- round(model_summary$fstatistic[1], 3)
+  r_squared <- model_summary$r.squared
+  r <- sqrt(model_summary$r.squared)
+  adj_r_squared <- model_summary$adj.r.squared
+  f_stat <- model_summary$fstatistic[1]
   df1 <- model_summary$fstatistic[2]
   df2 <- model_summary$fstatistic[3]
-  f_pvalue_raw <- stats::pf(model_summary$fstatistic[1], df1, df2, lower.tail = FALSE)
-  f_pvalue <- round(f_pvalue_raw, 3)
-  f_pvalue_formatted <- format_p_value(f_pvalue_raw)
+  f_pvalue <- stats::pf(model_summary$fstatistic[1], df1, df2, lower.tail = FALSE)
 
   coef_table <- as.data.frame(model_summary$coefficients)
 
@@ -331,7 +293,6 @@ linear_reg_answers <- function(data, criterion,
     se <- coef_table[p, "Std. Error"]
     t_val <- coef_table[p, "t value"]
     b_pvalue <- coef_table[p, "Pr(>|t|)"]
-    b_pvalue_formatted <- format_p_value(b_pvalue)
 
     r_val <- bivariate_list[[p]]$r
     r_sig <- bivariate_list[[p]]$significant
@@ -364,11 +325,10 @@ linear_reg_answers <- function(data, criterion,
       regression_weights[[p]] <- list(
         label = predictor_labels[i],
         type = "Binary",
-        b = round(b, 3),
-        se = round(se, 3),
-        t = round(t_val, 3),
-        p_value = round(b_pvalue, 3),
-        p_value_formatted = b_pvalue_formatted,
+        b = b,
+        se = se,
+        t = t_val,
+        p_value = b_pvalue,
         significant = b_sig,
         category = category,
         category_desc = category_desc,
@@ -388,11 +348,10 @@ linear_reg_answers <- function(data, criterion,
       regression_weights[[p]] <- list(
         label = predictor_labels[i],
         type = "Quant",
-        b = round(b, 3),
-        se = round(se, 3),
-        t = round(t_val, 3),
-        p_value = round(b_pvalue, 3),
-        p_value_formatted = b_pvalue_formatted,
+        b = b,
+        se = se,
+        t = t_val,
+        p_value = b_pvalue,
         significant = b_sig,
         category = category,
         category_desc = category_desc,
@@ -402,10 +361,10 @@ linear_reg_answers <- function(data, criterion,
     }
   }
 
-  intercept <- round(coef_table["(Intercept)", "Estimate"], 3)
+  intercept <- coef_table["(Intercept)", "Estimate"]
 
   # =========================================================================
-  # COMPILE RESULTS
+  # COMPILE RESULTS - NO ROUNDING
   # =========================================================================
 
   results_list <- list(
@@ -417,9 +376,8 @@ linear_reg_answers <- function(data, criterion,
       df1 = df1,
       df2 = df2,
       p_value = f_pvalue,
-      p_value_formatted = f_pvalue_formatted,
       significant = f_pvalue < 0.05,
-      variance_explained = round(r_squared * 100, 1),
+      variance_explained = r_squared * 100,
       intercept = intercept,
       n = n,
       k = k

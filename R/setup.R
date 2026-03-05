@@ -1,7 +1,5 @@
 # ============================================================================
-# setup.R \\u2014 Install and load all dependencies for psych350lab
-# ============================================================================
-# Usage: source("setup.R")
+#Install and load all dependencies for psych350lab
 # ============================================================================
 
 # All packages needed by psych350lab
@@ -36,3 +34,4 @@ invisible(lapply(required_pkgs, library, character.only = TRUE))
 
 message("\nAll psych350lab dependencies are installed and loaded.")
 message("You can now run: library(psych350lab)")
+

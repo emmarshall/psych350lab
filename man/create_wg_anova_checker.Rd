@@ -33,7 +33,7 @@ descriptives.
 }
 \examples{
 \dontrun{
-data(superman)
+data(superman, package = "psych350data")
 result <- wg_anova_answers(superman,
   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 create_wg_anova_checker("RH1",

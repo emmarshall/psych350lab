@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 #' # Answer KEY
 #' cat(format_chi2_results("RH1", c("clark_grp", "tomatometer"), result,
@@ -104,7 +104,7 @@ format_chi2_results <- function(rh_name, vars, chi_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 #'
 #' # Filled version
@@ -237,7 +237,7 @@ create_rh_contingency <- function(var1_name = "Variable 1",
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 #'
 #' # Filled table with percentages
@@ -313,7 +313,7 @@ create_chi_crosstabs_table <- function(chi_results_list = NULL,
     if (include_percentages) {
       # Format cells with count and row percentage
       format_cell <- function(count, row_total) {
-        pct <- round((count / row_total) * 100, 1)
+        pct <- format_stat((count / row_total) * 100, digits = 1)
         paste0(count, " (", pct, "%)")
       }
 
@@ -438,7 +438,7 @@ create_chi_crosstabs_table <- function(chi_results_list = NULL,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- chi_square_answers(superman, "clark_grp", "tomatometer")
 #' ft <- create_chi_combined_table("RH1", c("clark_grp", "tomatometer"),
 #'   result,
@@ -472,7 +472,7 @@ create_chi_combined_table <- function(rh_name, vars, chi_results_list,
     if (p_value < 0.001) {
       p_formatted <- "< .001"
     } else {
-      p_formatted <- sprintf("%.3f", p_value)
+      p_formatted <- format_p_value(p_value)
     }
 
     # Build combined table

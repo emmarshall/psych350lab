@@ -45,7 +45,7 @@ from \code{\link[=bg_anova_answers]{bg_anova_answers()}}, \code{\link[=anova_kgr
 }
 \examples{
 # Two-group design (bg_anova_answers)
-data(superman)
+data(superman, package = "psych350data")
 result_2g <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
 create_bg_anova_table(result_2g,
   iv_name = "Height Group", dv_name = "Critics Score",

@@ -27,13 +27,15 @@ Imports:
     glue,
     stats,
     flextable,
+    ftExtra,
     officer,
     ggplot2,
     scales,
     psych,
     jmv,
     tibble,
-    purrr
+    purrr,
+    psych350data
 Suggests:
     webexercises,
     tinytable,
@@ -43,3 +45,5 @@ Suggests:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 URL: https://emmarshall.github.io/psych350lab
+Remotes:
+    emmarshall/psych350data

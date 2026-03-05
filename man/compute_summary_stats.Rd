@@ -4,23 +4,21 @@
 \alias{compute_summary_stats}
 \title{Compute Summary Statistics for All Variables}
 \usage{
-compute_summary_stats(data, digits = 2)
+compute_summary_stats(data)
 }
 \arguments{
 \item{data}{A data frame. All columns will be summarised.}
-
-\item{digits}{Integer. Number of decimal places to round to. Default is 2.}
 }
 \value{
 A tibble with columns \code{variable}, \code{mean}, \code{sd}, \code{n}, and \code{sem}.
+All values are unrounded.
 }
 \description{
 Calculates mean, standard deviation, sample size, and standard error of the
-mean for every column in a data frame. Useful for preparing data for
-\code{create_stats_table()}.
+mean for every column in a data frame. All numeric values stored unrounded.
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 library(dplyr)
 
 my_data <- superman |>

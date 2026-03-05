@@ -65,7 +65,7 @@
 #' @return A character string.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman |>
 #'   dplyr::filter(!is.na(rt_critics_score), !is.na(rt_audience_score))
 #' result <- linear_reg_answers(
@@ -147,7 +147,7 @@ regression_model_statistics <- function(...) {
 #' @return A character string with markdown formatting.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman |>
 #'   dplyr::filter(!is.na(rt_critics_score), !is.na(rt_audience_score))
 #' result <- linear_reg_answers(
@@ -235,7 +235,7 @@ regression_model_evaluation <- function(...) {
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman |>
 #'   dplyr::filter(!is.na(rt_critics_score), !is.na(rt_audience_score))
 #' result <- linear_reg_answers(
@@ -261,7 +261,8 @@ create_linear_reg_combined_table <- function(reg_results_list, KEY = TRUE) {
       Type = predictor_types,
       r_p = purrr::map_chr(predictors, \(p) {
         bivar <- reg_results_list$Bivariate[[p]]
-        paste0(sprintf("%.3f", bivar$r), " (", bivar$p_value_formatted, ")")
+        paste0(format_stat(bivar$r, remove_leading_zero = TRUE),
+               " (", format_p_value(bivar$p_value), ")")
       }),
       b_p = purrr::map_chr(predictors, \(p) {
         regwt <- reg_results_list$Regression_Weights[[p]]
@@ -423,7 +424,7 @@ linear_reg_category_legend <- function() {
 #' @return A [flextable::flextable()] object.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman |>
 #'   dplyr::filter(!is.na(rt_critics_score), !is.na(rt_audience_score))
 #' result <- linear_reg_answers(
@@ -521,7 +522,7 @@ create_linear_reg_correlation_interp_ft <- function(reg_results_list,
 #' @return A \code{\link[flextable]{flextable}} object.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman[!is.na(superman$rt_critics_score) &
 #'                     !is.na(superman$rt_audience_score), ]
 #' result <- linear_reg_answers(
@@ -621,7 +622,7 @@ create_correlation_interp_ft <- function(reg_results_list,
 #' @return A \code{\link[flextable]{flextable}} object.
 #'
 #' @examples
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' sm <- superman[!is.na(superman$rt_critics_score) &
 #'                     !is.na(superman$rt_audience_score), ]
 #' result <- linear_reg_answers(
@@ -731,454 +732,3 @@ regression_category_legend <- function() {
   return(legend_text)
 }
 
-
-#' Interactive Model Summary Checker (Webexercise)
-#'
-#' Creates a tinytable with fill-in-the-blank and multiple choice inputs
-#' for checking overall model statistics. Requires the \code{tinytable}
-#' and \code{webexercises} packages.
-#'
-#' @param reg_results_list Output from \code{linear_reg_answers()}.
-#'
-#' @return A tinytable object with embedded webexercise elements.
-#'
-#' @examples
-#' \dontrun{
-#' data(superman)
-#' sm <- superman[!is.na(superman$rt_critics_score) &
-#'                     !is.na(superman$rt_audience_score), ]
-#' result <- linear_reg_answers(
-#'   data = sm,
-#'   criterion = "rt_critics_score",
-#'   quant_predictors = c("clark_height_in", "rt_audience_score"),
-#'   quant_labels = c("Height", "Audience"),
-#'   criterion_label = "Critics Score"
-#' )
-#' create_model_summary_checker(result)
-#' }
-#'
-#' @export
-create_model_summary_checker <- function(reg_results_list) {
-
-  if (!requireNamespace("tinytable", quietly = TRUE)) {
-    stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
-  }
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required. Install with install.packages('webexercises')")
-  }
-
-  r <- reg_results_list$Model$R
-  r_sq <- reg_results_list$Model$R_squared
-  f_stat <- reg_results_list$Model$F
-  df1 <- reg_results_list$Model$df1
-  df2 <- reg_results_list$Model$df2
-  p_val_formatted <- reg_results_list$Model$p_value_formatted
-
-  # MCQ for model significance
-  if (reg_results_list$Model$p_value < 0.05) {
-    model_works_mcq <- webexercises::mcq(c(answer = "Yes", "No"))
-  } else {
-    model_works_mcq <- webexercises::mcq(c("Yes", answer = "No"))
-  }
-
-  model_table <- tibble::tibble(
-    ` ` = "Model Summary",
-    `R` = webexercises::fitb(r),
-    R2 = webexercises::fitb(r_sq),
-    `F` = webexercises::fitb(f_stat),
-    `df1, df2` = paste0(webexercises::fitb(df1), ", ", webexercises::fitb(df2)),
-    `p` = webexercises::fitb(p_val_formatted),
-    `Does the model work?` = model_works_mcq
-  )
-  names(model_table)[3] <- "R\u00B2"
-
-  result_table <- tinytable::tt(model_table) |>
-    tinytable::format_tt(escape = FALSE) |>
-    tinytable::style_tt(j = 5,
-                        bootstrap_css = "min-width: 120px; white-space: nowrap;") |>
-    tinytable::style_tt(
-      bootstrap_class = "table table-bordered table-sm",
-      bootstrap_css_rule = "width: 95%; margin-left: auto; margin-right: auto;"
-    )
-
-  return(result_table)
-}
-
-
-#' Interactive Predictor Results Checker (Webexercise)
-#'
-#' Creates a tinytable with fill-in-the-blank inputs for r and b values,
-#' multiple choice for significance levels and variable type, and
-#' category selection for each predictor. Requires \code{tinytable}
-#' and \code{webexercises}.
-#'
-#' @param reg_results_list Output from \code{linear_reg_answers()}.
-#' @param show_legend Logical. If \code{TRUE} (default), print a collapsible
-#'   significance and category legend before the table.
-#'
-#' @return A tinytable object with embedded webexercise elements.
-#'
-#' @examples
-#' \dontrun{
-#' data(superman)
-#' sm <- superman[!is.na(superman$rt_critics_score) &
-#'                     !is.na(superman$rt_audience_score), ]
-#' result <- linear_reg_answers(
-#'   data = sm,
-#'   criterion = "rt_critics_score",
-#'   quant_predictors = c("clark_height_in", "rt_audience_score"),
-#'   quant_labels = c("Height", "Audience"),
-#'   criterion_label = "Critics Score"
-#' )
-#' create_predictor_checker(result)
-#' }
-#'
-#' @export
-create_predictor_checker <- function(reg_results_list, show_legend = TRUE) {
-
-  if (!requireNamespace("tinytable", quietly = TRUE)) {
-    stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
-  }
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required. Install with install.packages('webexercises')")
-  }
-
-  predictors <- reg_results_list$Labels$predictors
-  predictor_labels <- reg_results_list$Labels$predictor_labels
-  predictor_types <- reg_results_list$Labels$predictor_types
-
-  # Build predictor rows
-  predictor_rows <- tibble::tibble(
-    `Predictor` = character(),
-    `Type` = character(),
-    `r` = character(),
-    `r sig` = character(),
-    `b` = character(),
-    `b sig` = character(),
-    `Result` = character()
-  )
-
-  for (i in seq_along(predictors)) {
-    p <- predictors[i]
-    bivar <- reg_results_list$Bivariate[[p]]
-    regwt <- reg_results_list$Regression_Weights[[p]]
-
-    # Get the type for this predictor
-    p_type <- predictor_types[i]
-    if (is.na(p_type)) p_type <- predictor_types[p]
-
-    # MCQ for variable type
-    if (p_type == "Binary") {
-      type_mcq <- webexercises::mcq(c(answer = "Binary", "Quant"))
-    } else {
-      type_mcq <- webexercises::mcq(c("Binary", answer = "Quant"))
-    }
-
-    # MCQ for r significance
-    r_sig_mcq <- .sig_mcq(bivar$p_value)
-
-    # MCQ for b significance
-    b_sig_mcq <- .sig_mcq(regwt$p_value)
-
-    # MCQ for interpretation category
-    cat_choice <- regwt$category
-    if (cat_choice == "a") {
-      category_mcq <- webexercises::mcq(c(answer = "a", "b", "c", "d"))
-    } else if (cat_choice == "b") {
-      category_mcq <- webexercises::mcq(c("a", answer = "b", "c", "d"))
-    } else if (cat_choice == "c") {
-      category_mcq <- webexercises::mcq(c("a", "b", answer = "c", "d"))
-    } else {
-      category_mcq <- webexercises::mcq(c("a", "b", "c", answer = "d"))
-    }
-
-    new_row <- tibble::tibble(
-      `Predictor` = predictor_labels[i],
-      `Type` = type_mcq,
-      `r` = webexercises::fitb(bivar$r),
-      `r sig` = r_sig_mcq,
-      `b` = webexercises::fitb(regwt$b),
-      `b sig` = b_sig_mcq,
-      `Result` = category_mcq
-    )
-
-    predictor_rows <- dplyr::bind_rows(predictor_rows, new_row)
-  }
-
-  # Print collapsible legend if requested
-  if (show_legend) {
-    cat(webexercises::hide("Click here for significance key"))
-    cat("\n\n**Significance Key:**\n\n")
-    cat("- **ns** = p > .05 (not significant)\n")
-    cat("- **\\*** = p < .05\n")
-    cat("- **\\*\\*** = p < .01\n")
-    cat("- **\\*\\*\\*** = p < .001\n\n")
-    cat("**Result Categories:**\n\n")
-    cat("- **a** = Neither r nor b significant\n")
-    cat("- **b** = r & b both significant & same sign\n")
-    cat("- **c** = r significant but not b\n")
-    cat("- **d** = suppressor effect\n")
-    cat(webexercises::unhide())
-    cat("\n\n")
-  }
-
-  result_table <- tinytable::tt(predictor_rows) |>
-    tinytable::format_tt(escape = FALSE) |>
-    tinytable::style_tt(
-      bootstrap_class = "table table-striped table-bordered table-sm",
-      bootstrap_css_rule = "width: 95%; margin-left: auto; margin-right: auto;"
-    )
-
-  return(result_table)
-}
-
-
-#' Interactive Correlation Interpretations (Webexercise)
-#'
-#' Creates a tinytable showing correlation interpretation for each predictor,
-#' either filled (answer key with red HTML) or blank. Requires \code{tinytable}.
-#'
-#' @param reg_results_list Output from \code{linear_reg_answers()}.
-#' @param interpretations Named list or \code{NULL}. Custom interpretations.
-#' @param KEY Logical. If \code{TRUE} (default), show filled. If \code{FALSE}, blank.
-#'
-#' @return A tinytable object.
-#'
-#' @examples
-#' \dontrun{
-#' data(superman)
-#' sm <- superman[!is.na(superman$rt_critics_score) &
-#'                     !is.na(superman$rt_audience_score), ]
-#' result <- linear_reg_answers(
-#'   data = sm,
-#'   criterion = "rt_critics_score",
-#'   quant_predictors = c("clark_height_in", "rt_audience_score"),
-#'   quant_labels = c("Height", "Audience"),
-#'   criterion_label = "Critics Score"
-#' )
-#' create_correlation_interpretations(result, KEY = TRUE)
-#' }
-#'
-#' @export
-create_correlation_interpretations <- function(reg_results_list,
-                                               interpretations = NULL,
-                                               KEY = TRUE) {
-
-  if (!requireNamespace("tinytable", quietly = TRUE)) {
-    stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
-  }
-
-  predictors <- reg_results_list$Labels$predictors
-  predictor_labels <- reg_results_list$Labels$predictor_labels
-  predictor_types <- reg_results_list$Labels$predictor_types
-  criterion_label <- reg_results_list$Labels$criterion_label
-
-  # Auto-generate interpretations if not provided
-  if (is.null(interpretations)) {
-    interpretations <- list()
-
-    for (i in seq_along(predictors)) {
-      p <- predictors[i]
-      bivar <- reg_results_list$Bivariate[[p]]
-      p_type <- predictor_types[i]
-
-      if (bivar$significant) {
-        if (p_type == "Binary") {
-          if (bivar$r > 0) {
-            interpretations[[p]] <- paste0("Higher coded group tends to have higher ",
-                                           criterion_label, " scores")
-          } else {
-            interpretations[[p]] <- paste0("Higher coded group tends to have lower ",
-                                           criterion_label, " scores")
-          }
-        } else {
-          if (bivar$r > 0) {
-            interpretations[[p]] <- paste0("As ", predictor_labels[i],
-                                           " increases, ", criterion_label,
-                                           " scores tend to increase")
-          } else {
-            interpretations[[p]] <- paste0("As ", predictor_labels[i],
-                                           " increases, ", criterion_label,
-                                           " scores tend to decrease")
-          }
-        }
-      } else {
-        interpretations[[p]] <- paste0(predictor_labels[i],
-                                       " is not correlated with ", criterion_label)
-      }
-    }
-  }
-
-  if (KEY) {
-    table_data <- tibble::tibble(
-      `Predictor` = predictor_labels,
-      `Interpretation` = sapply(predictors, function(p) {
-        paste0('<span style="color: red;">', interpretations[[p]], '</span>')
-      })
-    )
-  } else {
-    table_data <- tibble::tibble(
-      `Predictor` = predictor_labels,
-      `Interpretation` = rep("", length(predictors))
-    )
-  }
-
-  result_table <- tinytable::tt(table_data) |>
-    tinytable::format_tt(escape = FALSE) |>
-    tinytable::style_tt(
-      bootstrap_class = "table table-striped table-hover table-sm",
-      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
-    )
-
-  return(result_table)
-}
-
-
-#' Interactive Regression Weight Interpretations (Webexercise)
-#'
-#' Creates a tinytable showing regression weight interpretation for each
-#' predictor, either filled (answer key with red HTML) or blank.
-#' Requires \code{tinytable}.
-#'
-#' @param reg_results_list Output from \code{linear_reg_answers()}.
-#' @param interpretations Named list or \code{NULL}. Custom interpretations.
-#' @param KEY Logical. If \code{TRUE} (default), show filled. If \code{FALSE}, blank.
-#'
-#' @return A tinytable object.
-#'
-#' @examples
-#' \dontrun{
-#' data(superman)
-#' sm <- superman[!is.na(superman$rt_critics_score) &
-#'                     !is.na(superman$rt_audience_score), ]
-#' result <- linear_reg_answers(
-#'   data = sm,
-#'   criterion = "rt_critics_score",
-#'   quant_predictors = c("clark_height_in", "rt_audience_score"),
-#'   quant_labels = c("Height", "Audience"),
-#'   criterion_label = "Critics Score"
-#' )
-#' create_regression_weight_interpretations(result, KEY = TRUE)
-#' }
-#'
-#' @export
-create_regression_weight_interpretations <- function(reg_results_list,
-                                                     interpretations = NULL,
-                                                     KEY = TRUE) {
-
-  if (!requireNamespace("tinytable", quietly = TRUE)) {
-    stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
-  }
-
-  predictors <- reg_results_list$Labels$predictors
-  predictor_labels <- reg_results_list$Labels$predictor_labels
-  predictor_types <- reg_results_list$Labels$predictor_types
-  criterion_label <- reg_results_list$Labels$criterion_label
-
-  # Auto-generate interpretations if not provided
-  if (is.null(interpretations)) {
-    interpretations <- list()
-
-    for (i in seq_along(predictors)) {
-      p <- predictors[i]
-      regwt <- reg_results_list$Regression_Weights[[p]]
-      p_type <- predictor_types[i]
-
-      if (!regwt$significant) {
-        interpretations[[p]] <- paste0(predictor_labels[i],
-                                       " does not contribute to the model")
-      } else {
-        if (p_type == "Binary") {
-          if (regwt$b > 0) {
-            interpretations[[p]] <- paste0(
-              "Higher coded group has ", criterion_label,
-              " scores ", abs(regwt$b),
-              " higher than lower coded group, ",
-              "after controlling for all other variables")
-          } else {
-            interpretations[[p]] <- paste0(
-              "Higher coded group has ", criterion_label,
-              " scores ", abs(regwt$b),
-              " lower than lower coded group, ",
-              "after controlling for all other variables")
-          }
-        } else {
-          direction <- ifelse(regwt$b > 0, "increase", "decrease")
-          interpretations[[p]] <- paste0(
-            "For each 1-unit increase in ",
-            predictor_labels[i], ", ", criterion_label,
-            " is expected to ", direction, " by ",
-            abs(regwt$b),
-            ", after controlling for all other variables")
-        }
-      }
-    }
-  }
-
-  if (KEY) {
-    table_data <- tibble::tibble(
-      `Predictor` = predictor_labels,
-      `Interpretation` = sapply(predictors, function(p) {
-        paste0('<span style="color: red;">', interpretations[[p]], '</span>')
-      })
-    )
-  } else {
-    table_data <- tibble::tibble(
-      `Predictor` = predictor_labels,
-      `Interpretation` = rep("", length(predictors))
-    )
-  }
-
-  result_table <- tinytable::tt(table_data) |>
-    tinytable::format_tt(escape = FALSE) |>
-    tinytable::style_tt(
-      bootstrap_class = "table table-striped table-hover table-sm",
-      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
-    )
-
-  return(result_table)
-}
-
-
-###############################################################################
-# INTERNAL HELPERS
-###############################################################################
-
-#' Convert p-value to significance stars (internal)
-#'
-#' @param p Numeric p-value.
-#' @return Character string: "***", "**", "*", or "ns".
-#' @noRd
-.p_to_stars <- function(p) {
-  if (p < 0.001) return("***")
-  if (p < 0.01) return("**")
-  if (p < 0.05) return("*")
-  return("ns")
-}
-
-
-#' Create significance MCQ (internal)
-#'
-#' Creates a webexercises multiple choice question with the correct
-#' significance level pre-selected.
-#'
-#' @param p_value Numeric p-value.
-#' @return A webexercises mcq HTML string.
-#' @noRd
-.sig_mcq <- function(p_value) {
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required.")
-  }
-
-  stars <- .p_to_stars(p_value)
-
-  if (stars == "ns") {
-    return(webexercises::mcq(c(answer = "ns", "*", "**", "***")))
-  } else if (stars == "*") {
-    return(webexercises::mcq(c("ns", answer = "*", "**", "***")))
-  } else if (stars == "**") {
-    return(webexercises::mcq(c("ns", "*", answer = "**", "***")))
-  } else {
-    return(webexercises::mcq(c("ns", "*", "**", answer = "***")))
-  }
-}

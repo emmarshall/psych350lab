@@ -16,11 +16,9 @@ chi_square_kgroup_answers(
 \arguments{
 \item{data}{A data frame or tibble.}
 
-\item{var1}{Character string. Name of the multi-level categorical variable (rows).
-Can be numeric codes, character strings, or factors.}
+\item{var1}{Character string. Name of the multi-level categorical variable (rows).}
 
-\item{var2}{Character string. Name of the binary categorical variable (columns).
-Must have exactly 2 levels. Can be numeric codes, character strings, or factors.}
+\item{var2}{Character string. Name of the binary categorical variable (columns).}
 
 \item{var1_labels}{Character vector or NULL. Display labels for var1 levels.}
 
@@ -30,37 +28,11 @@ Must have exactly 2 levels. Can be numeric codes, character strings, or factors.
 comparisons (1 or 2). Default is 2.}
 }
 \value{
-A list with elements:
-\describe{
-\item{ChiSquare}{Omnibus chi-square results: \code{chi_sq}, \code{p_value}, \code{df}.}
-\item{ContingencyTable}{The raw contingency table.}
-\item{Var1_Descriptives}{Counts for each level of var1.}
-\item{Var2_Descriptives}{Counts for each level of var2.}
-\item{Sample_Size}{Total number of valid cases.}
-\item{ChiCrit}{Critical chi-square value (3.84 for df=1, alpha=.05).}
-\item{Pairwise}{List of pairwise comparison results.}
-\item{var1_labels}{Labels used for var1 levels.}
-\item{var2_labels}{Labels used for var2 levels.}
-\item{pct_var2_level}{Which var2 level was used for percentages.}
-\item{pct_var2_label}{Label for the percentage comparison level.}
-}
+A list with elements (all numeric values unrounded).
 }
 \description{
 Performs a chi-square test of independence on two categorical variables
 where var1 has 3+ levels and var2 has exactly 2 levels, then conducts
 all pairwise chi-square comparisons with effect sizes.
-}
-\examples{
-data(superman)
-# Compare height_gap (3 levels) by tomatometer (2 levels)
-result <- chi_square_kgroup_answers(
-  superman,
-  var1 = "height_gap",
-  var2 = "tomatometer",
-  var1_labels = c("Minimal", "Average", "Big"),
-  var2_labels = c("Rotten", "Fresh")
-)
-result$ChiSquare
-result$Pairwise
-
+All numeric values stored unrounded.
 }

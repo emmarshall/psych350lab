@@ -44,6 +44,7 @@ optimized for HTML output. Supports both modern (v24+) and legacy
 (<v24) SPSS styles.
 }
 \examples{
+\dontrun{
 library(ggplot2)
 
 # Basic usage with modern style
@@ -60,5 +61,5 @@ ggplot(superman, aes(x = clark_height, y = lois_height)) +
 ggplot(superman, aes(x = factor(type), y = lois_height)) +
   geom_boxplot() +
   theme_SPSS(scale.x = "discrete")
-
+}
 }

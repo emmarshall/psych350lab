@@ -1,26 +1,24 @@
 # =============================================================================
-# answer_checkers.R
 # Interactive Homework Checker Functions for Webexercises (tinytable)
 # =============================================================================
 # These functions create tinytable-based interactive widgets using
-# webexercises::fitb() for fill-in-the-blank and webexercises::mcq() for multiple choice.
-# They require the 'tinytable' and 'webexercises' packages (Suggests).
+# webexercises::fitb() for fill-in-the-blank and webexercises::mcq() for
+# multiple choice. They require the 'tinytable' and 'webexercises' packages.
+#
+# Formatting helpers are defined in utils.R:
+#   .format_stat()   - unbounded stats (F, t, means, SDs, b)
+#   .format_stat(bounded=TRUE) - bounded stats (r, R², effect sizes)
+#   .format_p_apa()  - p-values
+#   .format_int()    - integers (n, df, k)
+#   .safe_format()   - wrapper that handles NULL/NA safely
 #
 # Updated for dplyr 1.2.0
 # =============================================================================
 
 
-# -----------------------------------------------------------------------------
-# INTERNAL HELPERS
-# -----------------------------------------------------------------------------
-
-#' Create chi-square symbol using unicode package
-#' @keywords internal
-#' @noRd
-.chi_sq_symbol <- function() {
-
-  paste0(intToUtf8(0x03C7), intToUtf8(0x00B2))
-}
+# =============================================================================
+# MCQ HELPER FUNCTIONS
+# =============================================================================
 
 #' Convert a p-value to significance stars
 #'
@@ -29,7 +27,6 @@
 #' @keywords internal
 #' @export
 p_to_stars <- function(p) {
-
   if (p < 0.001) return("***")
   if (p < 0.01) return("**")
   if (p < 0.05) return("*")
@@ -47,9 +44,7 @@ p_to_stars <- function(p) {
 #' @keywords internal
 #' @export
 sig_mcq <- function(p_value) {
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required.")
-  }
+  .check_packages("webexercises")
 
   stars <- p_to_stars(p_value)
 
@@ -72,8 +67,13 @@ sig_mcq <- function(p_value) {
 #' @keywords internal
 #' @noRd
 .make_reject_retain_mcq <- function(p_value, alpha = 0.05) {
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required.")
+  .check_packages("webexercises")
+
+  if (is.na(p_value)) {
+    return(webexercises::mcq(c(
+      "Retain the H0 null hypothesis",
+      "Reject the H0 null hypothesis"
+    )))
   }
 
   if (p_value < alpha) {
@@ -99,30 +99,32 @@ sig_mcq <- function(p_value) {
 #' @keywords internal
 #' @noRd
 .make_posthoc_mcq <- function(p_value, test_type = "omnibus_f", alpha = 0.05) {
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required.")
-  }
+  .check_packages("webexercises")
 
   options <- switch(test_type,
                     "omnibus_f" = c(
-                      no = "No - a nonsignificant Omnibus F-test",
+                      no  = "No - a nonsignificant Omnibus F-test",
                       yes = "Yes - significant Omnibus F-test"
                     ),
                     "interaction" = c(
-                      no = "No - a nonsignificant interaction",
+                      no  = "No - a nonsignificant interaction",
                       yes = "Yes - significant interaction"
                     ),
                     "chi_square" = c(
-                      no = "No - a nonsignificant Omnibus Chi-Square test",
-                      yes = "Yes - significant Omnibus Chi-Square test"
+                      no  = paste0("No - a nonsignificant Omnibus ", .chi_sq_symbol(), " test"),
+                      yes = paste0("Yes - significant Omnibus ", .chi_sq_symbol(), " test")
                     ),
                     c(no = "No", yes = "Yes")
   )
 
+  if (is.na(p_value)) {
+    return(webexercises::mcq(c(unname(options["no"]), unname(options["yes"]))))
+  }
+
   if (p_value < alpha) {
-    webexercises::mcq(c(options["no"], answer = options["yes"]))
+    webexercises::mcq(c(unname(options["no"]), answer = unname(options["yes"])))
   } else {
-    webexercises::mcq(c(answer = options["no"], options["yes"]))
+    webexercises::mcq(c(answer = unname(options["no"]), unname(options["yes"])))
   }
 }
 
@@ -134,9 +136,7 @@ sig_mcq <- function(p_value) {
 #' @keywords internal
 #' @noRd
 .make_error_type_mcq <- function(is_significant) {
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required.")
-  }
+  .check_packages("webexercises")
 
   if (is_significant) {
     webexercises::mcq(c(answer = "Type I & III", "Type II"))
@@ -153,9 +153,7 @@ sig_mcq <- function(p_value) {
 #' @keywords internal
 #' @noRd
 .make_power_mcq <- function(power_text) {
-  if (!requireNamespace("webexercises", quietly = TRUE)) {
-    stop("Package 'webexercises' is required.")
-  }
+  .check_packages("webexercises")
 
   options <- c(
     "No - rejecting H0: means there was sufficient power",
@@ -175,54 +173,6 @@ sig_mcq <- function(p_value) {
 }
 
 
-#' Format p-value for display
-#'
-#' @param p_value Numeric p-value.
-#' @return Character formatted p-value.
-#' @keywords internal
-#' @noRd
-.format_p_display <- function(p_value) {
-  if (is.na(p_value) || p_value < 0.001) ".001" else p_value
-}
-
-
-#' Safely extract scalar value for fitb
-#'
-#' @param value Value to check and convert.
-#' @param default Default value if NA or empty.
-#' @return Scalar value safe for webexercises::fitb().
-#' @keywords internal
-#' @noRd
-.safe_fitb_value <- function(value, default = "NA") {
-  if (is.null(value) || length(value) == 0 || (length(value) == 1 && is.na(value))) {
-    default
-
-  } else {
-    value[[1]]
-  }
-}
-
-
-#' Check and load required packages
-#'
-#' @param packages Character vector of package names.
-#' @keywords internal
-#' @noRd
-.check_packages <- function(packages = c("tinytable", "webexercises")) {
-  for (pkg in packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
-      stop(
-        "Package '", pkg, "' is required. ",
-        "Install with install.packages('", pkg, "')"
-      )
-    }
-  }
-}
-
-
-# =============================================================================
-# DESCRIPTIVE STATISTICS CHECKER
-# =============================================================================
 
 #' Interactive Descriptive Statistics Homework Checker
 #'
@@ -231,10 +181,9 @@ sig_mcq <- function(p_value) {
 #' **tinytable** and **webexercises** packages.
 #'
 #' @param vars Character vector. Variable names to include, in display order.
-#' @param desc_results_list Output from [descriptives_answers()]. Must contain
+#' @param desc_results_list Output from [compute_summary_stats()]. Must contain
 #'   `$Descriptives` (a tibble with columns `variable`, `mean`, `sd`, `n`, `sem`).
 #' @param var_labels Named character vector or `NULL`. Optional display labels,
-#'
 #'   e.g. `c(clark_height_in = "Clark Height")`.
 #' @param label Character vector or `NULL`. Variables that are IDs/labels
 #'   (mean is NOT interpretable).
@@ -249,8 +198,8 @@ sig_mcq <- function(p_value) {
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
-#' result <- descriptives_answers(superman,
+#' data(superman, package = "psych350data")
+#' result <- compute_summary_stats(superman,
 #'   vars = c("year", "clark_height_in", "height_diff"))
 #' create_descriptives_checker(
 #'   vars = c("year", "clark_height_in", "height_diff"),
@@ -273,15 +222,13 @@ create_descriptives_checker <- function(vars,
 
   desc_stats <- desc_results_list$Descriptives
 
-  # Build type lookup from category parameters
   var_type_map <- c(
-    stats::setNames(rep("label", length(label)), label),
-    stats::setNames(rep("quantitative", length(quantitative)), quantitative),
-    stats::setNames(rep("binary", length(binary)), binary),
+    stats::setNames(rep("label",          length(label)),          label),
+    stats::setNames(rep("quantitative",   length(quantitative)),   quantitative),
+    stats::setNames(rep("binary",         length(binary)),         binary),
     stats::setNames(rep("multi_category", length(multi_category)), multi_category)
   )
 
-  # MCQ answer text for each type
   answer_text <- c(
     label          = "No - this is a label, not a variable",
     quantitative   = "Yes - this is a quantitative variable",
@@ -296,7 +243,6 @@ create_descriptives_checker <- function(vars,
     "No - this is a multiple-category variable"
   )
 
-  # Helper to build MCQ
   build_mcq <- function(correct_type) {
     correct <- answer_text[correct_type]
     opts <- all_options
@@ -304,7 +250,6 @@ create_descriptives_checker <- function(vars,
     webexercises::mcq(opts)
   }
 
-  # Helper to get display label
   get_label <- function(v) {
     if (!is.null(var_labels) && v %in% names(var_labels)) {
       return(unname(var_labels[v]))
@@ -312,13 +257,10 @@ create_descriptives_checker <- function(vars,
     v
   }
 
-  # Build all rows using purrr::map
   rows_list <- purrr::map(vars, \(v) {
-    # Filter to get the matching row
     var_stats <- desc_stats |>
       dplyr::filter(.data$variable == v)
 
-    # Check if variable was found
     if (nrow(var_stats) == 0) {
       stop(
         "Variable '", v, "' not found in desc_results_list$Descriptives. ",
@@ -326,32 +268,28 @@ create_descriptives_checker <- function(vars,
       )
     }
 
-    # Extract scalar values safely using dplyr::pull()
-    mean_val <- .safe_fitb_value(dplyr::pull(var_stats, "mean"))
-    sd_val <- .safe_fitb_value(dplyr::pull(var_stats, "sd"))
-    sem_val <- .safe_fitb_value(dplyr::pull(var_stats, "sem"))
+    mean_raw <- dplyr::pull(var_stats, "mean")
+    sd_raw   <- dplyr::pull(var_stats, "sd")
+    sem_raw  <- dplyr::pull(var_stats, "sem")
 
-    # Determine variable type (default to quantitative)
     vtype <- if (v %in% names(var_type_map)) var_type_map[[v]] else "quantitative"
 
     tibble::tibble(
-      Variable = get_label(v),
-      Mean = webexercises::fitb(mean_val),
-      SD = webexercises::fitb(sd_val),
-      SEM = webexercises::fitb(sem_val),
+      Variable         = get_label(v),
+      Mean             = webexercises::fitb(.format_stat(mean_raw, bounded = FALSE)),
+      SD               = webexercises::fitb(.format_stat(sd_raw,   bounded = FALSE)),
+      SEM              = webexercises::fitb(.format_stat(sem_raw,  bounded = FALSE)),
       `Interpretable?` = build_mcq(vtype)
     )
   })
 
-  # Combine all rows
   table_data <- dplyr::bind_rows(rows_list)
 
-  # Create tinytable and apply styling
   table_data |>
     tinytable::tt() |>
     tinytable::format_tt(escape = FALSE) |>
     tinytable::style_tt(
-      bootstrap_class = "table table-striped table-hover table-sm",
+      bootstrap_class    = "table table-striped table-hover table-sm",
       bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
     )
 }
@@ -361,7 +299,7 @@ create_descriptives_checker <- function(vars,
 # CORRELATION CHECKER
 # =============================================================================
 
-#' Interactive Correlation Homework Checker
+#' Interactive Pearson Correlation Homework Checker
 #'
 #' Creates a [tinytable::tt()] table with fill-in-the-blank and multiple
 #' choice inputs for checking Pearson correlation results and descriptive
@@ -378,7 +316,7 @@ create_descriptives_checker <- function(vars,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
 #' create_corr_checker("RH1", c("Clark Height", "Critics Score"), result)
 #' }
@@ -396,24 +334,32 @@ create_corr_checker <- function(rh_name, vars, corr_results_list) {
   var2_stats <- desc_stats |>
     dplyr::filter(.data$variable == vars[2])
 
-  # Extract scalars safely
-  var1_mean <- .safe_fitb_value(dplyr::pull(var1_stats, "mean"))
-  var1_sd <- .safe_fitb_value(dplyr::pull(var1_stats, "sd"))
+  # Extract scalars safely and format (2 decimals for descriptives)
+  var1_mean <- .format_stat(dplyr::pull(var1_stats, "mean"), bounded = FALSE)
+  var1_sd <- .format_stat(dplyr::pull(var1_stats, "sd"), bounded = FALSE)
   var1_n <- .safe_fitb_value(dplyr::pull(var1_stats, "n"))
 
-  var2_mean <- .safe_fitb_value(dplyr::pull(var2_stats, "mean"))
-  var2_sd <- .safe_fitb_value(dplyr::pull(var2_stats, "sd"))
+  var2_mean <- .format_stat(dplyr::pull(var2_stats, "mean"), bounded = FALSE)
+  var2_sd <- .format_stat(dplyr::pull(var2_stats, "sd"), bounded = FALSE)
   var2_n <- .safe_fitb_value(dplyr::pull(var2_stats, "n"))
 
+  # Format correlation coefficient (2 decimals, no leading zero)
+  r_value <- .format_stat(corr_results_list$Correlation$r, bounded = TRUE)
+
+  # Format p-value (3 decimals, no leading zero)
   p_value <- corr_results_list$Correlation$p_value
+  p_formatted <- .format_p_apa(p_value)
+
+  # df stays as integer
+  df_value <- corr_results_list$Correlation$df
 
   reject_retain_mcq <- .make_reject_retain_mcq(p_value)
 
   corr_table_data <- tibble::tibble(
     ` `  = paste("Correlation:", rh_name),
-    r    = webexercises::fitb(corr_results_list$Correlation$r),
-    p    = webexercises::fitb(p_value),
-    df   = webexercises::fitb(corr_results_list$Correlation$df),
+    r    = webexercises::fitb(r_value),
+    p    = webexercises::fitb(p_formatted),
+    df   = webexercises::fitb(df_value),
     `Reject or Retain?` = reject_retain_mcq
   )
   corr_table <- tinytable::tt(corr_table_data) |>
@@ -470,13 +416,18 @@ create_chisq_checker <- function(rh_name, chi_results_list,
 
   .check_packages()
 
-  chi_sq    <- chi_results_list$ChiSquare$chi_sq
-  p_value   <- chi_results_list$ChiSquare$p_value
-  df        <- chi_results_list$ChiSquare$df
+  # Format chi-square (2 decimals, keep leading zero for unbounded stat)
+  chi_sq <- .format_stat(chi_results_list$ChiSquare$chi_sq, bounded = FALSE)
+
+  # Format p-value (3 decimals, no leading zero)
+  p_value <- chi_results_list$ChiSquare$p_value
+  p_formatted <- .format_p_apa(p_value)
+
+  df <- chi_results_list$ChiSquare$df
   var1_desc <- chi_results_list$Var1_Descriptives
   var2_desc <- chi_results_list$Var2_Descriptives
 
-  # Extract scalar values safely
+  # Extract scalar values safely (counts stay as integers)
   var1_n1 <- .safe_fitb_value(var1_desc$n[1])
   var1_n2 <- .safe_fitb_value(var1_desc$n[2])
   var2_n1 <- .safe_fitb_value(var2_desc$n[1])
@@ -487,7 +438,7 @@ create_chisq_checker <- function(rh_name, chi_results_list,
   chi_table_data <- tibble::tibble(
     ` `  = paste("Chi-Square:", rh_name),
     chi2 = webexercises::fitb(chi_sq),
-    p    = webexercises::fitb(p_value),
+    p    = webexercises::fitb(p_formatted),
     df   = webexercises::fitb(df),
     `Reject or Retain H0?` = reject_retain_mcq
   )
@@ -554,8 +505,13 @@ create_chisq_omnibus_table <- function(rh_name, chisq_results_list,
 
   .check_packages()
 
-  chi_sq <- chisq_results_list$ChiSquare$chi_sq
+  # Format chi-square (2 decimals)
+  chi_sq <- .format_stat(chisq_results_list$ChiSquare$chi_sq, bounded = FALSE)
+
+  # Format p-value (3 decimals, no leading zero)
   p_value <- chisq_results_list$ChiSquare$p_value
+  p_formatted <- .format_p_apa(p_value)
+
   df <- chisq_results_list$ChiSquare$df
   total_n <- chisq_results_list$Sample_Size
 
@@ -581,7 +537,7 @@ create_chisq_omnibus_table <- function(rh_name, chisq_results_list,
   chisq_table_data <- tibble::tibble(
     ` ` = paste("Chi-Square:", rh_name),
     chi2 = webexercises::fitb(chi_sq),
-    p = webexercises::fitb(p_value),
+    p = webexercises::fitb(p_formatted),
     df = webexercises::fitb(df),
     N = webexercises::fitb(total_n),
     `  ` = "",
@@ -595,7 +551,7 @@ create_chisq_omnibus_table <- function(rh_name, chisq_results_list,
   n_var1 <- nrow(var1_desc)
   n_var2 <- nrow(var2_desc)
 
-  # Extract values safely
+  # Extract values safely (counts stay as integers)
   var1_col1 <- purrr::map_chr(seq_len(n_var1), \(i) {
     paste("Number of", var1_labels[i], "in sample")
   })
@@ -677,7 +633,8 @@ create_chisq_pairwise_table <- function(chisq_results_list,
     }
   }
 
-  chi_crit <- chisq_results_list$ChiCrit
+  # Format chi critical (2 decimals)
+  chi_crit <- .format_stat(chisq_results_list$ChiCrit, bounded = FALSE)
 
   # Using unicode function to get symbol
   chi_crit_data <- tibble::tibble(
@@ -698,14 +655,13 @@ create_chisq_pairwise_table <- function(chisq_results_list,
     ` ` = purrr::map_chr(seq_len(n_pairwise), \(i) pairwise[[i]]$comparison),
     !!pct_column_name := purrr::map_chr(seq_len(n_pairwise), \(i) {
       paste0(
-        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$pct1)), "% vs ",
-        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$pct2)), "%"
+        webexercises::fitb(.format_stat(pairwise[[i]]$pct1, bounded = FALSE)), "% vs ",
+        webexercises::fitb(.format_stat(pairwise[[i]]$pct2, bounded = FALSE)), "%"
       )
     }),
-    #use unicode package to fix chr
     chi2_result = purrr::map_chr(seq_len(n_pairwise), \(i) {
       paste0(
-        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$chi_sq)), " ",
+        webexercises::fitb(.format_stat(pairwise[[i]]$chi_sq, bounded = FALSE)), " ",
         webexercises::fitb(.safe_fitb_value(pairwise[[i]]$chi_result))
       )
     }),
@@ -713,8 +669,9 @@ create_chisq_pairwise_table <- function(chisq_results_list,
       is_sig <- pairwise[[i]]$chi_result != "="
       .make_error_type_mcq(is_sig)
     }),
+    # Effect size is bounded (-1 to 1), so no leading zero
     `Effect Size (r)` = purrr::map_chr(seq_len(n_pairwise), \(i) {
-      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$effect_size))
+      webexercises::fitb(.format_stat(pairwise[[i]]$effect_size, bounded = TRUE))
     }),
     `Power Problem?` = purrr::map_chr(seq_len(n_pairwise), \(i) {
       .make_power_mcq(pairwise[[i]]$power_problem)
@@ -779,7 +736,8 @@ create_chisq_pairwise_checker <- function(chisq_results_list,
     }
   }
 
-  chi_crit <- chisq_results_list$ChiCrit
+  # Format chi critical (2 decimals)
+  chi_crit <- .format_stat(chisq_results_list$ChiCrit, bounded = FALSE)
 
   chi_crit_data <- tibble::tibble(
     ` `   = "Chi-Square critical",
@@ -793,13 +751,13 @@ create_chisq_pairwise_checker <- function(chisq_results_list,
     ` ` = purrr::map_chr(seq_len(n_pairwise), \(i) pairwise[[i]]$comparison),
     `% comparison` = purrr::map_chr(seq_len(n_pairwise), \(i) {
       paste0(
-        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$pct1)), "% vs ",
-        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$pct2)), "%"
+        webexercises::fitb(.format_stat(pairwise[[i]]$pct1, bounded = FALSE)), "% vs ",
+        webexercises::fitb(.format_stat(pairwise[[i]]$pct2, bounded = FALSE)), "%"
       )
     }),
     chi2_result = purrr::map_chr(seq_len(n_pairwise), \(i) {
       paste0(
-        webexercises::fitb(.safe_fitb_value(pairwise[[i]]$chi_sq)), " ",
+        webexercises::fitb(.format_stat(pairwise[[i]]$chi_sq, bounded = FALSE)), " ",
         webexercises::fitb(.safe_fitb_value(pairwise[[i]]$chi_result))
       )
     }),
@@ -807,8 +765,9 @@ create_chisq_pairwise_checker <- function(chisq_results_list,
       is_sig <- pairwise[[i]]$chi_result != "="
       .make_error_type_mcq(is_sig)
     }),
+    # Effect size bounded
     `Effect Size (r)` = purrr::map_chr(seq_len(n_pairwise), \(i) {
-      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$effect_size))
+      webexercises::fitb(.format_stat(pairwise[[i]]$effect_size, bounded = TRUE))
     }),
     `Power Problem?` = purrr::map_chr(seq_len(n_pairwise), \(i) {
       .make_power_mcq(pairwise[[i]]$power_problem)
@@ -846,7 +805,7 @@ create_chisq_pairwise_checker <- function(chisq_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- bg_anova_answers(superman, iv = "clark_grp",
 #'   dv = "rt_critics_score")
 #' create_bg_anova_checker("RH1",
@@ -865,13 +824,18 @@ create_bg_anova_checker <- function(rh_name, vars, anova_results_list,
     "Within-Groups (WG)"
   ))
 
-  f_stat     <- anova_results_list$ANOVA$F
-  p_value    <- anova_results_list$ANOVA$p_value
+  # Format F statistic (2 decimals, unbounded)
+  f_stat <- .format_stat(anova_results_list$ANOVA$F, bounded = FALSE)
+
+  # Format p-value (3 decimals, no leading zero)
+  p_value <- anova_results_list$ANOVA$p_value
+  p_formatted <- .format_p_apa(p_value)
+
   df_between <- anova_results_list$ANOVA$df_between
   df_within  <- anova_results_list$ANOVA$df_within
-  mse        <- anova_results_list$ANOVA$mse
 
-  p_value_display <- .format_p_display(p_value)
+  # Format MSE (2 decimals)
+  mse <- .format_stat(anova_results_list$ANOVA$mse, bounded = FALSE)
 
   desc_stats <- anova_results_list$Descriptives
   if (is.null(group_labels)) group_labels <- as.character(desc_stats$iv)
@@ -889,7 +853,7 @@ create_bg_anova_checker <- function(rh_name, vars, anova_results_list,
   anova_table_data <- tibble::tibble(
     ` `           = paste("BG ANOVA:", rh_name),
     F             = webexercises::fitb(f_stat),
-    p             = webexercises::fitb(p_value_display),
+    p             = webexercises::fitb(p_formatted),
     `df(between)` = webexercises::fitb(df_between),
     `df(within)`  = webexercises::fitb(df_within),
     MSE           = webexercises::fitb(mse)
@@ -905,14 +869,14 @@ create_bg_anova_checker <- function(rh_name, vars, anova_results_list,
   decision_table <- tinytable::tt(decision_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
-  # Extract scalar values safely for descriptives
+  # Extract scalar values safely for descriptives (format to 2 decimals)
   desc_table_data <- tibble::tibble(
     ` `  = group_labels,
     Mean = purrr::map_chr(seq_along(group_labels), \(i) {
-      webexercises::fitb(.safe_fitb_value(desc_stats$mean[i]))
+      webexercises::fitb(.format_stat(desc_stats$mean[i], bounded = FALSE))
     }),
     SD   = purrr::map_chr(seq_along(group_labels), \(i) {
-      webexercises::fitb(.safe_fitb_value(desc_stats$sd[i]))
+      webexercises::fitb(.format_stat(desc_stats$sd[i], bounded = FALSE))
     }),
     n    = purrr::map_chr(seq_along(group_labels), \(i) {
       webexercises::fitb(.safe_fitb_value(desc_stats$n[i]))
@@ -955,7 +919,7 @@ create_bg_anova_checker <- function(rh_name, vars, anova_results_list,
 #'
 #' @examples
 #' \dontrun{
-#' data(superman)
+#' data(superman, package = "psych350data")
 #' result <- wg_anova_answers(superman,
 #'   dv1 = "rt_critics_score", dv2 = "rt_audience_score")
 #' create_wg_anova_checker("RH1",
@@ -974,31 +938,19 @@ create_wg_anova_checker <- function(rh_name, vars, anova_results_list,
     answer = "Within-Groups (WG)"
   ))
 
-  f_stat    <- .safe_fitb_value(anova_results_list$ANOVA$F, "___")
-  p_value   <- anova_results_list$ANOVA$p_value
-  df_effect <- .safe_fitb_value(anova_results_list$ANOVA$df_effect, "___")
-  df_error  <- .safe_fitb_value(anova_results_list$ANOVA$df_error, "___")
-  mse       <- .safe_fitb_value(anova_results_list$ANOVA$mse, "___")
-
-  p_value_display <- .format_p_display(p_value)
+  f_stat      <- .safe_format(anova_results_list$ANOVA$F, "stat")
+  p_value     <- anova_results_list$ANOVA$p_value
+  p_formatted <- .format_p_apa(p_value)
+  df_effect   <- .safe_format(anova_results_list$ANOVA$df_effect, "int")
+  df_error    <- .safe_format(anova_results_list$ANOVA$df_error, "int")
+  mse         <- .safe_format(anova_results_list$ANOVA$mse, "stat")
 
   desc_stats <- anova_results_list$Descriptives
   if (is.null(condition_labels)) {
-    condition_labels <- as.character(desc_stats$condition)
+    condition_labels <- as.character(desc_stats$condition_label)  # FIXED
   }
 
-  # Create reject/retain MCQ
-  if (!is.na(p_value) && length(p_value) > 0 && p_value < 0.05) {
-    reject_retain_mcq <- webexercises::mcq(c(
-      "Retain the H0 null hypothesis",
-      answer = "Reject the H0 null hypothesis"
-    ))
-  } else {
-    reject_retain_mcq <- webexercises::mcq(c(
-      answer = "Retain the H0 null hypothesis",
-      "Reject the H0 null hypothesis"
-    ))
-  }
+  reject_retain_mcq <- .make_reject_retain_mcq(p_value)
 
   type_table_data <- tibble::tibble(
     ` `    = paste("ANOVA Type:", rh_name),
@@ -1011,7 +963,7 @@ create_wg_anova_checker <- function(rh_name, vars, anova_results_list,
   anova_table_data <- tibble::tibble(
     ` `          = paste("WG ANOVA:", rh_name),
     F            = webexercises::fitb(f_stat),
-    p            = webexercises::fitb(p_value_display),
+    p            = webexercises::fitb(p_formatted),
     `df(effect)` = webexercises::fitb(df_effect),
     `df(error)`  = webexercises::fitb(df_error),
     MSE          = webexercises::fitb(mse)
@@ -1030,13 +982,13 @@ create_wg_anova_checker <- function(rh_name, vars, anova_results_list,
   desc_table_data <- tibble::tibble(
     ` `  = condition_labels,
     Mean = purrr::map_chr(seq_along(condition_labels), \(i) {
-      webexercises::fitb(.safe_fitb_value(desc_stats$mean[i]))
+      webexercises::fitb(.safe_format(desc_stats$mean[i], "stat"))
     }),
     SD   = purrr::map_chr(seq_along(condition_labels), \(i) {
-      webexercises::fitb(.safe_fitb_value(desc_stats$sd[i]))
+      webexercises::fitb(.safe_format(desc_stats$sd[i], "stat"))
     }),
     n    = purrr::map_chr(seq_along(condition_labels), \(i) {
-      webexercises::fitb(.safe_fitb_value(desc_stats$n[i]))
+      webexercises::fitb(.safe_format(desc_stats$n[i], "int"))
     }),
     `  ` = rep("", length(condition_labels)),
     `   ` = rep("", length(condition_labels))
@@ -1086,14 +1038,16 @@ create_anova_omnibus_checker <- function(rh_name, anova_results_list,
 
   .check_packages()
 
-  f_stat     <- anova_results_list$ANOVA$F
+  # Format all statistics properly
+  f_stat     <- .safe_format(anova_results_list$ANOVA$F, "stat")
   p_value    <- anova_results_list$ANOVA$p_value
-  df_between <- anova_results_list$ANOVA$df_between
-  df_within  <- anova_results_list$ANOVA$df_within
-  mse        <- anova_results_list$ANOVA$mse
-  total_n    <- anova_results_list$ANOVA$total_n
-  k          <- anova_results_list$ANOVA$k
-  mean_n     <- anova_results_list$ANOVA$mean_n
+  p_formatted <- .format_p_apa(p_value)
+  df_between <- .safe_format(anova_results_list$ANOVA$df_between, "int")
+  df_within  <- .safe_format(anova_results_list$ANOVA$df_within, "int")
+  mse        <- .safe_format(anova_results_list$ANOVA$mse, "stat")
+  total_n    <- .safe_format(anova_results_list$ANOVA$total_n, "int")
+  k          <- .safe_format(anova_results_list$ANOVA$k, "int")
+  mean_n     <- .safe_format(anova_results_list$ANOVA$mean_n, "stat")
 
   desc_stats <- anova_results_list$Descriptives
   n_groups   <- nrow(desc_stats)
@@ -1104,7 +1058,7 @@ create_anova_omnibus_checker <- function(rh_name, anova_results_list,
   anova_table_data <- tibble::tibble(
     ` `            = paste("BG ANOVA:", rh_name),
     F              = webexercises::fitb(f_stat),
-    p              = webexercises::fitb(p_value),
+    p              = webexercises::fitb(p_formatted),
     `df (between)` = webexercises::fitb(df_between),
     `df (within)`  = webexercises::fitb(df_within),
     MSE            = webexercises::fitb(mse),
@@ -1123,16 +1077,17 @@ create_anova_omnibus_checker <- function(rh_name, anova_results_list,
   sample_table <- tinytable::tt(sample_table_data) |>
     tinytable::format_tt(escape = FALSE)
 
+  # Descriptives: means/SDs to 2 decimals, n as integer
   desc_table_data <- tibble::tibble(
     ` `  = group_labels,
     Mean = purrr::map_chr(seq_len(n_groups), \(i) {
-      webexercises::fitb(.safe_fitb_value(desc_stats$mean[i]))
+      webexercises::fitb(.safe_format(desc_stats$mean[i], "stat"))
     }),
     SD   = purrr::map_chr(seq_len(n_groups), \(i) {
-      webexercises::fitb(.safe_fitb_value(desc_stats$sd[i]))
+      webexercises::fitb(.safe_format(desc_stats$sd[i], "stat"))
     }),
     n    = purrr::map_chr(seq_len(n_groups), \(i) {
-      webexercises::fitb(.safe_fitb_value(desc_stats$n[i]))
+      webexercises::fitb(.safe_format(desc_stats$n[i], "int"))
     }),
     `  ` = rep("", n_groups),
     `   ` = rep("", n_groups),
@@ -1176,7 +1131,8 @@ create_lsd_pairwise_checker <- function(anova_results_list,
 
   .check_packages()
 
-  lsd_mmd    <- anova_results_list$LSD$lsd_mmd
+  # Format LSD (2 decimals)
+  lsd_mmd    <- .safe_format(anova_results_list$LSD$lsd_mmd, "stat")
   pairwise   <- anova_results_list$Pairwise
   n_pairwise <- length(pairwise)
 
@@ -1205,17 +1161,17 @@ create_lsd_pairwise_checker <- function(anova_results_list,
   pairwise_table_data <- tibble::tibble(
     ` ` = purrr::map_chr(seq_len(n_pairwise), \(i) pairwise[[i]]$comparison),
     `Mean Difference` = purrr::map_chr(seq_len(n_pairwise), \(i) {
-      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$mean_diff))
+      webexercises::fitb(.safe_format(pairwise[[i]]$mean_diff, "stat"))
     }),
     `LSD Result` = purrr::map_chr(seq_len(n_pairwise), \(i) {
-      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$lsd_result))
+      webexercises::fitb(pairwise[[i]]$lsd_result)  # This is a character: "<", ">", "="
     }),
     `Type of Error` = purrr::map_chr(seq_len(n_pairwise), \(i) {
       is_sig <- pairwise[[i]]$lsd_result != "="
       .make_error_type_mcq(is_sig)
     }),
     `Effect Size (r)` = purrr::map_chr(seq_len(n_pairwise), \(i) {
-      webexercises::fitb(.safe_fitb_value(pairwise[[i]]$effect_size))
+      webexercises::fitb(.safe_format(pairwise[[i]]$effect_size, "bounded"))
     }),
     `Power Problem?` = purrr::map_chr(seq_len(n_pairwise), \(i) {
       .make_power_mcq(pairwise[[i]]$power_problem)
@@ -1266,25 +1222,27 @@ create_factorial_anova_checker <- function(rh_name, anova_results_list,
 
   .check_packages()
 
-  f_iv1          <- anova_results_list$ANOVA$MainEffect_IV1$F
+  # Format all statistics properly
+  f_iv1          <- .safe_format(anova_results_list$ANOVA$MainEffect_IV1$F, "stat")
   p_iv1          <- anova_results_list$ANOVA$MainEffect_IV1$p_value
-  df_iv1         <- anova_results_list$ANOVA$MainEffect_IV1$df
-  f_iv2          <- anova_results_list$ANOVA$MainEffect_IV2$F
-  p_iv2          <- anova_results_list$ANOVA$MainEffect_IV2$p_value
-  df_iv2         <- anova_results_list$ANOVA$MainEffect_IV2$df
-  f_interaction  <- anova_results_list$ANOVA$Interaction$F
-  p_interaction  <- anova_results_list$ANOVA$Interaction$p_value
-  df_interaction <- anova_results_list$ANOVA$Interaction$df
-  df_within      <- anova_results_list$ANOVA$df_within
-  mse            <- anova_results_list$ANOVA$mse
-  k              <- anova_results_list$ANOVA$k
-  mean_n         <- anova_results_list$ANOVA$mean_n
-  lsd_mmd        <- anova_results_list$LSD$lsd_mmd
+  p_iv1_fmt      <- .format_p_apa(p_iv1)
+  df_iv1         <- .safe_format(anova_results_list$ANOVA$MainEffect_IV1$df, "int")
 
-  # Format p-values
-  p_iv1_fmt         <- ifelse(p_iv1 < 0.001, "<.001", sprintf("%.2f", p_iv1))
-  p_iv2_fmt         <- ifelse(p_iv2 < 0.001, "<.001", sprintf("%.2f", p_iv2))
-  p_interaction_fmt <- ifelse(p_interaction < 0.001, "<.001", sprintf("%.2f", p_interaction))
+  f_iv2          <- .safe_format(anova_results_list$ANOVA$MainEffect_IV2$F, "stat")
+  p_iv2          <- anova_results_list$ANOVA$MainEffect_IV2$p_value
+  p_iv2_fmt      <- .format_p_apa(p_iv2)
+  df_iv2         <- .safe_format(anova_results_list$ANOVA$MainEffect_IV2$df, "int")
+
+  f_interaction  <- .safe_format(anova_results_list$ANOVA$Interaction$F, "stat")
+  p_interaction  <- anova_results_list$ANOVA$Interaction$p_value
+  p_interaction_fmt <- .format_p_apa(p_interaction)
+  df_interaction <- .safe_format(anova_results_list$ANOVA$Interaction$df, "int")
+
+  df_within      <- .safe_format(anova_results_list$ANOVA$df_within, "int")
+  mse            <- .safe_format(anova_results_list$ANOVA$mse, "stat")
+  k              <- .safe_format(anova_results_list$ANOVA$k, "int")
+  mean_n         <- .safe_format(anova_results_list$ANOVA$mean_n, "stat")
+  lsd_mmd        <- .safe_format(anova_results_list$LSD$lsd_mmd, "stat")
 
   posthoc_mcq <- .make_posthoc_mcq(p_interaction, "interaction")
 
@@ -1387,23 +1345,23 @@ create_factorial_desc_checker <- function(anova_results_list,
     stop("FactorLevels not found. Please re-run anova_factorial_answers().")
   }
 
-  # Get cell means for each combination
+  # Get cell means for each combination - format to 2 decimals
   cell_data <- tibble::tibble(
     ` ` = final_iv1_labels,
     col1 = purrr::map_chr(seq_along(final_iv1_labels), \(i) {
       cell <- desc_stats |>
-        dplyr::filter(.data$iv1 == iv1_levels_actual[i],
-                      .data$iv2 == iv2_levels_actual[1])
-      webexercises::fitb(.safe_fitb_value(dplyr::pull(cell, "mean")))
+        dplyr::filter(.data$iv1_level == iv1_levels_actual[i],
+                      .data$iv2_level == iv2_levels_actual[1])
+      webexercises::fitb(.safe_format(dplyr::pull(cell, "mean"), "stat"))
     }),
     col2 = purrr::map_chr(seq_along(final_iv1_labels), \(i) {
       cell <- desc_stats |>
-        dplyr::filter(.data$iv1 == iv1_levels_actual[i],
-                      .data$iv2 == iv2_levels_actual[2])
-      webexercises::fitb(.safe_fitb_value(dplyr::pull(cell, "mean")))
+        dplyr::filter(.data$iv1_level == iv1_levels_actual[i],
+                      .data$iv2_level == iv2_levels_actual[2])
+      webexercises::fitb(.safe_format(dplyr::pull(cell, "mean"), "stat"))
     }),
     `EMM` = purrr::map_chr(seq_along(final_iv1_labels), \(i) {
-      webexercises::fitb(.safe_fitb_value(emm_iv1$emm[i]))
+      webexercises::fitb(.safe_format(emm_iv1$mean[i], "stat"))
     })
   )
   names(cell_data)[2:3] <- final_iv2_labels
@@ -1411,8 +1369,8 @@ create_factorial_desc_checker <- function(anova_results_list,
   # Add EMM row for IV2
   emm_row <- tibble::tibble(
     ` ` = "EMM",
-    col1 = webexercises::fitb(.safe_fitb_value(emm_iv2$emm[1])),
-    col2 = webexercises::fitb(.safe_fitb_value(emm_iv2$emm[2])),
+    col1 = webexercises::fitb(.safe_format(emm_iv2$mean[1], "stat")),
+    col2 = webexercises::fitb(.safe_format(emm_iv2$mean[2], "stat")),
     `EMM` = ""
   )
   names(emm_row)[2:3] <- final_iv2_labels
@@ -1455,12 +1413,14 @@ create_regression_model_checker <- function(reg_results_list) {
 
   .check_packages()
 
-  r         <- reg_results_list$Model$R
-  r_sq      <- reg_results_list$Model$R_squared
-  f_stat    <- reg_results_list$Model$F
-  df1       <- reg_results_list$Model$df1
-  df2       <- reg_results_list$Model$df2
-  p_val_fmt <- reg_results_list$Model$p_value_formatted
+  # Format all statistics properly
+  # R and R² are bounded (0-1), so use bounded format
+  r         <- .safe_format(reg_results_list$Model$R, "bounded")
+  r_sq      <- .safe_format(reg_results_list$Model$R_squared, "bounded")
+  f_stat    <- .safe_format(reg_results_list$Model$F, "stat")
+  df1       <- .safe_format(reg_results_list$Model$df1, "int")
+  df2       <- .safe_format(reg_results_list$Model$df2, "int")
+  p_val_fmt <- .format_p_apa(reg_results_list$Model$p_value)
 
   model_works_mcq <- if (reg_results_list$Model$p_value < 0.05) {
     webexercises::mcq(c(answer = "Yes", "No"))
@@ -1549,9 +1509,11 @@ create_regression_predictor_checker <- function(reg_results_list,
     tibble::tibble(
       `Predictor` = predictor_labels[i],
       `Type`      = type_mcq,
-      `r`         = webexercises::fitb(bivar$r),
+      # r is bounded (-1 to 1)
+      `r`         = webexercises::fitb(.safe_format(bivar$r, "bounded")),
       `r sig`     = r_sig_mcq,
-      `b`         = webexercises::fitb(regwt$b),
+      # b is unbounded
+      `b`         = webexercises::fitb(.safe_format(regwt$b, "stat")),
       `b sig`     = b_sig_mcq,
       `Result`    = category_mcq
     )
@@ -1580,3 +1542,211 @@ create_regression_predictor_checker <- function(reg_results_list,
       bootstrap_css_rule = "width: 95%; margin-left: auto; margin-right: auto;"
     )
 }
+
+
+#' Interactive Correlation Interpretations (Webexercise)
+#'
+#' Creates a tinytable showing correlation interpretation for each predictor,
+#' either filled (answer key with red HTML) or blank. Requires \code{tinytable}.
+#'
+#' @param reg_results_list Output from \code{linear_reg_answers()}.
+#' @param interpretations Named list or \code{NULL}. Custom interpretations.
+#' @param KEY Logical. If \code{TRUE} (default), show filled. If \code{FALSE}, blank.
+#'
+#' @return A tinytable object.
+#'
+#' @examples
+#' \dontrun{
+#' data(superman, package = "psych350data")
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
+#' result <- linear_reg_answers(
+#'   data = sm,
+#'   criterion = "rt_critics_score",
+#'   quant_predictors = c("clark_height_in", "rt_audience_score"),
+#'   quant_labels = c("Height", "Audience"),
+#'   criterion_label = "Critics Score"
+#' )
+#' create_correlation_interpretations(result, KEY = TRUE)
+#' }
+#'
+#' @export
+create_correlation_interpretations <- function(reg_results_list,
+                                               interpretations = NULL,
+                                               KEY = TRUE) {
+
+  if (!requireNamespace("tinytable", quietly = TRUE)) {
+    stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
+  }
+
+  predictors <- reg_results_list$Labels$predictors
+  predictor_labels <- reg_results_list$Labels$predictor_labels
+  predictor_types <- reg_results_list$Labels$predictor_types
+  criterion_label <- reg_results_list$Labels$criterion_label
+
+  # Auto-generate interpretations if not provided
+  if (is.null(interpretations)) {
+    interpretations <- list()
+
+    for (i in seq_along(predictors)) {
+      p <- predictors[i]
+      bivar <- reg_results_list$Bivariate[[p]]
+      p_type <- predictor_types[i]
+
+      if (bivar$significant) {
+        if (p_type == "Binary") {
+          if (bivar$r > 0) {
+            interpretations[[p]] <- paste0("Higher coded group tends to have higher ",
+                                           criterion_label, " scores")
+          } else {
+            interpretations[[p]] <- paste0("Higher coded group tends to have lower ",
+                                           criterion_label, " scores")
+          }
+        } else {
+          if (bivar$r > 0) {
+            interpretations[[p]] <- paste0("As ", predictor_labels[i],
+                                           " increases, ", criterion_label,
+                                           " scores tend to increase")
+          } else {
+            interpretations[[p]] <- paste0("As ", predictor_labels[i],
+                                           " increases, ", criterion_label,
+                                           " scores tend to decrease")
+          }
+        }
+      } else {
+        interpretations[[p]] <- paste0(predictor_labels[i],
+                                       " is not correlated with ", criterion_label)
+      }
+    }
+  }
+
+  if (KEY) {
+    table_data <- tibble::tibble(
+      `Predictor` = predictor_labels,
+      `Interpretation` = sapply(predictors, function(p) {
+        paste0('<span style="color: red;">', interpretations[[p]], '</span>')
+      })
+    )
+  } else {
+    table_data <- tibble::tibble(
+      `Predictor` = predictor_labels,
+      `Interpretation` = rep("", length(predictors))
+    )
+  }
+
+  result_table <- tinytable::tt(table_data) |>
+    tinytable::format_tt(escape = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class = "table table-striped table-hover table-sm",
+      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
+    )
+
+  return(result_table)
+}
+
+
+#' Interactive Regression Weight Interpretations (Webexercise)
+#'
+#' Creates a tinytable showing regression weight interpretation for each
+#' predictor, either filled (answer key with red HTML) or blank.
+#' Requires \code{tinytable}.
+#'
+#' @param reg_results_list Output from \code{linear_reg_answers()}.
+#' @param interpretations Named list or \code{NULL}. Custom interpretations.
+#' @param KEY Logical. If \code{TRUE} (default), show filled. If \code{FALSE}, blank.
+#'
+#' @return A tinytable object.
+#'
+#' @examples
+#' \dontrun{
+#' data(superman, package = "psych350data")
+#' sm <- superman[!is.na(superman$rt_critics_score) &
+#'                     !is.na(superman$rt_audience_score), ]
+#' result <- linear_reg_answers(
+#'   data = sm,
+#'   criterion = "rt_critics_score",
+#'   quant_predictors = c("clark_height_in", "rt_audience_score"),
+#'   quant_labels = c("Height", "Audience"),
+#'   criterion_label = "Critics Score"
+#' )
+#' create_regression_weight_interpretations(result, KEY = TRUE)
+#' }
+#'
+#' @export
+create_regression_weight_interpretations <- function(reg_results_list,
+                                                     interpretations = NULL,
+                                                     KEY = TRUE) {
+
+  if (!requireNamespace("tinytable", quietly = TRUE)) {
+    stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
+  }
+
+  predictors <- reg_results_list$Labels$predictors
+  predictor_labels <- reg_results_list$Labels$predictor_labels
+  predictor_types <- reg_results_list$Labels$predictor_types
+  criterion_label <- reg_results_list$Labels$criterion_label
+
+  # Auto-generate interpretations if not provided
+  if (is.null(interpretations)) {
+    interpretations <- list()
+
+    for (i in seq_along(predictors)) {
+      p <- predictors[i]
+      regwt <- reg_results_list$Regression_Weights[[p]]
+      p_type <- predictor_types[i]
+
+      if (!regwt$significant) {
+        interpretations[[p]] <- paste0(predictor_labels[i],
+                                       " does not contribute to the model")
+      } else {
+        if (p_type == "Binary") {
+          if (regwt$b > 0) {
+            interpretations[[p]] <- paste0(
+              "Higher coded group has ", criterion_label,
+              " scores ", abs(regwt$b),
+              " higher than lower coded group, ",
+              "after controlling for all other variables")
+          } else {
+            interpretations[[p]] <- paste0(
+              "Higher coded group has ", criterion_label,
+              " scores ", abs(regwt$b),
+              " lower than lower coded group, ",
+              "after controlling for all other variables")
+          }
+        } else {
+          direction <- ifelse(regwt$b > 0, "increase", "decrease")
+          interpretations[[p]] <- paste0(
+            "For each 1-unit increase in ",
+            predictor_labels[i], ", ", criterion_label,
+            " is expected to ", direction, " by ",
+            abs(regwt$b),
+            ", after controlling for all other variables")
+        }
+      }
+    }
+  }
+
+  if (KEY) {
+    table_data <- tibble::tibble(
+      `Predictor` = predictor_labels,
+      `Interpretation` = sapply(predictors, function(p) {
+        paste0('<span style="color: red;">', interpretations[[p]], '</span>')
+      })
+    )
+  } else {
+    table_data <- tibble::tibble(
+      `Predictor` = predictor_labels,
+      `Interpretation` = rep("", length(predictors))
+    )
+  }
+
+  result_table <- tinytable::tt(table_data) |>
+    tinytable::format_tt(escape = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class = "table table-striped table-hover table-sm",
+      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
+    )
+
+  return(result_table)
+}
+

@@ -2,7 +2,7 @@
 % Please edit documentation in R/descriptive_tables.R
 \name{create_answer_table}
 \alias{create_answer_table}
-\title{Descriptive Statistics Answer Key Table}
+\title{Descriptive Statistics Answer KEY Table}
 \usage{
 create_answer_table(
   vars,
@@ -11,14 +11,14 @@ create_answer_table(
   quantitative = NULL,
   binary = NULL,
   multi_category = NULL,
-  Key = TRUE
+  KEY = TRUE
 )
 }
 \arguments{
 \item{vars}{Character vector. Variable names to include, in display order.}
 
 \item{stats_data}{A data frame with columns \code{variable}, \code{mean}, \code{sd}, and
-\code{sem} \\u2014 typically the output of \code{\link[=compute_summary_stats]{compute_summary_stats()}}.}
+\code{sem} -- typically the output of \code{\link[=compute_summary_stats]{compute_summary_stats()}}.}
 
 \item{label}{Character vector or \code{NULL}. Variables that are IDs/labels.}
 
@@ -28,7 +28,7 @@ create_answer_table(
 
 \item{multi_category}{Character vector or \code{NULL}. Nominal variables (3+ levels).}
 
-\item{Key}{Logical. If \code{TRUE} (default), fill with computed values.
+\item{KEY}{Logical. If \code{TRUE} (default), fill with computed values.
 If \code{FALSE}, create a blank template with empty cells.}
 }
 \value{
@@ -36,12 +36,12 @@ A \code{\link[flextable:flextable]{flextable::flextable()}} object.
 }
 \description{
 Creates a flextable showing the correct Mean, SD, SEM, and interpretability
-for each variable. Used as a printable answer key for the worksheet
+for each variable. Used as a printable answer KEY for the worksheet
 (Word/PDF output). For the interactive HTML checker version, use
 \code{create_stats_table()} instead.
 }
 \examples{
-data(superman)
+data(superman, package = "psych350data")
 library(dplyr)
 
 my_data <- superman |>
@@ -51,7 +51,7 @@ my_data <- superman |>
 
 stats <- compute_summary_stats(my_data)
 
-# Answer key
+# Answer KEY
 create_answer_table(
   vars = names(my_data), stats_data = stats,
   label = "num", binary = "clark_grp",
@@ -60,7 +60,7 @@ create_answer_table(
 
 # Blank version
 create_answer_table(
-  vars = names(my_data), stats_data = stats, Key = FALSE
+  vars = names(my_data), stats_data = stats, KEY = FALSE
 )
 
 }
