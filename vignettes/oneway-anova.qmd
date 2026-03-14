@@ -1,0 +1,276 @@
+---
+title: "One-Way ANOVA (BG & WG)"
+subtitle: "Between-groups and within-groups one-way ANOVA for two groups"
+order: 4
+---
+
+## Overview
+
+This guide covers two-group one-way ANOVA in **psych350lab**:
+
+- **Between-groups (BG)** — comparing means across two independent groups
+- **Within-groups (WG)** — comparing means across two repeated-measures
+  conditions
+
+Both follow the same workflow: run the analysis, format results for
+worksheets, create APA tables, generate write-ups, and build homework
+checkers.
+
+## Between-Groups ANOVA
+
+### 1. Run the Analysis
+
+`bg_anova_answers()` performs a one-way between-groups ANOVA with
+descriptive statistics for each group.
+
+```{r}
+#| label: run-bg
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# Run between-groups ANOVA
+bg_result <- bg_anova_answers(
+  data = superman,
+  iv   = "clark_grp",
+  dv   = "rt_audience_score"
+)
+
+# Inspect the results
+bg_result$ANOVA
+bg_result$Descriptives
+```
+
+#### What `bg_anova_answers()` returns
+
+| Element | Contents |
+|---------|----------|
+| `$ANOVA` | `F`, `p_value`, `df_between`, `df_within`, `mse` |
+| `$Descriptives` | Tibble with `iv`, `mean`, `sd`, `n`, `sem` per group |
+| `$Sample_Size` | Total valid cases |
+
+### 2. Format Results for Worksheets
+
+`format_bg_anova_results()` creates markdown output for lab worksheets
+with KEY/BLANK toggle.
+
+```{r}
+#| label: format-bg
+#| eval: false
+
+# Answer key
+bg_KEY <- format_bg_anova_results(
+  rh_name            = "RH1",
+  vars               = c("Height Group", "Audience Score"),
+  anova_results_list = bg_result,
+  iv_labels          = c("Under 6ft", "6ft or taller"),
+  KEY                = TRUE
+)
+
+# Student worksheet
+bg_BLANK <- format_bg_anova_results(
+  rh_name            = "RH1",
+  vars               = c("Height Group", "Audience Score"),
+  anova_results_list = bg_result,
+  iv_labels          = c("Under 6ft", "6ft or taller"),
+  KEY                = FALSE
+)
+
+# cat(bg_KEY)
+```
+
+### 3. Create APA Tables
+
+```{r}
+#| label: bg-tables
+#| eval: false
+
+# Descriptives table
+create_bg_anova_table(
+  anova_results_list = bg_result,
+  iv_name       = "Height Group",
+  dv_name       = "Audience Score",
+  group_labels  = c("Under 6ft", "6ft or taller"),
+  KEY           = TRUE,
+  table_title   = "Descriptive Statistics for Audience Score by Height Group"
+)
+
+# ANOVA source table (SPSS-style)
+create_anova_source_table(
+  anova_results_list = bg_result,
+  KEY                = TRUE,
+  table_title        = "ANOVA Source Table"
+)
+```
+
+### 4. Generate Write-Up
+
+```{r}
+#| label: bg-writeup
+#| eval: false
+
+writeup <- apa_bg_anova_writeup(
+  anova_results_list = bg_result,
+  iv_name            = "height group",
+  dv_name            = "audience score",
+  group_labels       = c("under 6ft", "6ft or taller"),
+  hypothesis         = list(
+    direction = "greater",
+    rh_text   = "taller actors' movies would receive higher audience scores"
+  )
+)
+
+# cat(writeup)
+```
+
+### 5. Pairwise Effect Size
+
+`pr_means_to_r()` computes r from two group means using the omnibus MSE:
+
+```{r}
+#| label: effect-size
+#| eval: false
+
+pr_means_to_r(
+  mean1 = bg_result$Descriptives$mean[1],
+  mean2 = bg_result$Descriptives$mean[2],
+  mse   = bg_result$ANOVA$mse,
+  n1    = bg_result$Descriptives$n[1],
+  n2    = bg_result$Descriptives$n[2]
+)
+```
+
+## Within-Groups ANOVA
+
+### 1. Run the Analysis
+
+`wg_anova_answers()` performs a paired/repeated-measures ANOVA for two
+conditions. Each row in the data represents one participant measured
+twice.
+
+```{r}
+#| label: run-wg
+#| eval: false
+
+# Example: comparing critics score vs audience score for each movie
+wg_result <- wg_anova_answers(
+  data      = superman,
+  dv1       = "rt_critics_score",
+  dv2       = "rt_audience_score",
+  dv1_label = "Critics Score",
+  dv2_label = "Audience Score"
+)
+
+wg_result$ANOVA
+wg_result$Descriptives
+```
+
+#### What `wg_anova_answers()` returns
+
+| Element | Contents |
+|---------|----------|
+| `$ANOVA` | `F`, `p_value`, `df_effect`, `df_error`, `mse` |
+| `$Descriptives` | Tibble with `condition`, `condition_label`, `mean`, `sd`, `n`, `sem` |
+| `$Sample_Size` | Number of complete cases |
+
+### 2. Format Results for Worksheets
+
+```{r}
+#| label: format-wg
+#| eval: false
+
+wg_KEY <- format_wg_anova_results(
+  rh_name            = "RH1",
+  dv_name            = "Rating Score",
+  anova_results_list = wg_result,
+  condition_labels   = c("Critics Score", "Audience Score"),
+  KEY                = TRUE
+)
+
+# cat(wg_KEY)
+```
+
+### 3. Create APA Tables
+
+```{r}
+#| label: wg-tables
+#| eval: false
+
+create_wg_anova_table(
+  anova_results_list = wg_result,
+  dv_name            = "Rating Score",
+  condition_labels   = c("Critics Score", "Audience Score"),
+  KEY                = TRUE,
+  table_title        = "Descriptive Statistics for Rating Scores"
+)
+```
+
+### 4. Generate Write-Up
+
+```{r}
+#| label: wg-writeup
+#| eval: false
+
+writeup <- apa_wg_anova_writeup(
+  anova_results_list = wg_result,
+  condition_labels   = c("critics score", "audience score"),
+  dv_name            = "rating score",
+  hypothesis         = list(
+    direction = "greater_dv1",
+    rh_text   = "critics scores would be higher than audience scores"
+  )
+)
+
+# cat(writeup)
+```
+
+## Inline APA Statistics
+
+Both BG and WG results work with `apa_inline_anova()`:
+
+```{r}
+#| label: inline
+#| eval: false
+
+# BG: *F*(1, 28) = 3.45, *MSE* = 125.67, *p* = .073
+apa_inline_anova(bg_result)
+
+# WG: *F*(1, 29) = 8.12, *MSE* = 98.34, *p* = .008
+apa_inline_anova(wg_result)
+
+# Without MSE
+apa_inline_anova(bg_result, include_mse = FALSE)
+```
+
+## Key Functions Reference
+
+### Between-Groups
+
+| Function | Purpose |
+|----------|---------|
+| `bg_anova_answers()` | Run BG ANOVA, get F, p, descriptives |
+| `format_bg_anova_results()` | Markdown output for worksheets (KEY/BLANK) |
+| `create_bg_anova_table()` | APA descriptives table (flextable) |
+| `create_anova_source_table()` | ANOVA source table (flextable) |
+| `apa_bg_anova_writeup()` | Full APA write-up |
+| `pr_means_to_r()` | Pairwise r effect size from means |
+
+### Within-Groups
+
+| Function | Purpose |
+|----------|---------|
+| `wg_anova_answers()` | Run WG ANOVA, get F, p, descriptives |
+| `format_wg_anova_results()` | Markdown output for worksheets (KEY/BLANK) |
+| `create_wg_anova_table()` | APA descriptives table (flextable) |
+| `apa_wg_anova_writeup()` | Full APA write-up |
+
+### Shared
+
+| Function | Purpose |
+|----------|---------|
+| `apa_inline_anova()` | Inline APA-formatted F statistic |
+| `create_anova_source_table()` | ANOVA source table (works with both) |

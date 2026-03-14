@@ -1,0 +1,216 @@
+---
+title: "Getting Started with psych350lab"
+subtitle: "Installation, core concepts, and a quick tour"
+order: 1
+---
+
+## What This Package Does
+
+**psych350lab** helps instructors and TAs build statistics lab materials in
+R that replicate SPSS/jamovi output. The package provides four types of
+output for each statistical test:
+
+1. **Worksheet output** — markdown-formatted results with a KEY/BLANK
+   toggle for answer keys vs. student fill-in-the-blank worksheets
+   (rendered via Quarto to `.docx`)
+2. **APA tables** — publication-ready tables as `flextable` objects
+3. **Statistical write-ups** — complete APA-style interpretation text
+4. **Homework checkers** — interactive HTML widgets (via `webexercises`)
+   where students enter answers and get immediate feedback
+
+## Installation
+
+Install both packages from GitHub using `pak`:
+
+```{r}
+#| label: install
+#| eval: false
+
+install.packages("pak")
+
+pak::pak("emmarshall/psych350data")
+pak::pak("emmarshall/psych350lab")
+```
+
+### GitHub Authentication (First Time Only)
+
+```{r}
+#| label: github-auth
+#| eval: false
+
+install.packages(c("gitcreds", "usethis"))
+
+usethis::create_github_token()
+gitcreds::gitcreds_set()
+usethis::git_sitrep()
+```
+
+## Core Workflow
+
+Every lab section follows the same five-step pattern, regardless of the
+statistical test:
+
+```{r}
+#| label: workflow
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+library(ggplot2)
+
+# ── Step 1: Load and prepare data ────────────────────────
+data(superman, package = "psych350data")
+
+# ── Step 2: Run the analysis ─────────────────────────────
+result <- corr_answers(
+  data = superman,
+  var1 = "clark_height_in",
+  var2 = "rt_audience_score"
+)
+
+# ── Step 3: Format for worksheets (KEY or BLANK) ─────────
+key_output <- format_corr_results(
+  rh_name = "RH1",
+  vars = c("clark_height_in", "rt_audience_score"),
+  corr_results_list = result,
+  Key = TRUE
+)
+
+# ── Step 4: Create APA table ─────────────────────────────
+create_corr_apa_table(
+  data = superman,
+  vars = c("clark_height_in", "rt_audience_score"),
+  var_labels = c("1. Actor Height (in)", "2. Audience Score"),
+  KEY = TRUE
+)
+
+# ── Step 5: Generate write-up ────────────────────────────
+writeup <- apa_corr_writeup(
+  corr_results_list = result,
+  var1_label = "actor height",
+  var2_label = "audience score",
+  hypothesis = list(
+    direction = "positive",
+    rh_text = "taller actors would receive higher audience scores"
+  ),
+  include_descriptives = TRUE
+)
+```
+
+## The KEY/BLANK System
+
+Most display functions have a `KEY` argument (sometimes called `Key`) that
+toggles between two modes:
+
+- **`KEY = TRUE`** — fills in all values (instructor answer key)
+- **`KEY = FALSE`** — shows blanks for students to fill in
+
+This lets you generate both versions from the same Quarto source file
+using a `params` toggle:
+
+```yaml
+# In your .qmd YAML header:
+params:
+  hide_answers: true
+```
+
+```{r}
+#| label: key-blank
+#| eval: false
+
+# In a code chunk:
+format_corr_results(
+  rh_name = "RH1",
+  vars = c("clark_height_in", "rt_audience_score"),
+  corr_results_list = result,
+  Key = !params$hide_answers
+)
+```
+
+## Available Analyses
+
+The package follows the lab course progression. Each analysis type has its
+own detailed guide:
+
+| Lab Topic | Analysis | Guide |
+|-----------|----------|-------|
+| Bivariate | Pearson's correlation | [Correlations](correlations.qmd) |
+| Bivariate | Chi-square (2×2) | [Chi-Square (2×2)](chi-square-2x2.qmd) |
+| Group differences | One-way ANOVA (BG & WG) | [One-Way ANOVA](oneway-anova.qmd) |
+| Group differences | K-group one-way ANOVA | [K-Group ANOVA](kgroup-anova.qmd) |
+| Categorical | K-group chi-square (k×2) | [K-Group Chi-Square](kgroup-chi-square.qmd) |
+| Factorial | 2×2 factorial ANOVA (BG, MG, WG) | [Factorial ANOVA](factorial-anova.qmd) |
+| Multivariate | Multiple linear regression | [Regression](regression.qmd) |
+
+## Function Naming Conventions
+
+Functions follow a consistent naming pattern:
+
+| Pattern | Purpose | Example |
+|---------|---------|---------|
+| `*_answers()` | Run analysis, return raw results | `corr_answers()`, `bg_anova_answers()` |
+| `format_*_results()` | Markdown for worksheets (KEY/BLANK) | `format_corr_results()` |
+| `create_*_table()` | APA flextable | `create_corr_apa_table()` |
+| `create_*_checker()` | Interactive HTML checker | `create_corr_checker()` |
+| `apa_*_writeup()` | Full APA write-up text | `apa_corr_writeup()` |
+| `apa_inline_*()` | Inline APA statistic | `apa_inline_r()` |
+| `format_*()` | Format a single value | `format_p_value()`, `format_stat()` |
+
+## Formatting Utilities
+
+These helper functions format individual values for display:
+
+```{r}
+#| label: format-helpers
+#| eval: false
+
+format_p_value(0.023)                         # ".023"
+format_p_value(0.0004)                        # "< .001"
+format_p_value(0.023, include_p = TRUE)       # "p = .023"
+format_stat(3.456)                            # "3.46"
+format_stat(0.456, remove_leading_zero = TRUE) # ".46"
+format_r(0.456)                               # ".46"
+format_effect(0.35)                           # ".35"
+format_int(25.4)                              # "25"
+p_to_stars(0.003)                             # "**"
+key_or_blank(0.45, KEY = TRUE, format_fn = format_r) # ".45"
+key_or_blank(0.45, KEY = FALSE)               # "______"
+```
+
+## SPSS-Style Plots
+
+`theme_SPSS()` and `number_SPSS` replicate the SPSS chart appearance:
+
+```{r}
+#| label: plot-theme
+#| eval: false
+
+ggplot(superman, aes(x = clark_height_in, y = rt_audience_score)) +
+  geom_point(
+    shape = 21, fill = "#1192E8", color = "black",
+    size = 2.5, stroke = 0.75, alpha = 0.7
+  ) +
+  theme_SPSS() +
+  scale_x_continuous(labels = number_SPSS) +
+  scale_y_continuous(labels = number_SPSS) +
+  labs(x = "Actor Height (inches)", y = "Audience Score")
+```
+
+## Typical Lab File Structure
+
+A complete lab consists of three files:
+
+```
+labs/lab-07/
+├── lab07-setup.R          # Data prep + all analyses
+├── lab07_worksheet.qmd    # Quarto → Word worksheet
+└── lab07_checker.qmd      # Quarto → HTML homework checker
+```
+
+The **setup file** runs all analyses and stores results in objects.
+The **worksheet** and **checker** files source the setup file and display
+the results using the appropriate output functions.
+
+See the [Correlations](correlations.qmd) guide for a complete setup file
+example.

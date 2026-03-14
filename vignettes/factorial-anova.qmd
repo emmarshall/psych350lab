@@ -1,0 +1,343 @@
+---
+title: "Factorial ANOVA (2×2)"
+subtitle: "Between-groups, mixed, and within-groups 2×2 factorial designs"
+order: 7
+---
+
+## Overview
+
+**psych350lab** supports three types of 2×2 factorial ANOVA:
+
+| Design | Function | When to use |
+|--------|----------|-------------|
+| **Between-groups (BG)** | `anova_factorial_answers()` | Both IVs are between-subjects |
+| **Mixed (MG)** | `anova_factorial_mg_answers()` | One BG IV × one WG IV |
+| **Within-groups (WG)** | `anova_factorial_wg_answers()` | Both IVs are within-subjects |
+
+All three follow the same general workflow and return similarly structured
+results. This guide covers each design with examples.
+
+## Between-Groups Factorial (2×2 BG)
+
+### 1. Run the Analysis
+
+```{r}
+#| label: run-bg-factorial
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# 2×2 BG factorial: Height group × Tomatometer → Audience score
+bg_factorial <- anova_factorial_answers(
+  data       = superman,
+  dv         = "rt_audience_score",
+  iv1        = "clark_grp",
+  iv2        = "tomatometer",
+  iv1_labels = c("Under 6ft", "6ft or taller"),
+  iv2_labels = c("Rotten", "Fresh")
+)
+
+# Main effects and interaction
+bg_factorial$ANOVA
+# Cell means
+bg_factorial$Descriptives
+```
+
+#### What `anova_factorial_answers()` returns
+
+| Element | Contents |
+|---------|----------|
+| `$ANOVA` | List with `iv1`, `iv2`, and `interaction` sub-lists, each containing `F`, `p_value`, `df_effect`, `df_error`, `mse` |
+| `$Descriptives` | Tibble with `iv1_level`, `iv2_level`, `mean`, `sd`, `n` for each cell |
+| `$Marginal_Means` | Marginal means for each IV |
+
+### 2. Create Checker Widgets
+
+```{r}
+#| label: bg-checkers
+#| eval: false
+
+# Factorial ANOVA statistics checker
+create_factorial_anova_checker(
+  rh_name            = "RH1",
+  anova_results_list = bg_factorial,
+  iv1_name           = "Height Group",
+  iv2_name           = "Tomatometer"
+)
+
+# Cell descriptives checker
+create_factorial_desc_checker(
+  anova_results_list = bg_factorial,
+  iv1_name           = "Height Group",
+  iv2_name           = "Tomatometer"
+)
+```
+
+### 3. Format Results
+
+```{r}
+#| label: bg-format
+#| eval: false
+
+# Complete formatted results
+format_factorial_results(
+  anova_results_list = bg_factorial,
+  iv1_name           = "Height Group",
+  iv2_name           = "Tomatometer",
+  KEY                = TRUE
+)
+```
+
+### 4. APA Tables
+
+```{r}
+#| label: bg-tables
+#| eval: false
+
+# Factorial ANOVA statistics table
+create_factorial_anova_stats_table(
+  rh_name            = "RH1",
+  anova_results_list = bg_factorial,
+  iv1_name           = "Height Group",
+  iv2_name           = "Tomatometer"
+)
+
+# Cell means table
+create_factorial_apa_desc_table(
+  anova_results_list = bg_factorial,
+  iv1_name           = "Height Group",
+  iv2_name           = "Tomatometer",
+  KEY                = TRUE,
+  table_title        = "Cell Means for Audience Score"
+)
+```
+
+### 5. Interaction and Main Effect Results
+
+These functions generate formatted text describing the interaction and
+main effects, suitable for worksheets:
+
+```{r}
+#| label: bg-effects
+#| eval: false
+
+# Interaction results
+factorial_interaction_results(
+  anova_results_list = bg_factorial,
+  KEY                = TRUE
+)
+
+# Main effect results (specify which IV)
+factorial_main_effect_results(
+  anova_results_list = bg_factorial,
+  iv_name            = "Height Group",
+  which_iv           = "IV1",
+  KEY                = TRUE
+)
+```
+
+### 6. Write-Up
+
+```{r}
+#| label: bg-writeup
+#| eval: false
+
+writeup <- apa_2x2_bg_factorial_writeup(
+  factorial_results_list = bg_factorial,
+  dv_name                = "audience score",
+  factor_a_name          = "height group",
+  factor_b_name          = "Tomatometer rating",
+  factor_a_labels        = c("under 6ft", "6ft or taller"),
+  factor_b_labels        = c("Rotten", "Fresh"),
+  hypothesis             = list(
+    rh_text = "an interaction between height and rating on audience scores"
+  ),
+  report_main_effects    = TRUE
+)
+
+# cat(writeup)
+```
+
+## Mixed Factorial (2×2 MG)
+
+### 1. Run the Analysis
+
+In a mixed design, one IV is between-subjects and one is within-subjects
+(repeated measures).
+
+```{r}
+#| label: run-mg-factorial
+#| eval: false
+
+# Mixed factorial: Height group (BG) × Score type (WG)
+mg_factorial <- anova_factorial_mg_answers(
+  data       = superman,
+  dv         = "rt_audience_score",   # placeholder - see function docs
+  iv1        = "clark_grp",           # between-subjects IV
+  iv2        = "score_type",          # within-subjects IV
+  iv1_labels = c("Under 6ft", "6ft or taller"),
+  iv2_labels = c("Critics Score", "Audience Score")
+)
+```
+
+### 2. Interaction and Main Effect Text
+
+Mixed designs have their own formatting functions:
+
+```{r}
+#| label: mg-effects
+#| eval: false
+
+# Interaction results
+factorial_mg_int_results(
+  anova_results_list = mg_factorial,
+  KEY                = TRUE
+)
+
+# Main effect results
+factorial_mg_main_effect_results(
+  anova_results_list = mg_factorial,
+  iv_name            = "Height Group",
+  which_iv           = "IV1",
+  KEY                = TRUE
+)
+```
+
+## Within-Groups Factorial (2×2 WG)
+
+### 1. Run the Analysis
+
+In a fully within-subjects design, each participant is measured in all
+four cells. You provide the four DV column names directly.
+
+```{r}
+#| label: run-wg-factorial
+#| eval: false
+
+# Four columns: one per cell (IV1_level1 × IV2_level1, etc.)
+wg_factorial <- anova_factorial_wg_answers(
+  data       = superman,
+  dv_a1b1    = "score_critics_fresh",
+  dv_a1b2    = "score_critics_rotten",
+  dv_a2b1    = "score_audience_fresh",
+  dv_a2b2    = "score_audience_rotten",
+  iv1_labels = c("Critics", "Audience"),
+  iv2_labels = c("Fresh", "Rotten")
+)
+```
+
+### 2. Interaction and Main Effect Text
+
+```{r}
+#| label: wg-effects
+#| eval: false
+
+# Interaction results
+factorial_wg_int_results(
+  anova_results_list = wg_factorial,
+  KEY                = TRUE
+)
+
+# Main effect results
+factorial_wg_main_effect_results(
+  anova_results_list = wg_factorial,
+  iv_name            = "Score Type",
+  which_iv           = "IV1",
+  KEY                = TRUE
+)
+```
+
+### 3. Write-Up
+
+```{r}
+#| label: wg-writeup
+#| eval: false
+
+writeup <- apa_2x2_wg_factorial_writeup(
+  wg_factorial_results_list = wg_factorial,
+  dv_name                   = "rating score",
+  factor_a_name             = "score type",
+  factor_b_name             = "rating",
+  factor_a_labels           = c("critics", "audience"),
+  factor_b_labels           = c("Fresh", "Rotten"),
+  hypothesis                = list(
+    rh_text = "an interaction between score type and rating"
+  )
+)
+
+# cat(writeup)
+```
+
+## Shared Functions Across All Factorial Designs
+
+These work with all three factorial types:
+
+```{r}
+#| label: shared
+#| eval: false
+
+# Factorial ANOVA checker (interactive HTML)
+create_factorial_anova_checker(
+  rh_name = "RH1",
+  anova_results_list = bg_factorial,
+  iv1_name = "Height Group",
+  iv2_name = "Tomatometer"
+)
+
+# Cell descriptives checker
+create_factorial_desc_checker(
+  anova_results_list = bg_factorial,
+  iv1_name = "Height Group",
+  iv2_name = "Tomatometer"
+)
+
+# Table with pairwise comparisons
+factorial_table_with_comparisons(
+  anova_results_list = bg_factorial,
+  iv1_name = "Height Group",
+  iv2_name = "Tomatometer"
+)
+```
+
+## Key Functions Reference
+
+### Analysis Functions
+
+| Function | Design |
+|----------|--------|
+| `anova_factorial_answers()` | 2×2 between-groups |
+| `anova_factorial_mg_answers()` | 2×2 mixed (1 BG × 1 WG) |
+| `anova_factorial_wg_answers()` | 2×2 within-groups |
+
+### Display Functions
+
+| Function | Purpose |
+|----------|---------|
+| `create_factorial_anova_checker()` | Interactive statistics checker |
+| `create_factorial_desc_checker()` | Interactive descriptives checker |
+| `create_factorial_anova_stats_table()` | ANOVA statistics table |
+| `create_factorial_apa_desc_table()` | Cell means table |
+| `format_factorial_results()` | Formatted markdown output |
+| `factorial_table_with_comparisons()` | Table with pairwise results |
+
+### Effect Interpretation Functions
+
+| Function | Design |
+|----------|--------|
+| `factorial_interaction_results()` | BG interaction text |
+| `factorial_main_effect_results()` | BG main effect text |
+| `factorial_mg_int_results()` | Mixed interaction text |
+| `factorial_mg_main_effect_results()` | Mixed main effect text |
+| `factorial_wg_int_results()` | WG interaction text |
+| `factorial_wg_main_effect_results()` | WG main effect text |
+
+### Write-Up Functions
+
+| Function | Design |
+|----------|--------|
+| `apa_2x2_bg_factorial_writeup()` | BG factorial |
+| `apa_2x2_wg_factorial_writeup()` | WG factorial |

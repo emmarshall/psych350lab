@@ -1,0 +1,240 @@
+---
+title: "K-Group Chi-Square (k×2)"
+subtitle: "Chi-square with 3+ groups and pairwise comparisons"
+order: 6
+---
+
+## Overview
+
+When one (or both) categorical variables has three or more levels, a
+significant omnibus chi-square must be followed by pairwise 2×2 comparisons.
+`chi_square_kgroup_answers()` handles the full workflow: the omnibus test,
+all pairwise comparisons, and effect sizes.
+
+## 1. Run the Analysis
+
+```{r}
+#| label: run-kgroup-chi
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# Run k-group chi-square
+kgroup_chi <- chi_square_kgroup_answers(
+  data       = superman,
+  var1       = "decade",
+  var2       = "tomatometer",
+  var1_labels = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels = c("Rotten", "Fresh")
+)
+
+# Omnibus results
+kgroup_chi$Chi_Square
+
+# Observed frequencies
+kgroup_chi$Observed
+
+# Pairwise comparisons
+kgroup_chi$Pairwise
+```
+
+### What `chi_square_kgroup_answers()` returns
+
+| Element | Contents |
+|---------|----------|
+| `$Chi_Square` | `chi_square`, `p_value`, `df`, `n` |
+| `$Observed` | Matrix of observed cell frequencies |
+| `$Expected` | Matrix of expected cell frequencies |
+| `$Pairwise` | List of all pairwise 2×2 comparisons |
+| `$var1_labels` | Display labels for the k-group variable |
+| `$var2_labels` | Display labels for the 2-level variable |
+
+### Pairwise comparison elements
+
+Each entry in `$Pairwise` contains:
+
+- `comparison` — which two groups are being compared
+- `chi_sq`, `p_value`, `df` — test statistics for the 2×2 sub-table
+- `effect_size` — phi/r coefficient for the pair
+- `observed` — 2×2 observed frequency table
+
+## 2. Create Checker Widgets
+
+### Omnibus checker
+
+`create_chisq_omnibus_table()` creates the omnibus statistics checker:
+
+```{r}
+#| label: omnibus-checker
+#| eval: false
+
+create_chisq_omnibus_table(
+  rh_name          = "RH1",
+  chi_results_list = kgroup_chi,
+  var1_labels      = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels      = c("Rotten", "Fresh")
+)
+```
+
+### Pairwise checker
+
+`create_chisq_pairwise_checker()` creates fill-in-the-blank widgets
+for each pairwise comparison:
+
+```{r}
+#| label: pairwise-checker
+#| eval: false
+
+create_chisq_pairwise_checker(
+  rh_name          = "RH1",
+  chi_results_list = kgroup_chi
+)
+```
+
+## 3. Create APA Tables
+
+### Combined results table
+
+`create_chi_combined_table()` produces a single table with the omnibus
+result and all pairwise comparisons:
+
+```{r}
+#| label: combined-table
+#| eval: false
+
+create_chi_combined_table(
+  chi_results_list = kgroup_chi,
+  var1_name        = "Decade",
+  var2_name        = "Tomatometer",
+  var1_labels      = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels      = c("Rotten", "Fresh"),
+  table_title      = "Chi-Square Results for Decade × Tomatometer"
+)
+```
+
+### Pairwise results table
+
+```{r}
+#| label: pairwise-table
+#| eval: false
+
+create_chisq_pairwise_table(
+  chi_results_list = kgroup_chi,
+  var1_labels      = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels      = c("Rotten", "Fresh")
+)
+```
+
+## 4. Generate APA Write-Up
+
+`apa_kgroup_chi_writeup()` produces a write-up covering the omnibus
+test and any significant pairwise follow-ups:
+
+```{r}
+#| label: writeup
+#| eval: false
+
+writeup <- apa_kgroup_chi_writeup(
+  chi_results_list = kgroup_chi,
+  var1_name        = "decade",
+  var2_name        = "Tomatometer rating",
+  var1_labels      = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels      = c("Rotten", "Fresh"),
+  hypothesis       = list(
+    rh_text = "the distribution of Fresh vs Rotten ratings would differ across decades"
+  ),
+  include_posthoc  = TRUE
+)
+
+# cat(writeup)
+```
+
+## 5. Format Omnibus Results
+
+`format_chi_omnibus_results()` creates markdown output for the omnibus
+portion of the worksheet:
+
+```{r}
+#| label: format-omnibus
+#| eval: false
+
+format_chi_omnibus_results(
+  rh_name          = "RH1",
+  chi_results_list = kgroup_chi,
+  KEY              = TRUE
+)
+```
+
+## Complete Lab Setup Example
+
+```{r}
+#| label: full-example
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# ── Analysis ─────────────────────────────────────────────
+RH1_kchi <- chi_square_kgroup_answers(
+  data = superman,
+  var1 = "decade",
+  var2 = "tomatometer",
+  var1_labels = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels = c("Rotten", "Fresh")
+)
+
+# ── Checkers (for HTML) ──────────────────────────────────
+# Omnibus checker
+create_chisq_omnibus_table("RH1", RH1_kchi,
+  var1_labels = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels = c("Rotten", "Fresh")
+)
+
+# Pairwise checker
+create_chisq_pairwise_checker("RH1", RH1_kchi)
+
+# Pairwise answer key
+chisq_pairwise_KEY(RH1_kchi)
+
+# ── APA Tables ───────────────────────────────────────────
+create_chi_combined_table(
+  chi_results_list = RH1_kchi,
+  var1_name = "Decade", var2_name = "Tomatometer",
+  var1_labels = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels = c("Rotten", "Fresh"),
+  table_title = "Chi-Square Results for Decade × Tomatometer"
+)
+
+# ── Write-Up ─────────────────────────────────────────────
+RH1_writeup <- apa_kgroup_chi_writeup(
+  chi_results_list = RH1_kchi,
+  var1_name = "decade",
+  var2_name = "Tomatometer rating",
+  var1_labels = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels = c("Rotten", "Fresh"),
+  hypothesis = list(
+    rh_text = "the distribution of ratings would differ across decades"
+  ),
+  include_posthoc = TRUE
+)
+```
+
+## Key Functions Reference
+
+| Function | Purpose |
+|----------|---------|
+| `chi_square_kgroup_answers()` | K-group chi-square with pairwise comparisons |
+| `create_chisq_omnibus_table()` | Omnibus statistics checker widget |
+| `create_chisq_pairwise_checker()` | Pairwise comparison checker widget |
+| `create_chisq_pairwise_table()` | Pairwise results table (flextable) |
+| `create_chi_combined_table()` | Combined omnibus + pairwise table |
+| `chisq_pairwise_KEY()` | Pairwise comparison answer key |
+| `format_chi_omnibus_results()` | Markdown output for omnibus results |
+| `apa_kgroup_chi_writeup()` | Full APA write-up with post-hoc |

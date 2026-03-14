@@ -1,0 +1,279 @@
+---
+title: "Correlations"
+subtitle: "Pearson's r with descriptives, APA tables, and write-ups"
+order: 2
+---
+
+## Overview
+
+This guide shows how to use **psych350lab** to build a complete correlation
+lab—from running the analysis through generating student worksheets, answer
+keys, APA tables, write-ups, and interactive homework checkers.
+
+Every code block below is a self-contained example you can copy into your
+own lab setup file or Quarto document.
+
+## 1. Run the Analysis
+
+`corr_answers()` computes a Pearson correlation and returns descriptive
+statistics for both variables. All numeric values are stored **unrounded**
+so that display functions can format them appropriately.
+
+```{r}
+#| label: run-corr
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+# Load and prepare data
+data(superman, package = "psych350data")
+
+# Run the correlation
+corr_result <- corr_answers(
+  data = superman,
+  var1 = "clark_height_in",
+  var2 = "rt_audience_score"
+)
+
+# Inspect what comes back
+str(corr_result)
+```
+
+### What `corr_answers()` returns
+
+| Element | Contents |
+|---------|----------|
+| `$Correlation` | `r`, `p_value`, `df`, `n` |
+| `$Descriptives` | Tibble with `variable`, `mean`, `sd`, `n` for each variable |
+
+## 2. Format Results for Worksheets
+
+`format_corr_results()` creates markdown-formatted output with two modes:
+`Key = TRUE` fills in the answers; `Key = FALSE` leaves blanks for students.
+
+Use these inside a Quarto chunk with `results: asis` so the markdown renders
+properly.
+
+```{r}
+#| label: format-corr
+#| eval: false
+
+# Answer key version
+corr_KEY <- format_corr_results(
+  rh_name           = "RH1",
+  vars              = c("clark_height_in", "rt_audience_score"),
+  corr_results_list = corr_result,
+  Key               = TRUE
+)
+
+# Student worksheet version (blanks)
+corr_BLANK <- format_corr_results(
+  rh_name           = "RH1",
+  vars              = c("clark_height_in", "rt_audience_score"),
+  corr_results_list = corr_result,
+  Key               = FALSE
+)
+
+# In your Quarto document:
+# cat(corr_KEY)   # for answer key
+# cat(corr_BLANK) # for student worksheet
+```
+
+## 3. Create APA Correlation Tables
+
+`create_corr_apa_table()` produces a publication-ready correlation matrix
+as a `flextable`. The `KEY` argument toggles between filled and blank versions.
+
+```{r}
+#| label: apa-table
+#| eval: false
+
+# Answer key table
+create_corr_apa_table(
+  data       = superman,
+  vars       = c("clark_height_in", "rt_audience_score"),
+  var_labels = c("1. Actor Height (in)", "2. Audience Score"),
+  KEY        = TRUE,
+  table_title = "Table 1: Correlations Between Actor Height and Ratings"
+)
+
+# Blank table for worksheets (no data needed)
+create_corr_apa_table(
+  var_labels = c("1. Actor Height (in)", "2. Audience Score"),
+  KEY        = FALSE
+)
+```
+
+## 4. Generate APA Write-Ups
+
+`apa_corr_writeup()` produces a complete statistical write-up with
+hypothesis evaluation, descriptive statistics, and interpretation.
+
+```{r}
+#| label: writeup
+#| eval: false
+
+writeup <- apa_corr_writeup(
+  corr_results_list    = corr_result,
+  var1_label           = "actor height",
+  var2_label           = "audience score",
+  hypothesis           = list(
+    direction = "positive",
+    rh_text   = "taller actors would receive higher audience scores"
+  ),
+  include_descriptives = TRUE,
+  table_number         = 1
+)
+
+# Use in a Quarto chunk with results: asis
+# cat(writeup)
+```
+
+### Hypothesis directions
+
+The `direction` field controls the write-up language:
+
+- `"positive"` — expects r > 0
+- `"negative"` — expects r < 0
+- `"none"` — non-directional (two-tailed only)
+
+## 5. Create Interactive Homework Checkers
+
+`create_corr_checker()` produces an interactive HTML widget (using the
+`webexercises` package) where students type in their answers and get
+immediate feedback.
+
+```{r}
+#| label: checker
+#| eval: false
+
+# In a Quarto HTML document:
+create_corr_checker(
+  rh_name           = "RH1",
+  vars              = c("clark_height_in", "rt_audience_score"),
+  corr_results_list = corr_result
+)
+```
+
+Students see fill-in-the-blank boxes for means, SDs, N, r, df, and p.
+Correct answers turn green; incorrect answers turn red.
+
+## 6. Inline APA Statistics
+
+For quick inline reporting in Quarto text, use `apa_inline_r()`:
+
+```{r}
+#| label: inline
+#| eval: false
+
+# Returns something like: *r*(28) = .45, *p* = .012
+apa_inline_r(corr_result)
+```
+
+## 7. SPSS-Style Scatterplots
+
+Use `ggplot2` with `theme_SPSS()` and `number_SPSS` for plots that match
+SPSS output:
+
+```{r}
+#| label: scatterplot
+#| eval: false
+
+library(ggplot2)
+
+ggplot(superman, aes(x = clark_height_in, y = rt_audience_score)) +
+  geom_point(
+    shape = 21, fill = "#1192E8", color = "black",
+    size = 2.5, stroke = 0.75, alpha = 0.7
+  ) +
+  theme_SPSS() +
+  scale_x_continuous(labels = number_SPSS) +
+  scale_y_continuous(labels = number_SPSS) +
+  labs(x = "Actor Height (inches)", y = "Audience Score")
+```
+
+## Complete Lab Setup Example
+
+Here is a minimal but complete setup file for a correlation lab section,
+following the same pattern used in the actual course labs:
+
+```{r}
+#| label: full-example
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+library(ggplot2)
+
+# ── Data ─────────────────────────────────────────────────
+data(superman, package = "psych350data")
+
+# ── Analysis ─────────────────────────────────────────────
+RH1_corr <- corr_answers(
+  data = superman,
+  var1 = "clark_height_in",
+  var2 = "rt_audience_score"
+)
+
+RH1_vars <- c("clark_height_in", "rt_audience_score")
+
+# ── Worksheet Output ─────────────────────────────────────
+RH1_corr_BLANK <- format_corr_results(
+  rh_name = "RH1", vars = RH1_vars,
+  corr_results_list = RH1_corr, Key = FALSE
+)
+
+RH1_corr_KEY <- format_corr_results(
+  rh_name = "RH1", vars = RH1_vars,
+  corr_results_list = RH1_corr, Key = TRUE
+)
+
+# ── APA Tables ───────────────────────────────────────────
+RH1_table_BLANK <- create_corr_apa_table(
+  var_labels = c("1. Actor Height (in)", "2. Audience Score"),
+  KEY = FALSE
+)
+
+RH1_table_KEY <- create_corr_apa_table(
+  data = superman, vars = RH1_vars,
+  var_labels = c("1. Actor Height (in)", "2. Audience Score"),
+  KEY = TRUE,
+  table_title = "Table 1: Correlations Between Actor Height and Ratings"
+)
+
+# ── Write-Up ─────────────────────────────────────────────
+RH1_writeup <- apa_corr_writeup(
+  corr_results_list = RH1_corr,
+  var1_label = "actor height",
+  var2_label = "audience score",
+  hypothesis = list(
+    direction = "positive",
+    rh_text = "taller actors would receive higher audience scores"
+  ),
+  include_descriptives = TRUE
+)
+
+# ── Scatterplot ──────────────────────────────────────────
+RH1_plot <- ggplot(superman, aes(x = clark_height_in, y = rt_audience_score)) +
+  geom_point(shape = 21, fill = "#1192E8", color = "black",
+             size = 2.5, stroke = 0.75, alpha = 0.7) +
+  theme_SPSS() +
+  scale_x_continuous(labels = number_SPSS) +
+  scale_y_continuous(labels = number_SPSS) +
+  labs(x = "Actor Height (in)", y = "Audience Score")
+```
+
+## Key Functions Reference
+
+| Function | Purpose |
+|----------|---------|
+| `corr_answers()` | Run Pearson correlation, get r, p, df, descriptives |
+| `format_corr_results()` | Markdown output for worksheets (KEY/BLANK) |
+| `create_corr_apa_table()` | APA-style correlation matrix (flextable) |
+| `apa_corr_writeup()` | Full APA write-up with hypothesis evaluation |
+| `create_corr_checker()` | Interactive HTML homework checker |
+| `apa_inline_r()` | Inline APA-formatted r statistic |
+| `theme_SPSS()` / `number_SPSS` | SPSS-style plot theme and axis labels |

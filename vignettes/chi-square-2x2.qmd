@@ -1,0 +1,334 @@
+---
+title: "Chi-Square (2×2)"
+subtitle: "Pearson's chi-square test of independence for two categorical variables"
+order: 3
+---
+
+## Overview
+
+This guide covers the 2×2 chi-square test of independence workflow in
+**psych350lab**: running the analysis, creating contingency tables,
+formatting worksheet output, generating APA write-ups, and building
+interactive homework checkers.
+
+## 1. Run the Analysis
+
+`chi_square_answers()` performs a Pearson's chi-square test for two
+categorical variables and returns observed/expected frequencies along with
+the test statistic.
+
+```{r}
+#| label: run-chi
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# Run chi-square test
+chi_result <- chi_square_answers(
+  data = superman,
+  var1 = "clark_grp",
+  var2 = "tomatometer"
+)
+
+# Inspect the results
+str(chi_result)
+```
+
+### What `chi_square_answers()` returns
+
+| Element | Contents |
+|---------|----------|
+| `$ChiSquare` | `chi_sq`, `p_value`, `df`, `n`, `phi` |
+| `$Observed` | Matrix of observed cell frequencies |
+| `$Expected` | Matrix of expected cell frequencies |
+| `$Effect_Size` | `phi` and `r` effect size |
+
+## 2. Create Hypothesis Contingency Tables
+
+Before running the analysis, students label a contingency table with
+`<`, `>`, or `=` to predict the expected pattern. `create_rh_crosstabs()`
+generates this table in both KEY and BLANK modes.
+
+```{r}
+#| label: rh-crosstabs
+#| eval: false
+
+# Blank version for students to fill in
+create_rh_crosstabs(
+  var1_name      = "Actor Height",
+  var2_name      = "Tomatometer",
+  var1_levels    = c("Under 6ft", "6ft or taller"),
+  var2_levels    = c("Rotten", "Fresh"),
+  KEY            = FALSE,
+  include_totals = TRUE
+)
+
+# Answer key version with hypothesis pattern
+create_rh_crosstabs(
+  var1_name          = "Actor Height",
+  var2_name          = "Tomatometer",
+  var1_levels        = c("Under 6ft", "6ft or taller"),
+  var2_levels        = c("Rotten", "Fresh"),
+  KEY                = TRUE,
+  chi_results        = chi_result,
+  hypothesis_pattern = c("<", "="),
+  include_totals     = TRUE
+)
+```
+
+### Understanding the hypothesis pattern
+
+The `hypothesis_pattern` is a character vector with one symbol per row of
+the contingency table (one per level of `var1`). Each symbol describes
+the expected relationship between the two columns of `var2`:
+
+- `"<"` — the first column count is expected to be less than the second
+- `">"` — the first column count is expected to be greater than the second
+- `"="` — no expected difference between columns
+
+## 3. Format Results for Worksheets
+
+`format_chi2_results()` creates markdown output with the test statistic,
+observed frequencies, and effect size. Toggle `KEY` for answer key vs.
+blank student versions.
+
+```{r}
+#| label: format-chi
+#| eval: false
+
+# Answer key
+chi_KEY <- format_chi2_results(
+  rh_name          = "RH2",
+  vars             = c("clark_grp", "tomatometer"),
+  chi_results_list = chi_result,
+  var1_labels      = c("Under 6ft", "6ft or taller"),
+  var2_labels      = c("Rotten", "Fresh"),
+  KEY              = TRUE
+)
+
+# Student worksheet (blanks)
+chi_BLANK <- format_chi2_results(
+  rh_name          = "RH2",
+  vars             = c("clark_grp", "tomatometer"),
+  chi_results_list = chi_result,
+  var1_labels      = c("Under 6ft", "6ft or taller"),
+  var2_labels      = c("Rotten", "Fresh"),
+  KEY              = FALSE
+)
+
+# In your Quarto document (results: asis):
+# cat(chi_KEY)
+```
+
+## 4. Create APA Contingency Tables
+
+`create_apa_chi_crosstabs_table()` produces a publication-ready crosstab
+as a `flextable`.
+
+```{r}
+#| label: apa-table
+#| eval: false
+
+# Answer key table
+create_apa_chi_crosstabs_table(
+  chi_results_list = chi_result,
+  var1_name        = "Actor Height",
+  var2_name        = "Tomatometer",
+  var1_labels      = c("Under 6ft", "6ft or taller"),
+  var2_labels      = c("Rotten", "Fresh"),
+  KEY              = TRUE,
+  table_title      = "Crosstabulation of Actor Height and Critic Ratings",
+  table_number     = 2
+)
+
+# Blank version (pass NULL for chi_results_list)
+create_apa_chi_crosstabs_table(
+  chi_results_list = NULL,
+  var1_name        = "Actor Height",
+  var2_name        = "Tomatometer",
+  var1_labels      = c("Under 6ft", "6ft or taller"),
+  var2_labels      = c("Rotten", "Fresh"),
+  KEY              = FALSE
+)
+```
+
+## 5. Generate APA Write-Ups
+
+`apa_chi_writeup()` generates a complete statistical write-up with
+hypothesis evaluation and effect size interpretation.
+
+```{r}
+#| label: writeup
+#| eval: false
+
+writeup <- apa_chi_writeup(
+  chi_results_list = chi_result,
+  var1_name        = "actor height",
+  var2_name        = "critic rating",
+  var1_labels      = c("Under 6ft", "6ft or taller"),
+  var2_labels      = c("Rotten", "Fresh"),
+  hypothesis       = list(
+    pattern              = c("=", "<"),
+    rh_text              = "actors over 6ft tall would be more likely to appear in Fresh-rated media",
+    comparison_var2_level = 2
+  )
+)
+
+# cat(writeup)
+```
+
+### Hypothesis pattern for write-ups
+
+The `hypothesis` list contains:
+
+- `pattern` — character vector of `<`, `>`, `=` for each row of the table
+- `rh_text` — plain-English description of the hypothesis
+- `comparison_var2_level` — which column of `var2` is the "target" for
+  the comparison (1 or 2)
+
+## 6. Create Interactive Homework Checkers
+
+`create_chisq_checker()` produces an HTML widget where students enter
+observed frequencies and chi-square statistics.
+
+```{r}
+#| label: checker
+#| eval: false
+
+# In a Quarto HTML document:
+create_chisq_checker(
+  rh_name          = "RH2",
+  chi_results_list = chi_result,
+  var1_labels      = c("Under 6ft", "6ft or taller"),
+  var2_labels      = c("Rotten", "Fresh")
+)
+```
+
+## 7. Inline APA Statistics
+
+```{r}
+#| label: inline
+#| eval: false
+
+# Returns something like: χ²(1) = 4.52, *p* = .034
+apa_inline_chi2(chi_result)
+```
+
+## 8. Effect Size Conversion
+
+`pr_chi_to_r()` converts 2×2 cell frequencies to an r effect size,
+useful for interpreting the practical significance of the association.
+
+```{r}
+#| label: effect-size
+#| eval: false
+
+# a, b, c, d are the four cells of the 2x2 table
+pr_chi_to_r(a = 15, b = 10, c = 8, d = 17)
+```
+
+## Complete Lab Setup Example
+
+```{r}
+#| label: full-example
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# ── Analysis ─────────────────────────────────────────────
+RH2_chi <- chi_square_answers(
+  data = superman,
+  var1 = "clark_grp",
+  var2 = "tomatometer"
+)
+
+# ── Hypothesis Crosstabs ─────────────────────────────────
+RH2_contingency_BLANK <- create_rh_crosstabs(
+  var1_name = "Actor Height", var2_name = "Tomatometer",
+  var1_levels = c("Under 6ft", "6ft or taller"),
+  var2_levels = c("Rotten", "Fresh"),
+  KEY = FALSE, include_totals = TRUE
+)
+
+RH2_contingency_KEY <- create_rh_crosstabs(
+  var1_name = "Actor Height", var2_name = "Tomatometer",
+  var1_levels = c("Under 6ft", "6ft or taller"),
+  var2_levels = c("Rotten", "Fresh"),
+  KEY = TRUE, chi_results = RH2_chi,
+  hypothesis_pattern = c("<", "="),
+  include_totals = TRUE
+)
+
+# ── Worksheet Output ─────────────────────────────────────
+RH2_chi_BLANK <- format_chi2_results(
+  rh_name = "RH2",
+  vars = c("clark_grp", "tomatometer"),
+  chi_results_list = RH2_chi,
+  var1_labels = c("Under 6ft", "6ft or taller"),
+  var2_labels = c("Rotten", "Fresh"),
+  KEY = FALSE
+)
+
+RH2_chi_KEY <- format_chi2_results(
+  rh_name = "RH2",
+  vars = c("clark_grp", "tomatometer"),
+  chi_results_list = RH2_chi,
+  var1_labels = c("Under 6ft", "6ft or taller"),
+  var2_labels = c("Rotten", "Fresh"),
+  KEY = TRUE
+)
+
+# ── APA Tables ───────────────────────────────────────────
+RH2_table_BLANK <- create_apa_chi_crosstabs_table(
+  chi_results_list = NULL,
+  var1_name = "Actor Height", var2_name = "Tomatometer",
+  var1_labels = c("Under 6ft", "6ft or taller"),
+  var2_labels = c("Rotten", "Fresh"),
+  KEY = FALSE
+)
+
+RH2_table_KEY <- create_apa_chi_crosstabs_table(
+  chi_results_list = RH2_chi,
+  var1_name = "Actor Height", var2_name = "Tomatometer",
+  var1_labels = c("Under 6ft", "6ft or taller"),
+  var2_labels = c("Rotten", "Fresh"),
+  KEY = TRUE,
+  table_title = "Crosstabulation of Actor Height and Critic Ratings",
+  table_number = 2
+)
+
+# ── Write-Up ─────────────────────────────────────────────
+RH2_writeup <- apa_chi_writeup(
+  chi_results_list = RH2_chi,
+  var1_name = "actor height",
+  var2_name = "critic rating",
+  var1_labels = c("Under 6ft", "6ft or taller"),
+  var2_labels = c("Rotten", "Fresh"),
+  hypothesis = list(
+    pattern = c("=", "<"),
+    rh_text = "actors over 6ft would be more likely to appear in Fresh-rated media",
+    comparison_var2_level = 2
+  )
+)
+```
+
+## Key Functions Reference
+
+| Function | Purpose |
+|----------|---------|
+| `chi_square_answers()` | Run chi-square test, get χ², p, observed/expected |
+| `create_rh_crosstabs()` | Hypothesis contingency table (KEY/BLANK) |
+| `format_chi2_results()` | Markdown output for worksheets (KEY/BLANK) |
+| `create_apa_chi_crosstabs_table()` | APA-style contingency table (flextable) |
+| `apa_chi_writeup()` | Full APA write-up with hypothesis evaluation |
+| `create_chisq_checker()` | Interactive HTML homework checker |
+| `apa_inline_chi2()` | Inline APA-formatted χ² statistic |
+| `pr_chi_to_r()` | Convert 2×2 cell frequencies to r effect size |

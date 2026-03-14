@@ -1,0 +1,253 @@
+---
+title: "Multiple Linear Regression"
+subtitle: "Multiple predictors with univariate, bivariate, and multivariate results"
+order: 8
+---
+
+## Overview
+
+`linear_reg_answers()` runs a complete multiple linear regression analysis
+that mirrors the SPSS workflow: univariate descriptive statistics for each
+variable, bivariate correlations between all pairs, and the multivariate
+regression model with standardized and unstandardized coefficients.
+
+## 1. Run the Analysis
+
+```{r}
+#| label: run-regression
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# Multiple regression with mixed predictor types
+reg_result <- linear_reg_answers(
+  data              = superman,
+  criterion         = "rt_audience_score",
+  quant_predictors  = c("clark_height_in", "box_office_mil"),
+  binary_predictors = c("tomatometer"),
+  quant_labels      = c("Actor Height (in)", "Box Office (millions)"),
+  binary_labels     = c("Tomatometer (Fresh vs Rotten)"),
+  criterion_label   = "Audience Score"
+)
+
+# Inspect the structure
+str(reg_result, max.level = 2)
+```
+
+### What `linear_reg_answers()` returns
+
+| Element | Contents |
+|---------|----------|
+| `$Univariate` | Descriptives (M, SD, n) for all variables |
+| `$Bivariate` | Full correlation matrix for all variables |
+| `$Model` | `R`, `R_sq`, `adj_R_sq`, `F`, `p_value`, `df_regression`, `df_residual` |
+| `$Predictors` | Tibble with `b`, `SE`, `beta`, `t`, `p_value`, `sr2` for each predictor |
+| `$Correlations` | Bivariate r for each predictor with the criterion |
+
+### Arguments explained
+
+- **`criterion`** — the dependent variable (Y)
+- **`quant_predictors`** — continuous predictor variables
+- **`binary_predictors`** — dichotomous predictors (coded 0/1 or 1/2)
+- **`*_labels`** — display labels for tables and write-ups
+- **`verbose`** — if TRUE, prints intermediate results
+
+## 2. Model Statistics Checker
+
+`create_regression_model_checker()` creates an interactive widget for
+students to enter model-level statistics (R, R², F, p):
+
+```{r}
+#| label: model-checker
+#| eval: false
+
+create_regression_model_checker(reg_result)
+```
+
+## 3. Predictor Weight Checker
+
+`create_regression_predictor_checker()` creates a widget for each
+predictor's coefficients (b, SE, β, t, p, sr²):
+
+```{r}
+#| label: predictor-checker
+#| eval: false
+
+create_regression_predictor_checker(
+  reg_results_list = reg_result,
+  predictor_labels = c("Actor Height (in)", "Box Office (millions)",
+                       "Tomatometer (Fresh vs Rotten)")
+)
+```
+
+## 4. Interpretation Widgets
+
+### Bivariate correlation interpretations
+
+Students categorize each predictor-criterion correlation:
+
+```{r}
+#| label: corr-interp
+#| eval: false
+
+create_correlation_interpretations(
+  reg_results_list = reg_result,
+  output_format    = "table"
+)
+```
+
+### Regression weight interpretations
+
+Students categorize each predictor's contribution to the model:
+
+```{r}
+#| label: weight-interp
+#| eval: false
+
+create_regression_weight_interpretations(
+  reg_results_list = reg_result,
+  output_format    = "table"
+)
+```
+
+## 5. Model Statistics Display
+
+These functions produce formatted displays of model-level results:
+
+```{r}
+#| label: model-display
+#| eval: false
+
+# Model statistics (R, R², F, p)
+linear_reg_model_statistics(reg_result)
+
+# Model evaluation criteria
+linear_reg_model_evaluation(reg_result)
+
+# Category legend for interpretation
+regression_category_legend()
+```
+
+## 6. Combined Results Table
+
+`create_regression_combined_table()` produces a comprehensive flextable
+with all regression results:
+
+```{r}
+#| label: combined-table
+#| eval: false
+
+create_regression_combined_table(reg_result)
+```
+
+## 7. Interpretation Flextables
+
+These produce formatted flextables for the interpretation sections:
+
+```{r}
+#| label: interp-tables
+#| eval: false
+
+# Bivariate correlation interpretation table
+create_correlation_interp_ft(reg_result)
+
+# Regression weight interpretation table
+create_regwt_interp_ft(reg_result)
+```
+
+## Complete Lab Setup Example
+
+```{r}
+#| label: full-example
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# ── Analysis ─────────────────────────────────────────────
+RH1_reg <- linear_reg_answers(
+  data = superman,
+  criterion = "rt_audience_score",
+  quant_predictors = c("clark_height_in", "box_office_mil"),
+  binary_predictors = c("tomatometer"),
+  quant_labels = c("Actor Height (in)", "Box Office (millions)"),
+  binary_labels = c("Tomatometer"),
+  criterion_label = "Audience Score"
+)
+
+# ── Checkers (for HTML) ──────────────────────────────────
+# Model statistics checker
+create_regression_model_checker(RH1_reg)
+
+# Predictor weight checker
+create_regression_predictor_checker(
+  RH1_reg,
+  predictor_labels = c("Actor Height", "Box Office", "Tomatometer")
+)
+
+# Interpretation widgets
+create_correlation_interpretations(RH1_reg, output_format = "table")
+create_regression_weight_interpretations(RH1_reg, output_format = "table")
+
+# ── APA Tables ───────────────────────────────────────────
+# Combined regression results table
+create_regression_combined_table(RH1_reg)
+
+# Model statistics display
+linear_reg_model_statistics(RH1_reg)
+linear_reg_model_evaluation(RH1_reg)
+
+# Category legend
+regression_category_legend()
+
+# Interpretation tables
+create_correlation_interp_ft(RH1_reg)
+create_regwt_interp_ft(RH1_reg)
+```
+
+## Key Functions Reference
+
+### Analysis
+
+| Function | Purpose |
+|----------|---------|
+| `linear_reg_answers()` | Run multiple regression with full results |
+
+### Interactive Checkers
+
+| Function | Purpose |
+|----------|---------|
+| `create_regression_model_checker()` | Model statistics checker (R, R², F, p) |
+| `create_regression_predictor_checker()` | Predictor coefficients checker |
+| `create_correlation_interpretations()` | Bivariate correlation categorization |
+| `create_regression_weight_interpretations()` | Regression weight categorization |
+
+### Display Tables
+
+| Function | Purpose |
+|----------|---------|
+| `create_regression_combined_table()` | Combined results table (flextable) |
+| `linear_reg_model_statistics()` | Model R, R², F, p display |
+| `linear_reg_model_evaluation()` | Model evaluation criteria |
+| `regression_category_legend()` | Interpretation category legend |
+| `create_correlation_interp_ft()` | Correlation interpretation table |
+| `create_regwt_interp_ft()` | Regression weight interpretation table |
+
+### Aliases
+
+Several functions have shorter aliases for convenience:
+
+| Full name | Alias |
+|-----------|-------|
+| `linear_reg_model_statistics()` | `regression_model_statistics()` |
+| `linear_reg_model_evaluation()` | `regression_model_evaluation()` |
+| `create_linear_reg_combined_table()` | `create_regression_combined_table()` |
+| `linear_reg_table_legend()` | `regression_table_legend()` |
+| `linear_reg_category_legend()` | `regression_category_legend()` |

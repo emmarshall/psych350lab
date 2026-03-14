@@ -1,0 +1,240 @@
+---
+title: "K-Group One-Way ANOVA"
+subtitle: "Between-groups ANOVA with 3+ groups, LSD/HSD post-hoc comparisons"
+order: 5
+---
+
+## Overview
+
+When the independent variable has three or more groups, a significant
+omnibus F-test must be followed by pairwise comparisons. **psych350lab**
+handles the full workflow: omnibus ANOVA, LSD and Tukey's HSD minimum
+mean differences, pairwise comparisons with effect sizes, and power
+assessment.
+
+## 1. Run the Analysis
+
+`anova_kgroup_answers()` performs the omnibus ANOVA, calculates
+LSD/HSD thresholds, and runs all pairwise comparisons automatically.
+
+```{r}
+#| label: run-kgroup
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# Run k-group ANOVA
+kgroup_result <- anova_kgroup_answers(
+  data         = superman,
+  dv           = "box_office_mil",
+  iv           = "decade",
+  group_labels = c("1950s", "1970-80s", "2000s", "2010s")
+)
+
+# Omnibus results
+kgroup_result$ANOVA
+
+# Group descriptives
+kgroup_result$Descriptives
+
+# LSD/HSD thresholds
+kgroup_result$LSD
+
+# Pairwise comparisons
+kgroup_result$Pairwise
+```
+
+### What `anova_kgroup_answers()` returns
+
+| Element | Contents |
+|---------|----------|
+| `$ANOVA` | `F`, `p_value`, `df_between`, `df_within`, `mse`, `total_n`, `k`, `mean_n` |
+| `$Descriptives` | Tibble with `iv`, `mean`, `sd`, `n`, `group_label` per group |
+| `$LSD` | `lsd_mmd`, `hsd_mmd`, `need_posthoc` (TRUE if p < .05) |
+| `$Pairwise` | List of comparison results, each with `comparison`, `mean_diff`, `lsd_result`, `error_type`, `effect_size`, `power_problem` |
+| `$group_labels` | Character vector of display labels |
+
+## 2. Understanding Pairwise Comparisons
+
+Each element in `$Pairwise` contains:
+
+- **`comparison`** — which groups are being compared (e.g., "1950s vs 2000s")
+- **`mean_diff`** — raw difference between group means
+- **`lsd_result`** — `">"`, `"<"`, or `"="` based on whether |mean_diff| > LSD MMD
+- **`error_type`** — "Type I & III" if significant, "Type II" if not
+- **`effect_size`** — r effect size for the comparison
+- **`power_problem`** — assessment of whether non-significant results may
+  reflect a power issue
+
+## 3. LSD and HSD Calculation
+
+`lsd_hsd_calculator()` is called internally but can also be used
+directly:
+
+```{r}
+#| label: lsd-hsd
+#| eval: false
+
+lsd_hsd_calculator(
+  k              = 4,        # number of groups
+  n_per_group    = 8,        # average n per group
+  mse            = 1250.5,   # mean square error from omnibus ANOVA
+  df_error_input = 28        # df_within from omnibus ANOVA
+)
+```
+
+## 4. Format Results for Worksheets
+
+The k-group ANOVA uses the same `format_bg_anova_results()` function
+for the omnibus portion, plus additional pairwise display functions.
+
+```{r}
+#| label: format-kgroup
+#| eval: false
+
+# Omnibus results for worksheet
+format_bg_anova_results(
+  rh_name            = "RH1",
+  vars               = c("Decade", "Box Office (millions)"),
+  anova_results_list = kgroup_result,
+  iv_labels          = c("1950s", "1970-80s", "2000s", "2010s"),
+  KEY                = TRUE
+)
+```
+
+## 5. Create APA Tables
+
+```{r}
+#| label: apa-tables
+#| eval: false
+
+# Descriptives table with group means
+create_bg_anova_table(
+  anova_results_list = kgroup_result,
+  iv_name            = "Decade",
+  dv_name            = "Box Office (millions)",
+  group_labels       = c("1950s", "1970-80s", "2000s", "2010s"),
+  KEY                = TRUE,
+  table_title        = "Descriptive Statistics for Box Office by Decade"
+)
+
+# ANOVA source table
+create_anova_source_table(
+  anova_results_list = kgroup_result,
+  KEY                = TRUE,
+  table_title        = "ANOVA Source Table for Box Office by Decade"
+)
+
+# LSD pairwise comparisons (answer key)
+lsd_pairwise_KEY(kgroup_result)
+```
+
+## 6. Generate APA Write-Up
+
+`apa_kgroup_anova_writeup()` produces a write-up that includes the
+omnibus test, post-hoc comparisons (if significant), and effect size
+interpretation.
+
+```{r}
+#| label: writeup
+#| eval: false
+
+writeup <- apa_kgroup_anova_writeup(
+  kgroup_results_list = kgroup_result,
+  dv_name             = "box office revenue",
+  iv_name             = "decade",
+  group_labels        = c("1950s", "1970-80s", "2000s", "2010s"),
+  hypothesis          = list(
+    direction = "different",
+    rh_text   = "box office revenue would differ across decades"
+  ),
+  posthoc_tests       = c("LSD", "Tukey's HSD")
+)
+
+# cat(writeup)
+```
+
+## 7. Hypothesis Support Evaluation
+
+`create_rh_support_text()` generates text evaluating whether pairwise
+results support the research hypothesis:
+
+```{r}
+#| label: rh-support
+#| eval: false
+
+create_rh_support_text(kgroup_result)
+```
+
+## Complete Lab Setup Example
+
+```{r}
+#| label: full-example
+#| eval: false
+
+library(psych350lab)
+library(psych350data)
+library(dplyr)
+
+data(superman, package = "psych350data")
+
+# ── Analysis ─────────────────────────────────────────────
+RH1_kgroup <- anova_kgroup_answers(
+  data         = superman,
+  dv           = "box_office_mil",
+  iv           = "decade",
+  group_labels = c("1950s", "1970-80s", "2000s", "2010s")
+)
+
+# ── Worksheet Output ─────────────────────────────────────
+RH1_omnibus_KEY <- format_bg_anova_results(
+  rh_name = "RH1",
+  vars = c("Decade", "Box Office (millions)"),
+  anova_results_list = RH1_kgroup,
+  iv_labels = c("1950s", "1970-80s", "2000s", "2010s"),
+  KEY = TRUE
+)
+
+# ── APA Tables ───────────────────────────────────────────
+RH1_desc_table <- create_bg_anova_table(
+  anova_results_list = RH1_kgroup,
+  iv_name = "Decade", dv_name = "Box Office (millions)",
+  group_labels = c("1950s", "1970-80s", "2000s", "2010s"),
+  KEY = TRUE,
+  table_title = "Descriptive Statistics for Box Office by Decade"
+)
+
+RH1_source_table <- create_anova_source_table(
+  anova_results_list = RH1_kgroup, KEY = TRUE
+)
+
+# ── Write-Up ─────────────────────────────────────────────
+RH1_writeup <- apa_kgroup_anova_writeup(
+  kgroup_results_list = RH1_kgroup,
+  dv_name = "box office revenue",
+  iv_name = "decade",
+  group_labels = c("1950s", "1970-80s", "2000s", "2010s"),
+  hypothesis = list(
+    direction = "different",
+    rh_text = "box office revenue would differ across decades"
+  )
+)
+```
+
+## Key Functions Reference
+
+| Function | Purpose |
+|----------|---------|
+| `anova_kgroup_answers()` | K-group ANOVA with LSD/HSD and pairwise comparisons |
+| `lsd_hsd_calculator()` | Compute LSD and HSD minimum mean differences |
+| `pr_means_to_r()` | Pairwise r effect size from means and MSE |
+| `create_rh_support_text()` | Hypothesis support evaluation text |
+| `format_bg_anova_results()` | Markdown output for worksheets (KEY/BLANK) |
+| `create_bg_anova_table()` | APA descriptives table (flextable) |
+| `create_anova_source_table()` | ANOVA source table (flextable) |
+| `lsd_pairwise_KEY()` | Pairwise comparison answer key |
+| `apa_kgroup_anova_writeup()` | Full APA write-up with post-hoc results |
