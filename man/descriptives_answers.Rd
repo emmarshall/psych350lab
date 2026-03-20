@@ -24,9 +24,9 @@ A list with elements:
 Computes descriptive statistics for selected variables and returns a
 structured results list consistent with the other \verb{*_answers()} functions
 in the package. This is a convenience wrapper around
-\code{\link[=compute_summary_stats]{compute_summary_stats()}} that selects the requested variables and packages
+\code{\link[=univariate_stats_answers]{univariate_stats_answers()}} that selects the requested variables and packages
 the output for use with \code{\link[=create_descriptives_checker]{create_descriptives_checker()}} and
-\code{\link[=create_apa_descriptives_table]{create_apa_descriptives_table()}}.
+\code{\link[=create_apa_univariates_table]{create_apa_univariates_table()}}.
 }
 \examples{
 data(superman, package = "psych350data")
@@ -44,6 +44,6 @@ result$Sample_Size
 
 }
 \seealso{
-\code{\link[=compute_summary_stats]{compute_summary_stats()}}, \code{\link[=create_descriptives_checker]{create_descriptives_checker()}},
-\code{\link[=create_apa_descriptives_table]{create_apa_descriptives_table()}}
+\code{\link[=univariate_stats_answers]{univariate_stats_answers()}}, \code{\link[=create_descriptives_checker]{create_descriptives_checker()}},
+\code{\link[=create_apa_univariates_table]{create_apa_univariates_table()}}
 }

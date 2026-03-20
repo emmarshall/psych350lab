@@ -153,10 +153,10 @@ These produce formatted flextables for the interpretation sections:
 #| eval: false
 
 # Bivariate correlation interpretation table
-create_correlation_interp_ft(reg_result)
+create_correlation_interp_table(reg_result)
 
 # Regression weight interpretation table
-create_regwt_interp_ft(reg_result)
+create_regwt_interp_table(reg_result)
 ```
 
 ## Complete Lab Setup Example
@@ -208,8 +208,8 @@ linear_reg_model_evaluation(RH1_reg)
 regression_category_legend()
 
 # Interpretation tables
-create_correlation_interp_ft(RH1_reg)
-create_regwt_interp_ft(RH1_reg)
+create_correlation_interp_table(RH1_reg)
+create_regwt_interp_table(RH1_reg)
 ```
 
 ## Key Functions Reference
@@ -237,8 +237,8 @@ create_regwt_interp_ft(RH1_reg)
 | `linear_reg_model_statistics()` | Model R, R², F, p display |
 | `linear_reg_model_evaluation()` | Model evaluation criteria |
 | `regression_category_legend()` | Interpretation category legend |
-| `create_correlation_interp_ft()` | Correlation interpretation table |
-| `create_regwt_interp_ft()` | Regression weight interpretation table |
+| `create_correlation_interp_table()` | Correlation interpretation table |
+| `create_regwt_interp_table()` | Regression weight interpretation table |
 
 ### Aliases
 

@@ -14,6 +14,15 @@
 #'
 #' @return A tibble with numeric values and no SPSS labels.
 #'
+#' @examples
+#' \dontrun{
+#' # Read SPSS file with default settings
+#' data <- get_spss_data("data/mydata.sav")
+#'
+#' # Read with verbose output to check for missing values
+#' data <- get_spss_data("data/mydata.sav", verbose = TRUE)
+#' }
+#'
 #' @export
 get_spss_data <- function(file_path, check_filter = TRUE, verbose = FALSE) {
   data <- haven::read_sav(here::here(file_path))
@@ -758,7 +767,7 @@ interpret_eta_sq <- function(eta_sq) {
     is.na(eta_sq) ~ NA_character_,
     eta_sq < 0.06 ~ "small",
     eta_sq < 0.14 ~ "medium",
-    .default ~ "large"
+    TRUE ~ "large"
   )
 }
 

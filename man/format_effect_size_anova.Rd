@@ -23,3 +23,14 @@ Character string with formatted effect size.
 \description{
 Formats eta-squared or partial eta-squared with interpretation.
 }
+\examples{
+# Format partial eta-squared effect size
+format_effect_size_anova(0.125)
+
+# Include interpretation of effect size
+format_effect_size_anova(0.03, include_interpretation = TRUE)
+
+# Use eta-squared instead
+format_effect_size_anova(0.23, type = "eta_sq", include_interpretation = TRUE)
+
+}

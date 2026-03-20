@@ -28,9 +28,9 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 # APA flextable styling
 # -----------------------------------------------------------------------------
 
-#' APA Descriptive Statistics Table
+#' APA Univariate Statistics Table
 #'
-#' Creates an APA-formatted descriptive statistics table suitable for
+#' Creates an APA-formatted univariate statistics table suitable for
 #' univariate descriptives, ANOVA group descriptives, and regression sample descriptions. Continuous
 #' variables show M(SD) and n; categorical variables show level
 #' frequencies and percentages. Produces either a filled answer KEY or
@@ -42,7 +42,7 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 #'   These display as M(SD) with n.
 #' @param categorical Character vector or `NULL`. Categorical variable names.
 #'   These display level labels with n and percentage.
-#' @param stats_data Output from [compute_summary_stats()]. Required when
+#' @param stats_data Output from [univariate_stats_answers()]. Required when
 #'   `KEY = TRUE`.
 #' @param var_labels Named character vector or `NULL`. Display labels,
 #'   e.g. `c(height_diff = "Height Difference")`.
@@ -57,17 +57,17 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 #'
 #' @return A [flextable::flextable()] object.
 #'
-#' @seealso [compute_summary_stats()]
+#' @seealso [univariate_stats_answers()]
 #'
 #' @examples
 #' \dontrun{
 #' data(superman, package = "psych350data")
 #' my_data <- superman[!is.na(superman$height_diff),
 #'   c("clark_height_in", "height_diff", "clark_grp", "height_gap")]
-#' stats <- compute_summary_stats(my_data)
+#' stats <- univariate_stats_answers(my_data)
 #'
 #' # Without SEM (default)
-#' create_apa_descriptives_table(
+#' create_apa_univariates_table(
 #'   data        = my_data,
 #'   continuous  = c("clark_height_in", "height_diff"),
 #'   categorical = c("clark_grp", "height_gap"),
@@ -75,7 +75,7 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 #' )
 #'
 #' # With SEM column
-#' create_apa_descriptives_table(
+#' create_apa_univariates_table(
 #'   data        = my_data,
 #'   continuous  = c("clark_height_in", "height_diff"),
 #'   categorical = c("clark_grp", "height_gap"),
@@ -84,7 +84,7 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 #' )
 #'
 #' # Blank worksheet
-#' create_apa_descriptives_table(
+#' create_apa_univariates_table(
 #'   data        = my_data,
 #'   continuous  = c("clark_height_in", "height_diff"),
 #'   categorical = c("clark_grp", "height_gap"),
@@ -93,7 +93,7 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 #' }
 #'
 #' @export
-create_apa_descriptives_table <- function(data        = NULL,
+create_apa_univariates_table <- function(data        = NULL,
                                      continuous  = NULL,
                                      categorical = NULL,
                                      stats_data  = NULL,
@@ -699,5 +699,14 @@ create_apa_regression_table <- function(regression_results,
   }
   ft <- ftExtra::colformat_md(ft, part = "header")
   ft
+}
+
+# Deprecated wrapper for backwards compatibility
+#' @rdname create_apa_univariates_table
+#' @param ... Arguments passed to [create_apa_univariates_table()].
+#' @export
+create_apa_descriptives_table <- function(...) {
+  .Deprecated("create_apa_univariates_table")
+  create_apa_univariates_table(...)
 }
 

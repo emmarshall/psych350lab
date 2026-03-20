@@ -11,7 +11,7 @@
 #'
 #' @param vars Character vector. Variable names to include, in display order.
 #' @param stats_data A data frame with columns `variable`, `mean`, `sd`, and
-#'   `sem` -- typically the output of [compute_summary_stats()].
+#'   `sem` -- typically the output of [univariate_stats_answers()].
 #' @param label Character vector or `NULL`. Variables that are IDs/labels.
 #' @param quantitative Character vector or `NULL`. Continuous variables.
 #' @param binary Character vector or `NULL`. Dichotomous variables.
@@ -30,7 +30,7 @@
 #'          height_diff, height_gap) |>
 #'   filter(year > 1975)
 #'
-#' stats <- compute_summary_stats(my_data)
+#' stats <- univariate_stats_answers(my_data)
 #'
 #' # Answer KEY
 #' create_answer_table(
@@ -119,7 +119,7 @@ create_answer_table <- function(vars,
 #'   continuous variables. Default `NULL` (no SEM column).
 #' @param continuous Character vector or `NULL`. Continuous variable names.
 #' @param categorical Character vector or `NULL`. Categorical variable names.
-#' @param stats_data Output from [compute_summary_stats()]. Required when
+#' @param stats_data Output from [univariate_stats_answers()]. Required when
 #'   `KEY = TRUE`.
 #' @param var_labels Named character vector or `NULL`. Display labels,
 #'   e.g. `c(height_diff = "Height Difference")`.

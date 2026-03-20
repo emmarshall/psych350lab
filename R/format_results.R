@@ -83,87 +83,8 @@ format_corr_results <- function(rh_name, vars, corr_results_list, Key = TRUE,
 ")
 }
 
-# -----------------------------------------------------------------------------
-# Chi-square results formatting
-# -----------------------------------------------------------------------------
-
-#' Format chi-square results for fill-in-the-blank output
-#'
-#' Creates a markdown-formatted results section for chi-square analysis.
-#'
-#' @param rh_name Name/number of research hypothesis.
-#' @param vars Character vector of two variable names.
-#' @param chi_results_list A results list from [chi_square_answers()].
-#' @param var1_labels Labels for var1 levels.
-#' @param var2_labels Labels for var2 levels.
-#' @param KEY If TRUE, show answers; if FALSE, show blanks.
-#' @param digits Number of decimal places (default 2).
-#' @return Character string of formatted results.
-#' @export
-format_chi2_results <- function(rh_name,
-                                vars,
-                                chi_results_list,
-                                var1_labels,
-                                var2_labels,
-                                KEY = TRUE,
-                                digits = 2) {
-
-  blank <- "______"
-
-  # Handle different naming conventions in results
-  if (!is.null(chi_results_list$ChiSquare)) {
-    chi2 <- chi_results_list$ChiSquare$chi_sq
-    df <- chi_results_list$ChiSquare$df
-    p <- chi_results_list$ChiSquare$p_value
-    ct <- chi_results_list$ContingencyTable
-    n <- sum(ct)
-  } else if (!is.null(chi_results_list$Chi_Square)) {
-    chi2 <- chi_results_list$Chi_Square$chi_square
-    df <- chi_results_list$Chi_Square$df
-    p <- chi_results_list$Chi_Square$p_value
-    ct <- chi_results_list$Crosstab
-    n <- chi_results_list$Sample_Size
-  } else {
-    stop("Unrecognized chi-square results structure")
-  }
-
-  if (KEY) {
-    chi2_fmt <- format_chi2(chi2, digits = digits)
-    df_fmt <- format_df(df)
-    p_fmt <- format_p_value(p, include_p = FALSE)
-    n_fmt <- as.character(n)
-
-    # Format crosstab cells
-    ct_formatted <- apply(ct, c(1, 2), as.character)
-  } else {
-    chi2_fmt <- df_fmt <- p_fmt <- n_fmt <- blank
-    ct_formatted <- matrix(blank, nrow = nrow(ct), ncol = ncol(ct))
-  }
-
-  # Build crosstab markdown table
-  header <- paste0("| | ", paste(var2_labels, collapse = " | "), " |")
-  sep <- paste0("|:--|", paste(rep(":---:", length(var2_labels)), collapse = "|"), "|")
-
-  rows <- vapply(seq_len(nrow(ct)), function(i) {
-    paste0("| ", var1_labels[i], " | ", paste(ct_formatted[i, ], collapse = " | "), " |")
-  }, character(1))
-
-  crosstab_md <- paste(c(header, sep, rows), collapse = "\n")
-
-  glue::glue("
-**{rh_name} Results**
-
-**Crosstabulation:**
-
-{crosstab_md}
-
-**Chi-Square Test:**
-
-| {.chi_sq_symbol()} | *df* | *p* | *N* |
-|:---:|:---:|:---:|:---:|
-| {chi2_fmt} | {df_fmt} | {p_fmt} | {n_fmt} |
-")
-}
+# NOTE: format_chi2_results is defined in chisquare_tables.R (canonical version)
+# A duplicate was removed from here during the 2026-03 refactoring.
 
 # -----------------------------------------------------------------------------
 # ANOVA results formatting

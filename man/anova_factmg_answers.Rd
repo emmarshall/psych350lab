@@ -55,3 +55,19 @@ effects (WG main effect, BG x WG interaction), between-subjects effects
 (BG main effect), descriptive statistics for all cells, and estimated
 marginal means. All numeric values stored unrounded.
 }
+\examples{
+\dontrun{
+library(psych350data)
+# Mixed factorial ANOVA: clark_grp (BG) x two repeated measures (WG)
+# For example, rt_critics_score measured under two conditions
+mg_results <- anova_factmg_answers(
+  data = superman,
+  dv_vars = c("rt_critics_score", "rt_audience_score"),
+  bg_iv = "clark_grp",
+  wg_name = "Rating Source",
+  wg_labels = c("Critics", "Audience"),
+  bg_labels = c("Under 6ft", "6ft or taller")
+)
+}
+
+}

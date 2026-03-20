@@ -10,6 +10,15 @@
 #'
 #' @return A list with elements (all numeric values unrounded).
 #'
+#' @examples
+#' \dontrun{
+#' # Using Superman data: test relationship between clark_grp and tomatometer
+#' result <- chi_square_answers(psych350data::superman, "clark_grp", "tomatometer")
+#'
+#' # Access the chi-square statistic and p-value
+#' result$ChiSquare
+#' }
+#'
 #' @export
 chi_square_answers <- function(data, var1, var2) {
 
@@ -91,6 +100,21 @@ chi_square_answers <- function(data, var1, var2) {
 #'   comparisons (1 or 2). Default is 2.
 #'
 #' @return A list with elements (all numeric values unrounded).
+#'
+#' @examples
+#' \dontrun{
+#' # Using Superman data: test relationship between type (3 levels) and tomatometer (2 levels)
+#' result <- chi_square_kgroup_answers(
+#'   psych350data::superman,
+#'   var1 = "type",
+#'   var2 = "tomatometer",
+#'   var1_labels = c("Film", "TV Show", "Serial")
+#' )
+#'
+#' # Access omnibus chi-square and pairwise comparisons
+#' result$ChiSquare
+#' result$Pairwise
+#' }
 #'
 #' @export
 chi_square_kgroup_answers <- function(data, var1, var2,

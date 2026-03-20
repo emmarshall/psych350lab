@@ -21,10 +21,10 @@
 #'   select(year, clark_height_in, height_diff) |>
 #'   filter(!is.na(height_diff))
 #'
-#' compute_summary_stats(my_data)
+#' univariate_stats_answers(my_data)
 #'
 #' @export
-compute_summary_stats <- function(data) {
+univariate_stats_answers <- function(data) {
   data |>
     dplyr::summarise(dplyr::across(dplyr::everything(), list(
       mean = \(x) mean(x, na.rm = TRUE),
@@ -48,9 +48,9 @@ compute_summary_stats <- function(data) {
 #' Computes descriptive statistics for selected variables and returns a
 #' structured results list consistent with the other `*_answers()` functions
 #' in the package. This is a convenience wrapper around
-#' [compute_summary_stats()] that selects the requested variables and packages
+#' [univariate_stats_answers()] that selects the requested variables and packages
 #' the output for use with [create_descriptives_checker()] and
-#' [create_apa_descriptives_table()].
+#' [create_apa_univariates_table()].
 #'
 #' @param data A data frame.
 #' @param vars Character vector. Variable names to include in the analysis.
@@ -63,8 +63,8 @@ compute_summary_stats <- function(data) {
 #'   \item{`Sample_Size`}{Integer. Number of rows in the (subsetted) data.}
 #' }
 #'
-#' @seealso [compute_summary_stats()], [create_descriptives_checker()],
-#'   [create_apa_descriptives_table()]
+#' @seealso [univariate_stats_answers()], [create_descriptives_checker()],
+#'   [create_apa_univariates_table()]
 #'
 #' @examples
 #' data(superman, package = "psych350data")
@@ -96,11 +96,20 @@ descriptives_answers <- function(data, vars = NULL) {
     analysis_df <- data
   }
 
-  desc_stats <- compute_summary_stats(analysis_df)
+  desc_stats <- univariate_stats_answers(analysis_df)
 
   list(
     Descriptives = desc_stats,
     Sample_Size  = nrow(data)
   )
+}
+
+
+#' @rdname univariate_stats_answers
+#' @param ... Arguments passed to [univariate_stats_answers()].
+#' @export
+compute_summary_stats <- function(...) {
+  .Deprecated("univariate_stats_answers")
+  univariate_stats_answers(...)
 }
 

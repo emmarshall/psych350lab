@@ -22,6 +22,16 @@
 #'
 #' @return Character string with formatted effect size.
 #'
+#' @examples
+#' # Format partial eta-squared effect size
+#' format_effect_size_anova(0.125)
+#'
+#' # Include interpretation of effect size
+#' format_effect_size_anova(0.03, include_interpretation = TRUE)
+#'
+#' # Use eta-squared instead
+#' format_effect_size_anova(0.23, type = "eta_sq", include_interpretation = TRUE)
+#'
 #' @export
 format_effect_size_anova <- function(es, type = "partial_eta_sq",
                                      include_interpretation = FALSE) {

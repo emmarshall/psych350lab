@@ -67,3 +67,21 @@ Column 4 = IV1_Level2 + IV2_Level1
 Column 5 = IV1_Level2 + IV2_Level2
 Column 6 = IV1_Level2 + IV2_Level3
 }
+\examples{
+\dontrun{
+library(psych350data)
+# Within-groups factorial ANOVA: height_gap x age_grp (both repeated measures)
+# This requires data in wide format with 6 columns (3 x 2 design)
+wg_results <- anova_factwg_answers(
+  data = superman_smes,
+  dv_vars = c("emotional_impact_min_min", "emotional_impact_min_avg",
+              "emotional_impact_avg_min", "emotional_impact_avg_avg",
+              "emotional_impact_big_min", "emotional_impact_big_avg"),
+  iv1_name = "Height Gap",
+  iv2_name = "Age Group",
+  iv1_labels = c("Minimal", "Average", "Big"),
+  iv2_labels = c("Minimal", "Average")
+)
+}
+
+}

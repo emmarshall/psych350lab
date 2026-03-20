@@ -49,8 +49,8 @@ website:
             contents:
               - text: descriptives_answers
                 file: man/descriptives_answers.qmd
-              - text: compute_summary_stats
-                file: man/compute_summary_stats.qmd
+              - text: univariate_stats_answers
+                file: man/univariate_stats_answers.qmd
               - text: corr_answers
                 file: man/corr_answers.qmd
               - text: chi_square_answers
@@ -119,8 +119,8 @@ website:
                 file: man/create_regression_weight_interpretations.qmd
           - section: APA Tables (docx)
             contents:
-              - text: create_apa_descriptives_table
-                file: man/create_apa_descriptives_table.qmd
+              - text: create_apa_univariates_table
+                file: man/create_apa_univariates_table.qmd
               - text: create_apa_corr_table
                 file: man/create_apa_corr_table.qmd
               - text: create_apa_chi_crosstabs_table
@@ -167,16 +167,16 @@ website:
                 file: man/create_wg_anova_combined_table.qmd
               - text: create_factbg_anova_stats_table
                 file: man/create_factbg_anova_stats_table.qmd
-              - text: factbg_table_with_comparisons
-                file: man/factbg_table_with_comparisons.qmd
+              - text: create_factbg_comparisons_table
+                file: man/create_factbg_comparisons_table.qmd
               - text: create_linear_reg_combined_table
                 file: man/create_linear_reg_combined_table.qmd
-              - text: create_linear_reg_correlation_interp_ft
-                file: man/create_linear_reg_correlation_interp_ft.qmd
-              - text: create_correlation_interp_ft
-                file: man/create_correlation_interp_ft.qmd
-              - text: create_regwt_interp_ft
-                file: man/create_regwt_interp_ft.qmd
+              - text: create_linear_reg_correlation_interp_table
+                file: man/create_linear_reg_correlation_interp_table.qmd
+              - text: create_correlation_interp_table
+                file: man/create_correlation_interp_table.qmd
+              - text: create_regwt_interp_table
+                file: man/create_regwt_interp_table.qmd
               - text: anova_statistics_KEY
                 file: man/anova_statistics_KEY.qmd
               - text: anova_descriptives_KEY
@@ -199,22 +199,22 @@ website:
                 file: man/format_wg_anova_results.qmd
               - text: format_factbg_results
                 file: man/format_factbg_results.qmd
-              - text: factbg_interaction_results
-                file: man/factbg_interaction_results.qmd
-              - text: factbg_main_effect_results
-                file: man/factbg_main_effect_results.qmd
-              - text: factwg_interaction_results
-                file: man/factwg_interaction_results.qmd
-              - text: factwg_main_effect_results
-                file: man/factwg_main_effect_results.qmd
-              - text: factwg_table_with_comparisons
-                file: man/factwg_table_with_comparisons.qmd
-              - text: factmg_interaction_results
-                file: man/factmg_interaction_results.qmd
-              - text: factmg_main_effect_results
-                file: man/factmg_main_effect_results.qmd
-              - text: factmg_table_with_comparisons
-                file: man/factmg_table_with_comparisons.qmd
+              - text: format_factbg_interaction_results
+                file: man/format_factbg_interaction_results.qmd
+              - text: format_factbg_main_effect_results
+                file: man/format_factbg_main_effect_results.qmd
+              - text: format_factwg_interaction_results
+                file: man/format_factwg_interaction_results.qmd
+              - text: format_factwg_main_effect_results
+                file: man/format_factwg_main_effect_results.qmd
+              - text: create_factwg_comparisons_table
+                file: man/create_factwg_comparisons_table.qmd
+              - text: format_factmg_interaction_results
+                file: man/format_factmg_interaction_results.qmd
+              - text: format_factmg_main_effect_results
+                file: man/format_factmg_main_effect_results.qmd
+              - text: create_factmg_comparisons_table
+                file: man/create_factmg_comparisons_table.qmd
               - text: create_rh_support_text
                 file: man/create_rh_support_text.qmd
               - text: key_or_blank

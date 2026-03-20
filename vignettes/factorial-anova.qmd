@@ -126,13 +126,13 @@ main effects, suitable for worksheets:
 #| eval: false
 
 # Interaction results
-factbg_interaction_results(
+format_factbg_interaction_results(
   anova_results_list = bg_factorial,
   KEY                = TRUE
 )
 
 # Main effect results (specify which IV)
-factbg_main_effect_results(
+format_factbg_main_effect_results(
   anova_results_list = bg_factorial,
   iv_name            = "Height Group",
   which_iv           = "IV1",
@@ -298,7 +298,7 @@ create_factbg_desc_checker(
 )
 
 # Table with pairwise comparisons
-factbg_table_with_comparisons(
+create_factbg_comparisons_table(
   anova_results_list = bg_factorial,
   iv1_name = "Height Group",
   iv2_name = "Tomatometer"
@@ -368,9 +368,9 @@ create_factwg_desc_checker(
 | `create_factbg_anova_stats_table()` | ANOVA statistics table |
 | `create_apa_factbg_desc_table()` | Cell means table |
 | `format_factbg_results()` | Formatted markdown output |
-| `factbg_table_with_comparisons()` | Table with pairwise results |
-| `factbg_interaction_results()` | Interaction text |
-| `factbg_main_effect_results()` | Main effect text |
+| `create_factbg_comparisons_table()` | Table with pairwise results |
+| `format_factbg_interaction_results()` | Interaction text |
+| `format_factbg_main_effect_results()` | Main effect text |
 
 ### Display Functions — Mixed
 

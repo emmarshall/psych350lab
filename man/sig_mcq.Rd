@@ -16,4 +16,14 @@ HTML string from \code{\link[webexercises:mcq]{webexercises::mcq()}}.
 Generates a \code{\link[webexercises:mcq]{webexercises::mcq()}} dropdown with the correct
 significance level pre-selected.
 }
+\examples{
+\dontrun{
+# Create MCQ for a p-value that would show "***"
+sig_mcq(0.0001)
+
+# Create MCQ for a p-value that would show "*"
+sig_mcq(0.03)
+}
+
+}
 \keyword{internal}

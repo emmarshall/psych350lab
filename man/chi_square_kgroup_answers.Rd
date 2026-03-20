@@ -36,3 +36,19 @@ where var1 has 3+ levels and var2 has exactly 2 levels, then conducts
 all pairwise chi-square comparisons with effect sizes.
 All numeric values stored unrounded.
 }
+\examples{
+\dontrun{
+# Using Superman data: test relationship between type (3 levels) and tomatometer (2 levels)
+result <- chi_square_kgroup_answers(
+  psych350data::superman,
+  var1 = "type",
+  var2 = "tomatometer",
+  var1_labels = c("Film", "TV Show", "Serial")
+)
+
+# Access omnibus chi-square and pairwise comparisons
+result$ChiSquare
+result$Pairwise
+}
+
+}

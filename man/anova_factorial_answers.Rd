@@ -43,3 +43,18 @@ Performs a 2x2 factorial ANOVA using the \code{jmv} package, returning main effe
 interaction, estimated marginal means, descriptive statistics for all cells,
 and LSD/HSD post-hoc values. All numeric values stored unrounded.
 }
+\examples{
+\dontrun{
+library(psych350data)
+# Between-groups factorial ANOVA: clark_grp x tomatometer predicting rt_critics_score
+bg_results <- anova_factorial_answers(
+  data = superman,
+  dv = "rt_critics_score",
+  iv1 = "clark_grp",
+  iv2 = "tomatometer",
+  iv1_labels = c("Under 6ft", "6ft or taller"),
+  iv2_labels = c("Rotten", "Fresh")
+)
+}
+
+}

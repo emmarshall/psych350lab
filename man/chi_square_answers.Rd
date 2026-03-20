@@ -21,3 +21,13 @@ Performs a chi-square test of independence on two categorical variables,
 returning observed and expected frequencies, proportions, and
 descriptive counts. All numeric values stored unrounded.
 }
+\examples{
+\dontrun{
+# Using Superman data: test relationship between clark_grp and tomatometer
+result <- chi_square_answers(psych350data::superman, "clark_grp", "tomatometer")
+
+# Access the chi-square statistic and p-value
+result$ChiSquare
+}
+
+}

@@ -21,3 +21,13 @@ A tibble with numeric values and no SPSS labels.
 Reads an SPSS \code{.sav} file, converts user-missing values to \code{NA},
 and removes all labels.
 }
+\examples{
+\dontrun{
+# Read SPSS file with default settings
+data <- get_spss_data("data/mydata.sav")
+
+# Read with verbose output to check for missing values
+data <- get_spss_data("data/mydata.sav", verbose = TRUE)
+}
+
+}

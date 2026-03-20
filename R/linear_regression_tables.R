@@ -434,13 +434,13 @@ linear_reg_category_legend <- function() {
 #'   quant_labels = c("Height", "Audience"),
 #'   criterion_label = "Critics Score"
 #' )
-#' create_linear_reg_correlation_interp_ft(result, KEY = TRUE)
-#' create_linear_reg_correlation_interp_ft(result, KEY = FALSE)
+#' create_linear_reg_correlation_interp_table(result, KEY = TRUE)
+#' create_linear_reg_correlation_interp_table(result, KEY = FALSE)
 #'
 #' @export
-create_linear_reg_correlation_interp_ft <- function(reg_results_list,
-                                                    interpretations = NULL,
-                                                    KEY = TRUE) {
+create_linear_reg_correlation_interp_table <- function(reg_results_list,
+                                                       interpretations = NULL,
+                                                       KEY = TRUE) {
 
   predictors <- reg_results_list$Labels$predictors
   predictor_labels <- reg_results_list$Labels$predictor_labels
@@ -507,6 +507,15 @@ create_linear_reg_correlation_interp_ft <- function(reg_results_list,
 }
 
 
+#' @rdname create_linear_reg_correlation_interp_table
+#' @param ... Arguments passed to [create_linear_reg_correlation_interp_table()].
+#' @export
+create_linear_reg_correlation_interp_ft <- function(...) {
+  .Deprecated("create_linear_reg_correlation_interp_table")
+  create_linear_reg_correlation_interp_table(...)
+}
+
+
 #' Correlation Interpretation Table (Flextable)
 #'
 #' Creates a flextable with one row per predictor showing the bivariate
@@ -532,13 +541,13 @@ create_linear_reg_correlation_interp_ft <- function(reg_results_list,
 #'   quant_labels = c("Height", "Audience"),
 #'   criterion_label = "Critics Score"
 #' )
-#' create_correlation_interp_ft(result, KEY = TRUE)
-#' create_correlation_interp_ft(result, KEY = FALSE)
+#' create_correlation_interp_table(result, KEY = TRUE)
+#' create_correlation_interp_table(result, KEY = FALSE)
 #'
 #' @export
-create_correlation_interp_ft <- function(reg_results_list,
-                                         interpretations = NULL,
-                                         KEY = TRUE) {
+create_correlation_interp_table <- function(reg_results_list,
+                                            interpretations = NULL,
+                                            KEY = TRUE) {
 
   predictors <- reg_results_list$Labels$predictors
   predictor_labels <- reg_results_list$Labels$predictor_labels
@@ -607,6 +616,15 @@ create_correlation_interp_ft <- function(reg_results_list,
 }
 
 
+#' @rdname create_correlation_interp_table
+#' @param ... Arguments passed to [create_correlation_interp_table()].
+#' @export
+create_correlation_interp_ft <- function(...) {
+  .Deprecated("create_correlation_interp_table")
+  create_correlation_interp_table(...)
+}
+
+
 #' Regression Weight Interpretation Table (Flextable)
 #'
 #' Creates a flextable with one row per predictor showing the regression
@@ -632,13 +650,13 @@ create_correlation_interp_ft <- function(reg_results_list,
 #'   quant_labels = c("Height", "Audience"),
 #'   criterion_label = "Critics Score"
 #' )
-#' create_regwt_interp_ft(result, KEY = TRUE)
-#' create_regwt_interp_ft(result, KEY = FALSE)
+#' create_regwt_interp_table(result, KEY = TRUE)
+#' create_regwt_interp_table(result, KEY = FALSE)
 #'
 #' @export
-create_regwt_interp_ft <- function(reg_results_list,
-                                   interpretations = NULL,
-                                   KEY = TRUE) {
+create_regwt_interp_table <- function(reg_results_list,
+                                      interpretations = NULL,
+                                      KEY = TRUE) {
 
   predictors <- reg_results_list$Labels$predictors
   predictor_labels <- reg_results_list$Labels$predictor_labels
@@ -702,6 +720,15 @@ create_regwt_interp_ft <- function(reg_results_list,
   }
 
   return(ft)
+}
+
+
+#' @rdname create_regwt_interp_table
+#' @param ... Arguments passed to [create_regwt_interp_table()].
+#' @export
+create_regwt_interp_ft <- function(...) {
+  .Deprecated("create_regwt_interp_table")
+  create_regwt_interp_table(...)
 }
 
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.9.35">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>create_linear_reg_correlation_interp_ft – psych350lab</title>
+<title>create_correlation_interp_table – psych350lab</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -300,7 +300,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Functions</li><li class="breadcrumb-item"><a href="../man/create_descriptive_table.html">Worksheet Tables &amp; KEY Functions</a></li><li class="breadcrumb-item"><a href="../man/create_linear_reg_correlation_interp_ft.html">create_linear_reg_correlation_interp_ft</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Functions</li><li class="breadcrumb-item"><a href="../man/create_descriptive_table.html">Worksheet Tables &amp; KEY Functions</a></li><li class="breadcrumb-item"><a href="../man/create_correlation_interp_table.html">create_correlation_interp_table</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -416,8 +416,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/compute_summary_stats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">compute_summary_stats</span></a>
+  <a href="../man/univariate_stats_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">univariate_stats_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -636,8 +636,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_descriptives_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_descriptives_table</span></a>
+  <a href="../man/create_apa_univariates_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_univariates_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -785,8 +785,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factbg_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factbg_table_with_comparisons</span></a>
+  <a href="../man/create_factbg_comparisons_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factbg_comparisons_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -797,20 +797,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_linear_reg_correlation_interp_ft.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">create_linear_reg_correlation_interp_ft</span></a>
+  <a href="../man/create_linear_reg_correlation_interp_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_linear_reg_correlation_interp_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_correlation_interp_ft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_correlation_interp_ft</span></a>
+  <a href="../man/create_correlation_interp_table.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">create_correlation_interp_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_regwt_interp_ft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_regwt_interp_ft</span></a>
+  <a href="../man/create_regwt_interp_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_regwt_interp_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -886,50 +886,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factbg_interaction_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factbg_interaction_results</span></a>
+  <a href="../man/format_factbg_interaction_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_factbg_interaction_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factbg_main_effect_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factbg_main_effect_results</span></a>
+  <a href="../man/format_factbg_main_effect_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_factbg_main_effect_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factwg_interaction_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factwg_interaction_results</span></a>
+  <a href="../man/format_factwg_interaction_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_factwg_interaction_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factwg_main_effect_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factwg_main_effect_results</span></a>
+  <a href="../man/format_factwg_main_effect_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_factwg_main_effect_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factwg_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factwg_table_with_comparisons</span></a>
+  <a href="../man/create_factwg_comparisons_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factwg_comparisons_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factmg_interaction_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factmg_interaction_results</span></a>
+  <a href="../man/format_factmg_interaction_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_factmg_interaction_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factmg_main_effect_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factmg_main_effect_results</span></a>
+  <a href="../man/format_factmg_main_effect_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_factmg_main_effect_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factmg_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factmg_table_with_comparisons</span></a>
+  <a href="../man/create_factmg_comparisons_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factmg_comparisons_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1305,7 +1305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
 <li>
-<a href="#linear-regression-correlation-interpretation-table-flextable" id="toc-linear-regression-correlation-interpretation-table-flextable" class="nav-link active" data-scroll-target="#linear-regression-correlation-interpretation-table-flextable">Linear Regression Correlation Interpretation Table (Flextable)</a>
+<a href="#correlation-interpretation-table-flextable" id="toc-correlation-interpretation-table-flextable" class="nav-link active" data-scroll-target="#correlation-interpretation-table-flextable">Correlation Interpretation Table (Flextable)</a>
   <ul class="collapse">
 <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
   <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
@@ -1317,15 +1317,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="undefined"><i class="bi bi-link-45deg"></i></a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Functions</li><li class="breadcrumb-item"><a href="../man/create_descriptive_table.html">Worksheet Tables &amp; KEY Functions</a></li><li class="breadcrumb-item"><a href="../man/create_linear_reg_correlation_interp_ft.html">create_linear_reg_correlation_interp_ft</a></li></ol></nav></header><section id="linear-regression-correlation-interpretation-table-flextable" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="linear-regression-correlation-interpretation-table-flextable">Linear Regression Correlation Interpretation Table (Flextable)</h2>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Functions</li><li class="breadcrumb-item"><a href="../man/create_descriptive_table.html">Worksheet Tables &amp; KEY Functions</a></li><li class="breadcrumb-item"><a href="../man/create_correlation_interp_table.html">create_correlation_interp_table</a></li></ol></nav></header><section id="correlation-interpretation-table-flextable" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="correlation-interpretation-table-flextable">Correlation Interpretation Table (Flextable)</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>Creates a flextable with one row per predictor showing the bivariate correlation interpretation. Auto-generates interpretations or uses custom-provided ones. Answer key uses red text.</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
-<pre><code class="language-R">create_linear_reg_correlation_interp_ft(
+<pre><code class="language-R">create_correlation_interp_table(
   reg_results_list,
   interpretations = NULL,
   KEY = TRUE
 )
+
+create_correlation_interp_ft(...)
 </code></pre>
 </section><section id="arguments" class="level3"><h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
 <table role="presentation">
@@ -1353,15 +1355,23 @@ Named list or <code>NULL</code>. Custom interpretations keyed by predictor varia
 Logical. If <code>TRUE</code> (default), show filled interpretations (red text). If <code>FALSE</code>, blank cells.
 </td>
 </tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="...">…</code>
+</td>
+<td>
+Arguments passed to <code><a href="https://emmarshall.github.io/psych350lab/man/create_correlation_interp_table.html">create_correlation_interp_table()</a></code>.
+</td>
+</tr>
 </tbody></table></section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
-<p>A <code><a href="https://davidgohel.github.io/flextable/reference/flextable.html">flextable::flextable()</a></code> object.</p>
+<p>A <code>flextable</code> object.</p>
 </section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://emmarshall.github.io/psych350lab">"psych350lab"</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">superman</span>, package <span class="op">=</span> <span class="st">"psych350data"</span><span class="op">)</span></span>
-<span><span class="va">sm</span> <span class="op">&lt;-</span> <span class="va">superman</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rt_critics_score</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rt_audience_score</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sm</span> <span class="op">&lt;-</span> <span class="va">superman</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">superman</span><span class="op">$</span><span class="va">rt_critics_score</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>                    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">superman</span><span class="op">$</span><span class="va">rt_audience_score</span><span class="op">)</span>, <span class="op">]</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/linear_reg_answers.html">linear_reg_answers</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sm</span>,</span>
 <span>  criterion <span class="op">=</span> <span class="st">"rt_critics_score"</span>,</span>
@@ -1369,45 +1379,45 @@ Logical. If <code>TRUE</code> (default), show filled interpretations (red text).
 <span>  quant_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Height"</span>, <span class="st">"Audience"</span><span class="op">)</span>,</span>
 <span>  criterion_label <span class="op">=</span> <span class="st">"Critics Score"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_linear_reg_correlation_interp_ft.html">create_linear_reg_correlation_interp_ft</a></span><span class="op">(</span><span class="va">result</span>, KEY <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_correlation_interp_table.html">create_correlation_interp_table</a></span><span class="op">(</span><span class="va">result</span>, KEY <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="tabwid">
-<style>.cl-e8d4fa70{}.cl-e8d21bfc{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e8d21c06{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-e8d335e6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e8d34310{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d3431a{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d3431b{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d3431c{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d3431d{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d3431e{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-e8d4fa70">
+<style>.cl-46c52250{}.cl-46c239aa{font-family:'Helvetica';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-46c239d2{font-family:'Helvetica';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-46c358c6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-46c3658c{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 2pt solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c3658d{width:5in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(0, 0, 0, 1.00);border-right: 2pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c3658e{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 2pt solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c3658f{width:5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(0, 0, 0, 1.00);border-right: 2pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c36590{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 2pt solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c36591{width:5in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(0, 0, 0, 1.00);border-right: 2pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-46c52250">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-e8d34310"><p class="cl-e8d335e6"><span class="cl-e8d21bfc">Predictor</span></p></th>
-<th class="cl-e8d3431a"><p class="cl-e8d335e6"><span class="cl-e8d21bfc">Interpretation</span></p></th>
+<th class="cl-46c3658c"><p class="cl-46c358c6"><span class="cl-46c239aa">Predictor</span></p></th>
+<th class="cl-46c3658d"><p class="cl-46c358c6"><span class="cl-46c239aa">Interpretation</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e8d3431b"><p class="cl-e8d335e6"><span class="cl-e8d21bfc">Height</span></p></td>
-<td class="cl-e8d3431c"><p class="cl-e8d335e6"><span class="cl-e8d21c06">Height is not correlated with Critics Score</span></p></td>
+<td class="cl-46c3658e"><p class="cl-46c358c6"><span class="cl-46c239aa">Height</span></p></td>
+<td class="cl-46c3658f"><p class="cl-46c358c6"><span class="cl-46c239d2">Height is not correlated with Critics Score</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e8d3431d"><p class="cl-e8d335e6"><span class="cl-e8d21bfc">Audience</span></p></td>
-<td class="cl-e8d3431e"><p class="cl-e8d335e6"><span class="cl-e8d21c06">Audience is not correlated with Critics Score</span></p></td>
+<td class="cl-46c36590"><p class="cl-46c358c6"><span class="cl-46c239aa">Audience</span></p></td>
+<td class="cl-46c36591"><p class="cl-46c358c6"><span class="cl-46c239d2">Audience is not correlated with Critics Score</span></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_linear_reg_correlation_interp_ft.html">create_linear_reg_correlation_interp_ft</a></span><span class="op">(</span><span class="va">result</span>, KEY <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_correlation_interp_table.html">create_correlation_interp_table</a></span><span class="op">(</span><span class="va">result</span>, KEY <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="tabwid">
-<style>.cl-e8d940d0{}.cl-e8d73952{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e8d810ac{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e8d81caa{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d81cab{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d81cb4{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d81cb5{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d81cb6{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e8d81cb7{width:4.5in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-e8d940d0">
+<style>.cl-46c9ba04{}.cl-46c7997c{font-family:'Helvetica';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-46c888c8{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-46c8949e{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 2pt solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c8949f{width:5in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(0, 0, 0, 1.00);border-right: 2pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c894a0{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 2pt solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c894a1{width:5in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(0, 0, 0, 1.00);border-right: 2pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c894a2{width:2in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 2pt solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-46c894a8{width:5in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(0, 0, 0, 1.00);border-right: 2pt solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-46c9ba04">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-e8d81caa"><p class="cl-e8d810ac"><span class="cl-e8d73952">Predictor</span></p></th>
-<th class="cl-e8d81cab"><p class="cl-e8d810ac"><span class="cl-e8d73952">Interpretation</span></p></th>
+<th class="cl-46c8949e"><p class="cl-46c888c8"><span class="cl-46c7997c">Predictor</span></p></th>
+<th class="cl-46c8949f"><p class="cl-46c888c8"><span class="cl-46c7997c">Interpretation</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e8d81cb4"><p class="cl-e8d810ac"><span class="cl-e8d73952">Height</span></p></td>
-<td class="cl-e8d81cb5"><p class="cl-e8d810ac"><span class="cl-e8d73952"></span></p></td>
+<td class="cl-46c894a0"><p class="cl-46c888c8"><span class="cl-46c7997c">Height</span></p></td>
+<td class="cl-46c894a1"><p class="cl-46c888c8"><span class="cl-46c7997c"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e8d81cb6"><p class="cl-e8d810ac"><span class="cl-e8d73952">Audience</span></p></td>
-<td class="cl-e8d81cb7"><p class="cl-e8d810ac"><span class="cl-e8d73952"></span></p></td>
+<td class="cl-46c894a2"><p class="cl-46c888c8"><span class="cl-46c7997c">Audience</span></p></td>
+<td class="cl-46c894a8"><p class="cl-46c888c8"><span class="cl-46c7997c"></span></p></td>
 </tr>
 </tbody>
 </table>

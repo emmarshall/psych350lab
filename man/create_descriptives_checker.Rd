@@ -18,7 +18,7 @@ create_descriptives_checker(
 \item{vars}{Character vector. Variable names to include, in display order.}
 
 \item{desc_results_list}{Output from \code{\link[=descriptives_answers]{descriptives_answers()}} (a list with
-\verb{$Descriptives}). Also accepts a raw tibble from \code{\link[=compute_summary_stats]{compute_summary_stats()}}
+\verb{$Descriptives}). Also accepts a raw tibble from \code{\link[=univariate_stats_answers]{univariate_stats_answers()}}
 for backwards compatibility.}
 
 \item{var_labels}{Named character vector or \code{NULL}. Optional display labels,
@@ -65,5 +65,5 @@ create_descriptives_checker(
 
 }
 \seealso{
-\code{\link[=descriptives_answers]{descriptives_answers()}}, \code{\link[=compute_summary_stats]{compute_summary_stats()}}
+\code{\link[=descriptives_answers]{descriptives_answers()}}, \code{\link[=univariate_stats_answers]{univariate_stats_answers()}}
 }

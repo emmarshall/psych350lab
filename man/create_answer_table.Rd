@@ -18,7 +18,7 @@ create_answer_table(
 \item{vars}{Character vector. Variable names to include, in display order.}
 
 \item{stats_data}{A data frame with columns \code{variable}, \code{mean}, \code{sd}, and
-\code{sem} -- typically the output of \code{\link[=compute_summary_stats]{compute_summary_stats()}}.}
+\code{sem} -- typically the output of \code{\link[=univariate_stats_answers]{univariate_stats_answers()}}.}
 
 \item{label}{Character vector or \code{NULL}. Variables that are IDs/labels.}
 
@@ -49,7 +49,7 @@ my_data <- superman |>
          height_diff, height_gap) |>
   filter(year > 1975)
 
-stats <- compute_summary_stats(my_data)
+stats <- univariate_stats_answers(my_data)
 
 # Answer KEY
 create_answer_table(

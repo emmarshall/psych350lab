@@ -59,6 +59,20 @@
 #'
 #' @return A list with elements (all numeric values unrounded).
 #'
+#' @examples
+#' \dontrun{
+#' library(psych350data)
+#' # Between-groups factorial ANOVA: clark_grp x tomatometer predicting rt_critics_score
+#' bg_results <- anova_factorial_answers(
+#'   data = superman,
+#'   dv = "rt_critics_score",
+#'   iv1 = "clark_grp",
+#'   iv2 = "tomatometer",
+#'   iv1_labels = c("Under 6ft", "6ft or taller"),
+#'   iv2_labels = c("Rotten", "Fresh")
+#' )
+#' }
+#'
 #' @export
 anova_factorial_answers <- function(data, dv, iv1, iv2,
                                     iv1_labels = NULL, iv2_labels = NULL,
@@ -283,6 +297,21 @@ anova_factorial_answers <- function(data, dv, iv1, iv2,
 #'   \item{EMMs}{List with `BG` and `WG` tibbles of estimated marginal means.}
 #'   \item{FactorInfo}{List with `wg_name`, `wg_labels`, `dv_vars`,
 #'     `bg_levels`, `bg_labels`, `n_obs`, `group_ns`.}
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' library(psych350data)
+#' # Mixed factorial ANOVA: clark_grp (BG) x two repeated measures (WG)
+#' # For example, rt_critics_score measured under two conditions
+#' mg_results <- anova_factmg_answers(
+#'   data = superman,
+#'   dv_vars = c("rt_critics_score", "rt_audience_score"),
+#'   bg_iv = "clark_grp",
+#'   wg_name = "Rating Source",
+#'   wg_labels = c("Critics", "Audience"),
+#'   bg_labels = c("Under 6ft", "6ft or taller")
+#' )
 #' }
 #'
 #' @export
@@ -553,6 +582,23 @@ anova_factmg_answers <- function(data, dv_vars, bg_iv,
 #'   \item{EMMs}{List with `IV1` and `IV2` tibbles of estimated marginal means.}
 #'   \item{FactorInfo}{List with `iv1_name`, `iv2_name`, `iv1_labels`,
 #'     `iv2_labels`, `dv_vars`, `n_obs`.}
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' library(psych350data)
+#' # Within-groups factorial ANOVA: height_gap x age_grp (both repeated measures)
+#' # This requires data in wide format with 6 columns (3 x 2 design)
+#' wg_results <- anova_factwg_answers(
+#'   data = superman_smes,
+#'   dv_vars = c("emotional_impact_min_min", "emotional_impact_min_avg",
+#'               "emotional_impact_avg_min", "emotional_impact_avg_avg",
+#'               "emotional_impact_big_min", "emotional_impact_big_avg"),
+#'   iv1_name = "Height Gap",
+#'   iv2_name = "Age Group",
+#'   iv1_labels = c("Minimal", "Average", "Big"),
+#'   iv2_labels = c("Minimal", "Average")
+#' )
 #' }
 #'
 #' @export

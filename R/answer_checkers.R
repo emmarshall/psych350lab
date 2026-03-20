@@ -41,6 +41,16 @@ p_to_stars <- function(p) {
 #'
 #' @param p_value Numeric p-value.
 #' @return HTML string from [webexercises::mcq()].
+#'
+#' @examples
+#' \dontrun{
+#' # Create MCQ for a p-value that would show "***"
+#' sig_mcq(0.0001)
+#'
+#' # Create MCQ for a p-value that would show "*"
+#' sig_mcq(0.03)
+#' }
+#'
 #' @keywords internal
 #' @export
 sig_mcq <- function(p_value) {
@@ -182,7 +192,7 @@ sig_mcq <- function(p_value) {
 #'
 #' @param vars Character vector. Variable names to include, in display order.
 #' @param desc_results_list Output from [descriptives_answers()] (a list with
-#'   `$Descriptives`). Also accepts a raw tibble from [compute_summary_stats()]
+#'   `$Descriptives`). Also accepts a raw tibble from [univariate_stats_answers()]
 #'   for backwards compatibility.
 #' @param var_labels Named character vector or `NULL`. Optional display labels,
 #'   e.g. `c(clark_height_in = "Clark Height")`.
@@ -197,7 +207,7 @@ sig_mcq <- function(p_value) {
 #'
 #' @return A tinytable object with embedded webexercise elements.
 #'
-#' @seealso [descriptives_answers()], [compute_summary_stats()]
+#' @seealso [descriptives_answers()], [univariate_stats_answers()]
 #'
 #' @examples
 #' \dontrun{
@@ -231,7 +241,7 @@ create_descriptives_checker <- function(vars,
 
   # Accept either a list with $Descriptives (from descriptives_answers()) or
 
-  # a raw tibble (from compute_summary_stats()) for backwards compatibility
+  # a raw tibble (from univariate_stats_answers()) for backwards compatibility
   if (is.data.frame(desc_results_list)) {
     desc_stats <- desc_results_list
   } else {

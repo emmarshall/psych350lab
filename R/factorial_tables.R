@@ -166,16 +166,16 @@ create_factbg_anova_stats_table <- function(rh_name, anova_results_list,
 #'   iv1 = "clark_grp", iv2 = "era",
 #'   iv1_labels = c("Under 6ft", "6ft+"),
 #'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' ft <- factbg_table_with_comparisons(result,
+#' ft <- create_factbg_comparisons_table(result,
 #'   iv1_name = "Height Group", iv2_name = "Era")
 #' ft
 #' }
 #'
 #' @export
-factbg_table_with_comparisons <- function(anova_results_list,
-                                          iv1_name = "IV1",
-                                          iv2_name = "IV2",
-                                          KEY = TRUE) {
+create_factbg_comparisons_table <- function(anova_results_list,
+                                            iv1_name = "IV1",
+                                            iv2_name = "IV2",
+                                            KEY = TRUE) {
 
   desc_stats <- anova_results_list$Descriptives
   emm_iv1 <- anova_results_list$EMMs$IV1
@@ -372,6 +372,19 @@ factbg_table_with_comparisons <- function(anova_results_list,
   return(ft)
 }
 
+#' @rdname create_factbg_comparisons_table
+#' @export
+factbg_table_with_comparisons <- function(anova_results_list,
+                                          iv1_name = "IV1",
+                                          iv2_name = "IV2",
+                                          KEY = TRUE) {
+  .Deprecated("create_factbg_comparisons_table")
+  create_factbg_comparisons_table(anova_results_list,
+                                  iv1_name = iv1_name,
+                                  iv2_name = iv2_name,
+                                  KEY = KEY)
+}
+
 
 #' Factorial Interaction Results Text
 #'
@@ -394,13 +407,13 @@ factbg_table_with_comparisons <- function(anova_results_list,
 #'   iv1 = "clark_grp", iv2 = "era",
 #'   iv1_labels = c("Under 6ft", "6ft+"),
 #'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' cat(factbg_interaction_results(result))
+#' cat(format_factbg_interaction_results(result))
 #' }
 #'
 #' @export
-factbg_interaction_results <- function(anova_results_list,
-                                       KEY = TRUE,
-                                       highlight = TRUE) {
+format_factbg_interaction_results <- function(anova_results_list,
+                                              KEY = TRUE,
+                                              highlight = TRUE) {
 
   f_int <- anova_results_list$ANOVA$Interaction$F
   p_int <- anova_results_list$ANOVA$Interaction$p_value
@@ -462,6 +475,17 @@ factbg_interaction_results <- function(anova_results_list,
   return(output)
 }
 
+#' @rdname format_factbg_interaction_results
+#' @export
+factbg_interaction_results <- function(anova_results_list,
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+  .Deprecated("format_factbg_interaction_results")
+  format_factbg_interaction_results(anova_results_list,
+                                    KEY = KEY,
+                                    highlight = highlight)
+}
+
 
 #' Factorial Main Effect Results Text
 #'
@@ -486,16 +510,16 @@ factbg_interaction_results <- function(anova_results_list,
 #'   iv1 = "clark_grp", iv2 = "era",
 #'   iv1_labels = c("Under 6ft", "6ft+"),
 #'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' cat(factbg_main_effect_results(result,
+#' cat(format_factbg_main_effect_results(result,
 #'   iv_name = "Height Group", which_iv = "IV1"))
 #' }
 #'
 #' @export
-factbg_main_effect_results <- function(anova_results_list,
-                                       iv_name = "IV",
-                                       which_iv = "IV2",
-                                       KEY = TRUE,
-                                       highlight = TRUE) {
+format_factbg_main_effect_results <- function(anova_results_list,
+                                              iv_name = "IV",
+                                              which_iv = "IV2",
+                                              KEY = TRUE,
+                                              highlight = TRUE) {
 
   # Extract appropriate stats
   if (which_iv == "IV1") {
@@ -568,6 +592,21 @@ factbg_main_effect_results <- function(anova_results_list,
   }
 
   return(output)
+}
+
+#' @rdname format_factbg_main_effect_results
+#' @export
+factbg_main_effect_results <- function(anova_results_list,
+                                       iv_name = "IV",
+                                       which_iv = "IV2",
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+  .Deprecated("format_factbg_main_effect_results")
+  format_factbg_main_effect_results(anova_results_list,
+                                    iv_name = iv_name,
+                                    which_iv = which_iv,
+                                    KEY = KEY,
+                                    highlight = highlight)
 }
 
 
@@ -1092,9 +1131,9 @@ format_factbg_results <- function(rh_name, anova_results_list,
 #' @return A character string with markdown/HTML formatting.
 #'
 #' @export
-factwg_interaction_results <- function(anova_results_list,
-                                       KEY = TRUE,
-                                       highlight = TRUE) {
+format_factwg_interaction_results <- function(anova_results_list,
+                                              KEY = TRUE,
+                                              highlight = TRUE) {
 
   f_int    <- anova_results_list$ANOVA$Interaction$F
   p_int    <- anova_results_list$ANOVA$Interaction$p_value
@@ -1137,6 +1176,17 @@ factwg_interaction_results <- function(anova_results_list,
   return(output)
 }
 
+#' @rdname format_factwg_interaction_results
+#' @export
+factwg_interaction_results <- function(anova_results_list,
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+  .Deprecated("format_factwg_interaction_results")
+  format_factwg_interaction_results(anova_results_list,
+                                    KEY = KEY,
+                                    highlight = highlight)
+}
+
 
 #' WG Factorial Main Effect Results Text
 #'
@@ -1154,11 +1204,11 @@ factwg_interaction_results <- function(anova_results_list,
 #' @return A character string with markdown/HTML formatting.
 #'
 #' @export
-factwg_main_effect_results <- function(anova_results_list,
-                                       iv_name = "IV",
-                                       which_iv = "IV1",
-                                       KEY = TRUE,
-                                       highlight = TRUE) {
+format_factwg_main_effect_results <- function(anova_results_list,
+                                              iv_name = "IV",
+                                              which_iv = "IV1",
+                                              KEY = TRUE,
+                                              highlight = TRUE) {
 
   if (which_iv == "IV1") {
     f_stat     <- anova_results_list$ANOVA$MainEffect_IV1$F
@@ -1228,6 +1278,21 @@ factwg_main_effect_results <- function(anova_results_list,
   return(output)
 }
 
+#' @rdname format_factwg_main_effect_results
+#' @export
+factwg_main_effect_results <- function(anova_results_list,
+                                       iv_name = "IV",
+                                       which_iv = "IV1",
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+  .Deprecated("format_factwg_main_effect_results")
+  format_factwg_main_effect_results(anova_results_list,
+                                    iv_name = iv_name,
+                                    which_iv = which_iv,
+                                    KEY = KEY,
+                                    highlight = highlight)
+}
+
 
 #' WG Factorial Cell Means Table with Comparisons (Flextable)
 #'
@@ -1243,10 +1308,10 @@ factwg_main_effect_results <- function(anova_results_list,
 #' @return A [flextable::flextable()] object.
 #'
 #' @export
-factwg_table_with_comparisons <- function(anova_results_list,
-                                          iv1_name = "IV1",
-                                          iv2_name = "IV2",
-                                          KEY = TRUE) {
+create_factwg_comparisons_table <- function(anova_results_list,
+                                            iv1_name = "IV1",
+                                            iv2_name = "IV2",
+                                            KEY = TRUE) {
 
   info <- anova_results_list$FactorInfo
   iv1_labels <- info$iv1_labels
@@ -1349,6 +1414,19 @@ factwg_table_with_comparisons <- function(anova_results_list,
   return(ft)
 }
 
+#' @rdname create_factwg_comparisons_table
+#' @export
+factwg_table_with_comparisons <- function(anova_results_list,
+                                          iv1_name = "IV1",
+                                          iv2_name = "IV2",
+                                          KEY = TRUE) {
+  .Deprecated("create_factwg_comparisons_table")
+  create_factwg_comparisons_table(anova_results_list,
+                                  iv1_name = iv1_name,
+                                  iv2_name = iv2_name,
+                                  KEY = KEY)
+}
+
 
 # ============================================================================
 # Mixed-Groups (MG) Factorial Worksheet Functions
@@ -1368,9 +1446,9 @@ factwg_table_with_comparisons <- function(anova_results_list,
 #' @return A character string with markdown/HTML formatting.
 #'
 #' @export
-factmg_interaction_results <- function(anova_results_list,
-                                       KEY = TRUE,
-                                       highlight = TRUE) {
+format_factmg_interaction_results <- function(anova_results_list,
+                                              KEY = TRUE,
+                                              highlight = TRUE) {
 
   f_int    <- anova_results_list$WithinSubjects$Interaction$F
   p_int    <- anova_results_list$WithinSubjects$Interaction$p_value
@@ -1413,6 +1491,17 @@ factmg_interaction_results <- function(anova_results_list,
   return(output)
 }
 
+#' @rdname format_factmg_interaction_results
+#' @export
+factmg_interaction_results <- function(anova_results_list,
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+  .Deprecated("format_factmg_interaction_results")
+  format_factmg_interaction_results(anova_results_list,
+                                    KEY = KEY,
+                                    highlight = highlight)
+}
+
 
 #' MG Factorial Main Effect Results Text
 #'
@@ -1431,11 +1520,11 @@ factmg_interaction_results <- function(anova_results_list,
 #' @return A character string with markdown/HTML formatting.
 #'
 #' @export
-factmg_main_effect_results <- function(anova_results_list,
-                                       iv_name = "IV",
-                                       which_iv = "BG",
-                                       KEY = TRUE,
-                                       highlight = TRUE) {
+format_factmg_main_effect_results <- function(anova_results_list,
+                                              iv_name = "IV",
+                                              which_iv = "BG",
+                                              KEY = TRUE,
+                                              highlight = TRUE) {
 
   if (which_iv == "BG") {
     f_stat     <- anova_results_list$BetweenSubjects$MainEffect_BG$F
@@ -1515,6 +1604,21 @@ factmg_main_effect_results <- function(anova_results_list,
   return(output)
 }
 
+#' @rdname format_factmg_main_effect_results
+#' @export
+factmg_main_effect_results <- function(anova_results_list,
+                                       iv_name = "IV",
+                                       which_iv = "BG",
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+  .Deprecated("format_factmg_main_effect_results")
+  format_factmg_main_effect_results(anova_results_list,
+                                    iv_name = iv_name,
+                                    which_iv = which_iv,
+                                    KEY = KEY,
+                                    highlight = highlight)
+}
+
 
 #' MG Factorial Cell Means Table with Comparisons (Flextable)
 #'
@@ -1529,10 +1633,10 @@ factmg_main_effect_results <- function(anova_results_list,
 #' @return A [flextable::flextable()] object.
 #'
 #' @export
-factmg_table_with_comparisons <- function(anova_results_list,
-                                          bg_name = "BG IV",
-                                          wg_name = "WG IV",
-                                          KEY = TRUE) {
+create_factmg_comparisons_table <- function(anova_results_list,
+                                            bg_name = "BG IV",
+                                            wg_name = "WG IV",
+                                            KEY = TRUE) {
 
   info <- anova_results_list$FactorInfo
   bg_labels  <- info$bg_labels
@@ -1630,4 +1734,17 @@ factmg_table_with_comparisons <- function(anova_results_list,
   }
 
   return(ft)
+}
+
+#' @rdname create_factmg_comparisons_table
+#' @export
+factmg_table_with_comparisons <- function(anova_results_list,
+                                          bg_name = "BG IV",
+                                          wg_name = "WG IV",
+                                          KEY = TRUE) {
+  .Deprecated("create_factmg_comparisons_table")
+  create_factmg_comparisons_table(anova_results_list,
+                                  bg_name = bg_name,
+                                  wg_name = wg_name,
+                                  KEY = KEY)
 }

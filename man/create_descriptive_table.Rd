@@ -27,7 +27,7 @@ continuous variables. Default \code{NULL} (no SEM column).}
 
 \item{categorical}{Character vector or \code{NULL}. Categorical variable names.}
 
-\item{stats_data}{Output from \code{\link[=compute_summary_stats]{compute_summary_stats()}}. Required when
+\item{stats_data}{Output from \code{\link[=univariate_stats_answers]{univariate_stats_answers()}}. Required when
 \code{KEY = TRUE}.}
 
 \item{var_labels}{Named character vector or \code{NULL}. Display labels,

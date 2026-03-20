@@ -41,3 +41,20 @@ quantitative and binary predictors, including univariate, bivariate, and
 multivariate results with interpretation categories (a-d).
 All numeric values stored unrounded.
 }
+\examples{
+\dontrun{
+# Using Superman data: predict rt_critics_score from year and clark_age
+result <- linear_reg_answers(
+  psych350data::superman,
+  criterion = "rt_critics_score",
+  quant_predictors = c("year", "clark_age"),
+  quant_labels = c("Year", "Clark's Age")
+)
+
+# Access model results
+result$Model
+result$Bivariate
+result$Regression_Weights
+}
+
+}
