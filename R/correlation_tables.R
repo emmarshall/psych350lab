@@ -129,7 +129,7 @@ create_corr_table <- function(rh_name, vars, corr_results_list) {
 #' data(superman, package = "psych350data")
 #'
 #' # Filled answer KEY table
-#' ft_KEY <- create_corr_apa_table(
+#' ft_KEY <- create_apa_corr_table(
 #'   data = superman,
 #'   vars = c("clark_height_in", "rt_critics_score", "rt_audience_score"),
 #'   var_labels = c("1. Clark Height", "2. Critics Score", "3. Audience Score"),
@@ -138,14 +138,14 @@ create_corr_table <- function(rh_name, vars, corr_results_list) {
 #' ft_KEY
 #'
 #' # Blank student worksheet table
-#' ft_blank <- create_corr_apa_table(
+#' ft_blank <- create_apa_corr_table(
 #'   var_labels = c("1. Clark Height", "2. Critics Score", "3. Audience Score"),
 #'   KEY = FALSE
 #' )
 #' ft_blank
 #'
 #' @export
-create_corr_apa_table <- function(data = NULL, vars = NULL, var_labels = NULL,
+create_apa_corr_table <- function(data = NULL, vars = NULL, var_labels = NULL,
                                   KEY = TRUE,
                                   table_title = "Means, Standard Deviations, and Correlations") {
 

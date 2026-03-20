@@ -1,0 +1,538 @@
+---
+title: "Homework Checkers"
+subtitle: "Interactive webexercises answer checkers for every analysis type"
+order: 10
+format:
+  html:
+    mainfont: Sora
+    filters:
+      - _extensions/nebraska/hwchecker/webexercises.lua
+    theme:
+      - default
+      - _extensions/nebraska/hwchecker/_variables.scss
+      - _extensions/nebraska/hwchecker/_mixins.scss
+      - _extensions/nebraska/hwchecker/custom.scss
+    css:
+      - _extensions/nebraska/hwchecker/webex.css
+    include-after-body:
+      - _extensions/nebraska/hwchecker/webex.js
+execute: 
+  warning: false
+  message: false
+---
+
+## Overview
+
+The `psych350lab` package provides interactive homework checkers that
+students can use in Quarto HTML documents. Students enter their answers
+into fill-in-the-blank boxes or select from dropdown menus, and the
+boxes turn **green** for correct or **red** for incorrect.
+
+These checkers rely on the `webexercises` and `tinytable` packages.
+
+## Setup
+
+This vignette uses the homework-checker theme and webexercises support
+bundled inside the `nebraska` Quarto extension
+(`_extensions/nebraska/hwchecker/`). To use it in your own documents,
+make sure the `_extensions/nebraska` folder is in your project and add
+the hwchecker assets to your YAML header:
+
+```yaml
+format:
+  html:
+    mainfont: Sora
+    filters:
+      - _extensions/nebraska/hwchecker/webexercises.lua
+    theme:
+      - default
+      - _extensions/nebraska/hwchecker/_variables.scss
+      - _extensions/nebraska/hwchecker/_mixins.scss
+      - _extensions/nebraska/hwchecker/custom.scss
+    css:
+      - _extensions/nebraska/hwchecker/webex.css
+    include-after-body:
+      - _extensions/nebraska/hwchecker/webex.js
+```
+
+Every checker chunk must include `results: asis` so that the HTML renders
+correctly:
+
+```yaml
+#| results: asis
+```
+
+## General Workflow
+
+All checkers follow the same two-step pattern:
+
+1. **Compute results** using an `*_answers()` function
+2. **Create checker** using a `create_*_checker()` function
+
+```r
+# Step 1: Compute
+result <- some_answers(data, ...)
+
+# Step 2: Create checker
+create_some_checker(result, ...)
+```
+
+### How Rounding and Computation Work
+
+The `*_answers()` functions return **unrounded** values from the
+underlying statistical tests. No rounding is applied at the computation
+step so that full precision is preserved. The `create_*_checker()`
+functions then round each statistic to the appropriate number of decimal
+places (e.g., 2 for means and standard deviations, 3 for correlations
+and *p*-values) before building the fill-in-the-blank widgets. This
+means the checker's expected answers always match what students would
+report following APA formatting conventions.
+
+All analyses follow SPSS defaults. Missing values coded as −99 (or other
+SPSS user-missing codes) are converted to `NA` when the data are read
+with `haven::read_sav()` and `haven::zap_missing()`, so they are
+automatically excluded from computations.
+
+## Shared Setup
+
+All examples below use the Superman media dataset. Load the data once at
+the top of your document:
+
+```{r}
+#| label: setup
+#| message: false
+library(psych350lab)
+library(dplyr)
+data(superman, package = "psych350data")
+
+# Derive decade from year (not in the base dataset)
+superman <- superman |>
+  mutate(
+    decade = case_when(
+      year < 1970 ~ 1,
+      year < 2000 ~ 2,
+      year < 2010 ~ 3,
+      TRUE        ~ 4
+    )
+  )
+```
+
+
+## 1. Descriptive Statistics
+
+Students enter Mean, SD, and SEM for each variable and identify whether
+the mean is interpretable.
+
+### Compute
+
+```{r}
+#| label: desc-compute
+
+# Select and filter your analysis variables
+my_data <- superman |>
+  select(num, year, clark_height_in, clark_grp, height_diff, height_gap) |>
+  filter(!is.na(height_diff))
+
+# Compute descriptive statistics
+desc_result <- descriptives_answers(my_data,
+  vars = c("num", "year", "clark_height_in", "clark_grp",
+           "height_diff", "height_gap")
+)
+```
+
+### Checker
+
+```{r}
+#| label: desc-checker
+#| results: asis
+
+create_descriptives_checker(
+  vars = c("num", "year", "clark_height_in", "clark_grp",
+           "height_diff", "height_gap"),
+  desc_results_list = desc_result,
+  label          = "num",
+  quantitative   = c("year", "clark_height_in", "height_diff"),
+  binary         = "clark_grp",
+  multi_category = "height_gap",
+  var_labels = c(
+    num            = "Film Number",
+    year           = "Release Year",
+    clark_height_in = "Clark Height (in)",
+    clark_grp      = "Height Group",
+    height_diff    = "Height Difference",
+    height_gap     = "Height Gap Category"
+  )
+)
+```
+
+### Variable Type Categories
+
+| Category         | Meaning                          | Mean Interpretable? |
+|------------------|----------------------------------|---------------------|
+| `label`          | ID variable (e.g., film number)  | No                  |
+| `quantitative`   | Continuous numeric variable      | Yes                 |
+| `binary`         | Dichotomous variable (2 levels)  | Yes                 |
+| `multi_category` | Nominal variable (3+ levels)     | No                  |
+
+
+## 2. Correlations
+
+Students report the Pearson *r*, *p*-value, degrees of freedom, and
+descriptive statistics for a bivariate correlation.
+
+### Compute
+
+```{r}
+#| label: corr-compute
+
+corr_result <- corr_answers(superman, "clark_height_in", "rt_critics_score")
+```
+
+### Checker
+
+```{r}
+#| label: corr-checker
+#| results: asis
+
+create_corr_checker(
+  rh_name = "RH1",
+  vars = c("Clark Height", "Critics Score"),
+  corr_results_list = corr_result
+)
+```
+
+
+## 3. Chi-Square (2×2)
+
+Students report observed frequencies, the chi-square statistic,
+*p*-value, and degrees of freedom for a 2×2 test of independence.
+
+### Compute
+
+```{r}
+#| label: chi2x2-compute
+
+chi_result <- chi_square_answers(superman, "clark_grp", "tomatometer")
+```
+
+### Checker
+
+```{r}
+#| label: chi2x2-checker
+#| results: asis
+
+create_chisq_checker(
+  rh_name      = "RH1",
+  chi_results_list = chi_result,
+  var1_labels  = c("Under 6ft", "6ft+"),
+  var2_labels  = c("Rotten", "Fresh")
+)
+```
+
+
+## 4. K-Group Chi-Square (k×2)
+
+When the row variable has three or more levels, a significant omnibus
+chi-square is followed by pairwise 2×2 comparisons. Two checkers are
+needed: one for the omnibus test and one for the pairwise follow-ups.
+
+### Compute
+
+```{r}
+#| label: kgroup-chi-compute
+
+kgroup_chi <- chi_square_kgroup_answers(
+  data       = superman,
+  var1       = "decade",
+  var2       = "tomatometer",
+  var1_labels = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels = c("Rotten", "Fresh")
+)
+```
+
+### Omnibus Checker
+
+```{r}
+#| label: kgroup-chi-omnibus-checker
+#| results: asis
+
+create_chisq_omnibus_table(
+  rh_name            = "RH1",
+  chisq_results_list = kgroup_chi,
+  var1_labels        = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels        = c("Rotten", "Fresh")
+)
+```
+
+### Pairwise Checker
+
+```{r}
+#| label: kgroup-chi-pairwise-checker
+#| results: asis
+
+create_chisq_pairwise_checker(
+  chisq_results_list = kgroup_chi,
+  var1_labels        = c("1950s", "1970-80s", "2000s", "2010s"),
+  var2_labels        = c("Rotten", "Fresh")
+)
+```
+
+
+## 5. One-Way Between-Groups ANOVA (2 groups)
+
+Students report the *F* statistic, *p*-value, degrees of freedom, MSE,
+and group descriptives for a two-group between-groups comparison.
+
+### Compute
+
+```{r}
+#| label: bg-anova-compute
+
+bg_result <- bg_anova_answers(superman, iv = "clark_grp", dv = "rt_critics_score")
+```
+
+### Checker
+
+```{r}
+#| label: bg-anova-checker
+#| results: asis
+
+create_bg_anova_checker(
+  rh_name            = "RH1",
+  vars               = c("clark_grp", "rt_critics_score"),
+  anova_results_list = bg_result
+)
+```
+
+
+## 6. One-Way Within-Groups ANOVA (2 conditions)
+
+Students report the *F* statistic, *p*-value, degrees of freedom, MSE,
+and condition descriptives for a repeated-measures comparison.
+
+### Compute
+
+```{r}
+#| label: wg-anova-compute
+
+wg_result <- wg_anova_answers(
+  superman,
+  dv1 = "rt_critics_score",
+  dv2 = "rt_audience_score",
+  dv1_label = "Critics Score",
+  dv2_label = "Audience Score"
+)
+```
+
+### Checker
+
+```{r}
+#| label: wg-anova-checker
+#| results: asis
+
+create_wg_anova_checker(
+  rh_name            = "RH1",
+  vars               = c("Critics Score", "Audience Score"),
+  anova_results_list = wg_result,
+  condition_labels   = c("Critics Score", "Audience Score")
+)
+```
+
+
+## 7. K-Group Between-Groups ANOVA (3+ groups)
+
+When the IV has three or more groups, the omnibus *F*-test is followed
+by LSD pairwise comparisons. Two checkers are needed.
+
+### Compute
+
+```{r}
+#| label: kgroup-bg-compute
+
+kgroup_bg <- anova_kgroup_answers(
+  data         = superman,
+  dv           = "rt_critics_score",
+  iv           = "decade",
+  group_labels = c("1950s", "1970-80s", "2000s", "2010s")
+)
+```
+
+### Omnibus Checker
+
+```{r}
+#| label: kgroup-bg-omnibus-checker
+#| results: asis
+
+create_anova_omnibus_checker(
+  rh_name            = "RH1",
+  anova_results_list = kgroup_bg,
+  group_labels       = c("1950s", "1970-80s", "2000s", "2010s")
+)
+```
+
+### LSD Pairwise Checker
+
+```{r}
+#| label: kgroup-bg-pairwise-checker
+#| results: asis
+
+create_lsd_pairwise_checker(
+  anova_results_list = kgroup_bg,
+  group_labels       = c("1950s", "1970-80s", "2000s", "2010s")
+)
+```
+
+
+## 8. Factorial ANOVA (2×2 Between-Groups / Mixed)
+
+Students report the interaction and main-effect *F*-tests, degrees of
+freedom, MSE, and follow-up comparisons. Two checkers cover the ANOVA
+results and the cell/marginal descriptive statistics.
+
+### Compute
+
+```{r}
+#| label: factorial-compute
+
+sm_factorial <- superman |>
+  mutate(era = if_else(year >= 2000, "Post-2000", "Pre-2000"))
+
+factorial_result <- anova_factorial_answers(
+  data      = sm_factorial,
+  dv        = "rt_critics_score",
+  iv1       = "clark_grp",
+  iv2       = "era",
+  iv1_labels = c("Under 6ft", "6ft+"),
+  iv2_labels = c("Pre-2000", "Post-2000")
+)
+```
+
+### ANOVA Checker
+
+```{r}
+#| label: factorial-anova-checker
+#| results: asis
+
+create_factbg_anova_checker(
+  rh_name            = "RH1",
+  anova_results_list = factorial_result,
+  iv1_name           = "Height Group",
+  iv2_name           = "Era"
+)
+```
+
+### Descriptives Checker (cell means and EMMs)
+
+```{r}
+#| label: factorial-desc-checker
+#| results: asis
+
+create_factbg_desc_checker(
+  anova_results_list = factorial_result,
+  iv1_name           = "Height Group",
+  iv2_name           = "Era",
+  iv1_labels         = c("Under 6ft", "6ft+"),
+  iv2_labels         = c("Pre-2000", "Post-2000")
+)
+```
+
+
+## 9. Linear Regression
+
+Students report model-level statistics (*R*, *R*², *F*, df, *p*) and
+predictor-level statistics (*r*, *b*, significance, interpretation
+category). Two checkers split these.
+
+### Compute
+
+```{r}
+#| label: reg-compute
+
+sm_reg <- superman |>
+  filter(
+    !is.na(rt_critics_score),
+    !is.na(clark_height_in),
+    !is.na(rt_audience_score)
+  )
+
+reg_result <- linear_reg_answers(
+  data              = sm_reg,
+  criterion         = "rt_critics_score",
+  quant_predictors  = c("clark_height_in", "rt_audience_score"),
+  quant_labels      = c("Clark Height", "Audience Score"),
+  criterion_label   = "Critics Score"
+)
+```
+
+### Model Summary Checker
+
+```{r}
+#| label: reg-model-checker
+#| results: asis
+
+create_regression_model_checker(reg_result)
+```
+
+### Predictor Results Checker
+
+```{r}
+#| label: reg-predictor-checker
+#| results: asis
+
+create_regression_predictor_checker(reg_result, show_legend = TRUE)
+```
+
+
+## Quick Reference
+
+### Analysis Functions
+
+| Function                         | Analysis Type        | Key Arguments                                       |
+|----------------------------------|----------------------|-----------------------------------------------------|
+| `descriptives_answers()`         | Univariate stats     | `data`, `vars`                                      |
+| `corr_answers()`                 | Correlation          | `data`, `var1`, `var2`                              |
+| `chi_square_answers()`           | Chi-Square (2×2)     | `data`, `var1`, `var2`                              |
+| `chi_square_kgroup_answers()`    | Chi-Square (k×2)     | `data`, `var1`, `var2`, `var1_labels`, `var2_labels` |
+| `bg_anova_answers()`             | BG ANOVA (2 groups)  | `data`, `iv`, `dv`                                  |
+| `wg_anova_answers()`             | WG ANOVA (2 cond.)   | `data`, `dv1`, `dv2`                                |
+| `anova_kgroup_answers()`         | BG ANOVA (k groups)  | `data`, `dv`, `iv`, `group_labels`                  |
+| `anova_factorial_answers()`      | 2×2 Factorial (BG)   | `data`, `dv`, `iv1`, `iv2`                          |
+| `anova_factmg_answers()`         | 2×2 Factorial (MG)   | `data`, `dv`, `iv1`, `iv2`                          |
+| `anova_factwg_answers()`         | 2×2 Factorial (WG)   | `data`, `dv_a1b1`, `dv_a1b2`, `dv_a2b1`, `dv_a2b2` |
+| `linear_reg_answers()`           | Regression           | `data`, `criterion`, `quant_predictors`             |
+
+### Checker Functions
+
+| Function                              | Analysis Type        | Key Components                          |
+|---------------------------------------|----------------------|-----------------------------------------|
+| `create_descriptives_checker()`       | Univariate           | Mean, SD, SEM, interpretability         |
+| `create_corr_checker()`               | Correlation          | *r*, *p*, df, descriptives              |
+| `create_chisq_checker()`              | Chi-Square (2×2)     | χ², *p*, df, frequencies                |
+| `create_chisq_omnibus_table()`        | Chi-Square omnibus   | χ², *p*, df, *N*, frequencies           |
+| `create_chisq_pairwise_checker()`     | Chi-Square pairwise  | χ² critical, percentages, effect sizes  |
+| `create_bg_anova_checker()`           | BG ANOVA (2 groups)  | *F*, *p*, df, MSE, group stats          |
+| `create_wg_anova_checker()`           | WG ANOVA (2 cond.)   | *F*, *p*, df, MSE, condition stats      |
+| `create_anova_omnibus_checker()`      | BG ANOVA (k groups)  | *F*, *p*, df, MSE, *N*, *k*, group stats |
+| `create_lsd_pairwise_checker()`       | LSD pairwise         | LSD MMD, mean differences, effect sizes |
+| `create_factbg_anova_checker()`       | 2×2 Factorial (BG) ANOVA | Interaction, main effects, LSD          |
+| `create_factbg_desc_checker()`        | 2×2 Factorial (BG) desc. | Cell means, EMMs                        |
+| `create_factmg_anova_checker()`       | 2×2 Factorial (MG) ANOVA | Interaction, main effects, LSD          |
+| `create_factmg_desc_checker()`        | 2×2 Factorial (MG) desc. | Cell means, EMMs                        |
+| `create_factwg_anova_checker()`       | 2×2 Factorial (WG) ANOVA | Interaction, main effects, LSD          |
+| `create_factwg_desc_checker()`        | 2×2 Factorial (WG) desc. | Cell means, EMMs                        |
+| `create_regression_model_checker()`   | Regression model     | *R*, *R*², *F*, df, *p*                 |
+| `create_regression_predictor_checker()` | Regression predictors | *r*, *b*, significance, categories    |
+
+
+## Troubleshooting
+
+**Tables not rendering.** Make sure your chunk includes `#| results: asis`.
+
+**webexercises styles missing.** Check that your YAML includes the CSS
+and JS files as shown in the Setup section above.
+
+**Checker shows wrong answers.** Make sure you are passing the result
+from the `*_answers()` function, not raw data.
+
+**Package not found errors.** Install required packages with
+`install.packages(c("tinytable", "webexercises"))`.

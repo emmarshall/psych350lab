@@ -39,7 +39,288 @@ website:
             file: vignettes/factorial-anova.qmd
           - text: Multiple Linear Regression
             file: vignettes/regression.qmd
-      - section: $ALTDOC_MAN_BLOCK
+      - section: Worksheets
+        contents:
+          - text: Answer Checkers (HTML)
+            file: vignettes/homework-checkers.qmd
+      - section: Functions
+        contents:
+          - section: Analysis
+            contents:
+              - text: descriptives_answers
+                file: man/descriptives_answers.qmd
+              - text: compute_summary_stats
+                file: man/compute_summary_stats.qmd
+              - text: corr_answers
+                file: man/corr_answers.qmd
+              - text: chi_square_answers
+                file: man/chi_square_answers.qmd
+              - text: chi_square_kgroup_answers
+                file: man/chi_square_kgroup_answers.qmd
+              - text: bg_anova_answers
+                file: man/bg_anova_answers.qmd
+              - text: wg_anova_answers
+                file: man/wg_anova_answers.qmd
+              - text: anova_kgroup_answers
+                file: man/anova_kgroup_answers.qmd
+              - text: anova_factorial_answers
+                file: man/anova_factorial_answers.qmd
+              - text: anova_factmg_answers
+                file: man/anova_factmg_answers.qmd
+              - text: anova_factwg_answers
+                file: man/anova_factwg_answers.qmd
+              - text: linear_reg_answers
+                file: man/linear_reg_answers.qmd
+              - text: lsd_hsd_calculator
+                file: man/lsd_hsd_calculator.qmd
+              - text: pr_means_to_r
+                file: man/pr_means_to_r.qmd
+              - text: pr_chi_to_r
+                file: man/pr_chi_to_r.qmd
+          - section: Interactive Checkers
+            contents:
+              - text: create_descriptives_checker
+                file: man/create_descriptives_checker.qmd
+              - text: create_corr_checker
+                file: man/create_corr_checker.qmd
+              - text: create_chisq_checker
+                file: man/create_chisq_checker.qmd
+              - text: create_chisq_omnibus_table
+                file: man/create_chisq_omnibus_table.qmd
+              - text: create_chisq_pairwise_checker
+                file: man/create_chisq_pairwise_checker.qmd
+              - text: create_bg_anova_checker
+                file: man/create_bg_anova_checker.qmd
+              - text: create_wg_anova_checker
+                file: man/create_wg_anova_checker.qmd
+              - text: create_anova_omnibus_checker
+                file: man/create_anova_omnibus_checker.qmd
+              - text: create_lsd_pairwise_checker
+                file: man/create_lsd_pairwise_checker.qmd
+              - text: create_factbg_anova_checker
+                file: man/create_factbg_anova_checker.qmd
+              - text: create_factbg_desc_checker
+                file: man/create_factbg_desc_checker.qmd
+              - text: create_factmg_anova_checker
+                file: man/create_factmg_anova_checker.qmd
+              - text: create_factmg_desc_checker
+                file: man/create_factmg_desc_checker.qmd
+              - text: create_factwg_anova_checker
+                file: man/create_factwg_anova_checker.qmd
+              - text: create_factwg_desc_checker
+                file: man/create_factwg_desc_checker.qmd
+              - text: create_regression_model_checker
+                file: man/create_regression_model_checker.qmd
+              - text: create_regression_predictor_checker
+                file: man/create_regression_predictor_checker.qmd
+              - text: create_correlation_interpretations
+                file: man/create_correlation_interpretations.qmd
+              - text: create_regression_weight_interpretations
+                file: man/create_regression_weight_interpretations.qmd
+          - section: APA Tables (docx)
+            contents:
+              - text: create_apa_descriptives_table
+                file: man/create_apa_descriptives_table.qmd
+              - text: create_apa_corr_table
+                file: man/create_apa_corr_table.qmd
+              - text: create_apa_chi_crosstabs_table
+                file: man/create_apa_chi_crosstabs_table.qmd
+              - text: create_apa_anova_stats_table
+                file: man/create_apa_anova_stats_table.qmd
+              - text: create_apa_anova_descriptives_table
+                file: man/create_apa_anova_descriptives_table.qmd
+              - text: create_apa_factbg_desc_table
+                file: man/create_apa_factbg_desc_table.qmd
+              - text: create_apa_factmg_desc_table
+                file: man/create_apa_factmg_desc_table.qmd
+              - text: create_apa_factwg_desc_table
+                file: man/create_apa_factwg_desc_table.qmd
+              - text: create_apa_regression_table
+                file: man/create_apa_regression_table.qmd
+          - section: Worksheet Tables & KEY Functions
+            contents:
+              - text: create_descriptive_table
+                file: man/create_descriptive_table.qmd
+              - text: create_answer_table
+                file: man/create_answer_table.qmd
+              - text: create_corr_table
+                file: man/create_corr_table.qmd
+              - text: create_chi_crosstabs_table
+                file: man/create_chi_crosstabs_table.qmd
+              - text: create_chi_combined_table
+                file: man/create_chi_combined_table.qmd
+              - text: create_chi_contingency_table
+                file: man/create_chi_contingency_table.qmd
+              - text: create_rh_contingency
+                file: man/create_rh_contingency.qmd
+              - text: create_chisq_pairwise_table
+                file: man/create_chisq_pairwise_table.qmd
+              - text: create_bg_anova_table
+                file: man/create_bg_anova_table.qmd
+              - text: create_wg_anova_table
+                file: man/create_wg_anova_table.qmd
+              - text: create_anova_source_table
+                file: man/create_anova_source_table.qmd
+              - text: create_bg_anova_combined_table
+                file: man/create_bg_anova_combined_table.qmd
+              - text: create_wg_anova_combined_table
+                file: man/create_wg_anova_combined_table.qmd
+              - text: create_factbg_anova_stats_table
+                file: man/create_factbg_anova_stats_table.qmd
+              - text: factbg_table_with_comparisons
+                file: man/factbg_table_with_comparisons.qmd
+              - text: create_linear_reg_combined_table
+                file: man/create_linear_reg_combined_table.qmd
+              - text: create_linear_reg_correlation_interp_ft
+                file: man/create_linear_reg_correlation_interp_ft.qmd
+              - text: create_correlation_interp_ft
+                file: man/create_correlation_interp_ft.qmd
+              - text: create_regwt_interp_ft
+                file: man/create_regwt_interp_ft.qmd
+              - text: anova_statistics_KEY
+                file: man/anova_statistics_KEY.qmd
+              - text: anova_descriptives_KEY
+                file: man/anova_descriptives_KEY.qmd
+              - text: lsd_pairwise_KEY
+                file: man/lsd_pairwise_KEY.qmd
+              - text: chisq_pairwise_KEY
+                file: man/chisq_pairwise_KEY.qmd
+          - section: Worksheet Formatters
+            contents:
+              - text: format_corr_results
+                file: man/format_corr_results.qmd
+              - text: format_chi2_results
+                file: man/format_chi2_results.qmd
+              - text: format_chi_omnibus_results
+                file: man/format_chi_omnibus_results.qmd
+              - text: format_bg_anova_results
+                file: man/format_bg_anova_results.qmd
+              - text: format_wg_anova_results
+                file: man/format_wg_anova_results.qmd
+              - text: format_factbg_results
+                file: man/format_factbg_results.qmd
+              - text: factbg_interaction_results
+                file: man/factbg_interaction_results.qmd
+              - text: factbg_main_effect_results
+                file: man/factbg_main_effect_results.qmd
+              - text: factwg_interaction_results
+                file: man/factwg_interaction_results.qmd
+              - text: factwg_main_effect_results
+                file: man/factwg_main_effect_results.qmd
+              - text: factwg_table_with_comparisons
+                file: man/factwg_table_with_comparisons.qmd
+              - text: factmg_interaction_results
+                file: man/factmg_interaction_results.qmd
+              - text: factmg_main_effect_results
+                file: man/factmg_main_effect_results.qmd
+              - text: factmg_table_with_comparisons
+                file: man/factmg_table_with_comparisons.qmd
+              - text: create_rh_support_text
+                file: man/create_rh_support_text.qmd
+              - text: key_or_blank
+                file: man/key_or_blank.qmd
+              - text: worksheet_value
+                file: man/worksheet_value.qmd
+          - section: APA Write-Ups
+            contents:
+              - text: apa_corr_writeup
+                file: man/apa_corr_writeup.qmd
+              - text: apa_chi_writeup
+                file: man/apa_chi_writeup.qmd
+              - text: apa_kgroup_chi_writeup
+                file: man/apa_kgroup_chi_writeup.qmd
+              - text: apa_bg_anova_writeup
+                file: man/apa_bg_anova_writeup.qmd
+              - text: apa_wg_anova_writeup
+                file: man/apa_wg_anova_writeup.qmd
+              - text: apa_kgroup_anova_writeup
+                file: man/apa_kgroup_anova_writeup.qmd
+              - text: apa_wg_kgroup_anova_writeup
+                file: man/apa_wg_kgroup_anova_writeup.qmd
+              - text: apa_planned_comparisons_writeup
+                file: man/apa_planned_comparisons_writeup.qmd
+              - text: apa_wg_simple_contrasts_writeup
+                file: man/apa_wg_simple_contrasts_writeup.qmd
+              - text: apa_2x2_bg_factorial_writeup
+                file: man/apa_2x2_bg_factorial_writeup.qmd
+              - text: apa_2x2_mixed_factorial_writeup
+                file: man/apa_2x2_mixed_factorial_writeup.qmd
+              - text: apa_2x2_wg_factorial_writeup
+                file: man/apa_2x2_wg_factorial_writeup.qmd
+          - section: Formatting Utilities
+            contents:
+              - text: format_stat
+                file: man/format_stat.qmd
+              - text: format_p_value
+                file: man/format_p_value.qmd
+              - text: format_r
+                file: man/format_r.qmd
+              - text: format_effect
+                file: man/format_effect.qmd
+              - text: format_effect_size_anova
+                file: man/format_effect_size_anova.qmd
+              - text: format_mean
+                file: man/format_mean.qmd
+              - text: format_F
+                file: man/format_F.qmd
+              - text: format_t
+                file: man/format_t.qmd
+              - text: format_chi2
+                file: man/format_chi2.qmd
+              - text: format_mse
+                file: man/format_mse.qmd
+              - text: format_df
+                file: man/format_df.qmd
+              - text: format_n
+                file: man/format_n.qmd
+              - text: format_int
+                file: man/format_int.qmd
+          - section: APA Inline Reporting
+            contents:
+              - text: apa_inline_r
+                file: man/apa_inline_r.qmd
+              - text: apa_inline_chi2
+                file: man/apa_inline_chi2.qmd
+              - text: apa_inline_t
+                file: man/apa_inline_t.qmd
+              - text: apa_inline_F
+                file: man/apa_inline_F.qmd
+              - text: apa_inline_anova
+                file: man/apa_inline_anova.qmd
+          - section: Markdown & Display Helpers
+            contents:
+              - text: md_format
+                file: man/md_format.qmd
+              - text: highlight_text
+                file: man/highlight_text.qmd
+          - section: Data & Theme Utilities
+            contents:
+              - text: get_spss_data
+                file: man/get_spss_data.qmd
+              - text: theme_SPSS
+                file: man/theme_SPSS.qmd
+              - text: palette_SPSS
+                file: man/palette_SPSS.qmd
+              - text: SPSS_pal
+                file: man/SPSS_pal.qmd
+              - text: scale_color_SPSS
+                file: man/scale_color_SPSS.qmd
+              - text: scale_fill_SPSS
+                file: man/scale_fill_SPSS.qmd
+              - text: number_SPSS
+                file: man/number_SPSS.qmd
+          - section: Regression Table Helpers
+            contents:
+              - text: linear_reg_model_statistics
+                file: man/linear_reg_model_statistics.qmd
+              - text: linear_reg_model_evaluation
+                file: man/linear_reg_model_evaluation.qmd
+              - text: linear_reg_table_legend
+                file: man/linear_reg_table_legend.qmd
+              - text: linear_reg_category_legend
+                file: man/linear_reg_category_legend.qmd
+              - text: regression_category_legend
+                file: man/regression_category_legend.qmd
       - text: News
         file: $ALTDOC_NEWS
       - text: Changelog

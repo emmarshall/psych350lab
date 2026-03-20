@@ -83,7 +83,7 @@ corr_BLANK <- format_corr_results(
 
 ## 3. Create APA Correlation Tables
 
-`create_corr_apa_table()` produces a publication-ready correlation matrix
+`create_apa_corr_table()` produces a publication-ready correlation matrix
 as a `flextable`. The `KEY` argument toggles between filled and blank versions.
 
 ```{r}
@@ -91,7 +91,7 @@ as a `flextable`. The `KEY` argument toggles between filled and blank versions.
 #| eval: false
 
 # Answer key table
-create_corr_apa_table(
+create_apa_corr_table(
   data       = superman,
   vars       = c("clark_height_in", "rt_audience_score"),
   var_labels = c("1. Actor Height (in)", "2. Audience Score"),
@@ -100,7 +100,7 @@ create_corr_apa_table(
 )
 
 # Blank table for worksheets (no data needed)
-create_corr_apa_table(
+create_apa_corr_table(
   var_labels = c("1. Actor Height (in)", "2. Audience Score"),
   KEY        = FALSE
 )
@@ -232,12 +232,12 @@ RH1_corr_KEY <- format_corr_results(
 )
 
 # ── APA Tables ───────────────────────────────────────────
-RH1_table_BLANK <- create_corr_apa_table(
+RH1_table_BLANK <- create_apa_corr_table(
   var_labels = c("1. Actor Height (in)", "2. Audience Score"),
   KEY = FALSE
 )
 
-RH1_table_KEY <- create_corr_apa_table(
+RH1_table_KEY <- create_apa_corr_table(
   data = superman, vars = RH1_vars,
   var_labels = c("1. Actor Height (in)", "2. Audience Score"),
   KEY = TRUE,
@@ -272,7 +272,7 @@ RH1_plot <- ggplot(superman, aes(x = clark_height_in, y = rt_audience_score)) +
 |----------|---------|
 | `corr_answers()` | Run Pearson correlation, get r, p, df, descriptives |
 | `format_corr_results()` | Markdown output for worksheets (KEY/BLANK) |
-| `create_corr_apa_table()` | APA-style correlation matrix (flextable) |
+| `create_apa_corr_table()` | APA-style correlation matrix (flextable) |
 | `apa_corr_writeup()` | Full APA write-up with hypothesis evaluation |
 | `create_corr_checker()` | Interactive HTML homework checker |
 | `apa_inline_r()` | Inline APA-formatted r statistic |

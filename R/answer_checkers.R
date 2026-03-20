@@ -181,8 +181,9 @@ sig_mcq <- function(p_value) {
 #' **tinytable** and **webexercises** packages.
 #'
 #' @param vars Character vector. Variable names to include, in display order.
-#' @param desc_results_list Output from [compute_summary_stats()]. Must contain
-#'   `$Descriptives` (a tibble with columns `variable`, `mean`, `sd`, `n`, `sem`).
+#' @param desc_results_list Output from [descriptives_answers()] (a list with
+#'   `$Descriptives`). Also accepts a raw tibble from [compute_summary_stats()]
+#'   for backwards compatibility.
 #' @param var_labels Named character vector or `NULL`. Optional display labels,
 #'   e.g. `c(clark_height_in = "Clark Height")`.
 #' @param label Character vector or `NULL`. Variables that are IDs/labels
@@ -196,10 +197,18 @@ sig_mcq <- function(p_value) {
 #'
 #' @return A tinytable object with embedded webexercise elements.
 #'
+#' @seealso [descriptives_answers()], [compute_summary_stats()]
+#'
 #' @examples
 #' \dontrun{
 #' data(superman, package = "psych350data")
-#' result <- compute_summary_stats(superman,
+#' library(dplyr)
+#'
+#' my_data <- superman |>
+#'   select(year, clark_height_in, height_diff) |>
+#'   filter(!is.na(height_diff))
+#'
+#' result <- descriptives_answers(my_data,
 #'   vars = c("year", "clark_height_in", "height_diff"))
 #' create_descriptives_checker(
 #'   vars = c("year", "clark_height_in", "height_diff"),
@@ -220,7 +229,14 @@ create_descriptives_checker <- function(vars,
 
   .check_packages()
 
-  desc_stats <- desc_results_list$Descriptives
+  # Accept either a list with $Descriptives (from descriptives_answers()) or
+
+  # a raw tibble (from compute_summary_stats()) for backwards compatibility
+  if (is.data.frame(desc_results_list)) {
+    desc_stats <- desc_results_list
+  } else {
+    desc_stats <- desc_results_list$Descriptives
+  }
 
   var_type_map <- c(
     stats::setNames(rep("label",          length(label)),          label),
@@ -1211,14 +1227,14 @@ create_lsd_pairwise_checker <- function(anova_results_list,
 #'   iv1 = "iv1", iv2 = "iv2",
 #'   iv1_labels = c("Low", "High"),
 #'   iv2_labels = c("Control", "Treatment"))
-#' create_factorial_anova_checker("RH1", result,
+#' create_factbg_anova_checker("RH1", result,
 #'   iv1_name = "Anxiety", iv2_name = "Condition")
 #' }
 #'
 #' @export
-create_factorial_anova_checker <- function(rh_name, anova_results_list,
-                                           iv1_name = "IV1",
-                                           iv2_name = "IV2") {
+create_factbg_anova_checker <- function(rh_name, anova_results_list,
+                                        iv1_name = "IV1",
+                                        iv2_name = "IV2") {
 
   .check_packages()
 
@@ -1324,11 +1340,11 @@ create_factorial_anova_checker <- function(rh_name, anova_results_list,
 #' @return A tinytable object with embedded webexercise elements.
 #'
 #' @export
-create_factorial_desc_checker <- function(anova_results_list,
-                                          iv1_name = "IV1",
-                                          iv2_name = "IV2",
-                                          iv1_labels = NULL,
-                                          iv2_labels = NULL) {
+create_factbg_desc_checker <- function(anova_results_list,
+                                       iv1_name = "IV1",
+                                       iv2_name = "IV2",
+                                       iv1_labels = NULL,
+                                       iv2_labels = NULL) {
 
   .check_packages()
 
@@ -1385,6 +1401,299 @@ create_factorial_desc_checker <- function(anova_results_list,
     )
 }
 
+# =============================================================================
+# MIXED FACTORIAL ANOVA CHECKERS (BG × WG)
+# =============================================================================
+
+#' Interactive Mixed Factorial ANOVA Homework Checker
+#'
+#' Creates a [tinytable::tt()] table for checking interaction, within-groups
+#' main effect, and between-groups main effect F-tests for a mixed (BG × WG)
+#' factorial ANOVA. Mixed designs have separate error terms for WS and BS
+#' effects.
+#'
+#' @param rh_name Character. Research hypothesis label.
+#' @param anova_results_list Output from [anova_factmg_answers()].
+#' @param bg_name Character. Display name for the between-groups IV.
+#' @param wg_name Character. Display name for the within-groups IV.
+#'
+#' @return A tinytable object with embedded webexercise elements.
+#'
+#' @export
+create_factmg_anova_checker <- function(rh_name, anova_results_list,
+                                        bg_name = "BG IV",
+                                        wg_name = "WG IV") {
+  .check_packages()
+
+  # Interaction (uses WS error)
+  f_ix   <- .safe_format(anova_results_list$WithinSubjects$Interaction$F, "stat")
+  p_ix   <- anova_results_list$WithinSubjects$Interaction$p_value
+  p_ix_fmt <- .format_p_apa(p_ix)
+  df_ix  <- .safe_format(anova_results_list$WithinSubjects$Interaction$df, "int")
+  df_ws_err <- .safe_format(anova_results_list$WithinSubjects$Error$df, "int")
+  ms_ws_err <- .safe_format(anova_results_list$WithinSubjects$Error$ms, "stat")
+
+  # WG main effect (uses WS error)
+  f_wg   <- .safe_format(anova_results_list$WithinSubjects$MainEffect_WG$F, "stat")
+  p_wg   <- anova_results_list$WithinSubjects$MainEffect_WG$p_value
+  p_wg_fmt <- .format_p_apa(p_wg)
+  df_wg  <- .safe_format(anova_results_list$WithinSubjects$MainEffect_WG$df, "int")
+
+  # BG main effect (uses BS error)
+  f_bg   <- .safe_format(anova_results_list$BetweenSubjects$MainEffect_BG$F, "stat")
+  p_bg   <- anova_results_list$BetweenSubjects$MainEffect_BG$p_value
+  p_bg_fmt <- .format_p_apa(p_bg)
+  df_bg  <- .safe_format(anova_results_list$BetweenSubjects$MainEffect_BG$df, "int")
+  df_bs_err <- .safe_format(anova_results_list$BetweenSubjects$Error$df, "int")
+  ms_bs_err <- .safe_format(anova_results_list$BetweenSubjects$Error$ms, "stat")
+
+  # Build tables
+  ix_data <- tibble::tibble(
+    ` `           = paste("Interaction:", bg_name, "\u00D7", wg_name),
+    F             = webexercises::fitb(f_ix),
+    p             = webexercises::fitb(p_ix_fmt),
+    `df (effect)` = webexercises::fitb(df_ix),
+    `df (error)`  = webexercises::fitb(df_ws_err),
+    MSE           = webexercises::fitb(ms_ws_err)
+  )
+  ix_table <- tinytable::tt(ix_data) |> tinytable::format_tt(escape = FALSE)
+
+  wg_data <- tibble::tibble(
+    ` `           = paste("WG Main Effect:", wg_name),
+    F             = webexercises::fitb(f_wg),
+    p             = webexercises::fitb(p_wg_fmt),
+    `df (effect)` = webexercises::fitb(df_wg),
+    `df (error)`  = webexercises::fitb(df_ws_err),
+    MSE           = webexercises::fitb(ms_ws_err)
+  )
+  wg_table <- tinytable::tt(wg_data) |> tinytable::format_tt(escape = FALSE)
+
+  bg_data <- tibble::tibble(
+    ` `           = paste("BG Main Effect:", bg_name),
+    F             = webexercises::fitb(f_bg),
+    p             = webexercises::fitb(p_bg_fmt),
+    `df (effect)` = webexercises::fitb(df_bg),
+    `df (error)`  = webexercises::fitb(df_bs_err),
+    MSE           = webexercises::fitb(ms_bs_err)
+  )
+  bg_table <- tinytable::tt(bg_data) |> tinytable::format_tt(escape = FALSE)
+
+  tinytable::rbind2(ix_table, wg_table, use_names = FALSE) |>
+    tinytable::rbind2(bg_table, use_names = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class    = "table table-striped table-hover table-sm",
+      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
+    )
+}
+
+#' Interactive Mixed Factorial Descriptives Homework Checker
+#'
+#' Creates a [tinytable::tt()] grid showing cell means and estimated
+#' marginal means (EMMs) for a mixed (BG × WG) factorial design with
+#' fill-in-the-blank inputs.
+#'
+#' @param anova_results_list Output from [anova_factmg_answers()].
+#' @param bg_name Character. Display name for the BG IV.
+#' @param wg_name Character. Display name for the WG IV.
+#'
+#' @return A tinytable object with embedded webexercise elements.
+#'
+#' @export
+create_factmg_desc_checker <- function(anova_results_list,
+                                       bg_name = "BG IV",
+                                       wg_name = "WG IV") {
+  .check_packages()
+
+  desc_stats <- anova_results_list$Descriptives
+  emm_bg     <- anova_results_list$EMMs$BG
+  emm_wg     <- anova_results_list$EMMs$WG
+  info       <- anova_results_list$FactorInfo
+
+  bg_levels <- info$bg_levels
+  bg_labels <- info$bg_labels
+  wg_labels <- info$wg_labels
+
+  # Build cell means grid: BG levels as rows, WG levels as columns
+  cell_data <- tibble::tibble(
+    ` ` = bg_labels
+  )
+
+  for (j in seq_along(wg_labels)) {
+    col_vals <- purrr::map_chr(seq_along(bg_levels), \(i) {
+      cell <- desc_stats[desc_stats$bg_level == bg_levels[i] &
+                           desc_stats$wg_level == wg_labels[j], ]
+      webexercises::fitb(.safe_format(cell$mean[1], "stat"))
+    })
+    cell_data[[wg_labels[j]]] <- col_vals
+  }
+
+  # EMM column for BG
+  cell_data[["EMM"]] <- purrr::map_chr(seq_along(bg_levels), \(i) {
+    webexercises::fitb(.safe_format(emm_bg$mean[i], "stat"))
+  })
+
+  # EMM row for WG
+  emm_row <- tibble::tibble(` ` = "EMM")
+  for (j in seq_along(wg_labels)) {
+    emm_row[[wg_labels[j]]] <- webexercises::fitb(.safe_format(emm_wg$mean[j], "stat"))
+  }
+  emm_row[["EMM"]] <- ""
+
+  full_data <- dplyr::bind_rows(cell_data, emm_row)
+
+  tinytable::tt(full_data) |>
+    tinytable::format_tt(escape = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class    = "table table-bordered table-sm",
+      bootstrap_css_rule = "width: 70%; margin-left: auto; margin-right: auto;"
+    )
+}
+
+# =============================================================================
+# WITHIN-GROUPS FACTORIAL ANOVA CHECKERS
+# =============================================================================
+
+#' Interactive Within-Groups Factorial ANOVA Homework Checker
+#'
+#' Creates a [tinytable::tt()] table for checking interaction and main
+#' effect F-tests for a within-groups factorial ANOVA. Each effect has
+#' its own error term (separate residuals).
+#'
+#' @param rh_name Character. Research hypothesis label.
+#' @param anova_results_list Output from [anova_factwg_answers()].
+#' @param iv1_name Character. Display name for IV1.
+#' @param iv2_name Character. Display name for IV2.
+#'
+#' @return A tinytable object with embedded webexercise elements.
+#'
+#' @export
+create_factwg_anova_checker <- function(rh_name, anova_results_list,
+                                        iv1_name = "IV1",
+                                        iv2_name = "IV2") {
+  .check_packages()
+
+  # Interaction
+  f_ix    <- .safe_format(anova_results_list$ANOVA$Interaction$F, "stat")
+  p_ix    <- anova_results_list$ANOVA$Interaction$p_value
+  p_ix_fmt <- .format_p_apa(p_ix)
+  df_ix   <- .safe_format(anova_results_list$ANOVA$Interaction$df, "int")
+  df_err_ix <- .safe_format(anova_results_list$ANOVA$Error_Interaction$df, "int")
+  ms_err_ix <- .safe_format(anova_results_list$ANOVA$Error_Interaction$ms, "stat")
+
+  # IV1 main effect
+  f_iv1    <- .safe_format(anova_results_list$ANOVA$MainEffect_IV1$F, "stat")
+  p_iv1    <- anova_results_list$ANOVA$MainEffect_IV1$p_value
+  p_iv1_fmt <- .format_p_apa(p_iv1)
+  df_iv1   <- .safe_format(anova_results_list$ANOVA$MainEffect_IV1$df, "int")
+  df_err_iv1 <- .safe_format(anova_results_list$ANOVA$Error_IV1$df, "int")
+  ms_err_iv1 <- .safe_format(anova_results_list$ANOVA$Error_IV1$ms, "stat")
+
+  # IV2 main effect
+  f_iv2    <- .safe_format(anova_results_list$ANOVA$MainEffect_IV2$F, "stat")
+  p_iv2    <- anova_results_list$ANOVA$MainEffect_IV2$p_value
+  p_iv2_fmt <- .format_p_apa(p_iv2)
+  df_iv2   <- .safe_format(anova_results_list$ANOVA$MainEffect_IV2$df, "int")
+  df_err_iv2 <- .safe_format(anova_results_list$ANOVA$Error_IV2$df, "int")
+  ms_err_iv2 <- .safe_format(anova_results_list$ANOVA$Error_IV2$ms, "stat")
+
+  # Build tables — each effect row has its own df(error) and MSE
+  ix_data <- tibble::tibble(
+    ` `           = paste("Interaction:", iv1_name, "\u00D7", iv2_name),
+    F             = webexercises::fitb(f_ix),
+    p             = webexercises::fitb(p_ix_fmt),
+    `df (effect)` = webexercises::fitb(df_ix),
+    `df (error)`  = webexercises::fitb(df_err_ix),
+    MSE           = webexercises::fitb(ms_err_ix)
+  )
+  ix_table <- tinytable::tt(ix_data) |> tinytable::format_tt(escape = FALSE)
+
+  iv1_data <- tibble::tibble(
+    ` `           = paste("Main Effect:", iv1_name),
+    F             = webexercises::fitb(f_iv1),
+    p             = webexercises::fitb(p_iv1_fmt),
+    `df (effect)` = webexercises::fitb(df_iv1),
+    `df (error)`  = webexercises::fitb(df_err_iv1),
+    MSE           = webexercises::fitb(ms_err_iv1)
+  )
+  iv1_table <- tinytable::tt(iv1_data) |> tinytable::format_tt(escape = FALSE)
+
+  iv2_data <- tibble::tibble(
+    ` `           = paste("Main Effect:", iv2_name),
+    F             = webexercises::fitb(f_iv2),
+    p             = webexercises::fitb(p_iv2_fmt),
+    `df (effect)` = webexercises::fitb(df_iv2),
+    `df (error)`  = webexercises::fitb(df_err_iv2),
+    MSE           = webexercises::fitb(ms_err_iv2)
+  )
+  iv2_table <- tinytable::tt(iv2_data) |> tinytable::format_tt(escape = FALSE)
+
+  tinytable::rbind2(ix_table, iv1_table, use_names = FALSE) |>
+    tinytable::rbind2(iv2_table, use_names = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class    = "table table-striped table-hover table-sm",
+      bootstrap_css_rule = "width: 90%; margin-left: auto; margin-right: auto;"
+    )
+}
+
+#' Interactive Within-Groups Factorial Descriptives Homework Checker
+#'
+#' Creates a [tinytable::tt()] grid showing cell means and estimated
+#' marginal means (EMMs) for a within-groups factorial design with
+#' fill-in-the-blank inputs. Supports arbitrary k × j designs.
+#'
+#' @param anova_results_list Output from [anova_factwg_answers()].
+#' @param iv1_name Character. Display name for IV1 (rows).
+#' @param iv2_name Character. Display name for IV2 (columns).
+#'
+#' @return A tinytable object with embedded webexercise elements.
+#'
+#' @export
+create_factwg_desc_checker <- function(anova_results_list,
+                                       iv1_name = "IV1",
+                                       iv2_name = "IV2") {
+  .check_packages()
+
+  desc_stats <- anova_results_list$Descriptives
+  emm_iv1    <- anova_results_list$EMMs$IV1
+  emm_iv2    <- anova_results_list$EMMs$IV2
+  info       <- anova_results_list$FactorInfo
+
+  iv1_labels <- info$iv1_labels
+  iv2_labels <- info$iv2_labels
+
+  # Build cell means grid: IV1 levels as rows, IV2 levels as columns
+  cell_data <- tibble::tibble(` ` = iv1_labels)
+
+  for (j in seq_along(iv2_labels)) {
+    col_vals <- purrr::map_chr(seq_along(iv1_labels), \(i) {
+      cell <- desc_stats[desc_stats$iv1_level == iv1_labels[i] &
+                           desc_stats$iv2_level == iv2_labels[j], ]
+      webexercises::fitb(.safe_format(cell$mean[1], "stat"))
+    })
+    cell_data[[iv2_labels[j]]] <- col_vals
+  }
+
+  # EMM column for IV1
+  cell_data[["EMM"]] <- purrr::map_chr(seq_along(iv1_labels), \(i) {
+    webexercises::fitb(.safe_format(emm_iv1$mean[i], "stat"))
+  })
+
+  # EMM row for IV2
+  emm_row <- tibble::tibble(` ` = "EMM")
+  for (j in seq_along(iv2_labels)) {
+    emm_row[[iv2_labels[j]]] <- webexercises::fitb(.safe_format(emm_iv2$mean[j], "stat"))
+  }
+  emm_row[["EMM"]] <- ""
+
+  full_data <- dplyr::bind_rows(cell_data, emm_row)
+
+  tinytable::tt(full_data) |>
+    tinytable::format_tt(escape = FALSE) |>
+    tinytable::style_tt(
+      bootstrap_class    = "table table-bordered table-sm",
+      bootstrap_css_rule = "width: 70%; margin-left: auto; margin-right: auto;"
+    )
+}
 
 # =============================================================================
 # REGRESSION MODEL CHECKER

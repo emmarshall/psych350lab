@@ -78,7 +78,7 @@ key_output <- format_corr_results(
 )
 
 # ── Step 4: Create APA table ─────────────────────────────
-create_corr_apa_table(
+create_apa_corr_table(
   data = superman,
   vars = c("clark_height_in", "rt_audience_score"),
   var_labels = c("1. Actor Height (in)", "2. Audience Score"),
@@ -151,7 +151,7 @@ Functions follow a consistent naming pattern:
 |---------|---------|---------|
 | `*_answers()` | Run analysis, return raw results | `corr_answers()`, `bg_anova_answers()` |
 | `format_*_results()` | Markdown for worksheets (KEY/BLANK) | `format_corr_results()` |
-| `create_*_table()` | APA flextable | `create_corr_apa_table()` |
+| `create_*_table()` | APA flextable | `create_apa_corr_table()` |
 | `create_*_checker()` | Interactive HTML checker | `create_corr_checker()` |
 | `apa_*_writeup()` | Full APA write-up text | `apa_corr_writeup()` |
 | `apa_inline_*()` | Inline APA statistic | `apa_inline_r()` |

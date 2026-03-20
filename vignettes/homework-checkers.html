@@ -1,0 +1,2443 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.35">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Homework Checkers</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="homework-checkers_files/libs/clipboard/clipboard.min.js"></script>
+<script src="homework-checkers_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="homework-checkers_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="homework-checkers_files/libs/quarto-html/popper.min.js"></script>
+<script src="homework-checkers_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="homework-checkers_files/libs/quarto-html/anchor.min.js"></script>
+<link href="homework-checkers_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="homework-checkers_files/libs/quarto-html/quarto-syntax-highlighting-de3508d3e6241af4f738b3ff8b57893e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="homework-checkers_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="homework-checkers_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="homework-checkers_files/libs/bootstrap/bootstrap-2763e97d69c9efa160505f3296afe71c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="homework-checkers_files/libs/quarto-contrib/webexercises-1.0.0/webex.js"></script>
+<link href="homework-checkers_files/libs/quarto-contrib/webexercises-1.0.0/webex.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="_extensions/nebraska/hwchecker/webex.css">
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework Checkers</h1>
+<p class="subtitle lead">Interactive webexercises answer checkers for every analysis type</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>The <code>psych350lab</code> package provides interactive homework checkers that students can use in Quarto HTML documents. Students enter their answers into fill-in-the-blank boxes or select from dropdown menus, and the boxes turn <strong>green</strong> for correct or <strong>red</strong> for incorrect.</p>
+<p>These checkers rely on the <code>webexercises</code> and <code>tinytable</code> packages.</p>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>This vignette uses the homework-checker theme and webexercises support bundled inside the <code>nebraska</code> Quarto extension (<code>_extensions/nebraska/hwchecker/</code>). To use it in your own documents, make sure the <code>_extensions/nebraska</code> folder is in your project and add the hwchecker assets to your YAML header:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">mainfont</span><span class="kw">:</span><span class="at"> Sora</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">filters</span><span class="kw">:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> _extensions/nebraska/hwchecker/webexercises.lua</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> default</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> _extensions/nebraska/hwchecker/_variables.scss</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> _extensions/nebraska/hwchecker/_mixins.scss</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> _extensions/nebraska/hwchecker/custom.scss</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> _extensions/nebraska/hwchecker/webex.css</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">include-after-body</span><span class="kw">:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> _extensions/nebraska/hwchecker/webex.js</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Every checker chunk must include <code>results: asis</code> so that the HTML renders correctly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: asis</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="general-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="general-workflow">General Workflow</h2>
+<p>All checkers follow the same two-step pattern:</p>
+<ol type="1">
+<li><strong>Compute results</strong> using an <code>*_answers()</code> function</li>
+<li><strong>Create checker</strong> using a <code>create_*_checker()</code> function</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Compute</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">some_answers</span>(data, ...)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Create checker</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">create_some_checker</span>(result, ...)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="how-rounding-and-computation-work" class="level3">
+<h3 class="anchored" data-anchor-id="how-rounding-and-computation-work">How Rounding and Computation Work</h3>
+<p>The <code>*_answers()</code> functions return <strong>unrounded</strong> values from the underlying statistical tests. No rounding is applied at the computation step so that full precision is preserved. The <code>create_*_checker()</code> functions then round each statistic to the appropriate number of decimal places (e.g., 2 for means and standard deviations, 3 for correlations and <em>p</em>-values) before building the fill-in-the-blank widgets. This means the checker’s expected answers always match what students would report following APA formatting conventions.</p>
+<p>All analyses follow SPSS defaults. Missing values coded as −99 (or other SPSS user-missing codes) are converted to <code>NA</code> when the data are read with <code>haven::read_sav()</code> and <code>haven::zap_missing()</code>, so they are automatically excluded from computations.</p>
+</section>
+</section>
+<section id="shared-setup" class="level2">
+<h2 class="anchored" data-anchor-id="shared-setup">Shared Setup</h2>
+<p>All examples below use the Superman media dataset. Load the data once at the top of your document:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych350lab)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(superman, <span class="at">package =</span> <span class="st">"psych350data"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Derive decade from year (not in the base dataset)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>superman <span class="ot">&lt;-</span> superman <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">decade =</span> <span class="fu">case_when</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      year <span class="sc">&lt;</span> <span class="dv">1970</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      year <span class="sc">&lt;</span> <span class="dv">2000</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      year <span class="sc">&lt;</span> <span class="dv">2010</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>        <span class="sc">~</span> <span class="dv">4</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="descriptive-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="descriptive-statistics">1. Descriptive Statistics</h2>
+<p>Students enter Mean, SD, and SEM for each variable and identify whether the mean is interpretable.</p>
+<section id="compute" class="level3">
+<h3 class="anchored" data-anchor-id="compute">Compute</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select and filter your analysis variables</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> superman <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(num, year, clark_height_in, clark_grp, height_diff, height_gap) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(height_diff))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute descriptive statistics</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>desc_result <span class="ot">&lt;-</span> <span class="fu">descriptives_answers</span>(my_data,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"num"</span>, <span class="st">"year"</span>, <span class="st">"clark_height_in"</span>, <span class="st">"clark_grp"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>           <span class="st">"height_diff"</span>, <span class="st">"height_gap"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="checker" class="level3">
+<h3 class="anchored" data-anchor-id="checker">Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_descriptives_checker</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"num"</span>, <span class="st">"year"</span>, <span class="st">"clark_height_in"</span>, <span class="st">"clark_grp"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">"height_diff"</span>, <span class="st">"height_gap"</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">desc_results_list =</span> desc_result,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">label          =</span> <span class="st">"num"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">quantitative   =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"clark_height_in"</span>, <span class="st">"height_diff"</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">binary         =</span> <span class="st">"clark_grp"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">multi_category =</span> <span class="st">"height_gap"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">var_labels =</span> <span class="fu">c</span>(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">num            =</span> <span class="st">"Film Number"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">year           =</span> <span class="st">"Release Year"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">clark_height_in =</span> <span class="st">"Clark Height (in)"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">clark_grp      =</span> <span class="st">"Height Group"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">height_diff    =</span> <span class="st">"Height Difference"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">height_gap     =</span> <span class="st">"Height Gap Category"</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_mbs3w8auq157li6b6v1z = TinyTable.createTableFunctions("tinytable_mbs3w8auq157li6b6v1z");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '6', j: 1 }, { i: '6', j: 2 }, { i: '6', j: 3 }, { i: '6', j: 4 }, { i: '6', j: 5 } ], css_id: 'tinytable_css_x1pxtwquphhnbf6uzgy2',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_st4mogjiq7ggqjxf9g9d',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_mbs3w8auq157li6b6v1z.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_mbs3w8auq157li6b6v1z td.tinytable_css_x1pxtwquphhnbf6uzgy2, #tinytable_mbs3w8auq157li6b6v1z th.tinytable_css_x1pxtwquphhnbf6uzgy2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_mbs3w8auq157li6b6v1z td.tinytable_css_st4mogjiq7ggqjxf9g9d, #tinytable_mbs3w8auq157li6b6v1z th.tinytable_css_st4mogjiq7ggqjxf9g9d {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_mbs3w8auq157li6b6v1z" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">Variable</th>
+                <th scope="col" data-row="0" data-col="2">Mean</th>
+                <th scope="col" data-row="0" data-col="3">SD</th>
+                <th scope="col" data-row="0" data-col="4">SEM</th>
+                <th scope="col" data-row="0" data-col="5">Interpretable?</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Film Number</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;5.00&quot;]"></td>
+                  <td data-row="1" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;2.74&quot;]"></td>
+                  <td data-row="1" data-col="4"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.91&quot;]"></td>
+                  <td data-row="1" data-col="5"><select class="webex-select"><option value="blank"></option><option value="answer">No - this is a label, not a variable</option><option value="Yes - this is a quantitative variable">Yes - this is a quantitative variable</option><option value="Yes - this is a binary variable">Yes - this is a binary variable</option><option value="No - this is a multiple-category variable">No - this is a multiple-category variable</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">Release Year</td>
+                  <td data-row="2" data-col="2"><input class="webex-solveme nospaces" size="7" data-answer="[&quot;1992.89&quot;]"></td>
+                  <td data-row="2" data-col="3"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;28.41&quot;]"></td>
+                  <td data-row="2" data-col="4"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;9.47&quot;]"></td>
+                  <td data-row="2" data-col="5"><select class="webex-select"><option value="blank"></option><option value="No - this is a label, not a variable">No - this is a label, not a variable</option><option value="answer">Yes - this is a quantitative variable</option><option value="Yes - this is a binary variable">Yes - this is a binary variable</option><option value="No - this is a multiple-category variable">No - this is a multiple-category variable</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Clark Height (in)</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;73.67&quot;]"></td>
+                  <td data-row="3" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;1.73&quot;]"></td>
+                  <td data-row="3" data-col="4"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.58&quot;]"></td>
+                  <td data-row="3" data-col="5"><select class="webex-select"><option value="blank"></option><option value="No - this is a label, not a variable">No - this is a label, not a variable</option><option value="answer">Yes - this is a quantitative variable</option><option value="Yes - this is a binary variable">Yes - this is a binary variable</option><option value="No - this is a multiple-category variable">No - this is a multiple-category variable</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">Height Group</td>
+                  <td data-row="4" data-col="2"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="4" data-col="3"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="4" data-col="4"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="4" data-col="5"><select class="webex-select"><option value="blank"></option><option value="No - this is a label, not a variable">No - this is a label, not a variable</option><option value="Yes - this is a quantitative variable">Yes - this is a quantitative variable</option><option value="answer">Yes - this is a binary variable</option><option value="No - this is a multiple-category variable">No - this is a multiple-category variable</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Height Difference</td>
+                  <td data-row="5" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;8.40&quot;]"></td>
+                  <td data-row="5" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;2.32&quot;]"></td>
+                  <td data-row="5" data-col="4"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.77&quot;]"></td>
+                  <td data-row="5" data-col="5"><select class="webex-select"><option value="blank"></option><option value="No - this is a label, not a variable">No - this is a label, not a variable</option><option value="answer">Yes - this is a quantitative variable</option><option value="Yes - this is a binary variable">Yes - this is a binary variable</option><option value="No - this is a multiple-category variable">No - this is a multiple-category variable</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">Height Gap Category</td>
+                  <td data-row="6" data-col="2"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="6" data-col="3"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="6" data-col="4"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="6" data-col="5"><select class="webex-select"><option value="blank"></option><option value="No - this is a label, not a variable">No - this is a label, not a variable</option><option value="Yes - this is a quantitative variable">Yes - this is a quantitative variable</option><option value="Yes - this is a binary variable">Yes - this is a binary variable</option><option value="answer">No - this is a multiple-category variable</option></select></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+<section id="variable-type-categories" class="level3">
+<h3 class="anchored" data-anchor-id="variable-type-categories">Variable Type Categories</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 46%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Meaning</th>
+<th>Mean Interpretable?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>label</code></td>
+<td>ID variable (e.g., film number)</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><code>quantitative</code></td>
+<td>Continuous numeric variable</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td><code>binary</code></td>
+<td>Dichotomous variable (2 levels)</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><code>multi_category</code></td>
+<td>Nominal variable (3+ levels)</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="correlations" class="level2">
+<h2 class="anchored" data-anchor-id="correlations">2. Correlations</h2>
+<p>Students report the Pearson <em>r</em>, <em>p</em>-value, degrees of freedom, and descriptive statistics for a bivariate correlation.</p>
+<section id="compute-1" class="level3">
+<h3 class="anchored" data-anchor-id="compute-1">Compute</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>corr_result <span class="ot">&lt;-</span> <span class="fu">corr_answers</span>(superman, <span class="st">"clark_height_in"</span>, <span class="st">"rt_critics_score"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="checker-1" class="level3">
+<h3 class="anchored" data-anchor-id="checker-1">Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_corr_checker</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rh_name =</span> <span class="st">"RH1"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"Clark Height"</span>, <span class="st">"Critics Score"</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">corr_results_list =</span> corr_result</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_by0eyd8c4q9tzkb41bk8 = TinyTable.createTableFunctions("tinytable_by0eyd8c4q9tzkb41bk8");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '5', j: 4 }, { i: '5', j: 5 } ], css_id: 'tinytable_css_ic1l9k08jv3pt297cppu',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_cjxes9p79d0optec1h4m',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_by0eyd8c4q9tzkb41bk8.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_by0eyd8c4q9tzkb41bk8 td.tinytable_css_ic1l9k08jv3pt297cppu, #tinytable_by0eyd8c4q9tzkb41bk8 th.tinytable_css_ic1l9k08jv3pt297cppu {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_by0eyd8c4q9tzkb41bk8 td.tinytable_css_cjxes9p79d0optec1h4m, #tinytable_by0eyd8c4q9tzkb41bk8 th.tinytable_css_cjxes9p79d0optec1h4m {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_by0eyd8c4q9tzkb41bk8" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">r</th>
+                <th scope="col" data-row="0" data-col="3">p</th>
+                <th scope="col" data-row="0" data-col="4">df</th>
+                <th scope="col" data-row="0" data-col="5">Reject or Retain?</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Correlation: RH1</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.03&quot;]"></td>
+                  <td data-row="1" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.950&quot;]"></td>
+                  <td data-row="1" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;6&quot;]"></td>
+                  <td data-row="1" data-col="5"><select class="webex-select"><option value="blank"></option><option value="answer">Retain the H0 null hypothesis</option><option value="">Reject the H0 null hypothesis</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">Mean</td>
+                  <td data-row="2" data-col="3">SD</td>
+                  <td data-row="2" data-col="4">N</td>
+                  <td data-row="2" data-col="5"></td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Variable 1: Clark Height</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="3" data-col="3"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="3" data-col="4"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="3" data-col="5"></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">Mean</td>
+                  <td data-row="4" data-col="3">SD</td>
+                  <td data-row="4" data-col="4">N</td>
+                  <td data-row="4" data-col="5"></td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Variable 2: Critics Score</td>
+                  <td data-row="5" data-col="2"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="5" data-col="3"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="5" data-col="4"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="5" data-col="5"></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+</section>
+<section id="chi-square-22" class="level2">
+<h2 class="anchored" data-anchor-id="chi-square-22">3. Chi-Square (2×2)</h2>
+<p>Students report observed frequencies, the chi-square statistic, <em>p</em>-value, and degrees of freedom for a 2×2 test of independence.</p>
+<section id="compute-2" class="level3">
+<h3 class="anchored" data-anchor-id="compute-2">Compute</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>chi_result <span class="ot">&lt;-</span> <span class="fu">chi_square_answers</span>(superman, <span class="st">"clark_grp"</span>, <span class="st">"tomatometer"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="checker-2" class="level3">
+<h3 class="anchored" data-anchor-id="checker-2">Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_chisq_checker</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rh_name      =</span> <span class="st">"RH1"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">chi_results_list =</span> chi_result,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var1_labels  =</span> <span class="fu">c</span>(<span class="st">"Under 6ft"</span>, <span class="st">"6ft+"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">var2_labels  =</span> <span class="fu">c</span>(<span class="st">"Rotten"</span>, <span class="st">"Fresh"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_lpnoyrk4z3jnceidki73 = TinyTable.createTableFunctions("tinytable_lpnoyrk4z3jnceidki73");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '4', j: 1 }, { i: '4', j: 2 }, { i: '4', j: 3 }, { i: '4', j: 4 }, { i: '4', j: 5 } ], css_id: 'tinytable_css_l2whhexfs5vy948rlozh',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 } ], css_id: 'tinytable_css_y6lhvn381g87amyq6dl0',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_lpnoyrk4z3jnceidki73.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_lpnoyrk4z3jnceidki73 td.tinytable_css_l2whhexfs5vy948rlozh, #tinytable_lpnoyrk4z3jnceidki73 th.tinytable_css_l2whhexfs5vy948rlozh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_lpnoyrk4z3jnceidki73 td.tinytable_css_y6lhvn381g87amyq6dl0, #tinytable_lpnoyrk4z3jnceidki73 th.tinytable_css_y6lhvn381g87amyq6dl0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_lpnoyrk4z3jnceidki73" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">χ²</th>
+                <th scope="col" data-row="0" data-col="3">p</th>
+                <th scope="col" data-row="0" data-col="4">df</th>
+                <th scope="col" data-row="0" data-col="5">Reject or Retain H0?</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Chi-Square: RH1</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.38&quot;]"></td>
+                  <td data-row="1" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.537&quot;]"></td>
+                  <td data-row="1" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="1" data-col="5"><select class="webex-select"><option value="blank"></option><option value="answer">Retain the H0 null hypothesis</option><option value="">Reject the H0 null hypothesis</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">n</td>
+                  <td data-row="2" data-col="3"></td>
+                  <td data-row="2" data-col="4">n</td>
+                  <td data-row="2" data-col="5"></td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Number of Under 6ft in the sample</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;6&quot;]"></td>
+                  <td data-row="3" data-col="3">Number of Rotten in the sample</td>
+                  <td data-row="3" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;7&quot;]"></td>
+                  <td data-row="3" data-col="5"></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">Number of 6ft+ in the sample</td>
+                  <td data-row="4" data-col="2"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></td>
+                  <td data-row="4" data-col="3">Number of Fresh in the sample</td>
+                  <td data-row="4" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="4" data-col="5"></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+</section>
+<section id="k-group-chi-square-k2" class="level2">
+<h2 class="anchored" data-anchor-id="k-group-chi-square-k2">4. K-Group Chi-Square (k×2)</h2>
+<p>When the row variable has three or more levels, a significant omnibus chi-square is followed by pairwise 2×2 comparisons. Two checkers are needed: one for the omnibus test and one for the pairwise follow-ups.</p>
+<section id="compute-3" class="level3">
+<h3 class="anchored" data-anchor-id="compute-3">Compute</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>kgroup_chi <span class="ot">&lt;-</span> <span class="fu">chi_square_kgroup_answers</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data       =</span> superman,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">var1       =</span> <span class="st">"decade"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var2       =</span> <span class="st">"tomatometer"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">var1_labels =</span> <span class="fu">c</span>(<span class="st">"1950s"</span>, <span class="st">"1970-80s"</span>, <span class="st">"2000s"</span>, <span class="st">"2010s"</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">var2_labels =</span> <span class="fu">c</span>(<span class="st">"Rotten"</span>, <span class="st">"Fresh"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="omnibus-checker" class="level3">
+<h3 class="anchored" data-anchor-id="omnibus-checker">Omnibus Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_chisq_omnibus_table</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rh_name            =</span> <span class="st">"RH1"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">chisq_results_list =</span> kgroup_chi,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var1_labels        =</span> <span class="fu">c</span>(<span class="st">"1950s"</span>, <span class="st">"1970-80s"</span>, <span class="st">"2000s"</span>, <span class="st">"2010s"</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">var2_labels        =</span> <span class="fu">c</span>(<span class="st">"Rotten"</span>, <span class="st">"Fresh"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_odmrcz4nwxziuvu1om3b = TinyTable.createTableFunctions("tinytable_odmrcz4nwxziuvu1om3b");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '4', j: 1 }, { i: '4', j: 2 }, { i: '4', j: 3 }, { i: '4', j: 4 }, { i: '4', j: 5 }, { i: '4', j: 6 }, { i: '4', j: 7 } ], css_id: 'tinytable_css_fdqowqnmapgqtkn3os1n',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_xpd029nk22mcza08ee4y',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_odmrcz4nwxziuvu1om3b.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_odmrcz4nwxziuvu1om3b td.tinytable_css_fdqowqnmapgqtkn3os1n, #tinytable_odmrcz4nwxziuvu1om3b th.tinytable_css_fdqowqnmapgqtkn3os1n {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_odmrcz4nwxziuvu1om3b td.tinytable_css_xpd029nk22mcza08ee4y, #tinytable_odmrcz4nwxziuvu1om3b th.tinytable_css_xpd029nk22mcza08ee4y {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_odmrcz4nwxziuvu1om3b" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">χ²</th>
+                <th scope="col" data-row="0" data-col="3">p</th>
+                <th scope="col" data-row="0" data-col="4">df</th>
+                <th scope="col" data-row="0" data-col="5">N</th>
+                <th scope="col" data-row="0" data-col="6">  </th>
+                <th scope="col" data-row="0" data-col="7">Do we need to perform pairwise comparisons?</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Chi-Square: RH1</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;1.90&quot;]"></td>
+                  <td data-row="1" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.592&quot;]"></td>
+                  <td data-row="1" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]"></td>
+                  <td data-row="1" data-col="5"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;8&quot;]"></td>
+                  <td data-row="1" data-col="6"></td>
+                  <td data-row="1" data-col="7"><select class="webex-select"><option value="blank"></option><option value="answer">No – a nonsignificant Omnibus χ² test</option><option value="">Yes – significant Omnibus χ² test</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2"></td>
+                  <td data-row="2" data-col="3"></td>
+                  <td data-row="2" data-col="4"></td>
+                  <td data-row="2" data-col="5"></td>
+                  <td data-row="2" data-col="6"></td>
+                  <td data-row="2" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Number of 1950s in sample</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="3" data-col="3">Number of 1970-80s in sample</td>
+                  <td data-row="3" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></td>
+                  <td data-row="3" data-col="5">Number of 2000s in sample</td>
+                  <td data-row="3" data-col="6"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></td>
+                  <td data-row="3" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">Number of Rotten in sample</td>
+                  <td data-row="4" data-col="2"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;7&quot;]"></td>
+                  <td data-row="4" data-col="3">Number of Fresh in sample</td>
+                  <td data-row="4" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="4" data-col="5"></td>
+                  <td data-row="4" data-col="6"></td>
+                  <td data-row="4" data-col="7"></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+<section id="pairwise-checker" class="level3">
+<h3 class="anchored" data-anchor-id="pairwise-checker">Pairwise Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_chisq_pairwise_checker</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">chisq_results_list =</span> kgroup_chi,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">var1_labels        =</span> <span class="fu">c</span>(<span class="st">"1950s"</span>, <span class="st">"1970-80s"</span>, <span class="st">"2000s"</span>, <span class="st">"2010s"</span>),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var2_labels        =</span> <span class="fu">c</span>(<span class="st">"Rotten"</span>, <span class="st">"Fresh"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_qe3aionb2inpi2ru0kvl = TinyTable.createTableFunctions("tinytable_qe3aionb2inpi2ru0kvl");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 }, { i: '5', j: 4 }, { i: '5', j: 5 }, { i: '5', j: 6 } ], css_id: 'tinytable_css_mkyj2z0ovkxz8eygboo9',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_9bwqco9wx8t0ejhcyyds',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_qe3aionb2inpi2ru0kvl.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_qe3aionb2inpi2ru0kvl td.tinytable_css_mkyj2z0ovkxz8eygboo9, #tinytable_qe3aionb2inpi2ru0kvl th.tinytable_css_mkyj2z0ovkxz8eygboo9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_qe3aionb2inpi2ru0kvl td.tinytable_css_9bwqco9wx8t0ejhcyyds, #tinytable_qe3aionb2inpi2ru0kvl th.tinytable_css_9bwqco9wx8t0ejhcyyds {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_qe3aionb2inpi2ru0kvl" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">  </th>
+                <th scope="col" data-row="0" data-col="3">   </th>
+                <th scope="col" data-row="0" data-col="4">    </th>
+                <th scope="col" data-row="0" data-col="5">     </th>
+                <th scope="col" data-row="0" data-col="6">      </th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Chi-Square critical</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;3.84&quot;]"></td>
+                  <td data-row="1" data-col="3"></td>
+                  <td data-row="1" data-col="4"></td>
+                  <td data-row="1" data-col="5"></td>
+                  <td data-row="1" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">% comparison</td>
+                  <td data-row="2" data-col="3">χ² Result</td>
+                  <td data-row="2" data-col="4">Type of Error</td>
+                  <td data-row="2" data-col="5">Effect Size (r)</td>
+                  <td data-row="2" data-col="6">Power Problem?</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">1950s vs 2010s</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.00&quot;]">% vs <input class="webex-solveme nospaces" size="5" data-answer="[&quot;33.33&quot;]">%</td>
+                  <td data-row="3" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.44&quot;]"> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;=&quot;]"></td>
+                  <td data-row="3" data-col="4"><select class="webex-select"><option value="blank"></option><option value="">Type I &amp; III</option><option value="answer">Type II</option></select></td>
+                  <td data-row="3" data-col="5"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.33&quot;]"></td>
+                  <td data-row="3" data-col="6"><select class="webex-select"><option value="blank"></option><option value="">No - rejecting H0: means there was sufficient power</option><option value="">No - effect is "too small to be interesting," (r &lt; .10)</option><option value="answer">Yes - The effect is "large enough to be interesting," (r &gt; .10)</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">1970-80s vs 2010s</td>
+                  <td data-row="4" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.00&quot;]">% vs <input class="webex-solveme nospaces" size="5" data-answer="[&quot;33.33&quot;]">%</td>
+                  <td data-row="4" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.83&quot;]"> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;=&quot;]"></td>
+                  <td data-row="4" data-col="4"><select class="webex-select"><option value="blank"></option><option value="">Type I &amp; III</option><option value="answer">Type II</option></select></td>
+                  <td data-row="4" data-col="5"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.41&quot;]"></td>
+                  <td data-row="4" data-col="6"><select class="webex-select"><option value="blank"></option><option value="">No - rejecting H0: means there was sufficient power</option><option value="">No - effect is "too small to be interesting," (r &lt; .10)</option><option value="answer">Yes - The effect is "large enough to be interesting," (r &gt; .10)</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">2000s vs 2010s</td>
+                  <td data-row="5" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.00&quot;]">% vs <input class="webex-solveme nospaces" size="5" data-answer="[&quot;33.33&quot;]">%</td>
+                  <td data-row="5" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.83&quot;]"> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;=&quot;]"></td>
+                  <td data-row="5" data-col="4"><select class="webex-select"><option value="blank"></option><option value="">Type I &amp; III</option><option value="answer">Type II</option></select></td>
+                  <td data-row="5" data-col="5"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.41&quot;]"></td>
+                  <td data-row="5" data-col="6"><select class="webex-select"><option value="blank"></option><option value="">No - rejecting H0: means there was sufficient power</option><option value="">No - effect is "too small to be interesting," (r &lt; .10)</option><option value="answer">Yes - The effect is "large enough to be interesting," (r &gt; .10)</option></select></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+</section>
+<section id="one-way-between-groups-anova-2-groups" class="level2">
+<h2 class="anchored" data-anchor-id="one-way-between-groups-anova-2-groups">5. One-Way Between-Groups ANOVA (2 groups)</h2>
+<p>Students report the <em>F</em> statistic, <em>p</em>-value, degrees of freedom, MSE, and group descriptives for a two-group between-groups comparison.</p>
+<section id="compute-4" class="level3">
+<h3 class="anchored" data-anchor-id="compute-4">Compute</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bg_result <span class="ot">&lt;-</span> <span class="fu">bg_anova_answers</span>(superman, <span class="at">iv =</span> <span class="st">"clark_grp"</span>, <span class="at">dv =</span> <span class="st">"rt_critics_score"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="checker-3" class="level3">
+<h3 class="anchored" data-anchor-id="checker-3">Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_bg_anova_checker</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rh_name            =</span> <span class="st">"RH1"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars               =</span> <span class="fu">c</span>(<span class="st">"clark_grp"</span>, <span class="st">"rt_critics_score"</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">anova_results_list =</span> bg_result</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_095x0v3u631ypy6m97s3 = TinyTable.createTableFunctions("tinytable_095x0v3u631ypy6m97s3");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '8', j: 1 }, { i: '8', j: 2 }, { i: '8', j: 3 }, { i: '8', j: 4 }, { i: '8', j: 5 }, { i: '8', j: 6 } ], css_id: 'tinytable_css_pzc7kvxqhlfwmnw462u2',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_yfbu3pm305r8hhfkgogq',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_095x0v3u631ypy6m97s3.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_095x0v3u631ypy6m97s3 td.tinytable_css_pzc7kvxqhlfwmnw462u2, #tinytable_095x0v3u631ypy6m97s3 th.tinytable_css_pzc7kvxqhlfwmnw462u2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_095x0v3u631ypy6m97s3 td.tinytable_css_yfbu3pm305r8hhfkgogq, #tinytable_095x0v3u631ypy6m97s3 th.tinytable_css_yfbu3pm305r8hhfkgogq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_095x0v3u631ypy6m97s3" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Type</th>
+                <th scope="col" data-row="0" data-col="3">  </th>
+                <th scope="col" data-row="0" data-col="4">   </th>
+                <th scope="col" data-row="0" data-col="5">    </th>
+                <th scope="col" data-row="0" data-col="6">     </th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">ANOVA Type: RH1</td>
+                  <td data-row="1" data-col="2"><select class="webex-select"><option value="blank"></option><option value="answer">Between-Groups (BG)</option><option value="">Within-Groups (WG)</option></select></td>
+                  <td data-row="1" data-col="3"></td>
+                  <td data-row="1" data-col="4"></td>
+                  <td data-row="1" data-col="5"></td>
+                  <td data-row="1" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">F</td>
+                  <td data-row="2" data-col="3">p</td>
+                  <td data-row="2" data-col="4">df(between)</td>
+                  <td data-row="2" data-col="5">df(within)</td>
+                  <td data-row="2" data-col="6">MSE</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">BG ANOVA: RH1</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;1.50&quot;]"></td>
+                  <td data-row="3" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.267&quot;]"></td>
+                  <td data-row="3" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="3" data-col="5"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;6&quot;]"></td>
+                  <td data-row="3" data-col="6"><input class="webex-solveme nospaces" size="6" data-answer="[&quot;103.47&quot;]"></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">Reject or Retain H0?</td>
+                  <td data-row="4" data-col="3"></td>
+                  <td data-row="4" data-col="4"></td>
+                  <td data-row="4" data-col="5"></td>
+                  <td data-row="4" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Decision:</td>
+                  <td data-row="5" data-col="2"><select class="webex-select"><option value="blank"></option><option value="answer">Retain the H0 null hypothesis</option><option value="">Reject the H0 null hypothesis</option></select></td>
+                  <td data-row="5" data-col="3"></td>
+                  <td data-row="5" data-col="4"></td>
+                  <td data-row="5" data-col="5"></td>
+                  <td data-row="5" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">Mean</td>
+                  <td data-row="6" data-col="3">SD</td>
+                  <td data-row="6" data-col="4">n</td>
+                  <td data-row="6" data-col="5"></td>
+                  <td data-row="6" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">6ft or taller</td>
+                  <td data-row="7" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;76.83&quot;]"></td>
+                  <td data-row="7" data-col="3"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;11.13&quot;]"></td>
+                  <td data-row="7" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;6&quot;]"></td>
+                  <td data-row="7" data-col="5"></td>
+                  <td data-row="7" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">Under 6ft</td>
+                  <td data-row="8" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;87.00&quot;]"></td>
+                  <td data-row="8" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;1.41&quot;]"></td>
+                  <td data-row="8" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></td>
+                  <td data-row="8" data-col="5"></td>
+                  <td data-row="8" data-col="6"></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+</section>
+<section id="one-way-within-groups-anova-2-conditions" class="level2">
+<h2 class="anchored" data-anchor-id="one-way-within-groups-anova-2-conditions">6. One-Way Within-Groups ANOVA (2 conditions)</h2>
+<p>Students report the <em>F</em> statistic, <em>p</em>-value, degrees of freedom, MSE, and condition descriptives for a repeated-measures comparison.</p>
+<section id="compute-5" class="level3">
+<h3 class="anchored" data-anchor-id="compute-5">Compute</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>wg_result <span class="ot">&lt;-</span> <span class="fu">wg_anova_answers</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  superman,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv1 =</span> <span class="st">"rt_critics_score"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv2 =</span> <span class="st">"rt_audience_score"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv1_label =</span> <span class="st">"Critics Score"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv2_label =</span> <span class="st">"Audience Score"</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="checker-4" class="level3">
+<h3 class="anchored" data-anchor-id="checker-4">Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_wg_anova_checker</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rh_name            =</span> <span class="st">"RH1"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vars               =</span> <span class="fu">c</span>(<span class="st">"Critics Score"</span>, <span class="st">"Audience Score"</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">anova_results_list =</span> wg_result,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">condition_labels   =</span> <span class="fu">c</span>(<span class="st">"Critics Score"</span>, <span class="st">"Audience Score"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_54i6ch2cq40yyfgskfjz = TinyTable.createTableFunctions("tinytable_54i6ch2cq40yyfgskfjz");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '8', j: 1 }, { i: '8', j: 2 }, { i: '8', j: 3 }, { i: '8', j: 4 }, { i: '8', j: 5 }, { i: '8', j: 6 } ], css_id: 'tinytable_css_vmg0mdzqviq3ppnk91so',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_x2vjn6w8jx0r9iq81k1o',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_54i6ch2cq40yyfgskfjz.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_54i6ch2cq40yyfgskfjz td.tinytable_css_vmg0mdzqviq3ppnk91so, #tinytable_54i6ch2cq40yyfgskfjz th.tinytable_css_vmg0mdzqviq3ppnk91so {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_54i6ch2cq40yyfgskfjz td.tinytable_css_x2vjn6w8jx0r9iq81k1o, #tinytable_54i6ch2cq40yyfgskfjz th.tinytable_css_x2vjn6w8jx0r9iq81k1o {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_54i6ch2cq40yyfgskfjz" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Type</th>
+                <th scope="col" data-row="0" data-col="3">  </th>
+                <th scope="col" data-row="0" data-col="4">   </th>
+                <th scope="col" data-row="0" data-col="5">    </th>
+                <th scope="col" data-row="0" data-col="6">     </th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">ANOVA Type: RH1</td>
+                  <td data-row="1" data-col="2"><select class="webex-select"><option value="blank"></option><option value="">Between-Groups (BG)</option><option value="answer">Within-Groups (WG)</option></select></td>
+                  <td data-row="1" data-col="3"></td>
+                  <td data-row="1" data-col="4"></td>
+                  <td data-row="1" data-col="5"></td>
+                  <td data-row="1" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">F</td>
+                  <td data-row="2" data-col="3">p</td>
+                  <td data-row="2" data-col="4">df(effect)</td>
+                  <td data-row="2" data-col="5">df(error)</td>
+                  <td data-row="2" data-col="6">MSE</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">WG ANOVA: RH1</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.09&quot;]"></td>
+                  <td data-row="3" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.771&quot;]"></td>
+                  <td data-row="3" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="3" data-col="5"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;7&quot;]"></td>
+                  <td data-row="3" data-col="6"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;43.86&quot;]"></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">Reject or Retain H0?</td>
+                  <td data-row="4" data-col="3"></td>
+                  <td data-row="4" data-col="4"></td>
+                  <td data-row="4" data-col="5"></td>
+                  <td data-row="4" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Decision:</td>
+                  <td data-row="5" data-col="2"><select class="webex-select"><option value="blank"></option><option value="answer">Retain the H0 null hypothesis</option><option value="">Reject the H0 null hypothesis</option></select></td>
+                  <td data-row="5" data-col="3"></td>
+                  <td data-row="5" data-col="4"></td>
+                  <td data-row="5" data-col="5"></td>
+                  <td data-row="5" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">Mean</td>
+                  <td data-row="6" data-col="3">SD</td>
+                  <td data-row="6" data-col="4">n</td>
+                  <td data-row="6" data-col="5"></td>
+                  <td data-row="6" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Critics Score</td>
+                  <td data-row="7" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;79.38&quot;]"></td>
+                  <td data-row="7" data-col="3"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;10.53&quot;]"></td>
+                  <td data-row="7" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;8&quot;]"></td>
+                  <td data-row="7" data-col="5"></td>
+                  <td data-row="7" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">Audience Score</td>
+                  <td data-row="8" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;80.38&quot;]"></td>
+                  <td data-row="8" data-col="3"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;10.53&quot;]"></td>
+                  <td data-row="8" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;8&quot;]"></td>
+                  <td data-row="8" data-col="5"></td>
+                  <td data-row="8" data-col="6"></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+</section>
+<section id="k-group-between-groups-anova-3-groups" class="level2">
+<h2 class="anchored" data-anchor-id="k-group-between-groups-anova-3-groups">7. K-Group Between-Groups ANOVA (3+ groups)</h2>
+<p>When the IV has three or more groups, the omnibus <em>F</em>-test is followed by LSD pairwise comparisons. Two checkers are needed.</p>
+<section id="compute-6" class="level3">
+<h3 class="anchored" data-anchor-id="compute-6">Compute</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>kgroup_bg <span class="ot">&lt;-</span> <span class="fu">anova_kgroup_answers</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data         =</span> superman,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv           =</span> <span class="st">"rt_critics_score"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv           =</span> <span class="st">"decade"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group_labels =</span> <span class="fu">c</span>(<span class="st">"1950s"</span>, <span class="st">"1970-80s"</span>, <span class="st">"2000s"</span>, <span class="st">"2010s"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="omnibus-checker-1" class="level3">
+<h3 class="anchored" data-anchor-id="omnibus-checker-1">Omnibus Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_anova_omnibus_checker</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rh_name            =</span> <span class="st">"RH1"</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">anova_results_list =</span> kgroup_bg,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">group_labels       =</span> <span class="fu">c</span>(<span class="st">"1950s"</span>, <span class="st">"1970-80s"</span>, <span class="st">"2000s"</span>, <span class="st">"2010s"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_1rk35tcp7r6t9mbscvwv = TinyTable.createTableFunctions("tinytable_1rk35tcp7r6t9mbscvwv");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '8', j: 1 }, { i: '8', j: 2 }, { i: '8', j: 3 }, { i: '8', j: 4 }, { i: '8', j: 5 }, { i: '8', j: 6 }, { i: '8', j: 7 } ], css_id: 'tinytable_css_dc5s1zt47e1ut0jsqywa',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_ylfoh2wbuerj6mox88c4',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_1rk35tcp7r6t9mbscvwv.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_1rk35tcp7r6t9mbscvwv td.tinytable_css_dc5s1zt47e1ut0jsqywa, #tinytable_1rk35tcp7r6t9mbscvwv th.tinytable_css_dc5s1zt47e1ut0jsqywa {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_1rk35tcp7r6t9mbscvwv td.tinytable_css_ylfoh2wbuerj6mox88c4, #tinytable_1rk35tcp7r6t9mbscvwv th.tinytable_css_ylfoh2wbuerj6mox88c4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_1rk35tcp7r6t9mbscvwv" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">F</th>
+                <th scope="col" data-row="0" data-col="3">p</th>
+                <th scope="col" data-row="0" data-col="4">df (between)</th>
+                <th scope="col" data-row="0" data-col="5">df (within)</th>
+                <th scope="col" data-row="0" data-col="6">MSE</th>
+                <th scope="col" data-row="0" data-col="7">Do we need to perform LSD pairwise comparisons?</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">BG ANOVA: RH1</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.47&quot;]"></td>
+                  <td data-row="1" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.720&quot;]"></td>
+                  <td data-row="1" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]"></td>
+                  <td data-row="1" data-col="5"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+                  <td data-row="1" data-col="6"><input class="webex-solveme nospaces" size="6" data-answer="[&quot;143.50&quot;]"></td>
+                  <td data-row="1" data-col="7"><select class="webex-select"><option value="blank"></option><option value="answer">No - a nonsignificant Omnibus F-test</option><option value="">Yes - significant Omnibus F-test</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">N</td>
+                  <td data-row="2" data-col="3">k</td>
+                  <td data-row="2" data-col="4">average n</td>
+                  <td data-row="2" data-col="5"></td>
+                  <td data-row="2" data-col="6"></td>
+                  <td data-row="2" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1"></td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;8&quot;]"></td>
+                  <td data-row="3" data-col="3"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+                  <td data-row="3" data-col="4"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;2.00&quot;]"></td>
+                  <td data-row="3" data-col="5"></td>
+                  <td data-row="3" data-col="6"></td>
+                  <td data-row="3" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">Mean</td>
+                  <td data-row="4" data-col="3">SD</td>
+                  <td data-row="4" data-col="4">n</td>
+                  <td data-row="4" data-col="5"></td>
+                  <td data-row="4" data-col="6"></td>
+                  <td data-row="4" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">1950s</td>
+                  <td data-row="5" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;83.00&quot;]"></td>
+                  <td data-row="5" data-col="3"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;NA&quot;]"></td>
+                  <td data-row="5" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="5" data-col="5"></td>
+                  <td data-row="5" data-col="6"></td>
+                  <td data-row="5" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">1970-80s</td>
+                  <td data-row="6" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;87.00&quot;]"></td>
+                  <td data-row="6" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;1.41&quot;]"></td>
+                  <td data-row="6" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></td>
+                  <td data-row="6" data-col="5"></td>
+                  <td data-row="6" data-col="6"></td>
+                  <td data-row="6" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">2000s</td>
+                  <td data-row="7" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;75.00&quot;]"></td>
+                  <td data-row="7" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;4.24&quot;]"></td>
+                  <td data-row="7" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></td>
+                  <td data-row="7" data-col="5"></td>
+                  <td data-row="7" data-col="6"></td>
+                  <td data-row="7" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">2010s</td>
+                  <td data-row="8" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;76.00&quot;]"></td>
+                  <td data-row="8" data-col="3"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;16.64&quot;]"></td>
+                  <td data-row="8" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]"></td>
+                  <td data-row="8" data-col="5"></td>
+                  <td data-row="8" data-col="6"></td>
+                  <td data-row="8" data-col="7"></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+<section id="lsd-pairwise-checker" class="level3">
+<h3 class="anchored" data-anchor-id="lsd-pairwise-checker">LSD Pairwise Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_lsd_pairwise_checker</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">anova_results_list =</span> kgroup_bg,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">group_labels       =</span> <span class="fu">c</span>(<span class="st">"1950s"</span>, <span class="st">"1970-80s"</span>, <span class="st">"2000s"</span>, <span class="st">"2010s"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_6h2neniewffihgd3y31f = TinyTable.createTableFunctions("tinytable_6h2neniewffihgd3y31f");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '8', j: 1 }, { i: '8', j: 2 }, { i: '8', j: 3 }, { i: '8', j: 4 }, { i: '8', j: 5 }, { i: '8', j: 6 } ], css_id: 'tinytable_css_nnflygytttmmt2e600ej',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 } ], css_id: 'tinytable_css_v5n8hqdbhsm2uadi9rwu',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_6h2neniewffihgd3y31f.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_6h2neniewffihgd3y31f td.tinytable_css_nnflygytttmmt2e600ej, #tinytable_6h2neniewffihgd3y31f th.tinytable_css_nnflygytttmmt2e600ej {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_6h2neniewffihgd3y31f td.tinytable_css_v5n8hqdbhsm2uadi9rwu, #tinytable_6h2neniewffihgd3y31f th.tinytable_css_v5n8hqdbhsm2uadi9rwu {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_6h2neniewffihgd3y31f" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">  </th>
+                <th scope="col" data-row="0" data-col="3">   </th>
+                <th scope="col" data-row="0" data-col="4">    </th>
+                <th scope="col" data-row="0" data-col="5">     </th>
+                <th scope="col" data-row="0" data-col="6">      </th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">LSDmmd</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;30.79&quot;]"></td>
+                  <td data-row="1" data-col="3"></td>
+                  <td data-row="1" data-col="4"></td>
+                  <td data-row="1" data-col="5"></td>
+                  <td data-row="1" data-col="6"></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">Mean Difference</td>
+                  <td data-row="2" data-col="3">LSD Result</td>
+                  <td data-row="2" data-col="4">Type of Error</td>
+                  <td data-row="2" data-col="5">Effect Size (r)</td>
+                  <td data-row="2" data-col="6">Power Problem?</td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">1950s vs 1970-80s</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;-4.00&quot;]"></td>
+                  <td data-row="3" data-col="3"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;=&quot;]"></td>
+                  <td data-row="3" data-col="4"><select class="webex-select"><option value="blank"></option><option value="">Type I &amp; III</option><option value="answer">Type II</option></select></td>
+                  <td data-row="3" data-col="5"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.26&quot;]"></td>
+                  <td data-row="3" data-col="6"><select class="webex-select"><option value="blank"></option><option value="">No - rejecting H0: means there was sufficient power</option><option value="">No - effect is "too small to be interesting," (r &lt; .10)</option><option value="answer">Yes - The effect is "large enough to be interesting," (r &gt; .10)</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1">1950s vs 2000s</td>
+                  <td data-row="4" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;8.00&quot;]"></td>
+                  <td data-row="4" data-col="3"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;=&quot;]"></td>
+                  <td data-row="4" data-col="4"><select class="webex-select"><option value="blank"></option><option value="">Type I &amp; III</option><option value="answer">Type II</option></select></td>
+                  <td data-row="4" data-col="5"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.48&quot;]"></td>
+                  <td data-row="4" data-col="6"><select class="webex-select"><option value="blank"></option><option value="">No - rejecting H0: means there was sufficient power</option><option value="">No - effect is "too small to be interesting," (r &lt; .10)</option><option value="answer">Yes - The effect is "large enough to be interesting," (r &gt; .10)</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">1950s vs 2010s</td>
+                  <td data-row="5" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;7.00&quot;]"></td>
+                  <td data-row="5" data-col="3"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;=&quot;]"></td>
+                  <td data-row="5" data-col="4"><select class="webex-select"><option value="blank"></option><option value="">Type I &amp; III</option><option value="answer">Type II</option></select></td>
+                  <td data-row="5" data-col="5"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.34&quot;]"></td>
+                  <td data-row="5" data-col="6"><select class="webex-select"><option value="blank"></option><option value="">No - rejecting H0: means there was sufficient power</option><option value="">No - effect is "too small to be interesting," (r &lt; .10)</option><option value="answer">Yes - The effect is "large enough to be interesting," (r &gt; .10)</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1">1970-80s vs 2000s</td>
+                  <td data-row="6" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;12.00&quot;]"></td>
+                  <td data-row="6" data-col="3"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;=&quot;]"></td>
+                  <td data-row="6" data-col="4"><select class="webex-select"><option value="blank"></option><option value="">Type I &amp; III</option><option value="answer">Type II</option></select></td>
+                  <td data-row="6" data-col="5"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.58&quot;]"></td>
+                  <td data-row="6" data-col="6"><select class="webex-select"><option value="blank"></option><option value="">No - rejecting H0: means there was sufficient power</option><option value="">No - effect is "too small to be interesting," (r &lt; .10)</option><option value="answer">Yes - The effect is "large enough to be interesting," (r &gt; .10)</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">1970-80s vs 2010s</td>
+                  <td data-row="7" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;11.00&quot;]"></td>
+                  <td data-row="7" data-col="3"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;=&quot;]"></td>
+                  <td data-row="7" data-col="4"><select class="webex-select"><option value="blank"></option><option value="">Type I &amp; III</option><option value="answer">Type II</option></select></td>
+                  <td data-row="7" data-col="5"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.50&quot;]"></td>
+                  <td data-row="7" data-col="6"><select class="webex-select"><option value="blank"></option><option value="">No - rejecting H0: means there was sufficient power</option><option value="">No - effect is "too small to be interesting," (r &lt; .10)</option><option value="answer">Yes - The effect is "large enough to be interesting," (r &gt; .10)</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="8" data-col="1">2000s vs 2010s</td>
+                  <td data-row="8" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;-1.00&quot;]"></td>
+                  <td data-row="8" data-col="3"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;=&quot;]"></td>
+                  <td data-row="8" data-col="4"><select class="webex-select"><option value="blank"></option><option value="">Type I &amp; III</option><option value="answer">Type II</option></select></td>
+                  <td data-row="8" data-col="5"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.05&quot;]"></td>
+                  <td data-row="8" data-col="6"><select class="webex-select"><option value="blank"></option><option value="">No - rejecting H0: means there was sufficient power</option><option value="answer">No - effect is "too small to be interesting," (r &lt; .10)</option><option value="">Yes - The effect is "large enough to be interesting," (r &gt; .10)</option></select></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+</section>
+<section id="factorial-anova-22-between-groups-mixed" class="level2">
+<h2 class="anchored" data-anchor-id="factorial-anova-22-between-groups-mixed">8. Factorial ANOVA (2×2 Between-Groups / Mixed)</h2>
+<p>Students report the interaction and main-effect <em>F</em>-tests, degrees of freedom, MSE, and follow-up comparisons. Two checkers cover the ANOVA results and the cell/marginal descriptive statistics.</p>
+<section id="compute-7" class="level3">
+<h3 class="anchored" data-anchor-id="compute-7">Compute</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sm_factorial <span class="ot">&lt;-</span> superman <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">era =</span> <span class="fu">if_else</span>(year <span class="sc">&gt;=</span> <span class="dv">2000</span>, <span class="st">"Post-2000"</span>, <span class="st">"Pre-2000"</span>))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>factorial_result <span class="ot">&lt;-</span> <span class="fu">anova_factorial_answers</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data      =</span> sm_factorial,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv        =</span> <span class="st">"rt_critics_score"</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv1       =</span> <span class="st">"clark_grp"</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv2       =</span> <span class="st">"era"</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv1_labels =</span> <span class="fu">c</span>(<span class="st">"Under 6ft"</span>, <span class="st">"6ft+"</span>),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv2_labels =</span> <span class="fu">c</span>(<span class="st">"Pre-2000"</span>, <span class="st">"Post-2000"</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="anova-checker" class="level3">
+<h3 class="anchored" data-anchor-id="anova-checker">ANOVA Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_factorial_anova_checker</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">rh_name            =</span> <span class="st">"RH1"</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">anova_results_list =</span> factorial_result,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv1_name           =</span> <span class="st">"Height Group"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv2_name           =</span> <span class="st">"Era"</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_0f3kpo2noidj7wnp1m42 = TinyTable.createTableFunctions("tinytable_0f3kpo2noidj7wnp1m42");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '7', j: 1 }, { i: '7', j: 2 }, { i: '7', j: 3 }, { i: '7', j: 4 }, { i: '7', j: 5 }, { i: '7', j: 6 }, { i: '7', j: 7 } ], css_id: 'tinytable_css_5q9d6dtbfs2t69vdhfa7',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_w6pvydmhy3n8ta3szpw7',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_0f3kpo2noidj7wnp1m42.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_0f3kpo2noidj7wnp1m42 td.tinytable_css_5q9d6dtbfs2t69vdhfa7, #tinytable_0f3kpo2noidj7wnp1m42 th.tinytable_css_5q9d6dtbfs2t69vdhfa7 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_0f3kpo2noidj7wnp1m42 td.tinytable_css_w6pvydmhy3n8ta3szpw7, #tinytable_0f3kpo2noidj7wnp1m42 th.tinytable_css_w6pvydmhy3n8ta3szpw7 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_0f3kpo2noidj7wnp1m42" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">F</th>
+                <th scope="col" data-row="0" data-col="3">p</th>
+                <th scope="col" data-row="0" data-col="4">df (between)</th>
+                <th scope="col" data-row="0" data-col="5">df (within)</th>
+                <th scope="col" data-row="0" data-col="6">MSE</th>
+                <th scope="col" data-row="0" data-col="7">Do we need to perform LSD pairwise comparisons?</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Interaction: Height Group x Era</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.83&quot;]"></td>
+                  <td data-row="1" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.413&quot;]"></td>
+                  <td data-row="1" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="1" data-col="5"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+                  <td data-row="1" data-col="6"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;98.38&quot;]"></td>
+                  <td data-row="1" data-col="7"><select class="webex-select"><option value="blank"></option><option value="answer">No - a nonsignificant interaction</option><option value="">Yes - significant interaction</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2"># of conditions</td>
+                  <td data-row="2" data-col="3">average n</td>
+                  <td data-row="2" data-col="4">df error</td>
+                  <td data-row="2" data-col="5">MSe</td>
+                  <td data-row="2" data-col="6">LSDmmd</td>
+                  <td data-row="2" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">Components for LSDmmd:</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+                  <td data-row="3" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;2.00&quot;]"></td>
+                  <td data-row="3" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+                  <td data-row="3" data-col="5"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;98.38&quot;]"></td>
+                  <td data-row="3" data-col="6"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;25.49&quot;]"></td>
+                  <td data-row="3" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">F</td>
+                  <td data-row="4" data-col="3">p</td>
+                  <td data-row="4" data-col="4">df (between)</td>
+                  <td data-row="4" data-col="5">df (within)</td>
+                  <td data-row="4" data-col="6">MSE</td>
+                  <td data-row="4" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="5" data-col="1">Main Effect: Height Group</td>
+                  <td data-row="5" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.95&quot;]"></td>
+                  <td data-row="5" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.386&quot;]"></td>
+                  <td data-row="5" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="5" data-col="5"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+                  <td data-row="5" data-col="6"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;98.38&quot;]"></td>
+                  <td data-row="5" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">F</td>
+                  <td data-row="6" data-col="3">p</td>
+                  <td data-row="6" data-col="4">df (between)</td>
+                  <td data-row="6" data-col="5">df (within)</td>
+                  <td data-row="6" data-col="6">MSE</td>
+                  <td data-row="6" data-col="7"></td>
+                </tr>
+                <tr>
+                  <td data-row="7" data-col="1">Main Effect: Era</td>
+                  <td data-row="7" data-col="2"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.45&quot;]"></td>
+                  <td data-row="7" data-col="3"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.540&quot;]"></td>
+                  <td data-row="7" data-col="4"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+                  <td data-row="7" data-col="5"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+                  <td data-row="7" data-col="6"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;98.38&quot;]"></td>
+                  <td data-row="7" data-col="7"></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+<section id="descriptives-checker-cell-means-and-emms" class="level3">
+<h3 class="anchored" data-anchor-id="descriptives-checker-cell-means-and-emms">Descriptives Checker (cell means and EMMs)</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_factorial_desc_checker</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">anova_results_list =</span> factorial_result,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv1_name           =</span> <span class="st">"Height Group"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv2_name           =</span> <span class="st">"Era"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv1_labels         =</span> <span class="fu">c</span>(<span class="st">"Under 6ft"</span>, <span class="st">"6ft+"</span>),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv2_labels         =</span> <span class="fu">c</span>(<span class="st">"Pre-2000"</span>, <span class="st">"Post-2000"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_3dtpg1i6yrtfbsftcorj = TinyTable.createTableFunctions("tinytable_3dtpg1i6yrtfbsftcorj");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '3', j: 1 }, { i: '3', j: 2 }, { i: '3', j: 3 }, { i: '3', j: 4 } ], css_id: 'tinytable_css_ru518alf9wl9xwmk08ra',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 } ], css_id: 'tinytable_css_vws602sc6bdhwh0n760m',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_3dtpg1i6yrtfbsftcorj.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_3dtpg1i6yrtfbsftcorj td.tinytable_css_ru518alf9wl9xwmk08ra, #tinytable_3dtpg1i6yrtfbsftcorj th.tinytable_css_ru518alf9wl9xwmk08ra {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_3dtpg1i6yrtfbsftcorj td.tinytable_css_vws602sc6bdhwh0n760m, #tinytable_3dtpg1i6yrtfbsftcorj th.tinytable_css_vws602sc6bdhwh0n760m {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_3dtpg1i6yrtfbsftcorj" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Pre-2000</th>
+                <th scope="col" data-row="0" data-col="3">Post-2000</th>
+                <th scope="col" data-row="0" data-col="4">EMM</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Under 6ft</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;72.50&quot;]"></td>
+                  <td data-row="1" data-col="3"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;85.50&quot;]"></td>
+                  <td data-row="1" data-col="4"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;76.83&quot;]"></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">6ft+</td>
+                  <td data-row="2" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;88.00&quot;]"></td>
+                  <td data-row="2" data-col="3"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;86.00&quot;]"></td>
+                  <td data-row="2" data-col="4"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;87.00&quot;]"></td>
+                </tr>
+                <tr>
+                  <td data-row="3" data-col="1">EMM</td>
+                  <td data-row="3" data-col="2"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;75.60&quot;]"></td>
+                  <td data-row="3" data-col="3"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;85.67&quot;]"></td>
+                  <td data-row="3" data-col="4"></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+</section>
+<section id="linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression">9. Linear Regression</h2>
+<p>Students report model-level statistics (<em>R</em>, <em>R</em>², <em>F</em>, df, <em>p</em>) and predictor-level statistics (<em>r</em>, <em>b</em>, significance, interpretation category). Two checkers split these.</p>
+<section id="compute-8" class="level3">
+<h3 class="anchored" data-anchor-id="compute-8">Compute</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sm_reg <span class="ot">&lt;-</span> superman <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(rt_critics_score),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(clark_height_in),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(rt_audience_score)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>reg_result <span class="ot">&lt;-</span> <span class="fu">linear_reg_answers</span>(</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">data              =</span> sm_reg,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">criterion         =</span> <span class="st">"rt_critics_score"</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">quant_predictors  =</span> <span class="fu">c</span>(<span class="st">"clark_height_in"</span>, <span class="st">"rt_audience_score"</span>),</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">quant_labels      =</span> <span class="fu">c</span>(<span class="st">"Clark Height"</span>, <span class="st">"Audience Score"</span>),</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">criterion_label   =</span> <span class="st">"Critics Score"</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="model-summary-checker" class="level3">
+<h3 class="anchored" data-anchor-id="model-summary-checker">Model Summary Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_regression_model_checker</span>(reg_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_21o1b102kj0p8bjto49c = TinyTable.createTableFunctions("tinytable_21o1b102kj0p8bjto49c");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '1', j: 1 }, { i: '1', j: 2 }, { i: '1', j: 3 }, { i: '1', j: 4 }, { i: '1', j: 5 }, { i: '1', j: 6 }, { i: '1', j: 7 } ], css_id: 'tinytable_css_82ymion60xa50ygjsy6l',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_5lg0dyfp7unyxh04l6jn',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_21o1b102kj0p8bjto49c.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_21o1b102kj0p8bjto49c td.tinytable_css_82ymion60xa50ygjsy6l, #tinytable_21o1b102kj0p8bjto49c th.tinytable_css_82ymion60xa50ygjsy6l {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_21o1b102kj0p8bjto49c td.tinytable_css_5lg0dyfp7unyxh04l6jn, #tinytable_21o1b102kj0p8bjto49c th.tinytable_css_5lg0dyfp7unyxh04l6jn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_21o1b102kj0p8bjto49c" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">R</th>
+                <th scope="col" data-row="0" data-col="3">R²</th>
+                <th scope="col" data-row="0" data-col="4">F</th>
+                <th scope="col" data-row="0" data-col="5">df1, df2</th>
+                <th scope="col" data-row="0" data-col="6">p</th>
+                <th scope="col" data-row="0" data-col="7">Does the model work?</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Model Summary</td>
+                  <td data-row="1" data-col="2"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.61&quot;]"></td>
+                  <td data-row="1" data-col="3"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.37&quot;]"></td>
+                  <td data-row="1" data-col="4"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;1.49&quot;]"></td>
+                  <td data-row="1" data-col="5"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]">, <input class="webex-solveme nospaces" size="1" data-answer="[&quot;5&quot;]"></td>
+                  <td data-row="1" data-col="6"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;.311&quot;]"></td>
+                  <td data-row="1" data-col="7"><select class="webex-select"><option value="blank"></option><option value="">Yes</option><option value="answer">No</option></select></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+<section id="predictor-results-checker" class="level3">
+<h3 class="anchored" data-anchor-id="predictor-results-checker">Predictor Results Checker</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_regression_predictor_checker</span>(reg_result, <span class="at">show_legend =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="webex-solution">
+<button>
+Click here for significance key
+</button>
+<p><strong>Significance Key:</strong></p>
+<ul>
+<li><strong>ns</strong> = p &gt; .05 (not significant)</li>
+<li><strong>*</strong> = p &lt; .05</li>
+<li><strong>**</strong> = p &lt; .01</li>
+<li><strong>***</strong> = p &lt; .001</li>
+</ul>
+<p><strong>Result Categories:</strong></p>
+<ul>
+<li><strong>a</strong> = Neither r nor b significant</li>
+<li><strong>b</strong> = r &amp; b both significant &amp; same sign</li>
+<li><strong>c</strong> = r significant but not b</li>
+<li><strong>d</strong> = suppressor effect</li>
+</ul>
+</div>
+<!-- preamble start -->
+
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
+    <script>
+      // Create table-specific functions using external factory
+      const tableFns_lrky7yhzim6576ig8o02 = TinyTable.createTableFunctions("tinytable_lrky7yhzim6576ig8o02");
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: '2', j: 1 }, { i: '2', j: 2 }, { i: '2', j: 3 }, { i: '2', j: 4 }, { i: '2', j: 5 }, { i: '2', j: 6 }, { i: '2', j: 7 } ], css_id: 'tinytable_css_01z1j79cx9dek1823km1',}, 
+          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 }, { i: '0', j: 6 }, { i: '0', j: 7 } ], css_id: 'tinytable_css_zo53jcj6e6fzf7t44ig7',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  tableFns_lrky7yhzim6576ig8o02.styleCell(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
+    <style>
+    /* tinytable css entries after */
+    #tinytable_lrky7yhzim6576ig8o02 td.tinytable_css_01z1j79cx9dek1823km1, #tinytable_lrky7yhzim6576ig8o02 th.tinytable_css_01z1j79cx9dek1823km1 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.1em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    #tinytable_lrky7yhzim6576ig8o02 td.tinytable_css_zo53jcj6e6fzf7t44ig7, #tinytable_lrky7yhzim6576ig8o02 th.tinytable_css_zo53jcj6e6fzf7t44ig7 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%;  }
+    </style>
+    <div class="container">
+      <table class="tinytable" id="tinytable_lrky7yhzim6576ig8o02" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+        
+        <thead>
+              <tr>
+                <th scope="col" data-row="0" data-col="1">Predictor</th>
+                <th scope="col" data-row="0" data-col="2">Type</th>
+                <th scope="col" data-row="0" data-col="3">r</th>
+                <th scope="col" data-row="0" data-col="4">r sig</th>
+                <th scope="col" data-row="0" data-col="5">b</th>
+                <th scope="col" data-row="0" data-col="6">b sig</th>
+                <th scope="col" data-row="0" data-col="7">Result</th>
+              </tr>
+        </thead>
+        
+        <tbody>
+                <tr>
+                  <td data-row="1" data-col="1">Clark Height</td>
+                  <td data-row="1" data-col="2"><select class="webex-select"><option value="blank"></option><option value="">Binary</option><option value="answer">Quant</option></select></td>
+                  <td data-row="1" data-col="3"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.03&quot;]"></td>
+                  <td data-row="1" data-col="4"><select class="webex-select"><option value="blank"></option><option value="answer">ns</option><option value="">*</option><option value="">**</option><option value="">***</option></select></td>
+                  <td data-row="1" data-col="5"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.51&quot;]"></td>
+                  <td data-row="1" data-col="6"><select class="webex-select"><option value="blank"></option><option value="answer">ns</option><option value="">*</option><option value="">**</option><option value="">***</option></select></td>
+                  <td data-row="1" data-col="7"><select class="webex-select"><option value="blank"></option><option value="answer">a</option><option value="">b</option><option value="">c</option><option value="">d</option></select></td>
+                </tr>
+                <tr>
+                  <td data-row="2" data-col="1">Audience Score</td>
+                  <td data-row="2" data-col="2"><select class="webex-select"><option value="blank"></option><option value="">Binary</option><option value="answer">Quant</option></select></td>
+                  <td data-row="2" data-col="3"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;.60&quot;]"></td>
+                  <td data-row="2" data-col="4"><select class="webex-select"><option value="blank"></option><option value="answer">ns</option><option value="">*</option><option value="">**</option><option value="">***</option></select></td>
+                  <td data-row="2" data-col="5"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;0.61&quot;]"></td>
+                  <td data-row="2" data-col="6"><select class="webex-select"><option value="blank"></option><option value="answer">ns</option><option value="">*</option><option value="">**</option><option value="">***</option></select></td>
+                  <td data-row="2" data-col="7"><select class="webex-select"><option value="blank"></option><option value="answer">a</option><option value="">b</option><option value="">c</option><option value="">d</option></select></td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+</section>
+</section>
+<section id="quick-reference" class="level2">
+<h2 class="anchored" data-anchor-id="quick-reference">Quick Reference</h2>
+<section id="analysis-functions" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-functions">Analysis Functions</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 20%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Analysis Type</th>
+<th>Key Arguments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>descriptives_answers()</code></td>
+<td>Univariate stats</td>
+<td><code>data</code>, <code>vars</code></td>
+</tr>
+<tr class="even">
+<td><code>corr_answers()</code></td>
+<td>Correlation</td>
+<td><code>data</code>, <code>var1</code>, <code>var2</code></td>
+</tr>
+<tr class="odd">
+<td><code>chi_square_answers()</code></td>
+<td>Chi-Square (2×2)</td>
+<td><code>data</code>, <code>var1</code>, <code>var2</code></td>
+</tr>
+<tr class="even">
+<td><code>chi_square_kgroup_answers()</code></td>
+<td>Chi-Square (k×2)</td>
+<td><code>data</code>, <code>var1</code>, <code>var2</code>, <code>var1_labels</code>, <code>var2_labels</code></td>
+</tr>
+<tr class="odd">
+<td><code>bg_anova_answers()</code></td>
+<td>BG ANOVA (2 groups)</td>
+<td><code>data</code>, <code>iv</code>, <code>dv</code></td>
+</tr>
+<tr class="even">
+<td><code>wg_anova_answers()</code></td>
+<td>WG ANOVA (2 cond.)</td>
+<td><code>data</code>, <code>dv1</code>, <code>dv2</code></td>
+</tr>
+<tr class="odd">
+<td><code>anova_kgroup_answers()</code></td>
+<td>BG ANOVA (k groups)</td>
+<td><code>data</code>, <code>dv</code>, <code>iv</code>, <code>group_labels</code></td>
+</tr>
+<tr class="even">
+<td><code>anova_factorial_answers()</code></td>
+<td>2×2 Factorial</td>
+<td><code>data</code>, <code>dv</code>, <code>iv1</code>, <code>iv2</code></td>
+</tr>
+<tr class="odd">
+<td><code>linear_reg_answers()</code></td>
+<td>Regression</td>
+<td><code>data</code>, <code>criterion</code>, <code>quant_predictors</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="checker-functions" class="level3">
+<h3 class="anchored" data-anchor-id="checker-functions">Checker Functions</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 21%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Analysis Type</th>
+<th>Key Components</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>create_descriptives_checker()</code></td>
+<td>Univariate</td>
+<td>Mean, SD, SEM, interpretability</td>
+</tr>
+<tr class="even">
+<td><code>create_corr_checker()</code></td>
+<td>Correlation</td>
+<td><em>r</em>, <em>p</em>, df, descriptives</td>
+</tr>
+<tr class="odd">
+<td><code>create_chisq_checker()</code></td>
+<td>Chi-Square (2×2)</td>
+<td>χ², <em>p</em>, df, frequencies</td>
+</tr>
+<tr class="even">
+<td><code>create_chisq_omnibus_table()</code></td>
+<td>Chi-Square omnibus</td>
+<td>χ², <em>p</em>, df, <em>N</em>, frequencies</td>
+</tr>
+<tr class="odd">
+<td><code>create_chisq_pairwise_checker()</code></td>
+<td>Chi-Square pairwise</td>
+<td>χ² critical, percentages, effect sizes</td>
+</tr>
+<tr class="even">
+<td><code>create_bg_anova_checker()</code></td>
+<td>BG ANOVA (2 groups)</td>
+<td><em>F</em>, <em>p</em>, df, MSE, group stats</td>
+</tr>
+<tr class="odd">
+<td><code>create_wg_anova_checker()</code></td>
+<td>WG ANOVA (2 cond.)</td>
+<td><em>F</em>, <em>p</em>, df, MSE, condition stats</td>
+</tr>
+<tr class="even">
+<td><code>create_anova_omnibus_checker()</code></td>
+<td>BG ANOVA (k groups)</td>
+<td><em>F</em>, <em>p</em>, df, MSE, <em>N</em>, <em>k</em>, group stats</td>
+</tr>
+<tr class="odd">
+<td><code>create_lsd_pairwise_checker()</code></td>
+<td>LSD pairwise</td>
+<td>LSD MMD, mean differences, effect sizes</td>
+</tr>
+<tr class="even">
+<td><code>create_factorial_anova_checker()</code></td>
+<td>2×2 Factorial ANOVA</td>
+<td>Interaction, main effects, LSD</td>
+</tr>
+<tr class="odd">
+<td><code>create_factorial_desc_checker()</code></td>
+<td>2×2 Factorial desc.</td>
+<td>Cell means, EMMs</td>
+</tr>
+<tr class="even">
+<td><code>create_regression_model_checker()</code></td>
+<td>Regression model</td>
+<td><em>R</em>, <em>R</em>², <em>F</em>, df, <em>p</em></td>
+</tr>
+<tr class="odd">
+<td><code>create_regression_predictor_checker()</code></td>
+<td>Regression predictors</td>
+<td><em>r</em>, <em>b</em>, significance, categories</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p><strong>Tables not rendering.</strong> Make sure your chunk includes <code>#| results: asis</code>.</p>
+<p><strong>webexercises styles missing.</strong> Check that your YAML includes the CSS and JS files as shown in the Setup section above.</p>
+<p><strong>Checker shows wrong answers.</strong> Make sure you are passing the result from the <code>*_answers()</code> function, not raw data.</p>
+<p><strong>Package not found errors.</strong> Install required packages with <code>install.packages(c("tinytable", "webexercises"))</code>.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

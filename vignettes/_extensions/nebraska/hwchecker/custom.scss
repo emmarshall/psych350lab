@@ -1,0 +1,1035 @@
+/*-- scss:defaults --*/
+
+// use bright as the base
+// https://bootswatch.com/bright/
+
+$theme: "lumen" !default;
+
+// Import partial files first
+@import 'variables';
+@import 'mixins';
+
+// Brite 5.3.7
+// Bootswatch
+
+$font_weight_normal: 400;
+$font_weight_bold: 800;
+
+// code-colors
+$code-color: $blueish-fg !default; //color for the font of inline code
+$code-bg: $blueish-bg !default;
+$btn-code-copy-color: $blueish-fg !default; //color for code blocks buttons
+
+// main content
+$body-bg: #fdfdfd !default;
+$body-color: $dark !default;
+$body-secondary: $primary !default;
+$headings-color: $dark !default;
+$form-select-border-color: $primary !default;
+
+$card-bg-color: #fff;
+$card-border-color: #000;
+$btn-shadow: 5px 5px 0px 0px #000;
+$btn-padding: 0.5rem 1rem;
+$transition-time: 150ms;
+$card-width: 15rem;
+$card-padding: 2em;
+$avatar-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+$avatar-border-color: #000;
+$box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+
+// sidebar
+$sidebar-bg: $gray-200 !default;
+$sidebar-fg: $dark !default;
+$sidebar-hl: $yellow !default;
+
+// footer
+$footer-bg: $gray-800 !default; // Changed from $dark-grey
+$footer-fg: $gray-100 !default; // Changed from $light-cream
+
+$font-size-base:              1.2rem !default;
+$headings-font-weight:        700 !default;
+
+$h1-font-size: $font-size-base * 2.35;
+$h2-font-size: $font-size-base * 1.8;
+$h3-font-size: $font-size-base * 1.45;
+$h4-font-size: $font-size-base * 1.1;
+$h5-font-size: $font-size-base * 1;
+$h6-font-size: $font-size-base * 0.8;
+
+$toc-font-size: 0.95rem;
+$sidebar-font-size: 1.1rem;
+$sidebar-font-size-section: 0.95rem;
+$footer-font-size: 0.95rem;
+
+$link-color: $blueish-fg;
+$link-hover-color: $yellow;
+
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Permanent+Marker&display=swap');
+
+$handwriting: "Newsreader";
+$font-family-sans-serif: 'IBM Plex Sans', serif;
+$font-family-monospace: 'Fira Code', mono;
+
+// callouts
+$callout-color-note: $primary;
+$callout-color-tip: $secondary;
+$callout-color-caution: $warning; // Changed from $bright-90 to $warning
+$callout-color-warning: $orange;
+$callout-color-important: $red;
+
+// nav bar
+$navbar-bg: $primary;
+$navbar-fg: $secondary;
+$navbar-hl: $yellow;
+
+/*-- scss:rules --*/
+
+// navbar
+.navbar-brand > img {
+  max-height: 50px;
+}
+
+.header-section-number {
+  font-family: $handwriting;
+  color: #747a7f;
+  color: lighten($primary, 55) !important;
+  background-color: $primary;
+  border-radius: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+// links
+a {
+  color: $primary; // Changed from $blueish-fg to $primary
+  text-decoration-thickness: 1px;
+  //text-underline-offset: .1rem;
+  //text-underline-position: under;
+}
+
+a:hover {
+  color: $gray-800; // Changed from $dark-grey
+  text-decoration-color: $primary; // Changed from $blueish-fg
+}
+
+.toc-actions a {
+  text-decoration: none !important;
+  border-bottom: 0;
+}
+
+.toc-actions a:hover {
+  color: $yellow;
+}
+
+div.tippy-content a:hover {
+  text-decoration-color: $yellow;
+}
+
+// iframes for slides embedded in talks pages
+iframe.slide-deck {
+  border: 3px solid $gray-700;
+  width: 100%;
+}
+
+.ar4x3 {
+  aspect-ratio: 4 / 3;
+}
+
+.ar3x2 {
+  aspect-ratio: 3 / 2;
+}
+
+// headings
+h1 {
+  font-size: calc(2rem + 1.5vw);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 55px;
+  letter-spacing: 0.01em;
+  color: $black;
+}
+
+h2 {
+  font-size: calc(1.55rem + 0.9vw);
+  font-weight: 600;
+  line-height: 40px;
+  letter-spacing: 0.05em;
+  font-style: normal;
+  color: $black;
+  border-bottom: 1px solid $gray-500;
+
+}
+
+h3 {
+  font-size: calc(1.25rem + 0.5vw);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 31px;
+  letter-spacing: 0.01em;
+  color: $black;
+}
+
+h4 {
+  font-size: calc(1.15rem + 0.3vw);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 31px;
+  letter-spacing: 0.01em;
+  color: $black;
+}
+
+// blockquotes
+blockquote {
+  margin-top: 10px;
+  color: $blue;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  padding-left: 15px;
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: $primary;
+
+  p {
+    font-size: 1.1rem;
+  }
+}
+
+
+// tables
+table {
+  display: table;
+  max-width: max-content;
+  overflow: auto;
+}
+
+thead > tr > th {
+  font-weight: $font-weight-bold;
+  vertical-align: baseline;
+  border-top: 4px solid $dark-steel;
+  border-bottom: 4px solid $dark-steel;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: $gray-100; // Changed from $light-cream
+}
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+  background-color: $gray-100; // Changed from $light-cream
+}
+
+tbody > tr {
+  border-bottom: 1px solid $gray-300;
+}
+
+tbody > tr:last-child {
+  border-bottom: 3px solid $dark-steel;
+}
+
+dt > * {
+  font-weight: inherit;
+}
+
+// buttons
+.btn-primary-outline {
+  border: 1px solid $primary;
+  color: $primary;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 75px;
+  padding-right: 75px;
+  padding-top: 17px;
+  padding-bottom: 17px;
+}
+
+.btn-primary-outline:hover {
+  color: $primary;
+  background: $gray-100; // Changed from $unl-cream
+}
+
+.btn-primary-outline:active {
+  color: #ffffff;
+  background: $primary;
+}
+
+// figures
+.figure {
+  max-width: 100%;
+}
+
+figcaption {
+  border-top: 1px solid $black;
+  background: $light-gray;
+  margin-bottom: 25px;
+  padding: 25px;
+}
+
+// sections
+.section-heading {
+  margin-top: 100px;
+}
+
+// dropdowns
+.dropdown-item:hover {
+  background-color: $yellow !important;
+  text-decoration: underline;
+}
+
+// pagination
+.bottom-pagination {
+  padding-top: 60px;
+  padding-bottom: 40px;
+  border-top: 1px solid #ccc;
+}
+
+// Variables
+:root {
+  --#{$prefix}border-width: 2px;
+  --#{$prefix}border-color: #000;
+}
+
+[data-bs-theme="light"],
+[data-bs-theme="dark"] {
+  --#{$prefix}border-color: #000;
+}
+
+// Mixins
+@mixin btn-shadow(){
+  box-shadow: 3px 3px 0 0 var(--#{$prefix}border-color);
+}
+
+.table {
+  border: 2px solid $black;
+}
+
+// Navbar
+.navbar {
+  $navbar-border-width: 2px;
+  font-size: $font-size-lg;
+  font-weight: $headings-font-weight;
+  border: $navbar-border-width solid $black;
+
+  &.fixed-top {
+    border-width: 0 0 $navbar-border-width 0;
+  }
+
+  &.fixed-bottom {
+    border-width: $navbar-border-width 0 0 0;
+  }
+
+  .dropdown-toggle::after {
+    margin-left: .15em;
+    vertical-align: .15em;
+  }
+
+  &-toggler {
+    --bs-border-width: 2px;
+  }
+}
+
+// Buttons
+.btn {
+  margin: 3px 0 0 3px;
+  border-color: $black;
+  @include btn-shadow();
+  transition: all .3s;
+  transform: translate(-3px, -3px);
+
+  &:hover {
+    border-color: $black;
+    box-shadow: none;
+    transform: translate(0, 0);
+  }
+
+  &.disabled {
+    border-color: $black;
+  }
+
+  &-link,
+  &-link:hover {
+    color: $black;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .btn-outline-#{$color} {
+    color: $black;
+    background-color: #{$value};
+    box-shadow: none;
+    transform: translate(0, 0);
+
+    &:hover {
+      @include btn-shadow();
+      transform: translate(-3px, -3px);
+    }
+  }
+
+  .btn-check + .btn-#{$color},
+  .btn-check + .btn-outline-#{$color} {
+    &:hover {
+      background-color: #{$value};
+    }
+  }
+}
+
+.btn-outline-dark {
+  color: $white;
+}
+
+.btn-group {
+  .btn {
+    margin-left: 0;
+  }
+
+  > .btn.active {
+    z-index: 0;
+  }
+}
+
+.btn-group,
+.btn-group-vertical {
+  .btn {
+    &:hover,
+    &:active,
+    &:focus {
+      z-index: 0;
+    }
+  }
+
+  > .btn-check:focus + .btn,
+  > .btn-check:checked + .btn {
+    z-index: 0;
+  }
+}
+
+.btn-check + .btn {
+  border-color: $black;
+  @include btn-shadow();
+  transform: translate(-3px, -3px);
+}
+
+.btn-check + .btn:hover {
+  color: $black;
+  border-color: $black;
+}
+
+.btn-check:checked + .btn,
+:not(.btn-check) + .btn:active,
+.btn:first-child:active,
+.btn.active,
+.btn.show {
+  border-color: $black;
+  box-shadow: none;
+  transform: translate(0, 0);
+}
+
+[data-bs-theme="dark"] .btn-link,
+[data-bs-theme="dark"] .btn-link:hover {
+  color: #fff;
+}
+
+// Typography
+a {
+  font-weight: $headings-font-weight;
+}
+
+// Forms
+.form-range {
+  &:not([disabled])::-moz-range-progress {
+    height: .6rem;
+    background-color: $primary;
+    border-radius: 6px 0 0 6px;
+  }
+
+  &:not([disabled])::-ms-fill-lower {
+    height: .6rem;
+    background-color: $primary;
+    border-radius: 6px 0 0 6px;
+  }
+
+  &::-webkit-slider-runnable-track {
+    border: 2px solid $black;
+  }
+
+  &::-moz-range-track {
+    border: 2px solid $black;
+  }
+
+  &::-webkit-slider-thumb {
+    margin-top: -.4rem;
+  }
+
+  &::-moz-range-thumb {
+    margin-top: -.4rem;
+  }
+
+  &:focus::-webkit-slider-thumb {
+    box-shadow: none;
+  }
+
+  &:focus::-moz-range-thumb {
+    box-shadow: none;
+  }
+}
+
+// Navs
+.nav {
+  &:not(.nav-tabs, .nav-pills) {
+    .nav-link {
+      &.active {
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.nav-tabs {
+  gap: 4px;
+  padding: .4rem .4rem calc(.4rem + 2px);
+  font-weight: $headings-font-weight;
+  border: 2px solid $black;
+  border-radius: $border-radius-lg;
+
+  .nav-link {
+    border-width: 2px;
+    border-radius: $border-radius;
+
+    &.active,
+    &:hover {
+      border: 2px solid $black;
+    }
+  }
+}
+
+.tab-content {
+  padding: 1rem;
+  margin-top: 1rem;
+  border: 2px solid $black;
+  border-radius: $border-radius-lg;
+}
+
+.nav-pills {
+  gap: 4px;
+  font-weight: $headings-font-weight;
+
+  .nav-link {
+    border: 2px solid $black;
+  }
+}
+
+.breadcrumb {
+  font-weight: $headings-font-weight;
+  border: 2px solid $black;
+
+  a {
+    color: $black;
+  }
+}
+
+.dropdown-menu {
+  @include btn-shadow();
+  border-radius: $border-radius;
+}
+
+.dropdown-header {
+  font-weight: 700;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: #000;
+}
+
+@each $color, $value in $theme-colors {
+  .list-group-item-#{$color} {
+    color: $black;
+    background-color: #{$value};
+    border-color: $black;
+  }
+}
+
+.list-group-item-dark {
+  color: $white;
+}
+
+[data-bs-theme="dark"] {
+  .nav-tabs,
+  .nav-pills {
+    .nav-link {
+      --#{$prefix}nav-link-color: #fff;
+
+      &:hover,
+      &:focus {
+        --#{$prefix}nav-link-hover-color: #fff;
+      }
+    }
+  }
+
+  .page-link {
+    --#{$prefix}pagination-color: #fff;
+
+    &:hover {
+      --#{$prefix}pagination-hover-color: #fff;
+    }
+  }
+
+  .nav {
+    .nav-link {
+      --#{$prefix}nav-link-color: #fff;
+
+      &:hover,
+      &:focus {
+        --#{$prefix}nav-link-hover-color: #fff;
+      }
+    }
+  }
+
+  .breadcrumb {
+    a {
+      color: $white;
+    }
+  }
+
+  .breadcrumb-item {
+    &.active {
+      --#{$prefix}breadcrumb-item-active-color: #fff;
+    }
+  }
+}
+
+// Indicators
+.alert {
+  color: $black;
+  border: 2px solid $black;
+  @include btn-shadow();
+}
+
+.alert-link {
+  color: $black;
+}
+
+.alert-dark {
+  color: $white;
+}
+
+@each $color, $value in $theme-colors {
+  .alert-#{$color} {
+    background-color: #{$value};
+  }
+}
+
+.badge {
+  border: 2px solid $black;
+
+  &.bg-dark {
+    color: $white;
+  }
+}
+
+.progress {
+  border: 2px solid $black;
+
+  &-bar {
+    border-right: 2px solid $black;
+  }
+}
+
+.modal {
+  &-content {
+    @include btn-shadow();
+  }
+}
+
+.vr {
+  width: 2px;
+  background-color: $black;
+}
+
+[data-bs-theme="dark"] .toast-header {
+  --#{$prefix}toast-header-color: #fff;
+}
+
+
+// tables
+
+// Lab schedule table with reactable()
+.lab-schedule {
+  font-family: $font-family-sans-serif;
+
+  h1, h2 {
+    font-weight: 600;
+  }
+
+  a {
+    color: $blue;
+    text-decoration: none;
+
+    &:hover, &:focus {
+      text-decoration: underline;
+      text-decoration-thickness: max(1px, 0.0625rem);
+    }
+  }
+}
+
+.lab-schedule-tbl {
+  margin-top: 1rem;
+  font-size: 1rem;
+
+  // Reactable table styling
+  .reactable {
+    font-family: $font-family-sans-serif;
+  }
+
+  // Header styling
+  .rt-thead {
+    background-color: #f8f9fa;
+
+    .rt-th {
+      font-weight: 700;
+      color: $dark;
+      border-bottom: 2px solid #dee2e6;
+      padding: 12px 8px;
+    }
+  }
+
+  // Cell styling
+  .rt-tbody {
+    .rt-td {
+      padding: 12px 8px;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    // Striped rows
+    .rt-tr-striped {
+      background-color: #f8f9fa;
+    }
+
+    // Hover effect
+    .rt-tr:hover {
+      background-color: rgba($yellow, 0.1);
+    }
+  }
+
+  // First column (Lab dates) styling
+  .rt-td:first-child {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  // Assignment columns styling
+  .rt-td:nth-child(3),
+  .rt-td:nth-child(4) {
+    white-space: normal;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+// Sortable headers
+.rt-th[aria-sort='ascending'],
+.rt-th[aria-sort='descending'] {
+  color: $gray-600;
+}
+
+// Mobile responsive design
+@media only screen and (max-width: 800px) {
+  .lab-schedule-tbl {
+    font-size: 14px;
+
+    .reactable {
+      // Make table scrollable horizontally on mobile
+      overflow-x: auto;
+
+      .rt-table {
+        min-width: 800px; // Maintain minimum width for readability
+      }
+    }
+
+    // Alternative: Stack layout for very small screens
+    @media only screen and (max-width: 600px) {
+      .reactable {
+        .rt-table,
+        .rt-thead,
+        .rt-tbody,
+        .rt-th,
+        .rt-td,
+        .rt-tr {
+          display: block;
+        }
+
+        .rt-thead .rt-tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+
+        .rt-tr {
+          border: 1px solid #ccc;
+          margin-bottom: 1rem;
+          border-radius: 4px;
+          padding: 0.5rem;
+        }
+
+        .rt-td {
+          border: none;
+          border-bottom: 1px solid #eee;
+          position: relative;
+          padding-left: 0;
+          padding-bottom: 0.5rem;
+          margin-bottom: 0.5rem;
+          white-space: normal;
+          text-align: left;
+        }
+
+        .rt-td:before {
+          content: attr(data-label) ": ";
+          position: relative;
+          display: block;
+          font-weight: bold;
+          color: $dark-steel;
+          margin-bottom: 0.25rem;
+          text-transform: uppercase;
+          font-size: 0.85rem;
+          letter-spacing: 0.5px;
+        }
+
+        // Hide last border on mobile stacked view
+        .rt-td:last-child {
+          border-bottom: none;
+          margin-bottom: 0;
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .lab-schedule-tbl {
+    .rt-tr:hover {
+      background-color: transparent !important;
+    }
+
+    a {
+      color: $dark !important;
+      text-decoration: underline !important;
+    }
+  }
+}
+
+
+// lab-pages
+
+
+.instructions {
+  border: 8px solid $primary; // Make sure $red is defined
+  border-radius: 22px;
+  box-sizing: border-box;
+  margin: 1em 0; // Choose one margin value
+  min-height: 80px; // Choose one min-height
+  padding: .1rem 1.5rem 1.5rem 7rem; // Choose one padding
+  position: relative;
+
+  h2 { // Adjust selector (h1-h6) to match your title's heading level
+    font-family: $headings-font-weight;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+  }
+
+  p {
+    font-family: $font-family-sans-serif;
+    font-size: 1.1rem;  // Your custom size
+    line-height: 1.5;   // Optional: improves readability
+    margin: 0 0 1em 0;  // Optional: controls spacing between paragraphs
+  }
+
+  &:before {
+    content: ''; // This is required
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    background-color: #fefdfa;
+    background-image: url('https://emmarshall.github.io/runza/img/icons/learn-2d.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+
+
+// Slightly bigger callouts
+.callout.callout-style-default .callout-body,
+.callout.callout-style-default > div.callout-header {
+  font-size: 1.1rem;
+}
+
+.callout-icon-container {
+  padding-top: 0 !important;
+}
+
+// Home page stuff
+.title-block {
+  margin: 1em 0;
+  border-bottom: 3px solid $gray-200;
+  padding-bottom: 1em;
+}
+
+.course-details {
+  margin: 0 0 1em;
+  border-bottom: 3px solid $gray-200;
+  padding-bottom: 1em;
+}
+
+.course-details h3 {
+  margin-top: 0;
+}
+
+.course-title {
+  font-size: 3.5rem;
+  border-bottom: 3px solid $gray-200;
+  margin-top: 0;
+  padding-bottom: 0.2em;
+}
+
+.course-subtitle {
+  font-size: 1.7rem;
+}
+
+.course-meta {
+  font-size: 1.2rem;
+  color: $gray-600;
+}
+
+// I copied this from Font Awesome's .fa-ul since there's no way to add a class
+// to a pandoc list
+.course-details ul {
+  list-style-type: none;
+  margin-left: var(--fa-li-margin, 1.5em);  // Was originally 2.5
+  padding-left: 0;
+}
+.course-details ul > li {
+  position: relative;
+}
+
+.contact-policy p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.course-details-smaller li {
+  font-size: 1rem;
+}
+
+.course-details-smaller h3 {
+  font-size: 1.4rem;
+}
+
+
+// Active links in navbar and sidebar
+.navbar-dark .navbar-nav .show>.nav-link,
+.navbar-dark .navbar-nav .active>.nav-link,
+.navbar-dark .navbar-nav .nav-link.active,
+div.sidebar-item-container .active,
+div.sidebar-item-container .show>.nav-link,
+div.sidebar-item-container .sidebar-link>code{
+  color: $gray-700;
+
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-brand:hover {
+  color: $orange;
+}
+
+
+// Footer stuff
+.nav-footer-left {
+  text-align: left;
+}
+
+.nav-footer-right {
+  text-align: right;
+}
+
+
+.vspace {
+     margin-bottom: 1cm;
+  }
+
+ .vspace2 {
+     margin-bottom: 2.5cm;
+     padding: 1%;
+  }
+
+.hspace {
+     margin-left: 5cm;
+     padding: 1%;
+  }
+
+
+/// cutom print button
+
+/*-- scss:rules --*/
+
+// Save/Print Button for webexercises
+.save-answers-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-base;
+  font-weight: $headings-font-weight;
+  color: $black;
+  background-color: $primary;
+  border: 2px solid $black;
+  border-radius: $border-radius;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 0 $black;
+  transform: translate(-3px, -3px);
+  transition: all 0.3s;
+  z-index: 1000;
+
+  &:hover {
+    box-shadow: none;
+    transform: translate(0, 0);
+    background-color: $primary;
+    border-color: $black;
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: translate(0, 0);
+  }
+}
+
+// Hide button when printing
+@media print {
+  .save-answers-button {
+    display: none !important;
+  }
+
+  // Make sure green answers are visible when printed
+  .webex-correct {
+    background-color: lighten($primary, 45%) !important;
+    border-color: $primary !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+// Mobile responsive
+@media only screen and (max-width: 800px) {
+  .save-answers-button {
+    bottom: 10px;
+    right: 10px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.30">
+<meta name="generator" content="quarto-1.9.35">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Factorial ANOVA (2×2) – psych350lab</title>
 <style>
@@ -70,14 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8382ef6bcf9f5a2461e71bacf674783.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-8073c01ad402aa5e4ca020b404e1a7a9.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8382ef6bcf9f5a2461e71bacf674783.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d7cc8b63efb29e8e42412eadb9bca2de.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b9ea414fb9105837b798b68e84c777ff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d7cc8b63efb29e8e42412eadb9bca2de.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-20f9da5c63de03bb57779945f514856d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-774d60f29866feaa47c6468ff32db202.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-20f9da5c63de03bb57779945f514856d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-06757e82f93737b7e098a4d8c74378f0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-bf0acc6dd4f21b5f5c296883600fd3e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-06757e82f93737b7e098a4d8c74378f0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Reference</span></a>
+ <span class="menu-text">Worksheets</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -383,164 +383,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_descriptives_KEY</span></a>
+  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Answer Checkers (HTML)</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/anova_factorial_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_factorial_answers</span></a>
-  </div>
+      </ul>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Functions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">
+<li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/anova_factorial_mg_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_factorial_mg_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/anova_factorial_wg_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_factorial_wg_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/anova_kgroup_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_kgroup_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/anova_statistics_KEY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_statistics_KEY</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_2x2_bg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_2x2_bg_factorial_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_2x2_mixed_factorial_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_2x2_mixed_factorial_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_2x2_wg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_2x2_wg_factorial_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_bg_anova_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_bg_anova_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_chi_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_chi_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_corr_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_corr_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_anova</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_chi2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_chi2</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_F.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_F</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_r</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_t.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_t</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_kgroup_anova_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_kgroup_chi_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_kgroup_chi_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_planned_comparisons_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_planned_comparisons_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_wg_anova_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_wg_anova_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_wg_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_wg_kgroup_anova_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_wg_simple_contrasts_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_wg_simple_contrasts_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/bg_anova_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">bg_anova_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/chi_square_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">chi_square_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/chi_square_kgroup_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">chi_square_kgroup_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/chisq_pairwise_KEY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">chisq_pairwise_KEY</span></a>
+  <a href="../man/descriptives_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">descriptives_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -557,80 +427,97 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_anova_omnibus_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_anova_omnibus_checker</span></a>
+  <a href="../man/chi_square_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">chi_square_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_anova_source_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_anova_source_table</span></a>
+  <a href="../man/chi_square_kgroup_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">chi_square_kgroup_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_answer_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_answer_table</span></a>
+  <a href="../man/bg_anova_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">bg_anova_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_anova_descriptives_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_anova_descriptives_table</span></a>
+  <a href="../man/wg_anova_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">wg_anova_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_anova_source_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_anova_source_table</span></a>
+  <a href="../man/anova_kgroup_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_kgroup_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_chi_crosstabs_table</span></a>
+  <a href="../man/anova_factorial_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_factorial_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_regression_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_regression_table</span></a>
+  <a href="../man/anova_factmg_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_factmg_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_bg_anova_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_bg_anova_checker</span></a>
+  <a href="../man/anova_factwg_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_factwg_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_bg_anova_combined_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_bg_anova_combined_table</span></a>
+  <a href="../man/linear_reg_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_bg_anova_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_bg_anova_table</span></a>
+  <a href="../man/lsd_hsd_calculator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">lsd_hsd_calculator</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_chi_combined_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_chi_combined_table</span></a>
+  <a href="../man/pr_means_to_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pr_means_to_r</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_chi_contingency_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_chi_contingency_table</span></a>
+  <a href="../man/pr_chi_to_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pr_chi_to_r</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Interactive Checkers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_descriptives_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_descriptives_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_chi_crosstabs_table</span></a>
+  <a href="../man/create_corr_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_corr_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -653,104 +540,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_chisq_pairwise_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_chisq_pairwise_table</span></a>
+  <a href="../man/create_bg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_bg_anova_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_corr_apa_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_corr_apa_table</span></a>
+  <a href="../man/create_wg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_wg_anova_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_corr_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_corr_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_corr_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_corr_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_correlation_interp_ft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_correlation_interp_ft</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_correlation_interpretations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_correlation_interpretations</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_descriptive_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_descriptive_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_descriptives_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_descriptives_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_anova_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_anova_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_anova_stats_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_anova_stats_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_apa_desc_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_apa_desc_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_desc_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_desc_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_mg_stats_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_mg_stats_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_wg_stats_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_wg_stats_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_linear_reg_combined_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_linear_reg_combined_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_linear_reg_correlation_interp_ft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_linear_reg_correlation_interp_ft</span></a>
+  <a href="../man/create_anova_omnibus_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_anova_omnibus_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/create_lsd_pairwise_checker.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">create_lsd_pairwise_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factbg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factbg_anova_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factbg_desc_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factbg_desc_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factmg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factmg_anova_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factmg_desc_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factmg_desc_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factwg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factwg_anova_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factwg_desc_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factwg_desc_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -767,38 +612,144 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../man/create_correlation_interpretations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_correlation_interpretations</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../man/create_regression_weight_interpretations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">create_regression_weight_interpretations</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">APA Tables (docx)</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_regwt_interp_ft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_regwt_interp_ft</span></a>
+  <a href="../man/create_apa_descriptives_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_descriptives_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_rh_crosstabs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_rh_crosstabs</span></a>
+  <a href="../man/create_apa_corr_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_corr_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_rh_support_text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_rh_support_text</span></a>
+  <a href="../man/create_apa_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_chi_crosstabs_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_wg_anova_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_wg_anova_checker</span></a>
+  <a href="../man/create_apa_anova_stats_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_anova_stats_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_wg_anova_combined_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_wg_anova_combined_table</span></a>
+  <a href="../man/create_apa_anova_descriptives_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_anova_descriptives_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_factbg_desc_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_factbg_desc_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_factmg_desc_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_factmg_desc_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_factwg_desc_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_factwg_desc_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_regression_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_regression_table</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Worksheet Tables &amp; KEY Functions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_descriptive_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_descriptive_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_answer_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_answer_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_corr_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_corr_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_chi_crosstabs_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_chi_combined_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_chi_combined_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_chi_contingency_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_chi_contingency_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_rh_contingency.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_rh_contingency</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_chisq_pairwise_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_chisq_pairwise_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_bg_anova_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_bg_anova_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -809,56 +760,97 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_interaction_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_interaction_results</span></a>
+  <a href="../man/create_anova_source_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_anova_source_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_main_effect_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_main_effect_results</span></a>
+  <a href="../man/create_bg_anova_combined_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_bg_anova_combined_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_mg_int_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_mg_int_results</span></a>
+  <a href="../man/create_wg_anova_combined_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_wg_anova_combined_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_mg_main_effect_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_mg_main_effect_results</span></a>
+  <a href="../man/create_factbg_anova_stats_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factbg_anova_stats_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_table_with_comparisons</span></a>
+  <a href="../man/factbg_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factbg_table_with_comparisons</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_wg_int_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_wg_int_results</span></a>
+  <a href="../man/create_linear_reg_combined_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_linear_reg_combined_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_wg_main_effect_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_wg_main_effect_results</span></a>
+  <a href="../man/create_linear_reg_correlation_interp_ft.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_linear_reg_correlation_interp_ft</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_bg_anova_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_bg_anova_results</span></a>
+  <a href="../man/create_correlation_interp_ft.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_correlation_interp_ft</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_chi_omnibus_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_chi_omnibus_results</span></a>
+  <a href="../man/create_regwt_interp_ft.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_regwt_interp_ft</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/anova_statistics_KEY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_statistics_KEY</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_descriptives_KEY</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/lsd_pairwise_KEY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">lsd_pairwise_KEY</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/chisq_pairwise_KEY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">chisq_pairwise_KEY</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Worksheet Formatters</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_corr_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_corr_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -869,68 +861,192 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_chi2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_chi2</span></a>
+  <a href="../man/format_chi_omnibus_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_chi_omnibus_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_corr_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_corr_results</span></a>
+  <a href="../man/format_bg_anova_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_bg_anova_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_df.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_df</span></a>
+  <a href="../man/format_wg_anova_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_wg_anova_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_effect_size_anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_effect_size_anova</span></a>
+  <a href="../man/format_factbg_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_factbg_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_effect.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_effect</span></a>
+  <a href="../man/factbg_interaction_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factbg_interaction_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_F.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_F</span></a>
+  <a href="../man/factbg_main_effect_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factbg_main_effect_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_factorial_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_factorial_results</span></a>
+  <a href="../man/factwg_interaction_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factwg_interaction_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_int.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_int</span></a>
+  <a href="../man/factwg_main_effect_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factwg_main_effect_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_mean.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_mean</span></a>
+  <a href="../man/factwg_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factwg_table_with_comparisons</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_mse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_mse</span></a>
+  <a href="../man/factmg_interaction_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factmg_interaction_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_n.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_n</span></a>
+  <a href="../man/factmg_main_effect_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factmg_main_effect_results</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/factmg_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factmg_table_with_comparisons</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_rh_support_text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_rh_support_text</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/key_or_blank.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">key_or_blank</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/worksheet_value.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">worksheet_value</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">APA Write-Ups</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_corr_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_corr_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_chi_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_chi_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_kgroup_chi_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_kgroup_chi_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_bg_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_bg_anova_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_wg_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_wg_anova_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_kgroup_anova_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_wg_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_wg_kgroup_anova_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_planned_comparisons_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_planned_comparisons_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_wg_simple_contrasts_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_wg_simple_contrasts_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_2x2_bg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_2x2_bg_factorial_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_2x2_mixed_factorial_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_2x2_mixed_factorial_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_2x2_wg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_2x2_wg_factorial_writeup</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">Formatting Utilities</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_stat</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -947,8 +1063,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_stat.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_stat</span></a>
+  <a href="../man/format_effect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_effect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_effect_size_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_effect_size_anova</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_F.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_F</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -959,8 +1093,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_wg_anova_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_wg_anova_results</span></a>
+  <a href="../man/format_chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_chi2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_mse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_mse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_df.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_df</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_n.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_n</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_int.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_int</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">APA Inline Reporting</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_r</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_chi2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_F.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_F</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_anova</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Markdown &amp; Display Helpers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/md_format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">md_format</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -969,64 +1185,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">highlight_text</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">Data &amp; Theme Utilities</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/key_or_blank.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">key_or_blank</span></a>
+  <a href="../man/get_spss_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">get_spss_data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_category_legend.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_category_legend</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_model_evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_model_evaluation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_model_statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_model_statistics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_table_legend.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_table_legend</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/lsd_hsd_calculator.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">lsd_hsd_calculator</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/lsd_pairwise_KEY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">lsd_pairwise_KEY</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/md_format.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">md_format</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/number_SPSS.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">number_SPSS</span></a>
+  <a href="../man/theme_SPSS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">theme_SPSS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1037,26 +1216,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/pr_chi_to_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">pr_chi_to_r</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/pr_means_to_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">pr_means_to_r</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/regression_category_legend.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">regression_category_legend</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/render_variable_list.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">render_variable_list</span></a>
+  <a href="../man/SPSS_pal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SPSS_pal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1073,27 +1234,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/SPSS_pal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">SPSS_pal</span></a>
+  <a href="../man/number_SPSS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">number_SPSS</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">Regression Table Helpers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/linear_reg_model_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_model_statistics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/theme_SPSS.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">theme_SPSS</span></a>
+  <a href="../man/linear_reg_model_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_model_evaluation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/wg_anova_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">wg_anova_answers</span></a>
+  <a href="../man/linear_reg_table_legend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_table_legend</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/worksheet_value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">worksheet_value</span></a>
+  <a href="../man/linear_reg_category_legend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_category_legend</span></a>
   </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/regression_category_legend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">regression_category_legend</span></a>
+  </div>
+</li>
+      </ul>
 </li>
       </ul>
 </li>
@@ -1133,24 +1319,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <a href="#mixed-factorial-22-mg" id="toc-mixed-factorial-22-mg" class="nav-link" data-scroll-target="#mixed-factorial-22-mg">Mixed Factorial (2×2 MG)</a>
   <ul class="collapse">
 <li><a href="#run-the-analysis-1" id="toc-run-the-analysis-1" class="nav-link" data-scroll-target="#run-the-analysis-1">1. Run the Analysis</a></li>
-  <li><a href="#interaction-and-main-effect-text" id="toc-interaction-and-main-effect-text" class="nav-link" data-scroll-target="#interaction-and-main-effect-text">2. Interaction and Main Effect Text</a></li>
+  <li><a href="#create-checker-widgets-1" id="toc-create-checker-widgets-1" class="nav-link" data-scroll-target="#create-checker-widgets-1">2. Create Checker Widgets</a></li>
   </ul>
 </li>
   <li>
 <a href="#within-groups-factorial-22-wg" id="toc-within-groups-factorial-22-wg" class="nav-link" data-scroll-target="#within-groups-factorial-22-wg">Within-Groups Factorial (2×2 WG)</a>
   <ul class="collapse">
 <li><a href="#run-the-analysis-2" id="toc-run-the-analysis-2" class="nav-link" data-scroll-target="#run-the-analysis-2">1. Run the Analysis</a></li>
-  <li><a href="#interaction-and-main-effect-text-1" id="toc-interaction-and-main-effect-text-1" class="nav-link" data-scroll-target="#interaction-and-main-effect-text-1">2. Interaction and Main Effect Text</a></li>
+  <li><a href="#create-checker-widgets-2" id="toc-create-checker-widgets-2" class="nav-link" data-scroll-target="#create-checker-widgets-2">2. Create Checker Widgets</a></li>
   <li><a href="#write-up-1" id="toc-write-up-1" class="nav-link" data-scroll-target="#write-up-1">3. Write-Up</a></li>
   </ul>
 </li>
-  <li><a href="#shared-functions-across-all-factorial-designs" id="toc-shared-functions-across-all-factorial-designs" class="nav-link" data-scroll-target="#shared-functions-across-all-factorial-designs">Shared Functions Across All Factorial Designs</a></li>
+  <li>
+<a href="#shared-functions-by-design" id="toc-shared-functions-by-design" class="nav-link" data-scroll-target="#shared-functions-by-design">Shared Functions by Design</a>
+  <ul class="collapse">
+<li><a href="#between-groups-functions" id="toc-between-groups-functions" class="nav-link" data-scroll-target="#between-groups-functions">Between-Groups Functions</a></li>
+  <li><a href="#mixed-factorial-functions" id="toc-mixed-factorial-functions" class="nav-link" data-scroll-target="#mixed-factorial-functions">Mixed Factorial Functions</a></li>
+  <li><a href="#within-groups-functions" id="toc-within-groups-functions" class="nav-link" data-scroll-target="#within-groups-functions">Within-Groups Functions</a></li>
+  </ul>
+</li>
   <li>
 <a href="#key-functions-reference" id="toc-key-functions-reference" class="nav-link" data-scroll-target="#key-functions-reference">Key Functions Reference</a>
   <ul class="collapse">
 <li><a href="#analysis-functions" id="toc-analysis-functions" class="nav-link" data-scroll-target="#analysis-functions">Analysis Functions</a></li>
-  <li><a href="#display-functions" id="toc-display-functions" class="nav-link" data-scroll-target="#display-functions">Display Functions</a></li>
-  <li><a href="#effect-interpretation-functions" id="toc-effect-interpretation-functions" class="nav-link" data-scroll-target="#effect-interpretation-functions">Effect Interpretation Functions</a></li>
+  <li><a href="#display-functions-between-groups" id="toc-display-functions-between-groups" class="nav-link" data-scroll-target="#display-functions-between-groups">Display Functions — Between-Groups</a></li>
+  <li><a href="#display-functions-mixed" id="toc-display-functions-mixed" class="nav-link" data-scroll-target="#display-functions-mixed">Display Functions — Mixed</a></li>
+  <li><a href="#display-functions-within-groups" id="toc-display-functions-within-groups" class="nav-link" data-scroll-target="#display-functions-within-groups">Display Functions — Within-Groups</a></li>
   <li><a href="#write-up-functions" id="toc-write-up-functions" class="nav-link" data-scroll-target="#write-up-functions">Write-Up Functions</a></li>
   </ul>
 </li>
@@ -1194,12 +1388,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td><strong>Mixed (MG)</strong></td>
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/anova_factorial_mg_answers.html">anova_factorial_mg_answers()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/anova_factmg_answers.html">anova_factmg_answers()</a></code></td>
 <td>One BG IV × one WG IV</td>
 </tr>
 <tr class="odd">
 <td><strong>Within-groups (WG)</strong></td>
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/anova_factorial_wg_answers.html">anova_factorial_wg_answers()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/anova_factwg_answers.html">anova_factwg_answers()</a></code></td>
 <td>Both IVs are within-subjects</td>
 </tr>
 </tbody>
@@ -1257,7 +1451,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table></section></section><section id="create-checker-widgets" class="level3"><h3 class="anchored" data-anchor-id="create-checker-widgets">2. Create Checker Widgets</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Factorial ANOVA statistics checker</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_anova_checker.html">create_factorial_anova_checker</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factbg_anova_checker.html">create_factbg_anova_checker</a></span><span class="op">(</span></span>
 <span>  rh_name            <span class="op">=</span> <span class="st">"RH1"</span>,</span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  iv1_name           <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
@@ -1265,7 +1459,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Cell descriptives checker</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_desc_checker.html">create_factorial_desc_checker</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factbg_desc_checker.html">create_factbg_desc_checker</a></span><span class="op">(</span></span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  iv1_name           <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
 <span>  iv2_name           <span class="op">=</span> <span class="st">"Tomatometer"</span></span>
@@ -1274,7 +1468,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="format-results" class="level3"><h3 class="anchored" data-anchor-id="format-results">3. Format Results</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Complete formatted results</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_factorial_results.html">format_factorial_results</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_factbg_results.html">format_factbg_results</a></span><span class="op">(</span></span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  iv1_name           <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
 <span>  iv2_name           <span class="op">=</span> <span class="st">"Tomatometer"</span>,</span>
@@ -1284,7 +1478,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section><section id="apa-tables" class="level3"><h3 class="anchored" data-anchor-id="apa-tables">4. APA Tables</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Factorial ANOVA statistics table</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_anova_stats_table.html">create_factorial_anova_stats_table</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factbg_anova_stats_table.html">create_factbg_anova_stats_table</a></span><span class="op">(</span></span>
 <span>  rh_name            <span class="op">=</span> <span class="st">"RH1"</span>,</span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  iv1_name           <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
@@ -1292,7 +1486,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Cell means table</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_apa_desc_table.html">create_factorial_apa_desc_table</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_apa_factbg_desc_table.html">create_apa_factbg_desc_table</a></span><span class="op">(</span></span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  iv1_name           <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
 <span>  iv2_name           <span class="op">=</span> <span class="st">"Tomatometer"</span>,</span>
@@ -1304,13 +1498,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>These functions generate formatted text describing the interaction and main effects, suitable for worksheets:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Interaction results</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factorial_interaction_results.html">factorial_interaction_results</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factbg_interaction_results.html">factbg_interaction_results</a></span><span class="op">(</span></span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  KEY                <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Main effect results (specify which IV)</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factorial_main_effect_results.html">factorial_main_effect_results</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factbg_main_effect_results.html">factbg_main_effect_results</a></span><span class="op">(</span></span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  iv_name            <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
 <span>  which_iv           <span class="op">=</span> <span class="st">"IV1"</span>,</span>
@@ -1339,7 +1533,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In a mixed design, one IV is between-subjects and one is within-subjects (repeated measures).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Mixed factorial: Height group (BG) × Score type (WG)</span></span>
-<span><span class="va">mg_factorial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/anova_factorial_mg_answers.html">anova_factorial_mg_answers</a></span><span class="op">(</span></span>
+<span><span class="va">mg_factorial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/anova_factmg_answers.html">anova_factmg_answers</a></span><span class="op">(</span></span>
 <span>  data       <span class="op">=</span> <span class="va">superman</span>,</span>
 <span>  dv         <span class="op">=</span> <span class="st">"rt_audience_score"</span>,   <span class="co"># placeholder - see function docs</span></span>
 <span>  iv1        <span class="op">=</span> <span class="st">"clark_grp"</span>,           <span class="co"># between-subjects IV</span></span>
@@ -1348,21 +1542,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  iv2_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Critics Score"</span>, <span class="st">"Audience Score"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="interaction-and-main-effect-text" class="level3"><h3 class="anchored" data-anchor-id="interaction-and-main-effect-text">2. Interaction and Main Effect Text</h3>
-<p>Mixed designs have their own formatting functions:</p>
+</section><section id="create-checker-widgets-1" class="level3"><h3 class="anchored" data-anchor-id="create-checker-widgets-1">2. Create Checker Widgets</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Interaction results</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factorial_mg_int_results.html">factorial_mg_int_results</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Mixed factorial ANOVA checker</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factmg_anova_checker.html">create_factmg_anova_checker</a></span><span class="op">(</span></span>
+<span>  rh_name            <span class="op">=</span> <span class="st">"RH1"</span>,</span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">mg_factorial</span>,</span>
-<span>  KEY                <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  bg_name            <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
+<span>  wg_name            <span class="op">=</span> <span class="st">"Score Type"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Main effect results</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factorial_mg_main_effect_results.html">factorial_mg_main_effect_results</a></span><span class="op">(</span></span>
+<span><span class="co"># Cell descriptives checker</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factmg_desc_checker.html">create_factmg_desc_checker</a></span><span class="op">(</span></span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">mg_factorial</span>,</span>
-<span>  iv_name            <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
-<span>  which_iv           <span class="op">=</span> <span class="st">"IV1"</span>,</span>
-<span>  KEY                <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  bg_name            <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
+<span>  wg_name            <span class="op">=</span> <span class="st">"Score Type"</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section></section><section id="within-groups-factorial-22-wg" class="level2"><h2 class="anchored" data-anchor-id="within-groups-factorial-22-wg">Within-Groups Factorial (2×2 WG)</h2>
@@ -1370,7 +1564,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In a fully within-subjects design, each participant is measured in all four cells. You provide the four DV column names directly.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Four columns: one per cell (IV1_level1 × IV2_level1, etc.)</span></span>
-<span><span class="va">wg_factorial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/anova_factorial_wg_answers.html">anova_factorial_wg_answers</a></span><span class="op">(</span></span>
+<span><span class="va">wg_factorial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/anova_factwg_answers.html">anova_factwg_answers</a></span><span class="op">(</span></span>
 <span>  data       <span class="op">=</span> <span class="va">superman</span>,</span>
 <span>  dv_a1b1    <span class="op">=</span> <span class="st">"score_critics_fresh"</span>,</span>
 <span>  dv_a1b2    <span class="op">=</span> <span class="st">"score_critics_rotten"</span>,</span>
@@ -1380,20 +1574,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  iv2_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Fresh"</span>, <span class="st">"Rotten"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="interaction-and-main-effect-text-1" class="level3"><h3 class="anchored" data-anchor-id="interaction-and-main-effect-text-1">2. Interaction and Main Effect Text</h3>
+</section><section id="create-checker-widgets-2" class="level3"><h3 class="anchored" data-anchor-id="create-checker-widgets-2">2. Create Checker Widgets</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Interaction results</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factorial_wg_int_results.html">factorial_wg_int_results</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Within-groups factorial ANOVA checker</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factwg_anova_checker.html">create_factwg_anova_checker</a></span><span class="op">(</span></span>
+<span>  rh_name            <span class="op">=</span> <span class="st">"RH1"</span>,</span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">wg_factorial</span>,</span>
-<span>  KEY                <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  iv1_name           <span class="op">=</span> <span class="st">"Score Type"</span>,</span>
+<span>  iv2_name           <span class="op">=</span> <span class="st">"Rating"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Main effect results</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factorial_wg_main_effect_results.html">factorial_wg_main_effect_results</a></span><span class="op">(</span></span>
+<span><span class="co"># Cell descriptives checker</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factwg_desc_checker.html">create_factwg_desc_checker</a></span><span class="op">(</span></span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">wg_factorial</span>,</span>
-<span>  iv_name            <span class="op">=</span> <span class="st">"Score Type"</span>,</span>
-<span>  which_iv           <span class="op">=</span> <span class="st">"IV1"</span>,</span>
-<span>  KEY                <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  iv1_name           <span class="op">=</span> <span class="st">"Score Type"</span>,</span>
+<span>  iv2_name           <span class="op">=</span> <span class="st">"Rating"</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="write-up-1" class="level3"><h3 class="anchored" data-anchor-id="write-up-1">3. Write-Up</h3>
@@ -1412,11 +1607,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="co"># cat(writeup)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section></section><section id="shared-functions-across-all-factorial-designs" class="level2"><h2 class="anchored" data-anchor-id="shared-functions-across-all-factorial-designs">Shared Functions Across All Factorial Designs</h2>
-<p>These work with all three factorial types:</p>
+</section></section><section id="shared-functions-by-design" class="level2"><h2 class="anchored" data-anchor-id="shared-functions-by-design">Shared Functions by Design</h2>
+<p>Each factorial design has its own checker and formatting functions:</p>
+<section id="between-groups-functions" class="level3"><h3 class="anchored" data-anchor-id="between-groups-functions">Between-Groups Functions</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Factorial ANOVA checker (interactive HTML)</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_anova_checker.html">create_factorial_anova_checker</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factbg_anova_checker.html">create_factbg_anova_checker</a></span><span class="op">(</span></span>
 <span>  rh_name <span class="op">=</span> <span class="st">"RH1"</span>,</span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  iv1_name <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
@@ -1424,20 +1620,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Cell descriptives checker</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_desc_checker.html">create_factorial_desc_checker</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factbg_desc_checker.html">create_factbg_desc_checker</a></span><span class="op">(</span></span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  iv1_name <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
 <span>  iv2_name <span class="op">=</span> <span class="st">"Tomatometer"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Table with pairwise comparisons</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factorial_table_with_comparisons.html">factorial_table_with_comparisons</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/factbg_table_with_comparisons.html">factbg_table_with_comparisons</a></span><span class="op">(</span></span>
 <span>  anova_results_list <span class="op">=</span> <span class="va">bg_factorial</span>,</span>
 <span>  iv1_name <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
 <span>  iv2_name <span class="op">=</span> <span class="st">"Tomatometer"</span></span>
 <span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section><section id="key-functions-reference" class="level2"><h2 class="anchored" data-anchor-id="key-functions-reference">Key Functions Reference</h2>
+</section><section id="mixed-factorial-functions" class="level3"><h3 class="anchored" data-anchor-id="mixed-factorial-functions">Mixed Factorial Functions</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Mixed factorial ANOVA checker</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factmg_anova_checker.html">create_factmg_anova_checker</a></span><span class="op">(</span></span>
+<span>  rh_name <span class="op">=</span> <span class="st">"RH1"</span>,</span>
+<span>  anova_results_list <span class="op">=</span> <span class="va">mg_factorial</span>,</span>
+<span>  bg_name <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
+<span>  wg_name <span class="op">=</span> <span class="st">"Score Type"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Cell descriptives checker</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factmg_desc_checker.html">create_factmg_desc_checker</a></span><span class="op">(</span></span>
+<span>  anova_results_list <span class="op">=</span> <span class="va">mg_factorial</span>,</span>
+<span>  bg_name <span class="op">=</span> <span class="st">"Height Group"</span>,</span>
+<span>  wg_name <span class="op">=</span> <span class="st">"Score Type"</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section><section id="within-groups-functions" class="level3"><h3 class="anchored" data-anchor-id="within-groups-functions">Within-Groups Functions</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Within-groups factorial ANOVA checker</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factwg_anova_checker.html">create_factwg_anova_checker</a></span><span class="op">(</span></span>
+<span>  rh_name <span class="op">=</span> <span class="st">"RH1"</span>,</span>
+<span>  anova_results_list <span class="op">=</span> <span class="va">wg_factorial</span>,</span>
+<span>  iv1_name <span class="op">=</span> <span class="st">"Score Type"</span>,</span>
+<span>  iv2_name <span class="op">=</span> <span class="st">"Rating"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Cell descriptives checker</span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_factwg_desc_checker.html">create_factwg_desc_checker</a></span><span class="op">(</span></span>
+<span>  anova_results_list <span class="op">=</span> <span class="va">wg_factorial</span>,</span>
+<span>  iv1_name <span class="op">=</span> <span class="st">"Score Type"</span>,</span>
+<span>  iv2_name <span class="op">=</span> <span class="st">"Rating"</span></span>
+<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section></section><section id="key-functions-reference" class="level2"><h2 class="anchored" data-anchor-id="key-functions-reference">Key Functions Reference</h2>
 <section id="analysis-functions" class="level3"><h3 class="anchored" data-anchor-id="analysis-functions">Analysis Functions</h3>
 <table class="caption-top table">
 <thead><tr class="header">
@@ -1450,15 +1680,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>2×2 between-groups</td>
 </tr>
 <tr class="even">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/anova_factorial_mg_answers.html">anova_factorial_mg_answers()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/anova_factmg_answers.html">anova_factmg_answers()</a></code></td>
 <td>2×2 mixed (1 BG × 1 WG)</td>
 </tr>
 <tr class="odd">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/anova_factorial_wg_answers.html">anova_factorial_wg_answers()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/anova_factwg_answers.html">anova_factwg_answers()</a></code></td>
 <td>2×2 within-groups</td>
 </tr>
 </tbody>
-</table></section><section id="display-functions" class="level3"><h3 class="anchored" data-anchor-id="display-functions">Display Functions</h3>
+</table></section><section id="display-functions-between-groups" class="level3"><h3 class="anchored" data-anchor-id="display-functions-between-groups">Display Functions — Between-Groups</h3>
 <table class="caption-top table">
 <thead><tr class="header">
 <th>Function</th>
@@ -1466,60 +1696,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_anova_checker.html">create_factorial_anova_checker()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factbg_anova_checker.html">create_factbg_anova_checker()</a></code></td>
 <td>Interactive statistics checker</td>
 </tr>
 <tr class="even">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_desc_checker.html">create_factorial_desc_checker()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factbg_desc_checker.html">create_factbg_desc_checker()</a></code></td>
 <td>Interactive descriptives checker</td>
 </tr>
 <tr class="odd">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_anova_stats_table.html">create_factorial_anova_stats_table()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factbg_anova_stats_table.html">create_factbg_anova_stats_table()</a></code></td>
 <td>ANOVA statistics table</td>
 </tr>
 <tr class="even">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factorial_apa_desc_table.html">create_factorial_apa_desc_table()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_apa_factbg_desc_table.html">create_apa_factbg_desc_table()</a></code></td>
 <td>Cell means table</td>
 </tr>
 <tr class="odd">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/format_factorial_results.html">format_factorial_results()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/format_factbg_results.html">format_factbg_results()</a></code></td>
 <td>Formatted markdown output</td>
 </tr>
 <tr class="even">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/factorial_table_with_comparisons.html">factorial_table_with_comparisons()</a></code></td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/factbg_table_with_comparisons.html">factbg_table_with_comparisons()</a></code></td>
 <td>Table with pairwise results</td>
 </tr>
+<tr class="odd">
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/factbg_interaction_results.html">factbg_interaction_results()</a></code></td>
+<td>Interaction text</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/factbg_main_effect_results.html">factbg_main_effect_results()</a></code></td>
+<td>Main effect text</td>
+</tr>
 </tbody>
-</table></section><section id="effect-interpretation-functions" class="level3"><h3 class="anchored" data-anchor-id="effect-interpretation-functions">Effect Interpretation Functions</h3>
+</table></section><section id="display-functions-mixed" class="level3"><h3 class="anchored" data-anchor-id="display-functions-mixed">Display Functions — Mixed</h3>
 <table class="caption-top table">
 <thead><tr class="header">
 <th>Function</th>
-<th>Design</th>
+<th>Purpose</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/factorial_interaction_results.html">factorial_interaction_results()</a></code></td>
-<td>BG interaction text</td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factmg_anova_checker.html">create_factmg_anova_checker()</a></code></td>
+<td>Interactive statistics checker</td>
 </tr>
 <tr class="even">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/factorial_main_effect_results.html">factorial_main_effect_results()</a></code></td>
-<td>BG main effect text</td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factmg_desc_checker.html">create_factmg_desc_checker()</a></code></td>
+<td>Interactive descriptives checker</td>
 </tr>
+</tbody>
+</table></section><section id="display-functions-within-groups" class="level3"><h3 class="anchored" data-anchor-id="display-functions-within-groups">Display Functions — Within-Groups</h3>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Function</th>
+<th>Purpose</th>
+</tr></thead>
+<tbody>
 <tr class="odd">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/factorial_mg_int_results.html">factorial_mg_int_results()</a></code></td>
-<td>Mixed interaction text</td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factwg_anova_checker.html">create_factwg_anova_checker()</a></code></td>
+<td>Interactive statistics checker</td>
 </tr>
 <tr class="even">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/factorial_mg_main_effect_results.html">factorial_mg_main_effect_results()</a></code></td>
-<td>Mixed main effect text</td>
-</tr>
-<tr class="odd">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/factorial_wg_int_results.html">factorial_wg_int_results()</a></code></td>
-<td>WG interaction text</td>
-</tr>
-<tr class="even">
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/factorial_wg_main_effect_results.html">factorial_wg_main_effect_results()</a></code></td>
-<td>WG main effect text</td>
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_factwg_desc_checker.html">create_factwg_desc_checker()</a></code></td>
+<td>Interactive descriptives checker</td>
 </tr>
 </tbody>
 </table></section><section id="write-up-functions" class="level3"><h3 class="anchored" data-anchor-id="write-up-functions">Write-Up Functions</h3>
@@ -1534,6 +1772,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>BG factorial</td>
 </tr>
 <tr class="even">
+<td><code><a href="https://emmarshall.github.io/psych350lab/man/apa_2x2_mixed_factorial_writeup.html">apa_2x2_mixed_factorial_writeup()</a></code></td>
+<td>Mixed factorial</td>
+</tr>
+<tr class="odd">
 <td><code><a href="https://emmarshall.github.io/psych350lab/man/apa_2x2_wg_factorial_writeup.html">apa_2x2_wg_factorial_writeup()</a></code></td>
 <td>WG factorial</td>
 </tr>

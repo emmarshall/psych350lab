@@ -831,5 +831,30 @@ format_f <- format_F
   }
 }
 
+
+# -----------------------------------------------------------------------------
+# Utility: Blank vs. filled table generation
+# -----------------------------------------------------------------------------
+
+#' Create worksheet value (blank or filled)
+#'
+#' Helper function to return either a formatted value or a blank for worksheets.
+#'
+#' @param value The value to format.
+#' @param format_fn The formatting function to apply.
+#' @param KEY If TRUE, return formatted value; if FALSE, return blank.
+#' @param blank_text Text to use for blanks (default "______").
+#' @param ... Additional arguments passed to format_fn.
+#' @return Character string.
+#' @export
+worksheet_value <- function(value, format_fn, KEY = TRUE, blank_text = "______", ...) {
+  if (KEY) {
+    format_fn(value, ...)
+  } else {
+    blank_text
+  }
+}
+
+
 #' @import psych350data
 NULL

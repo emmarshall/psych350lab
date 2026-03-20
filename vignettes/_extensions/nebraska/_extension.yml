@@ -1,0 +1,51 @@
+title: Nebraska
+author: Emma Marshall
+version: 0.0.1
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    nebraska-docx:  # This is the format name you'll use in --to
+      base: docx    # Inherits from Quarto's built-in docx format
+      reference-doc: ressources/lab-template.docx
+      format-resources:
+        - ressources/lab-template.docx
+    nebraska-pptx:
+      base: pptx
+      reference-doc: ressources/accessible-template.pptx
+      format-resources:
+        - ressources/accessible-template.pptx
+      toc: true
+    nebraska-typst:
+      base: typst
+      title-page: false
+      logo-path: "lab-handout/logo.svg"
+      logo-alt: "Lab logo"
+      template-partials:
+        - lab-handout/typst-template.typ
+        - lab-handout/typst-show.typ
+      format-resources:
+        - lab-handout/logo.svg
+        - lab-handout/logo.png
+        - lab-handout/logo-red.svg
+    html:
+      filters:
+        - html/assets/callouts.lua
+      theme: [lumen, html/assets/unl.scss]
+    revealjs:
+      date-format: long
+      overview: true
+      progress: true
+      touch: true
+      chalkboard: false
+      leader-line: true
+      attribution: true
+      embedio: true
+      execute:
+        echo: true
+      title-slide-attributes:
+        data-background-image: 'https://emmarshall.github.io/runza/img/icons/corn-logo-c.svg'
+        data-background-size: contain
+        data-background-opacity: .5
+      theme: [default, revealjs/unl.scss]
+      logo: 'https://emmarshall.github.io/runza/img/icons/corn-logo-y.svg'
+      preload-iframes: true

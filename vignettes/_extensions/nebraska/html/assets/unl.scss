@@ -1,0 +1,884 @@
+/*-- scss:defaults --*/
+
+
+// use lumen as the base
+// https://bootswatch.com/lumen/
+
+$theme: "lumen" !default;
+
+// Import partial files
+
+@import 'mixins';
+@import 'variables';
+
+// My colors
+
+$white:    #fff;
+$gray:     #adb5bd;
+$gray-100: #f8f9fa;
+$gray-200: #eee;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #aaa;
+$gray-600: #777;
+$gray-700: #495057;
+$gray-800: #333;
+$gray-900: #212529;
+$black:    #000;
+
+
+
+// colors
+$red: #d00000 !default;
+$unl-red-light: #ffe5e5 !default;
+$dark-grey: #404040 !default;
+$gray: #c7c8ca !default;
+$unl-cream: #f5f1e7 !default;
+$light-cream: #fefdfa !default;
+$yellow: #ffd74f !default;
+$light-blue: #249ab5 !default;
+$blue: #005d84 !default;
+$navy: #001226 !default;
+$orange: #f58a1f !default;
+$green: #bccb2a !default;
+$purple: #a5228d !default;
+$light-gray: #cccccc !default;
+$dark-steel: #010B13 !default;
+
+
+$bright-90: #FFFECF;
+$blueish-bg: #e8eff2;
+$blueish-fg: #072e3c;
+
+$primary:       $red !default;
+$secondary:     $yellow !default;
+$success:       $blue !default;
+$info:          $light-blue !default;
+$warning:       $red !default;
+$danger:        $orange !default;
+$light:         $gray-200 !default;
+$dark:          $dark-steel !default;
+
+$font_weight_normal: 400;
+$font_weight_bold: 800;
+
+// code-colors
+$code-color: $primary !default; //color for the font of inline code
+$code-bg: $blueish-bg !default;
+$btn-code-copy-color: $primary !default; //color for code blocks buttons
+
+
+
+// main content
+$body-bg:  #fdfdfd !default;
+$body-color:  $dark !default;
+$body-secondary: $primary !default;
+$headings-color: $dark !default;
+$form-select-border-color: $primary !default;
+
+$card-bg-color: #fff;
+$card-border-color: #000;
+$btn-shadow: 5px 5px 0px 0px #000;
+$btn-padding: 0.5rem 1rem;
+$transition-time: 150ms;
+$card-width: 15rem;
+$card-padding: 2em;
+$avatar-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+$avatar-border-color: #000;
+$box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+
+
+// footer
+$footer-bg: $unl-cream;
+$footer-fg: $dark-steel;
+
+// fonts
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap');
+
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Code_Pro&display=swap');
+
+
+// fonts
+$handwriting: "Happy Monkey";
+
+$font-family-sans-serif: "Montserrat", sans-serif !default;
+$font-family-monospace: "Source Code Pro", "Fira Mono", monospace !default;
+$headings-font-family: 'Open Sans', sans-serif !default;
+
+
+
+
+// callouts
+$callout-color-note: $primary;
+$callout-color-tip: $secondary;
+$callout-color-caution: $bright-90;
+$callout-color-warning: $orange;
+$callout-color-important: $red;
+
+// nav bar
+$navbar-bg: $primary;
+$navbar-fg: $white;
+$navbar-hl: $gray-900;
+
+/*-- scss:rules --*/
+
+
+.header-section-number {
+    font-family: $handwriting;
+    color: #747a7f;
+    color: lighten($primary, 55) !important;
+    background-color: $primary;
+    border-radius: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+
+h1 {
+  font-size: calc(2rem + 1.5vw);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 55px;
+  letter-spacing: 0.01em;
+  color: $black;
+}
+
+h2 {
+  font-size: calc(1.55rem + 0.9vw);
+  font-weight: 600;
+  line-height: 40px;
+  letter-spacing: 0.05em;
+  font-style: normal;
+  color: $black;
+}
+
+h3 {
+  font-size:  calc(1.25rem + 0.5vw);
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 31px;
+  letter-spacing: 0.01em;
+  color: $black;
+}
+
+h4 {
+  font-size:  calc(1.15rem + 0.3vw);
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 31px;
+  letter-spacing: 0.01em;
+  color: $black;
+}
+
+blockquote {
+  margin-top: 10px;
+  color: $navy;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  padding-left: 15px;
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-left-color: $primary;
+  p {
+    font-size: 1.25rem;
+  }
+
+}
+
+
+
+
+a.anchor {
+  display: none;
+  margin-left: 5px;
+  width: Min(0.9em, 20px);
+  height: Min(0.9em, 20px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-link'%3E%3Cpath d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'%3E%3C/path%3E%3Cpath d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: Min(0.9em, 20px) Min(0.9em, 20px);
+  background-position: center center;
+}
+
+h2, h3, h4, h5, h6 {
+  &:hover .anchor {display: inline-block;}
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+table {
+  display: table;
+  max-width: max-content;
+  overflow: auto;
+}
+
+thead > tr > th {
+  font-weight: $font-weight-bold;
+  vertical-align: baseline;
+  border-top: 4px solid $dark-steel; /* Add a black border to the top of the thead */
+  border-bottom: 4px solid $dark-steel; /* Add a black border to the bottom of the thead */
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: $light-cream;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) > * {
+  background-color: $light-cream;
+}
+
+tbody > tr {
+  border-bottom: 1px solid $gray-300; /* Add a black border to the bottom of each tbody row */
+}
+
+tbody > tr:last-child {
+    border-bottom: 3px solid $dark-steel; /* Add a black border to the bottom of the thead */
+}
+
+dt > * {
+  font-weight: inherit;
+}
+
+.btn-primary-outline {
+  border: 1px solid $primary;
+  color: $primary;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 75px;
+  padding-right: 75px;
+  padding-top: 17px;
+  padding-bottom: 17px;
+}
+
+.btn-primary-outline:hover {
+  color: $primary;
+  background: $unl-cream;
+}
+
+.btn-primary-outline:active {
+  color: #ffffff;
+  background: $primary;
+}
+
+.figure {
+  max-width: 100%;
+}
+
+figcaption {
+  border-top: 1px solid $black;
+  background: $light-gray;
+  margin-bottom: 25px;
+  padding: 25px;
+}
+
+.section-heading {
+  margin-top: 100px;
+}
+
+.dropdown-item:hover {
+  text-decoration: underline;
+}
+
+.bottom-pagination {
+  padding-top: 60px;
+  padding-bottom: 40px;
+  border-top: 1px solid #ccc;
+}
+
+
+// callouts
+
+/* Basic carpentries style (gray callout) */
+
+.callout {
+  border-left: 10px solid $gray;
+  margin-bottom: 25px;
+}
+
+.card-shadow {
+  filter: drop-shadow(7px 7px 0 rgba(0, 0, 0, 1));
+  transition: all;
+  transition-duration: 0.5s;
+  animation: ease-in-out;
+
+  &:hover {
+    filter: drop-shadow(5px 5px 0 rgba(0, 0, 0, 1));
+  }
+}
+
+
+
+// card
+
+.card {
+  margin-bottom: 2.2rem;
+  border: none;
+  box-shadow: 5px 5px #141414;
+  border-radius: 8px;
+  border: 2px solid #141414;
+
+}
+
+.callout-square {
+  margin-left: -10px;
+  width: 53px;
+  height: 53px;
+  color: #ffffff;
+  background: $gray;
+  margin-right: -15px;
+  border-radius: 3px;
+}
+
+.callout-icon {
+  margin: 13px 0px 0px 13px;
+}
+
+.callout-content {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.callout-title {
+  position: relative;
+  font-size: 18px;
+  line-height: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0px 0px 25px 0px;
+  padding: 24px 0px 0px 0px;
+  text-decoration: bold;
+ // text-underline-offset: 6px;
+  code, kbd {
+    text-transform: none;
+  }
+}
+
+.callout p {
+  text-transform: none;
+  margin-left: 0px;
+  margin-top:10px;
+  margin-bottom:20px;
+}
+
+.callout li {
+  text-transform: none;
+  margin-left: 0px;
+  margin-top:10px;
+  margin-bottom:20px;
+}
+
+.callout-inner {
+  padding: 0px 25px 25px 25px;
+  background: $gray-200;
+}
+
+/* Overrides for different callout types */
+
+/* readings */
+
+.readings {
+  border-left: 10px solid $orange;
+}
+
+.readings .callout-square {
+  background: $orange;
+  background-image: url("https://emmarshall.github.io/runza/img/icons/read-3d.png");
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* takeaways */
+
+.takeaways {
+  border-left: 10px solid $secondary;
+}
+
+.takeaways .callout-square {
+  background: $primary;
+  color: $gray-200;
+  background-image: url("https://emmarshall.github.io/runza/img/icons/learn-3d.png");
+  background-size: 95%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* assignments */
+
+.checklist {
+  border-left: 10px solid $primary;
+}
+
+.checklist .callout-square {
+  background: $secondary;
+  color: #ffffff;
+  background-image: url("https://emmarshall.github.io/runza/img/icons/write-3d.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* discussion */
+
+.discussion {
+  border-left: 10px solid $light-blue;
+}
+
+.discussion .callout-square {
+  background: $light-blue;
+  color: #ffffff;
+  background-image: url("https://emmarshall.github.io/runza/img/icons/read-3d.png");
+    background-size: 95%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+
+/* resources */
+
+.activity {
+  border-left: 10px solid $gray;
+}
+
+.activity .callout-square {
+  background: $yellow;
+  color: $black;
+  background-image: url("https://emmarshall.github.io/runza/img/icons/puzzle-3d.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Challenge */
+
+.challenge {
+  border-left: 10px solid $yellow;
+}
+
+.challenge .callout-square {
+  background: $yellow;
+  background-image: url("https://emmarshall.github.io/runza/img/icons/assignments-3d.png");
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
+  color: $black;
+}
+
+/* Parent Class for Accordions in Learner View */
+@import 'variables';
+
+.learner-accordion {
+    --accordion-color: var(--accordion-color);
+    --accordion-bg: var(--accordion-bg);
+    --accordion-border-color: var(--accordion-border-color);
+    --accordion-border-width: var(--accordion-border-width);
+    --accordion-border-radius: var(--accordion-border-radius);
+    --accordion-inner-border-radius: var(--accordion-inner-border-radius);
+    --accordion-btn-padding-x: var(--accordion-btn-padding-x);
+    --accordion-btn-padding-y: var(--accordion-btn-padding-y);
+    --accordion-btn-color: var(--accordion-btn-color);
+    --accordion-btn-bg: var(--accordion-btn-bg);
+    --accordion-btn-icon: var(--accordion-btn-icon);
+    --accordion-btn-icon-width: var(--accordion-btn-icon-width);
+    --accordion-btn-icon-transform: var(--accordion-btn-icon-transform);
+    --accordion-btn-icon-transition: var(--accordion-btn-icon-transition);
+    --accordion-btn-active-icon: var(--accordion-btn-active-icon);
+    --accordion-btn-focus-border-color: var(--accordion-btn-focus-border-color);
+    --accordion-btn-focus-box-shadow: var(--accordion-btn-focus-box-shadow);
+    --accordion-body-padding-x: var(--accordion-body-padding-x);
+    --accordion-body-padding-y: var(--accordion-body-padding-y);
+    --accordion-active-color: var(--accordion-active-color);
+    --accordion-active-bg: var(--accordion-active-bg);
+    --accordion-transition: var(--accordion-transition);
+
+    border: var(--accordion-border-width) solid var(--accordion-border-color);
+    border-radius: var(--accordion-border-radius);
+    overflow: hidden;
+
+    .accordion-item {
+        background-color: var(--accordion-bg);
+        border-bottom: var(--accordion-border-width) solid var(--accordion-border-color);
+
+        &:first-of-type {
+            border-top-left-radius: var(--accordion-inner-border-radius);
+            border-top-right-radius: var(--accordion-inner-border-radius);
+        }
+
+        &:last-of-type {
+            border-bottom-right-radius: var(--accordion-inner-border-radius);
+            border-bottom-left-radius: var(--accordion-inner-border-radius);
+        }
+    }
+
+    .accordion-button {
+        padding: var(--accordion-btn-padding-y) var(--accordion-btn-padding-x);
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--accordion-btn-color);
+        background-color: var(--accordion-btn-bg);
+        border: 0;
+        border-radius: 0;
+        text-align: left;
+        transition: var(--accordion-transition);
+
+        &:not(.collapsed) {
+            color: var(--accordion-active-color);
+            background-color: var(--accordion-active-bg);
+            box-shadow: inset 0 calc(-1 * var(--accordion-border-width)) 0 var(--accordion-active-color);
+
+            .accordion-button-icon {
+                transform: var(--accordion-btn-icon-transform);
+            }
+        }
+
+        &:focus {
+            z-index: 3;
+            border-color: var(--accordion-btn-focus-border-color);
+            outline: 0;
+            box-shadow: var(--accordion-btn-focus-box-shadow);
+        }
+
+        .accordion-button-icon {
+            flex-shrink: 0;
+            width: var(--accordion-btn-icon-width);
+            height: var(--accordion-btn-icon-width);
+            background-image: var(--accordion-btn-icon);
+            background-repeat: no-repeat;
+            background-size: var(--accordion-btn-icon-width);
+            transition: var(--accordion-btn-icon-transition);
+        }
+
+        &.collapsed .accordion-button-icon {
+            background-image: var(--accordion-btn-active-icon);
+        }
+    }
+
+    .accordion-body {
+        padding: var(--accordion-body-padding-y) var(--accordion-body-padding-x);
+    }
+}
+
+
+
+
+/* Child classes for solution and spoiler accordions */
+
+.challenge-accordion {
+  @extend .learner-accordion;
+  margin: -25px 0 25px 0;
+}
+
+// Base hint accordion styles, inheriting from learner accordion
+.hint-accordion {
+  @extend .learner-accordion;  // Inherits all properties from learner-accordion
+
+  // Specific override styles for the hint accordion
+  --accordion-btn-bg: var(--hint-btn-bg, #f0f9ff); // Light blue background for buttons, defaulting if not defined
+  --accordion-active-bg: var(--hint-active-bg, #dbefff); // Different active background
+  --accordion-btn-color: var(--hint-btn-color, #0056b3); // Blue text color for buttons
+  --accordion-active-color: var(--hint-active-color, #002766); // Darker blue when active
+
+  .accordion-item {
+    // If needed, specific styles for hint accordion items
+  }
+
+  .accordion-button {
+    // Additional or override styles for hint accordion buttons
+    &:not(.collapsed) {
+      background-image: var(--hint-expanded-icon); // Example to change icon when expanded
+    }
+
+    &:hover {
+      background-color: var(--hint-hover-bg); // Background color on hover
+    }
+  }
+
+  .accordion-body {
+    // Additional styles for the body of the hint accordion
+    background-color: var(--hint-body-bg, #ffffff); // Default white if not defined
+  }
+}
+
+
+.spoiler-accordion {
+  @extend .learner-accordion;
+  margin: 25px 0 25px 0;
+  .spoiler-button {
+    background: $light-blue;
+    height: 53px;
+    padding-left: 15px;
+    position: relative;
+    border-color: $black;
+    padding-left: 10px;
+    color: $black;
+    box-shadow: 0;
+    &:focus {
+      box-shadow: $gray 0px 0px 0px 4px;
+    }
+    &, h3 {
+      font-size: 16px;
+      font-style: normal;
+      font-weight: normal;
+      text-transform: uppercase;
+    }
+    h3 {
+      margin-left: 65px;
+    }
+    &.collapsed {
+      color: $gray-300;
+      h3 {
+        text-decoration: none;
+      }
+    }
+  }
+  .spoiler-button-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  .spoiler-button-icon {
+    background-image: $accordion-button-icon;
+  }
+  .spoiler-button.collapsed .spoiler-button-icon {
+    background-image: $accordion-button-active-icon;
+  }
+  .note-square {
+    width: 53px;
+    height: 53px;
+    color: $black;
+    background: $gray;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("https://emmarshall.github.io/runza/img/icons/info-3d.png");
+    background-size: 95%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+
+
+
+
+/* Move icon, adjust margins on medium/large screens */
+
+@include media-breakpoint-up(md) {
+  .callout-square {
+    float: left;
+    position: relative;
+    left: -43px;
+  }
+
+  .callout {
+    margin-left: 42px;
+  }
+
+  .challenge-accordion {
+    margin-left: 42px;
+  }
+}
+
+//overview
+
+.overview .card-header {
+  text-transform: uppercase;
+  color: #ffffff;
+  background: $primary;
+  border-radius: 0px;
+  border: none;
+  height: 53px;
+  padding-top: 7px;
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+}
+
+.overview {
+  background: $light-cream;
+  border: none;
+  margin-bottom: 25px;
+  border-radius: 0px;
+  padding-bottom: 10px;
+}
+
+.overview li {
+  margin: 17px 0;
+}
+
+.overview .inner {
+  margin-top: 30px;
+  margin-left: 30px;
+  padding-left: 10px;
+  margin-right: 20px;
+}
+
+.overview ul {
+  margin-left: -15px;
+}
+
+.card-title {
+  //text-decoration: underline;
+ // text-decoration-thickness: 3px;
+  //text-underline-offset: 15px;
+  margin-bottom: 35px;
+  font-size: 1.4rem;
+}
+
+.overview .bordered {
+  border-top: 2px solid $black;
+  padding-top: 25px;
+  margin-top: -25px;
+}
+
+@include media-breakpoint-up(md) {
+  .overview .bordered {
+    border-left: 1px solid $black;
+    padding-left: 60px;
+    margin-top: 30px;
+    border-top: none;
+    border-radius: 3px;
+    padding-top: 0px;
+  }
+
+  .overview .inner {
+    margin-left: 60px;
+  }
+}
+
+//instructor-note
+.instructor-note {
+   margin-bottom: 25px;
+   .note-square {
+    width: 53px;
+    height: 53px;
+    color: black;
+    background: $gray;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("https://emmarshall.github.io/runza/img/icons/emw-3d.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+   .accordion-body {
+     padding: 25px 35px;
+     background: $light-cream;
+     li {
+      list-style-type: inherit;
+      margin-left: 0px;
+      margin-top:10px;
+      margin-bottom:20px;
+     }
+   }
+  .accordion-button {
+    position: relative;
+    background: $secondary;
+    height: 53px;
+    border-color: $black;
+    padding-left: 10px;
+    color: $black;
+    box-shadow: 0;
+    &:focus {
+      box-shadow: $gray 0px 0px 0px 4px;
+    }
+    &, h3 {
+      font-size: 16px;
+      font-style: normal;
+      font-weight: normal;
+      text-transform: uppercase;
+    }
+    h3 {
+      margin-left: 65px;
+    }
+    &.collapsed {
+      color: $gray;
+      h3 {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .instructor-note .accordion-button h2 {
+    line-height: 16px;
+    text-decoration: none;
+    text-underline-offset: 1px;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .instructor-note .accordion-button h2 {
+    text-underline-offset: 25px;
+  }
+}
+
+
+
+@media print {
+  // force solutions and instructor notes to show on print
+  .accordion-collapse {
+    display: unset !important;
+  }
+  // do not display navigation or search forms or extraneous decoration
+  button, nav, footer, form.search-form, #to-top, div.callout-square, .lesson-progress {
+    display: none !important;
+  }
+  // source: <https://css-tricks.com/almanac/properties/p/page-break/#aa-example>
+  h2 {
+    page-break-before: auto;
+  }
+  h3, h4 {
+    page-break-after: avoid;
+  }
+  pre, blockquote, .callout, .instructor-note, .challenge-accordion {
+    page-break-inside: avoid;
+    border-style: solid;
+  }
+  // add solution heading before the solution
+  .challenge-accordion::before {
+    content: "Solution";
+    display: block;
+    text-size: 18pt;
+    //text-decoration: underline;
+  }
+  .instructor-note::before {
+    content: "Instructor Note";
+    display: block;
+    text-size: 18pt;
+    //text-decoration: underline;
+  }
+  pre {
+    overflow: unset !important;
+  }
+}
+
+
+.slide-deck2 {
+  width: 100%;
+  height: 400px;
+  border-radius: 5px;
+  margin-bottom: 10px !important;
+  box-shadow: 0 15px 30px rgba($primary, 0.5);
+}

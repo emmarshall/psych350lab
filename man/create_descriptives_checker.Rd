@@ -17,8 +17,9 @@ create_descriptives_checker(
 \arguments{
 \item{vars}{Character vector. Variable names to include, in display order.}
 
-\item{desc_results_list}{Output from \code{\link[=compute_summary_stats]{compute_summary_stats()}}. Must contain
-\verb{$Descriptives} (a tibble with columns \code{variable}, \code{mean}, \code{sd}, \code{n}, \code{sem}).}
+\item{desc_results_list}{Output from \code{\link[=descriptives_answers]{descriptives_answers()}} (a list with
+\verb{$Descriptives}). Also accepts a raw tibble from \code{\link[=compute_summary_stats]{compute_summary_stats()}}
+for backwards compatibility.}
 
 \item{var_labels}{Named character vector or \code{NULL}. Optional display labels,
 e.g. \code{c(clark_height_in = "Clark Height")}.}
@@ -46,7 +47,13 @@ choice inputs for checking descriptive statistics results. Requires the
 \examples{
 \dontrun{
 data(superman, package = "psych350data")
-result <- compute_summary_stats(superman,
+library(dplyr)
+
+my_data <- superman |>
+  select(year, clark_height_in, height_diff) |>
+  filter(!is.na(height_diff))
+
+result <- descriptives_answers(my_data,
   vars = c("year", "clark_height_in", "height_diff"))
 create_descriptives_checker(
   vars = c("year", "clark_height_in", "height_diff"),
@@ -56,4 +63,7 @@ create_descriptives_checker(
 )
 }
 
+}
+\seealso{
+\code{\link[=descriptives_answers]{descriptives_answers()}}, \code{\link[=compute_summary_stats]{compute_summary_stats()}}
 }

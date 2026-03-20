@@ -13,7 +13,7 @@ create_apa_regression_table(
 )
 }
 \arguments{
-\item{regression_results}{A results list from \code{regression_answers()}.}
+\item{regression_results}{A results list from \code{linear_reg_answers()}.}
 
 \item{predictor_labels}{Optional labels for predictors.}
 

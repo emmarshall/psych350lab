@@ -1,0 +1,52 @@
+@mixin shadow($horizontal: 5px, $vertical: 5px, $top: 0, $right: 0, $color: #000) {
+  border-width: #{$top} #{$right} 0 0;
+  border-style: solid;
+  border-color: $color;
+  box-shadow: $horizontal $vertical 0 0 $color;
+}
+
+@mixin card-styling {
+  margin-bottom: 2.2rem;
+  border: none;
+  box-shadow: 5px 5px #141414;
+  border-radius: 8px;
+  border: 2px solid #141414;
+}
+
+@mixin pos($pos, $left:null, $top:null, $right:null, $bottom:null) {
+	position:$pos;
+	left:$left;
+	@if $top { top: $top; }
+	@if $left { left: $left; }
+	@if $right { right: $right; }
+	@if $bottom { bottom: $bottom; }
+}
+
+@mixin size($width, $height) {
+	width:$width;
+	height:$height;
+}
+
+// for color coding cards
+
+@mixin text-color($color, $hover-color) {
+  color: $color;
+  &:hover {
+    color: $hover-color;
+  }
+}
+
+@mixin background-color($color, $hover-color) {
+  background-color: $color;
+  &:hover {
+    background-color: $hover-color;
+  }
+}
+
+// for profile card-styling
+// Utility mixins for common styles
+@mixin grid-layout($columns, $rows: auto) {
+  display: grid;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+}

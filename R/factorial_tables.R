@@ -20,13 +20,13 @@
 #'   iv1 = "clark_grp", iv2 = "era",
 #'   iv1_labels = c("Under 6ft", "6ft+"),
 #'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' create_factorial_anova_stats_table("RH1", result,
+#' create_factbg_anova_stats_table("RH1", result,
 #'   iv1_name = "Height Group", iv2_name = "Era")
 #' }
 #'
 #' @export
-create_factorial_anova_stats_table <- function(rh_name, anova_results_list,
-                                               iv1_name = "IV1", iv2_name = "IV2") {
+create_factbg_anova_stats_table <- function(rh_name, anova_results_list,
+                                            iv1_name = "IV1", iv2_name = "IV2") {
 
   if (!requireNamespace("tinytable", quietly = TRUE)) {
     stop("Package 'tinytable' is required. Install with install.packages('tinytable')")
@@ -166,16 +166,16 @@ create_factorial_anova_stats_table <- function(rh_name, anova_results_list,
 #'   iv1 = "clark_grp", iv2 = "era",
 #'   iv1_labels = c("Under 6ft", "6ft+"),
 #'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' ft <- factorial_table_with_comparisons(result,
+#' ft <- factbg_table_with_comparisons(result,
 #'   iv1_name = "Height Group", iv2_name = "Era")
 #' ft
 #' }
 #'
 #' @export
-factorial_table_with_comparisons <- function(anova_results_list,
-                                             iv1_name = "IV1",
-                                             iv2_name = "IV2",
-                                             KEY = TRUE) {
+factbg_table_with_comparisons <- function(anova_results_list,
+                                          iv1_name = "IV1",
+                                          iv2_name = "IV2",
+                                          KEY = TRUE) {
 
   desc_stats <- anova_results_list$Descriptives
   emm_iv1 <- anova_results_list$EMMs$IV1
@@ -394,13 +394,13 @@ factorial_table_with_comparisons <- function(anova_results_list,
 #'   iv1 = "clark_grp", iv2 = "era",
 #'   iv1_labels = c("Under 6ft", "6ft+"),
 #'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' cat(factorial_interaction_results(result))
+#' cat(factbg_interaction_results(result))
 #' }
 #'
 #' @export
-factorial_interaction_results <- function(anova_results_list,
-                                          KEY = TRUE,
-                                          highlight = TRUE) {
+factbg_interaction_results <- function(anova_results_list,
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
 
   f_int <- anova_results_list$ANOVA$Interaction$F
   p_int <- anova_results_list$ANOVA$Interaction$p_value
@@ -486,16 +486,16 @@ factorial_interaction_results <- function(anova_results_list,
 #'   iv1 = "clark_grp", iv2 = "era",
 #'   iv1_labels = c("Under 6ft", "6ft+"),
 #'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' cat(factorial_main_effect_results(result,
+#' cat(factbg_main_effect_results(result,
 #'   iv_name = "Height Group", which_iv = "IV1"))
 #' }
 #'
 #' @export
-factorial_main_effect_results <- function(anova_results_list,
-                                          iv_name = "IV",
-                                          which_iv = "IV2",
-                                          KEY = TRUE,
-                                          highlight = TRUE) {
+factbg_main_effect_results <- function(anova_results_list,
+                                       iv_name = "IV",
+                                       which_iv = "IV2",
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
 
   # Extract appropriate stats
   if (which_iv == "IV1") {
@@ -644,19 +644,19 @@ factorial_main_effect_results <- function(anova_results_list,
 #'   iv1 = "clark_grp", iv2 = "era",
 #'   iv1_labels = c("Under 6ft", "6ft+"),
 #'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' ft <- create_factorial_apa_desc_table(result,
+#' ft <- create_apa_factbg_desc_table(result,
 #'   iv1_name = "Height Group", iv2_name = "Era",
 #'   dv_name = "Height (inches)")
 #' ft
 #' }
 #'
 #' @export
-create_factorial_apa_desc_table <- function(anova_results_list,
-                                            iv1_name = "IV1",
-                                            iv2_name = "IV2",
-                                            dv_name = "DV",
-                                            Key = TRUE,
-                                            table_title = NULL) {
+create_apa_factbg_desc_table <- function(anova_results_list,
+                                         iv1_name = "IV1",
+                                         iv2_name = "IV2",
+                                         dv_name = "DV",
+                                         Key = TRUE,
+                                         table_title = NULL) {
 
   if (!is.null(anova_results_list$FactorLevels)) {
     iv1_labels <- anova_results_list$FactorLevels$iv1_labels
@@ -745,6 +745,209 @@ create_factorial_apa_desc_table <- function(anova_results_list,
 }
 
 
+#' APA Descriptive Statistics Table for Mixed Factorial ANOVA (Flextable)
+#'
+#' Creates an APA-formatted descriptive statistics table for a mixed
+#' (BG × WG) factorial design showing cell means, SDs, and ns organized
+#' by BG levels (rows) and WG levels (columns).
+#'
+#' @param anova_results_list Output from [anova_factmg_answers()].
+#' @param bg_name Character. Display name for the between-groups IV.
+#' @param wg_name Character. Display name for the within-groups IV.
+#' @param dv_name Character. Display name for DV (used in caption).
+#' @param Key Logical. If `TRUE`, fill with values; if `FALSE`, blank.
+#' @param table_title Character or `NULL`. Optional table caption.
+#'
+#' @return A [flextable::flextable()] object.
+#'
+#' @export
+create_apa_factmg_desc_table <- function(anova_results_list,
+                                         bg_name = "BG IV",
+                                         wg_name = "WG IV",
+                                         dv_name = "DV",
+                                         Key = TRUE,
+                                         table_title = NULL) {
+
+  info <- anova_results_list$FactorInfo
+  if (is.null(info)) stop("FactorInfo not found in results.")
+
+  bg_levels  <- info$bg_levels
+  bg_labels  <- info$bg_labels
+  wg_labels  <- info$wg_labels
+  desc_stats <- anova_results_list$Descriptives
+  n_bg <- length(bg_labels)
+  n_wg <- length(wg_labels)
+
+  if (Key) {
+    rows <- list()
+    for (i in seq_len(n_bg)) {
+      for (j in seq_len(n_wg)) {
+        cell <- desc_stats[desc_stats$bg_level == bg_levels[i] &
+                             desc_stats$wg_level == wg_labels[j], ]
+
+        if (nrow(cell) > 0) {
+          rows[[length(rows) + 1]] <- data.frame(
+            BG = ifelse(j == 1, bg_labels[i], ""),
+            WG = wg_labels[j],
+            M  = sprintf("%.2f", cell$mean[1]),
+            SD = sprintf("%.2f", cell$sd[1]),
+            n  = as.character(cell$n[1]),
+            stringsAsFactors = FALSE
+          )
+        }
+      }
+    }
+    table_data <- do.call(rbind, rows)
+  } else {
+    rows <- list()
+    for (i in seq_len(n_bg)) {
+      for (j in seq_len(n_wg)) {
+        rows[[length(rows) + 1]] <- data.frame(
+          BG = ifelse(j == 1, bg_labels[i], ""),
+          WG = wg_labels[j],
+          M  = "",
+          SD = "",
+          n  = "",
+          stringsAsFactors = FALSE
+        )
+      }
+    }
+    table_data <- do.call(rbind, rows)
+  }
+
+  names(table_data) <- c(bg_name, wg_name, "M", "SD", "n")
+
+  if (is.null(table_title)) {
+    table_title <- paste0("Descriptive Statistics for ", dv_name,
+                          " by ", bg_name, " and ", wg_name)
+  }
+
+  apa_table <- table_data |>
+    flextable::flextable() |>
+    flextable::set_caption(caption = table_title) |>
+    flextable::set_table_properties(layout = "autofit", align = "left") |>
+    flextable::border_remove() |>
+    flextable::hline_top(part = "header", border = officer::fp_border(width = 2)) |>
+    flextable::hline_bottom(part = "header", border = officer::fp_border(width = 2)) |>
+    flextable::hline_bottom(part = "body", border = officer::fp_border(width = 2)) |>
+    flextable::align(align = "center", part = "all") |>
+    flextable::align(j = 1, align = "left", part = "all") |>
+    flextable::align(j = 2, align = "left", part = "all") |>
+    flextable::fontsize(size = 11, part = "all")
+
+  if (n_wg > 1) {
+    for (i in seq_len(n_bg - 1)) {
+      row_idx <- i * n_wg
+      apa_table <- flextable::hline(apa_table, i = row_idx, part = "body",
+                                    border = officer::fp_border(width = 0.5))
+    }
+  }
+
+  return(apa_table)
+}
+
+
+#' APA Descriptive Statistics Table for Within-Groups Factorial ANOVA (Flextable)
+#'
+#' Creates an APA-formatted descriptive statistics table for a within-groups
+#' factorial design showing cell means, SDs, and ns organized by IV1 (rows)
+#' and IV2 (columns). Supports arbitrary k × j designs.
+#'
+#' @param anova_results_list Output from [anova_factwg_answers()].
+#' @param iv1_name Character. Display name for IV1.
+#' @param iv2_name Character. Display name for IV2.
+#' @param dv_name Character. Display name for DV (used in caption).
+#' @param Key Logical. If `TRUE`, fill with values; if `FALSE`, blank.
+#' @param table_title Character or `NULL`. Optional table caption.
+#'
+#' @return A [flextable::flextable()] object.
+#'
+#' @export
+create_apa_factwg_desc_table <- function(anova_results_list,
+                                         iv1_name = "IV1",
+                                         iv2_name = "IV2",
+                                         dv_name = "DV",
+                                         Key = TRUE,
+                                         table_title = NULL) {
+
+  info <- anova_results_list$FactorInfo
+  if (is.null(info)) stop("FactorInfo not found in results.")
+
+  iv1_labels <- info$iv1_labels
+  iv2_labels <- info$iv2_labels
+  desc_stats <- anova_results_list$Descriptives
+  n_iv1 <- length(iv1_labels)
+  n_iv2 <- length(iv2_labels)
+
+  if (Key) {
+    rows <- list()
+    for (i in seq_len(n_iv1)) {
+      for (j in seq_len(n_iv2)) {
+        cell <- desc_stats[desc_stats$iv1_level == iv1_labels[i] &
+                             desc_stats$iv2_level == iv2_labels[j], ]
+
+        if (nrow(cell) > 0) {
+          rows[[length(rows) + 1]] <- data.frame(
+            IV1 = ifelse(j == 1, iv1_labels[i], ""),
+            IV2 = iv2_labels[j],
+            M   = sprintf("%.2f", cell$mean[1]),
+            SD  = sprintf("%.2f", cell$sd[1]),
+            n   = as.character(cell$n[1]),
+            stringsAsFactors = FALSE
+          )
+        }
+      }
+    }
+    table_data <- do.call(rbind, rows)
+  } else {
+    rows <- list()
+    for (i in seq_len(n_iv1)) {
+      for (j in seq_len(n_iv2)) {
+        rows[[length(rows) + 1]] <- data.frame(
+          IV1 = ifelse(j == 1, iv1_labels[i], ""),
+          IV2 = iv2_labels[j],
+          M   = "",
+          SD  = "",
+          n   = "",
+          stringsAsFactors = FALSE
+        )
+      }
+    }
+    table_data <- do.call(rbind, rows)
+  }
+
+  names(table_data) <- c(iv1_name, iv2_name, "M", "SD", "n")
+
+  if (is.null(table_title)) {
+    table_title <- paste0("Descriptive Statistics for ", dv_name,
+                          " by ", iv1_name, " and ", iv2_name)
+  }
+
+  apa_table <- table_data |>
+    flextable::flextable() |>
+    flextable::set_caption(caption = table_title) |>
+    flextable::set_table_properties(layout = "autofit", align = "left") |>
+    flextable::border_remove() |>
+    flextable::hline_top(part = "header", border = officer::fp_border(width = 2)) |>
+    flextable::hline_bottom(part = "header", border = officer::fp_border(width = 2)) |>
+    flextable::hline_bottom(part = "body", border = officer::fp_border(width = 2)) |>
+    flextable::align(align = "center", part = "all") |>
+    flextable::align(j = 1, align = "left", part = "all") |>
+    flextable::align(j = 2, align = "left", part = "all") |>
+    flextable::fontsize(size = 11, part = "all")
+
+  if (n_iv2 > 1) {
+    for (i in seq_len(n_iv1 - 1)) {
+      row_idx <- i * n_iv2
+      apa_table <- flextable::hline(apa_table, i = row_idx, part = "body",
+                                    border = officer::fp_border(width = 0.5))
+    }
+  }
+
+  return(apa_table)
+}
+
+
 #' Format Factorial ANOVA Results for Fill-in-the-Blank
 #'
 #' Returns a formatted text string of all factorial ANOVA results including
@@ -768,15 +971,15 @@ create_factorial_apa_desc_table <- function(anova_results_list,
 #'   iv1 = "clark_grp", iv2 = "era",
 #'   iv1_labels = c("Under 6ft", "6ft+"),
 #'   iv2_labels = c("Pre-2000", "Post-2000"))
-#' cat(format_factorial_results("RH1", result,
+#' cat(format_factbg_results("RH1", result,
 #'   iv1_name = "Height Group", iv2_name = "Era",
 #'   dv_name = "Height (inches)"))
 #' }
 #'
 #' @export
-format_factorial_results <- function(rh_name, anova_results_list,
-                                     iv1_name = "IV1", iv2_name = "IV2",
-                                     dv_name = "DV", Key = TRUE) {
+format_factbg_results <- function(rh_name, anova_results_list,
+                                  iv1_name = "IV1", iv2_name = "IV2",
+                                  dv_name = "DV", Key = TRUE) {
 
   anova <- anova_results_list$ANOVA
   desc_stats <- anova_results_list$Descriptives
@@ -867,4 +1070,564 @@ format_factorial_results <- function(rh_name, anova_results_list,
   }
 
   return(output)
+}
+
+
+# ============================================================================
+# Within-Groups (WG) Factorial Worksheet Functions
+# ============================================================================
+
+
+#' WG Factorial Interaction Results Text
+#'
+#' Returns formatted text for the interaction test in a within-groups factorial
+#' ANOVA, either filled (answer key with red highlighting) or blank (worksheet).
+#' Unlike BG factorial, WG uses a separate error term for the interaction.
+#'
+#' @param anova_results_list Output from [anova_factwg_answers()].
+#' @param KEY Logical. If `TRUE`, show filled answers. If `FALSE`, show blanks.
+#' @param highlight Logical. If `TRUE` and `KEY = TRUE`, wrap answers in
+#'   highlight markup for Quarto/RMarkdown.
+#'
+#' @return A character string with markdown/HTML formatting.
+#'
+#' @export
+factwg_interaction_results <- function(anova_results_list,
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+
+  f_int    <- anova_results_list$ANOVA$Interaction$F
+  p_int    <- anova_results_list$ANOVA$Interaction$p_value
+  df_int   <- anova_results_list$ANOVA$Interaction$df
+  df_err   <- anova_results_list$ANOVA$Error_Interaction$df
+  mse_err  <- anova_results_list$ANOVA$Error_Interaction$ms
+
+  hl <- function(text) {
+    if (highlight && KEY) {
+      paste0("[", text, "]{custom-style=\"highlight-yellow\"}")
+    } else {
+      as.character(text)
+    }
+  }
+
+  if (KEY) {
+    has_interaction <- ifelse(p_int < 0.05, "Yes", "No")
+
+    output <- paste0(
+      "Find the results of the test of the interaction:\n\n",
+      '<p style="color: red;">',
+      "F = ", hl(f_int), "     ",
+      "df = ", hl(df_int), ", ", hl(df_err), "     ",
+      "p = ", hl(sprintf("%.3f", p_int)), "     ",
+      "MSe = ", hl(sprintf("%.4f", mse_err)), "     ",
+      "Is there an interaction ??? ", hl(has_interaction),
+      "</p>\n"
+    )
+  } else {
+    output <- paste0(
+      "## Find the results of the test of the interaction:\n\n",
+      "F = ______     ",
+      "df = ____, ____     ",
+      "p = ______     ",
+      "MSe = ______     ",
+      "Is there an interaction ???\n"
+    )
+  }
+
+  return(output)
+}
+
+
+#' WG Factorial Main Effect Results Text
+#'
+#' Returns formatted text for a main effect test in a within-groups factorial
+#' ANOVA with descriptive/misleading evaluation. Each main effect uses its
+#' own separate error term.
+#'
+#' @param anova_results_list Output from [anova_factwg_answers()].
+#' @param iv_name Character. Display name for the IV being tested.
+#' @param which_iv Character. `"IV1"` or `"IV2"` to select which main effect.
+#' @param KEY Logical. If `TRUE`, show filled answers. If `FALSE`, show blanks.
+#' @param highlight Logical. If `TRUE` and `KEY = TRUE`, wrap answers in
+#'   highlight markup.
+#'
+#' @return A character string with markdown/HTML formatting.
+#'
+#' @export
+factwg_main_effect_results <- function(anova_results_list,
+                                       iv_name = "IV",
+                                       which_iv = "IV1",
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+
+  if (which_iv == "IV1") {
+    f_stat     <- anova_results_list$ANOVA$MainEffect_IV1$F
+    p_val      <- anova_results_list$ANOVA$MainEffect_IV1$p_value
+    df_between <- anova_results_list$ANOVA$MainEffect_IV1$df
+    df_err     <- anova_results_list$ANOVA$Error_IV1$df
+    mse_err    <- anova_results_list$ANOVA$Error_IV1$ms
+  } else {
+    f_stat     <- anova_results_list$ANOVA$MainEffect_IV2$F
+    p_val      <- anova_results_list$ANOVA$MainEffect_IV2$p_value
+    df_between <- anova_results_list$ANOVA$MainEffect_IV2$df
+    df_err     <- anova_results_list$ANOVA$Error_IV2$df
+    mse_err    <- anova_results_list$ANOVA$Error_IV2$ms
+  }
+
+  p_int <- anova_results_list$ANOVA$Interaction$p_value
+
+  hl <- function(text) {
+    if (highlight && KEY) {
+      paste0("[", text, "]{custom-style=\"highlight-yellow\"}")
+    } else {
+      as.character(text)
+    }
+  }
+
+  if (KEY) {
+    has_main_effect <- ifelse(p_val < 0.05, "Yes", "No")
+
+    # Descriptive or misleading determination
+    if (p_int < 0.05) {
+      desc_stats <- anova_results_list$Descriptives
+      is_consistent <- .check_simple_effects_consistency(desc_stats, which_iv)
+
+      if (is_consistent) {
+        desc_misleading <- "Descriptive - although there is a significant interaction, all simple effects are in the same direction as the main effect (quantitative interaction), so the main effect accurately describes the general pattern."
+      } else {
+        desc_misleading <- "Misleading - there is a significant interaction with simple effects going in different directions (qualitative/crossover interaction), so the main effect does not accurately describe the pattern of cell means. The simple effects show the actual pattern."
+      }
+    } else {
+      desc_misleading <- "Descriptive - there is no significant interaction, so the main effect accurately describes the pattern."
+    }
+
+    output <- paste0(
+      "Find the results for the test of the Main effect of ", iv_name, "\n\n",
+      '<p style="color: red;">',
+      "F = ", hl(f_stat), "     ",
+      "df = ", hl(df_between), ", ", hl(df_err), "     ",
+      "p = ", hl(sprintf("%.3f", p_val)), "     ",
+      "MSe = ", hl(sprintf("%.4f", mse_err)), "     ",
+      "Is there a main effect ??? ", hl(has_main_effect),
+      "</p>\n\n",
+      "So, is the main effect of ", hl(iv_name), " descriptive or misleading?\n\n",
+      '<p style="color: red;">', hl(desc_misleading), "</p>\n"
+    )
+  } else {
+    output <- paste0(
+      "Find the results for the test of the Main effect of ", hl(iv_name), "\n\n",
+      "F = ______     ",
+      "df = ____, ____     ",
+      "p = ______     ",
+      "MSe = ______     ",
+      "Is there a main effect ???\n\n",
+      "So, is the main effect of ", hl(iv_name), " descriptive or misleading?\n"
+    )
+  }
+
+  return(output)
+}
+
+
+#' WG Factorial Cell Means Table with Comparisons (Flextable)
+#'
+#' Creates a flextable showing cell means for a within-groups factorial design
+#' with IV1 levels as rows and IV2 levels as columns, plus EMMs. Supports
+#' k x j designs (not limited to 2x2).
+#'
+#' @param anova_results_list Output from [anova_factwg_answers()].
+#' @param iv1_name Character. Display name for IV1.
+#' @param iv2_name Character. Display name for IV2.
+#' @param KEY Logical. If `TRUE`, fill with values; if `FALSE`, blank.
+#'
+#' @return A [flextable::flextable()] object.
+#'
+#' @export
+factwg_table_with_comparisons <- function(anova_results_list,
+                                          iv1_name = "IV1",
+                                          iv2_name = "IV2",
+                                          KEY = TRUE) {
+
+  info <- anova_results_list$FactorInfo
+  iv1_labels <- info$iv1_labels
+  iv2_labels <- info$iv2_labels
+  desc_stats <- anova_results_list$Descriptives
+  emm_iv1    <- anova_results_list$EMMs$IV1
+  emm_iv2    <- anova_results_list$EMMs$IV2
+
+  n_iv1 <- length(iv1_labels)
+  n_iv2 <- length(iv2_labels)
+
+  if (KEY) {
+    data_list <- list()
+    data_list[[iv1_name]] <- iv1_labels
+
+    for (j in seq_len(n_iv2)) {
+      col_values <- c()
+      for (i in seq_len(n_iv1)) {
+        cell <- desc_stats[desc_stats$iv1_label == iv1_labels[i] &
+                             desc_stats$iv2_label == iv2_labels[j], ]
+        if (nrow(cell) == 0) {
+          cell <- desc_stats[desc_stats$iv1_level == iv1_labels[i] &
+                               desc_stats$iv2_level == iv2_labels[j], ]
+        }
+        if (nrow(cell) > 0) {
+          col_values <- c(col_values, sprintf("%.4f", cell$mean[1]))
+        } else {
+          col_values <- c(col_values, "NA")
+        }
+      }
+      data_list[[as.character(iv2_labels[j])]] <- col_values
+      if (j < n_iv2) {
+        data_list[[paste0(" ", strrep(" ", j))]] <- rep("", n_iv1)
+      }
+    }
+
+    marginal_col_name <- paste0("EMM: ", iv1_name)
+    data_list[[marginal_col_name]] <- sprintf("%.4f", emm_iv1$mean)
+
+    data <- as.data.frame(data_list, stringsAsFactors = FALSE, check.names = FALSE)
+
+  } else {
+    data_list <- list()
+    data_list[[iv1_name]] <- iv1_labels
+    for (j in seq_len(n_iv2)) {
+      data_list[[as.character(iv2_labels[j])]] <- rep("", n_iv1)
+      if (j < n_iv2) {
+        data_list[[paste0(" ", strrep(" ", j))]] <- rep("", n_iv1)
+      }
+    }
+    marginal_col_name <- paste0("EMM: ", iv1_name)
+    data_list[[marginal_col_name]] <- rep("", n_iv1)
+
+    data <- as.data.frame(data_list, stringsAsFactors = FALSE, check.names = FALSE)
+  }
+
+  ft <- flextable::flextable(data)
+
+  n_data_cols <- n_iv2 + (n_iv2 - 1)
+  ft <- flextable::add_header_row(ft,
+                                  values = c("", iv2_name, ""),
+                                  colwidths = c(1, n_data_cols, 1),
+                                  top = TRUE)
+
+  ft <- flextable::border_remove(ft)
+
+  cell_rows <- seq_len(n_iv1)
+  cell_mean_cols <- seq(2, 2 + n_data_cols - 1, by = 2)
+
+  ft <- flextable::border(ft,
+                          i = cell_rows,
+                          j = cell_mean_cols,
+                          border.top = officer::fp_border(color = "black", width = 1),
+                          border.bottom = officer::fp_border(color = "black", width = 1),
+                          border.left = officer::fp_border(color = "black", width = 1),
+                          border.right = officer::fp_border(color = "black", width = 1),
+                          part = "body")
+
+  ft <- flextable::align(ft, align = "center", part = "all")
+  ft <- flextable::align(ft, j = 1, align = "left", part = "all")
+  ft <- flextable::autofit(ft)
+
+  if (KEY) {
+    marginal_values <- c(paste0("EMM: ", iv2_name))
+    for (j in seq_len(n_iv2)) {
+      marginal_values <- c(marginal_values, sprintf("%.4f", emm_iv2$mean[j]))
+      if (j < n_iv2) {
+        marginal_values <- c(marginal_values, "")
+      }
+    }
+    marginal_values <- c(marginal_values, "")
+    ft <- flextable::add_footer_row(ft, values = marginal_values,
+                                    colwidths = rep(1, ncol(data)))
+  } else {
+    marginal_row <- c(paste0("EMM: ", iv2_name), rep("", ncol(data) - 1))
+    ft <- flextable::add_footer_row(ft, values = marginal_row,
+                                    colwidths = rep(1, ncol(data)))
+  }
+
+  return(ft)
+}
+
+
+# ============================================================================
+# Mixed-Groups (MG) Factorial Worksheet Functions
+# ============================================================================
+
+
+#' MG Factorial Interaction Results Text
+#'
+#' Returns formatted text for the interaction test in a mixed (BG x WG)
+#' factorial ANOVA. Uses the within-subjects error term for the interaction.
+#'
+#' @param anova_results_list Output from [anova_factmg_answers()].
+#' @param KEY Logical. If `TRUE`, show filled answers. If `FALSE`, show blanks.
+#' @param highlight Logical. If `TRUE` and `KEY = TRUE`, wrap answers in
+#'   highlight markup for Quarto/RMarkdown.
+#'
+#' @return A character string with markdown/HTML formatting.
+#'
+#' @export
+factmg_interaction_results <- function(anova_results_list,
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+
+  f_int    <- anova_results_list$WithinSubjects$Interaction$F
+  p_int    <- anova_results_list$WithinSubjects$Interaction$p_value
+  df_int   <- anova_results_list$WithinSubjects$Interaction$df
+  df_err   <- anova_results_list$WithinSubjects$Error$df
+  mse_err  <- anova_results_list$WithinSubjects$Error$ms
+
+  hl <- function(text) {
+    if (highlight && KEY) {
+      paste0("[", text, "]{custom-style=\"highlight-yellow\"}")
+    } else {
+      as.character(text)
+    }
+  }
+
+  if (KEY) {
+    has_interaction <- ifelse(p_int < 0.05, "Yes", "No")
+
+    output <- paste0(
+      "Find the results of the test of the interaction:\n\n",
+      '<p style="color: red;">',
+      "F = ", hl(f_int), "     ",
+      "df = ", hl(df_int), ", ", hl(df_err), "     ",
+      "p = ", hl(sprintf("%.3f", p_int)), "     ",
+      "MSe = ", hl(sprintf("%.4f", mse_err)), "     ",
+      "Is there an interaction ??? ", hl(has_interaction),
+      "</p>\n"
+    )
+  } else {
+    output <- paste0(
+      "## Find the results of the test of the interaction:\n\n",
+      "F = ______     ",
+      "df = ____, ____     ",
+      "p = ______     ",
+      "MSe = ______     ",
+      "Is there an interaction ???\n"
+    )
+  }
+
+  return(output)
+}
+
+
+#' MG Factorial Main Effect Results Text
+#'
+#' Returns formatted text for a main effect test in a mixed factorial ANOVA
+#' with descriptive/misleading evaluation. Routes to the correct error term
+#' based on whether the IV is between-groups or within-groups.
+#'
+#' @param anova_results_list Output from [anova_factmg_answers()].
+#' @param iv_name Character. Display name for the IV being tested.
+#' @param which_iv Character. `"BG"` for the between-groups IV or `"WG"` for
+#'   the within-groups IV.
+#' @param KEY Logical. If `TRUE`, show filled answers. If `FALSE`, show blanks.
+#' @param highlight Logical. If `TRUE` and `KEY = TRUE`, wrap answers in
+#'   highlight markup.
+#'
+#' @return A character string with markdown/HTML formatting.
+#'
+#' @export
+factmg_main_effect_results <- function(anova_results_list,
+                                       iv_name = "IV",
+                                       which_iv = "BG",
+                                       KEY = TRUE,
+                                       highlight = TRUE) {
+
+  if (which_iv == "BG") {
+    f_stat     <- anova_results_list$BetweenSubjects$MainEffect_BG$F
+    p_val      <- anova_results_list$BetweenSubjects$MainEffect_BG$p_value
+    df_between <- anova_results_list$BetweenSubjects$MainEffect_BG$df
+    df_err     <- anova_results_list$BetweenSubjects$Error$df
+    mse_err    <- anova_results_list$BetweenSubjects$Error$ms
+  } else {
+    f_stat     <- anova_results_list$WithinSubjects$MainEffect_WG$F
+    p_val      <- anova_results_list$WithinSubjects$MainEffect_WG$p_value
+    df_between <- anova_results_list$WithinSubjects$MainEffect_WG$df
+    df_err     <- anova_results_list$WithinSubjects$Error$df
+    mse_err    <- anova_results_list$WithinSubjects$Error$ms
+  }
+
+  p_int <- anova_results_list$WithinSubjects$Interaction$p_value
+
+  hl <- function(text) {
+    if (highlight && KEY) {
+      paste0("[", text, "]{custom-style=\"highlight-yellow\"}")
+    } else {
+      as.character(text)
+    }
+  }
+
+  if (KEY) {
+    has_main_effect <- ifelse(p_val < 0.05, "Yes", "No")
+
+    # Descriptive or misleading determination
+    if (p_int < 0.05) {
+      desc_stats <- anova_results_list$Descriptives
+
+      # MG descriptives use bg_level/wg_level columns
+      # Map to iv1/iv2 convention for helper: BG = IV1, WG = IV2
+      mapped_stats <- desc_stats
+      if ("bg_level" %in% names(mapped_stats) && !"iv1_level" %in% names(mapped_stats)) {
+        mapped_stats$iv1_level <- mapped_stats$bg_level
+        mapped_stats$iv2_level <- mapped_stats$wg_level
+      }
+
+      mapped_which <- ifelse(which_iv == "BG", "IV1", "IV2")
+      is_consistent <- .check_simple_effects_consistency(mapped_stats, mapped_which)
+
+      if (is_consistent) {
+        desc_misleading <- "Descriptive - although there is a significant interaction, all simple effects are in the same direction as the main effect (quantitative interaction), so the main effect accurately describes the general pattern."
+      } else {
+        desc_misleading <- "Misleading - there is a significant interaction with simple effects going in different directions (qualitative/crossover interaction), so the main effect does not accurately describe the pattern of cell means. The simple effects show the actual pattern."
+      }
+    } else {
+      desc_misleading <- "Descriptive - there is no significant interaction, so the main effect accurately describes the pattern."
+    }
+
+    output <- paste0(
+      "Find the results for the test of the Main effect of ", iv_name, "\n\n",
+      '<p style="color: red;">',
+      "F = ", hl(f_stat), "     ",
+      "df = ", hl(df_between), ", ", hl(df_err), "     ",
+      "p = ", hl(sprintf("%.3f", p_val)), "     ",
+      "MSe = ", hl(sprintf("%.4f", mse_err)), "     ",
+      "Is there a main effect ??? ", hl(has_main_effect),
+      "</p>\n\n",
+      "So, is the main effect of ", hl(iv_name), " descriptive or misleading?\n\n",
+      '<p style="color: red;">', hl(desc_misleading), "</p>\n"
+    )
+  } else {
+    output <- paste0(
+      "Find the results for the test of the Main effect of ", hl(iv_name), "\n\n",
+      "F = ______     ",
+      "df = ____, ____     ",
+      "p = ______     ",
+      "MSe = ______     ",
+      "Is there a main effect ???\n\n",
+      "So, is the main effect of ", hl(iv_name), " descriptive or misleading?\n"
+    )
+  }
+
+  return(output)
+}
+
+
+#' MG Factorial Cell Means Table with Comparisons (Flextable)
+#'
+#' Creates a flextable showing cell means for a mixed (BG x WG) factorial
+#' design with BG levels as rows and WG levels as columns, plus EMMs.
+#'
+#' @param anova_results_list Output from [anova_factmg_answers()].
+#' @param bg_name Character. Display name for the between-groups IV.
+#' @param wg_name Character. Display name for the within-groups IV.
+#' @param KEY Logical. If `TRUE`, fill with values; if `FALSE`, blank.
+#'
+#' @return A [flextable::flextable()] object.
+#'
+#' @export
+factmg_table_with_comparisons <- function(anova_results_list,
+                                          bg_name = "BG IV",
+                                          wg_name = "WG IV",
+                                          KEY = TRUE) {
+
+  info <- anova_results_list$FactorInfo
+  bg_labels  <- info$bg_labels
+  bg_levels  <- info$bg_levels
+  wg_labels  <- info$wg_labels
+  desc_stats <- anova_results_list$Descriptives
+  emm_bg     <- anova_results_list$EMMs$BG
+  emm_wg     <- anova_results_list$EMMs$WG
+
+  n_bg <- length(bg_labels)
+  n_wg <- length(wg_labels)
+
+  if (KEY) {
+    data_list <- list()
+    data_list[[bg_name]] <- bg_labels
+
+    for (j in seq_len(n_wg)) {
+      col_values <- c()
+      for (i in seq_len(n_bg)) {
+        cell <- desc_stats[desc_stats$bg_level == bg_levels[i] &
+                             desc_stats$wg_level == wg_labels[j], ]
+        if (nrow(cell) > 0) {
+          col_values <- c(col_values, sprintf("%.4f", cell$mean[1]))
+        } else {
+          col_values <- c(col_values, "NA")
+        }
+      }
+      data_list[[as.character(wg_labels[j])]] <- col_values
+      if (j < n_wg) {
+        data_list[[paste0(" ", strrep(" ", j))]] <- rep("", n_bg)
+      }
+    }
+
+    marginal_col_name <- paste0("EMM: ", bg_name)
+    data_list[[marginal_col_name]] <- sprintf("%.4f", emm_bg$mean)
+
+    data <- as.data.frame(data_list, stringsAsFactors = FALSE, check.names = FALSE)
+
+  } else {
+    data_list <- list()
+    data_list[[bg_name]] <- bg_labels
+    for (j in seq_len(n_wg)) {
+      data_list[[as.character(wg_labels[j])]] <- rep("", n_bg)
+      if (j < n_wg) {
+        data_list[[paste0(" ", strrep(" ", j))]] <- rep("", n_bg)
+      }
+    }
+    marginal_col_name <- paste0("EMM: ", bg_name)
+    data_list[[marginal_col_name]] <- rep("", n_bg)
+
+    data <- as.data.frame(data_list, stringsAsFactors = FALSE, check.names = FALSE)
+  }
+
+  ft <- flextable::flextable(data)
+
+  n_data_cols <- n_wg + (n_wg - 1)
+  ft <- flextable::add_header_row(ft,
+                                  values = c("", wg_name, ""),
+                                  colwidths = c(1, n_data_cols, 1),
+                                  top = TRUE)
+
+  ft <- flextable::border_remove(ft)
+
+  cell_rows <- seq_len(n_bg)
+  cell_mean_cols <- seq(2, 2 + n_data_cols - 1, by = 2)
+
+  ft <- flextable::border(ft,
+                          i = cell_rows,
+                          j = cell_mean_cols,
+                          border.top = officer::fp_border(color = "black", width = 1),
+                          border.bottom = officer::fp_border(color = "black", width = 1),
+                          border.left = officer::fp_border(color = "black", width = 1),
+                          border.right = officer::fp_border(color = "black", width = 1),
+                          part = "body")
+
+  ft <- flextable::align(ft, align = "center", part = "all")
+  ft <- flextable::align(ft, j = 1, align = "left", part = "all")
+  ft <- flextable::autofit(ft)
+
+  if (KEY) {
+    marginal_values <- c(paste0("EMM: ", wg_name))
+    for (j in seq_len(n_wg)) {
+      marginal_values <- c(marginal_values, sprintf("%.4f", emm_wg$mean[j]))
+      if (j < n_wg) {
+        marginal_values <- c(marginal_values, "")
+      }
+    }
+    marginal_values <- c(marginal_values, "")
+    ft <- flextable::add_footer_row(ft, values = marginal_values,
+                                    colwidths = rep(1, ncol(data)))
+  } else {
+    marginal_row <- c(paste0("EMM: ", wg_name), rep("", ncol(data) - 1))
+    ft <- flextable::add_footer_row(ft, values = marginal_row,
+                                    colwidths = rep(1, ncol(data)))
+  }
+
+  return(ft)
 }

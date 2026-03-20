@@ -11,8 +11,8 @@ order: 7
 | Design | Function | When to use |
 |--------|----------|-------------|
 | **Between-groups (BG)** | `anova_factorial_answers()` | Both IVs are between-subjects |
-| **Mixed (MG)** | `anova_factorial_mg_answers()` | One BG IV × one WG IV |
-| **Within-groups (WG)** | `anova_factorial_wg_answers()` | Both IVs are within-subjects |
+| **Mixed (MG)** | `anova_factmg_answers()` | One BG IV × one WG IV |
+| **Within-groups (WG)** | `anova_factwg_answers()` | Both IVs are within-subjects |
 
 All three follow the same general workflow and return similarly structured
 results. This guide covers each design with examples.
@@ -62,7 +62,7 @@ bg_factorial$Descriptives
 #| eval: false
 
 # Factorial ANOVA statistics checker
-create_factorial_anova_checker(
+create_factbg_anova_checker(
   rh_name            = "RH1",
   anova_results_list = bg_factorial,
   iv1_name           = "Height Group",
@@ -70,7 +70,7 @@ create_factorial_anova_checker(
 )
 
 # Cell descriptives checker
-create_factorial_desc_checker(
+create_factbg_desc_checker(
   anova_results_list = bg_factorial,
   iv1_name           = "Height Group",
   iv2_name           = "Tomatometer"
@@ -84,7 +84,7 @@ create_factorial_desc_checker(
 #| eval: false
 
 # Complete formatted results
-format_factorial_results(
+format_factbg_results(
   anova_results_list = bg_factorial,
   iv1_name           = "Height Group",
   iv2_name           = "Tomatometer",
@@ -99,7 +99,7 @@ format_factorial_results(
 #| eval: false
 
 # Factorial ANOVA statistics table
-create_factorial_anova_stats_table(
+create_factbg_anova_stats_table(
   rh_name            = "RH1",
   anova_results_list = bg_factorial,
   iv1_name           = "Height Group",
@@ -107,7 +107,7 @@ create_factorial_anova_stats_table(
 )
 
 # Cell means table
-create_factorial_apa_desc_table(
+create_apa_factbg_desc_table(
   anova_results_list = bg_factorial,
   iv1_name           = "Height Group",
   iv2_name           = "Tomatometer",
@@ -126,13 +126,13 @@ main effects, suitable for worksheets:
 #| eval: false
 
 # Interaction results
-factorial_interaction_results(
+factbg_interaction_results(
   anova_results_list = bg_factorial,
   KEY                = TRUE
 )
 
 # Main effect results (specify which IV)
-factorial_main_effect_results(
+factbg_main_effect_results(
   anova_results_list = bg_factorial,
   iv_name            = "Height Group",
   which_iv           = "IV1",
@@ -174,7 +174,7 @@ In a mixed design, one IV is between-subjects and one is within-subjects
 #| eval: false
 
 # Mixed factorial: Height group (BG) × Score type (WG)
-mg_factorial <- anova_factorial_mg_answers(
+mg_factorial <- anova_factmg_answers(
   data       = superman,
   dv         = "rt_audience_score",   # placeholder - see function docs
   iv1        = "clark_grp",           # between-subjects IV
@@ -184,26 +184,25 @@ mg_factorial <- anova_factorial_mg_answers(
 )
 ```
 
-### 2. Interaction and Main Effect Text
-
-Mixed designs have their own formatting functions:
+### 2. Create Checker Widgets
 
 ```{r}
-#| label: mg-effects
+#| label: mg-checkers
 #| eval: false
 
-# Interaction results
-factorial_mg_int_results(
+# Mixed factorial ANOVA checker
+create_factmg_anova_checker(
+  rh_name            = "RH1",
   anova_results_list = mg_factorial,
-  KEY                = TRUE
+  bg_name            = "Height Group",
+  wg_name            = "Score Type"
 )
 
-# Main effect results
-factorial_mg_main_effect_results(
+# Cell descriptives checker
+create_factmg_desc_checker(
   anova_results_list = mg_factorial,
-  iv_name            = "Height Group",
-  which_iv           = "IV1",
-  KEY                = TRUE
+  bg_name            = "Height Group",
+  wg_name            = "Score Type"
 )
 ```
 
@@ -219,7 +218,7 @@ four cells. You provide the four DV column names directly.
 #| eval: false
 
 # Four columns: one per cell (IV1_level1 × IV2_level1, etc.)
-wg_factorial <- anova_factorial_wg_answers(
+wg_factorial <- anova_factwg_answers(
   data       = superman,
   dv_a1b1    = "score_critics_fresh",
   dv_a1b2    = "score_critics_rotten",
@@ -230,24 +229,25 @@ wg_factorial <- anova_factorial_wg_answers(
 )
 ```
 
-### 2. Interaction and Main Effect Text
+### 2. Create Checker Widgets
 
 ```{r}
-#| label: wg-effects
+#| label: wg-checkers
 #| eval: false
 
-# Interaction results
-factorial_wg_int_results(
+# Within-groups factorial ANOVA checker
+create_factwg_anova_checker(
+  rh_name            = "RH1",
   anova_results_list = wg_factorial,
-  KEY                = TRUE
+  iv1_name           = "Score Type",
+  iv2_name           = "Rating"
 )
 
-# Main effect results
-factorial_wg_main_effect_results(
+# Cell descriptives checker
+create_factwg_desc_checker(
   anova_results_list = wg_factorial,
-  iv_name            = "Score Type",
-  which_iv           = "IV1",
-  KEY                = TRUE
+  iv1_name           = "Score Type",
+  iv2_name           = "Rating"
 )
 ```
 
@@ -272,16 +272,18 @@ writeup <- apa_2x2_wg_factorial_writeup(
 # cat(writeup)
 ```
 
-## Shared Functions Across All Factorial Designs
+## Shared Functions by Design
 
-These work with all three factorial types:
+Each factorial design has its own checker and formatting functions:
+
+### Between-Groups Functions
 
 ```{r}
-#| label: shared
+#| label: bg-shared
 #| eval: false
 
 # Factorial ANOVA checker (interactive HTML)
-create_factorial_anova_checker(
+create_factbg_anova_checker(
   rh_name = "RH1",
   anova_results_list = bg_factorial,
   iv1_name = "Height Group",
@@ -289,17 +291,61 @@ create_factorial_anova_checker(
 )
 
 # Cell descriptives checker
-create_factorial_desc_checker(
+create_factbg_desc_checker(
   anova_results_list = bg_factorial,
   iv1_name = "Height Group",
   iv2_name = "Tomatometer"
 )
 
 # Table with pairwise comparisons
-factorial_table_with_comparisons(
+factbg_table_with_comparisons(
   anova_results_list = bg_factorial,
   iv1_name = "Height Group",
   iv2_name = "Tomatometer"
+)
+```
+
+### Mixed Factorial Functions
+
+```{r}
+#| label: mg-shared
+#| eval: false
+
+# Mixed factorial ANOVA checker
+create_factmg_anova_checker(
+  rh_name = "RH1",
+  anova_results_list = mg_factorial,
+  bg_name = "Height Group",
+  wg_name = "Score Type"
+)
+
+# Cell descriptives checker
+create_factmg_desc_checker(
+  anova_results_list = mg_factorial,
+  bg_name = "Height Group",
+  wg_name = "Score Type"
+)
+```
+
+### Within-Groups Functions
+
+```{r}
+#| label: wg-shared
+#| eval: false
+
+# Within-groups factorial ANOVA checker
+create_factwg_anova_checker(
+  rh_name = "RH1",
+  anova_results_list = wg_factorial,
+  iv1_name = "Score Type",
+  iv2_name = "Rating"
+)
+
+# Cell descriptives checker
+create_factwg_desc_checker(
+  anova_results_list = wg_factorial,
+  iv1_name = "Score Type",
+  iv2_name = "Rating"
 )
 ```
 
@@ -310,34 +356,40 @@ factorial_table_with_comparisons(
 | Function | Design |
 |----------|--------|
 | `anova_factorial_answers()` | 2×2 between-groups |
-| `anova_factorial_mg_answers()` | 2×2 mixed (1 BG × 1 WG) |
-| `anova_factorial_wg_answers()` | 2×2 within-groups |
+| `anova_factmg_answers()` | 2×2 mixed (1 BG × 1 WG) |
+| `anova_factwg_answers()` | 2×2 within-groups |
 
-### Display Functions
+### Display Functions — Between-Groups
 
 | Function | Purpose |
 |----------|---------|
-| `create_factorial_anova_checker()` | Interactive statistics checker |
-| `create_factorial_desc_checker()` | Interactive descriptives checker |
-| `create_factorial_anova_stats_table()` | ANOVA statistics table |
-| `create_factorial_apa_desc_table()` | Cell means table |
-| `format_factorial_results()` | Formatted markdown output |
-| `factorial_table_with_comparisons()` | Table with pairwise results |
+| `create_factbg_anova_checker()` | Interactive statistics checker |
+| `create_factbg_desc_checker()` | Interactive descriptives checker |
+| `create_factbg_anova_stats_table()` | ANOVA statistics table |
+| `create_apa_factbg_desc_table()` | Cell means table |
+| `format_factbg_results()` | Formatted markdown output |
+| `factbg_table_with_comparisons()` | Table with pairwise results |
+| `factbg_interaction_results()` | Interaction text |
+| `factbg_main_effect_results()` | Main effect text |
 
-### Effect Interpretation Functions
+### Display Functions — Mixed
 
-| Function | Design |
-|----------|--------|
-| `factorial_interaction_results()` | BG interaction text |
-| `factorial_main_effect_results()` | BG main effect text |
-| `factorial_mg_int_results()` | Mixed interaction text |
-| `factorial_mg_main_effect_results()` | Mixed main effect text |
-| `factorial_wg_int_results()` | WG interaction text |
-| `factorial_wg_main_effect_results()` | WG main effect text |
+| Function | Purpose |
+|----------|---------|
+| `create_factmg_anova_checker()` | Interactive statistics checker |
+| `create_factmg_desc_checker()` | Interactive descriptives checker |
+
+### Display Functions — Within-Groups
+
+| Function | Purpose |
+|----------|---------|
+| `create_factwg_anova_checker()` | Interactive statistics checker |
+| `create_factwg_desc_checker()` | Interactive descriptives checker |
 
 ### Write-Up Functions
 
 | Function | Design |
 |----------|--------|
 | `apa_2x2_bg_factorial_writeup()` | BG factorial |
+| `apa_2x2_mixed_factorial_writeup()` | Mixed factorial |
 | `apa_2x2_wg_factorial_writeup()` | WG factorial |

@@ -115,6 +115,8 @@ create_answer_table <- function(vars,
 #' percentages. Produces either a filled answer KEY or blank student worksheet.
 #'
 #' @param data A data frame. Required when `KEY = TRUE`.
+#' @param show_sem Logical or `NULL`. If `TRUE`, adds a SEM column for
+#'   continuous variables. Default `NULL` (no SEM column).
 #' @param continuous Character vector or `NULL`. Continuous variable names.
 #' @param categorical Character vector or `NULL`. Categorical variable names.
 #' @param stats_data Output from [compute_summary_stats()]. Required when

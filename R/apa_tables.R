@@ -67,7 +67,7 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 #' stats <- compute_summary_stats(my_data)
 #'
 #' # Without SEM (default)
-#' create_descriptive_table(
+#' create_apa_descriptives_table(
 #'   data        = my_data,
 #'   continuous  = c("clark_height_in", "height_diff"),
 #'   categorical = c("clark_grp", "height_gap"),
@@ -75,7 +75,7 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 #' )
 #'
 #' # With SEM column
-#' create_descriptive_table(
+#' create_apa_descriptives_table(
 #'   data        = my_data,
 #'   continuous  = c("clark_height_in", "height_diff"),
 #'   categorical = c("clark_grp", "height_gap"),
@@ -84,7 +84,7 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 #' )
 #'
 #' # Blank worksheet
-#' create_descriptive_table(
+#' create_apa_descriptives_table(
 #'   data        = my_data,
 #'   continuous  = c("clark_height_in", "height_diff"),
 #'   categorical = c("clark_grp", "height_gap"),
@@ -93,7 +93,7 @@ add_apa_note <- function(ft, note_text, note_prefix = "Note. ") {
 #' }
 #'
 #' @export
-create_descriptive_table <- function(data        = NULL,
+create_apa_descriptives_table <- function(data        = NULL,
                                      continuous  = NULL,
                                      categorical = NULL,
                                      stats_data  = NULL,
@@ -250,104 +250,224 @@ create_descriptive_table <- function(data        = NULL,
 # Chi-square crosstabs table
 # -----------------------------------------------------------------------------
 
-#' Create APA chi-square crosstabulation table
+
+#' APA 7th-Style Chi-Square Crosstabulation Table
 #'
-#' @param chi_results_list A results list from `chi_square_answers()`, or NULL
-#'   for blank template.
-#' @param var1_name Display name for row variable.
-#' @param var2_name Display name for column variable.
-#' @param var1_labels Labels for row variable levels.
-#' @param var2_labels Labels for column variable levels.
-#' @param table_title Table title/caption.
-#' @param table_number Table number for caption.
-#' @param KEY If TRUE, show filled values; if FALSE, show blanks.
-#' @return A flextable object.
+#' Creates an APA 7th-formatted crosstabulation table with counts,
+#' percentages, and chi-square results in footer. Works with both
+#' 2x2 tables and tables with 3+ row levels.
+#'
+#' @param chi_results_list Output from [chi_square_answers()] (for 2x2 tables)
+#'   or [chi_square_kgroup_answers()] (for 3+ row levels), or NULL for blank table.
+#' @param var1_name Character. Display name for the row variable.
+#' @param var2_name Character. Display name for the column variable.
+#' @param var1_labels Character vector or NULL. Labels for row levels.
+#'   If NULL and KEY = TRUE, labels are extracted from chi_results_list.
+#' @param var2_labels Character vector of length 2. Labels for column levels.
+#' @param KEY Logical. If TRUE (default), fill with values; if FALSE, blank.
+#' @param include_percentages Logical. If TRUE (default), include row
+#'   percentages alongside counts (e.g., "15 (62.5%)").
+#' @param table_title Character or NULL. Optional table caption (italicized).
+#' @param table_number Integer or NULL. Optional table number (bold).
+#'
+#' @return A [flextable::flextable()] object.
+#'
+#' @seealso [chi_square_answers()], [chi_square_kgroup_answers()]
+#'
 #' @export
 create_apa_chi_crosstabs_table <- function(chi_results_list = NULL,
-                                           var1_name = "Row Variable",
-                                           var2_name = "Column Variable",
-                                           var1_labels = c("Level 1", "Level 2"),
+                                           var1_name = "Variable 1",
+                                           var2_name = "Variable 2",
+                                           var1_labels = NULL,
                                            var2_labels = c("Group 1", "Group 2"),
+                                           KEY = TRUE,
+                                           include_percentages = TRUE,
                                            table_title = NULL,
-                                           table_number = NULL,
-                                           KEY = TRUE) {
+                                           table_number = NULL) {
 
-  n_rows <- length(var1_labels)
-  n_cols <- length(var2_labels)
-
-  # Build table data
   if (KEY && !is.null(chi_results_list)) {
-    # Extract counts from results
-    ct <- chi_results_list$Crosstab
-
-    # Build data frame with counts
-    tbl_data <- data.frame(
-      Variable = var1_labels,
-      stringsAsFactors = FALSE
-    )
-
-    for (j in seq_len(n_cols)) {
-      col_values <- vapply(seq_len(n_rows), function(i) {
-        as.character(ct[i, j])
-      }, character(1))
-      tbl_data[[var2_labels[j]]] <- col_values
+    if (is.null(var1_labels)) {
+      if (!is.null(chi_results_list$Var1_Descriptives$level_label)) {
+        var1_labels <- chi_results_list$Var1_Descriptives$level_label
+      } else {
+        var1_labels <- rownames(chi_results_list$ContingencyTable)
+        if (is.null(var1_labels)) {
+          var1_labels <- paste("Level", 1:nrow(chi_results_list$ContingencyTable))
+        }
+      }
     }
 
-    # Add row totals
-    tbl_data$Total <- rowSums(ct)
+    cont_table <- chi_results_list$ContingencyTable
+    n_groups <- nrow(cont_table)
 
-    # Add column totals row
-    col_totals <- c("Total", as.character(colSums(ct)), sum(ct))
-    tbl_data <- rbind(tbl_data, col_totals)
+    row_totals <- rowSums(cont_table)
+    col_totals <- colSums(cont_table)
+    grand_total <- sum(cont_table)
+
+    if (include_percentages) {
+      format_cell <- function(count, row_total) {
+        pct <- round((count / row_total) * 100, 1)
+        paste0(count, " (", pct, "%)")
+      }
+
+      col1_vals <- sapply(1:n_groups, function(i) format_cell(cont_table[i, 1], row_totals[i]))
+      col2_vals <- sapply(1:n_groups, function(i) format_cell(cont_table[i, 2], row_totals[i]))
+      total_vals <- sapply(1:n_groups, function(i) paste0(row_totals[i], " (100%)"))
+
+    } else {
+      col1_vals <- sapply(1:n_groups, function(i) as.character(cont_table[i, 1]))
+      col2_vals <- sapply(1:n_groups, function(i) as.character(cont_table[i, 2]))
+      total_vals <- sapply(1:n_groups, function(i) as.character(row_totals[i]))
+    }
+
+    data <- data.frame(
+      " " = c(var1_labels, "Total"),
+      "Group1" = c(col1_vals, as.character(col_totals[1])),
+      "Group2" = c(col2_vals, as.character(col_totals[2])),
+      "Total" = c(total_vals, as.character(grand_total)),
+      check.names = FALSE
+    )
+
+    names(data) <- c(" ", var2_labels[1], var2_labels[2], "Total")
+
+    chi_sq <- chi_results_list$ChiSquare$chi_sq
+    p_value <- chi_results_list$ChiSquare$p_value
+    df <- chi_results_list$ChiSquare$df
+
+    if (p_value < 0.001) {
+      p_text <- "< .001"
+    } else {
+      p_text <- sprintf("= %.3f", p_value)
+    }
+
+    footer_text <- paste0("Note. \u03C7\u00B2(", df, ") = ", chi_sq, ", p ", p_text, ".")
 
   } else {
-    # Blank template
-    tbl_data <- data.frame(
-      Variable = c(var1_labels, "Total"),
-      stringsAsFactors = FALSE
+    if (is.null(var1_labels)) {
+      var1_labels <- c("Level 1", "Level 2")
+    }
+
+    n_groups <- length(var1_labels)
+
+    data <- data.frame(
+      " " = c(var1_labels, "Total"),
+      "Group1" = rep("", n_groups + 1),
+      "Group2" = rep("", n_groups + 1),
+      "Total" = rep("", n_groups + 1),
+      check.names = FALSE
     )
 
-    for (j in seq_len(n_cols)) {
-      tbl_data[[var2_labels[j]]] <- rep("______", n_rows + 1)
-    }
-    tbl_data$Total <- rep("______", n_rows + 1)
+    names(data) <- c(" ", var2_labels[1], var2_labels[2], "Total")
+
+    footer_text <- NULL
   }
 
-  # Create header structure for spanning
-  col_names <- c(var1_name, var2_labels, "Total")
-  names(tbl_data) <- col_names
+  # Build base flextable
+  apa_table <- data |>
+    flextable::flextable() |>
+    flextable::set_table_properties(layout = "autofit", align = "left") |>
+    flextable::set_header_labels(" " = var1_name)
 
-  # Create flextable
-  ft <- flextable::flextable(tbl_data) |>
-    apa_style_table() |>
-    flextable::align(j = 2:(n_cols + 2), align = "center", part = "all")
-
-  # Add column spanner for var2
-  if (n_cols > 1) {
-    ft <- flextable::add_header_row(
-      ft,
+  # Add spanning header for column variable (var2_name)
+  apa_table <- apa_table |>
+    flextable::add_header_row(
       values = c("", var2_name, ""),
-      colwidths = c(1, n_cols, 1),
+      colwidths = c(1, 2, 1),
       top = TRUE
-    ) |>
-      flextable::align(part = "header", align = "center")
+    )
+
+  # Count header rows before adding title/number
+  # Currently: row 1 = var2_name spanning, row 2 = column headers
+
+  # Determine which rows are which after adding title info
+  has_number <- !is.null(table_number)
+  has_title <- !is.null(table_title)
+
+  # Add title row (italicized) - this goes ABOVE the line
+  if (has_title) {
+    apa_table <- apa_table |>
+      flextable::add_header_lines(values = table_title, top = TRUE)
   }
 
-  # Add title
-  if (!is.null(table_title)) {
-    if (!is.null(table_number)) {
-      full_title <- paste0("Table ", table_number, "\n\n", table_title)
-    } else {
-      full_title <- table_title
-    }
-    ft <- flextable::set_caption(ft, caption = full_title)
+  # Add table number row (bold) - this goes at the very top, ABOVE the line
+  if (has_number) {
+    apa_table <- apa_table |>
+      flextable::add_header_lines(values = paste0("Table ", table_number), top = TRUE)
   }
 
-  ft
+  # Calculate header row positions
+  n_header_rows <- flextable::nrow_part(apa_table, part = "header")
+
+  # Number of "above the line" rows (table number + title)
+  above_line_rows <- sum(c(has_number, has_title))
+
+  # The first row inside the table (below the top border) is the var2_name spanning row
+  # which is at position (above_line_rows + 1)
+
+  # Apply borders
+  apa_table <- apa_table |>
+    flextable::border_remove()
+
+  # Top border - goes AFTER the title rows (above var2_name spanning header)
+  if (above_line_rows > 0) {
+    apa_table <- apa_table |>
+      flextable::hline(i = above_line_rows, part = "header", border = officer::fp_border(width = 2))
+  } else {
+    apa_table <- apa_table |>
+      flextable::hline_top(part = "header", border = officer::fp_border(width = 2))
+  }
+
+  # Border below var2_name spanning row (separates spanning header from column headers)
+  apa_table <- apa_table |>
+    flextable::hline(i = n_header_rows - 1, part = "header", border = officer::fp_border(width = 1))
+
+  # Border at bottom of header (below column headers)
+  apa_table <- apa_table |>
+    flextable::hline_bottom(part = "header", border = officer::fp_border(width = 1))
+
+  # Bottom border of table body
+  apa_table <- apa_table |>
+    flextable::hline_bottom(part = "body", border = officer::fp_border(width = 2))
+
+  # Apply formatting to title rows
+  if (has_number && has_title) {
+    # Row 1 = Table number (bold), Row 2 = Title (italic)
+    apa_table <- apa_table |>
+      flextable::bold(i = 1, part = "header") |>
+      flextable::italic(i = 2, part = "header")
+  } else if (has_number) {
+    # Row 1 = Table number (bold)
+    apa_table <- apa_table |>
+      flextable::bold(i = 1, part = "header")
+  } else if (has_title) {
+    # Row 1 = Title (italic)
+    apa_table <- apa_table |>
+      flextable::italic(i = 1, part = "header")
+  }
+
+  # Alignment
+  apa_table <- apa_table |>
+    flextable::align(align = "center", part = "all") |>
+    flextable::align(j = 1, align = "left", part = "body") |>
+    flextable::align(j = 1, align = "left", part = "header")
+
+  # Font sizes
+  apa_table <- apa_table |>
+    flextable::fontsize(size = 11, part = "all")
+
+  # Add footer if present
+  if (!is.null(footer_text)) {
+    apa_table <- apa_table |>
+      flextable::add_footer_lines(footer_text) |>
+      flextable::fontsize(part = "footer", size = 10) |>
+      flextable::align(part = "footer", align = "left")
+  }
+
+  return(apa_table)
 }
 
 # -----------------------------------------------------------------------------
-# ANOVA tables
+# ONEWAY ANOVA tables
 # -----------------------------------------------------------------------------
 
 #' Create APA ANOVA source table
@@ -357,7 +477,7 @@ create_apa_chi_crosstabs_table <- function(chi_results_list = NULL,
 #' @param KEY If TRUE, show filled values; if FALSE, show blanks.
 #' @return A flextable object.
 #' @export
-create_apa_anova_source_table <- function(anova_results,
+create_apa_anova_stats_table <- function(anova_results,
                                           table_title = NULL,
                                           KEY = TRUE) {
 
@@ -449,9 +569,9 @@ create_apa_anova_descriptives_table <- function(anova_results,
 
     tbl_data <- data.frame(
       Group = group_labels,
-      n = format_df(desc$n),
-      M = format_mean(desc$mean),
-      SD = format_sd(desc$sd),
+      n = vapply(desc$n, format_df, character(1)),
+      M = vapply(desc$mean, format_mean, character(1)),
+      SD = vapply(desc$sd, format_sd, character(1)),
       stringsAsFactors = FALSE
     )
   } else {
@@ -486,67 +606,78 @@ create_apa_anova_descriptives_table <- function(anova_results,
 
 #' Create APA regression coefficients table
 #'
-#' @param regression_results A results list from `regression_answers()`.
+#' @param regression_results A results list from `linear_reg_answers()`.
 #' @param predictor_labels Optional labels for predictors.
 #' @param show_beta Show standardized coefficients.
 #' @param show_ci Show confidence intervals.
 #' @param KEY If TRUE, show filled values; if FALSE, show blanks.
 #' @return A flextable object.
+#' @importFrom stats model.matrix
 #' @export
 create_apa_regression_table <- function(regression_results,
                                         predictor_labels = NULL,
                                         show_beta = TRUE,
                                         show_ci = FALSE,
                                         KEY = TRUE) {
-
   if (KEY && !is.null(regression_results)) {
     weights <- regression_results$Regression_Weights
 
     if (is.null(predictor_labels)) {
-      predictor_labels <- weights$predictor
+      predictor_labels <- vapply(weights, \(x) x$label, character(1))
     }
+
+    b_vals <- vapply(weights, \(x) x$b, numeric(1))
+    se_vals <- vapply(weights, \(x) x$se, numeric(1))
+    t_vals <- vapply(weights, \(x) x$t, numeric(1))
+    p_vals <- vapply(weights, \(x) x$p_value, numeric(1))
 
     tbl_data <- data.frame(
       Predictor = predictor_labels,
-      B = format_stat(weights$b),
-      SE = format_stat(weights$se),
+      B = vapply(b_vals, format_stat, character(1)),
+      SE = vapply(se_vals, format_stat, character(1)),
       stringsAsFactors = FALSE
     )
 
     if (show_beta) {
-      tbl_data[["beta"]] <- format_stat(weights$beta, remove_leading_zero = TRUE)
+      raw_model <- regression_results$Raw_Model
+      if (!is.null(raw_model)) {
+        X <- model.matrix(raw_model)[, -1, drop = FALSE]
+        y <- raw_model$model[[1]]
+        X_scaled <- scale(X)
+        y_scaled <- scale(y)
+        beta_model <- stats::lm(y_scaled ~ X_scaled - 1)
+        beta_vals <- unname(stats::coefficients(beta_model))
+        tbl_data[["beta"]] <- vapply(
+          beta_vals, \(x) format_stat(x, remove_leading_zero = TRUE), character(1)
+        )
+      }
     }
 
-    tbl_data$t <- format_t(weights$t)
-    tbl_data$p <- format_p(weights$p)
+    tbl_data$t <- vapply(t_vals, format_t, character(1))
+    tbl_data$p <- vapply(p_vals, format_p, character(1))
 
     if (show_ci) {
+      ci <- stats::confint(regression_results$Raw_Model)
+      # Remove intercept row
+      ci <- ci[-1, , drop = FALSE]
       tbl_data$`95% CI` <- mapply(
-        format_ci,
-        weights$ci_low,
-        weights$ci_high,
-        USE.NAMES = FALSE
+        format_ci, ci[, 1], ci[, 2], USE.NAMES = FALSE
       )
     }
-
   } else {
     n_pred <- if (!is.null(predictor_labels)) length(predictor_labels) else 3
     if (is.null(predictor_labels)) predictor_labels <- paste("Predictor", 1:n_pred)
-
     tbl_data <- data.frame(
       Predictor = predictor_labels,
       B = rep("______", n_pred),
       SE = rep("______", n_pred),
       stringsAsFactors = FALSE
     )
-
     if (show_beta) {
       tbl_data[["beta"]] <- rep("______", n_pred)
     }
-
     tbl_data$t <- rep("______", n_pred)
     tbl_data$p <- rep("______", n_pred)
-
     if (show_ci) {
       tbl_data$`95% CI` <- rep("______", n_pred)
     }
@@ -561,35 +692,12 @@ create_apa_regression_table <- function(regression_results,
       t = "*t*",
       p = "*p*"
     )
-
-  if (show_beta) {
-    ft <- flextable::set_header_labels(ft, beta = paste0("*", intToUtf8(0x03B2), "*"))
+  if (show_beta && "beta" %in% names(tbl_data)) {
+    ft <- flextable::set_header_labels(
+      ft, beta = paste0("*", intToUtf8(0x03B2), "*")
+    )
   }
-
   ft <- ftExtra::colformat_md(ft, part = "header")
-
   ft
 }
 
-# -----------------------------------------------------------------------------
-# Utility: Blank vs. filled table generation
-# -----------------------------------------------------------------------------
-
-#' Create worksheet value (blank or filled)
-#'
-#' Helper function to return either a formatted value or a blank for worksheets.
-#'
-#' @param value The value to format.
-#' @param format_fn The formatting function to apply.
-#' @param KEY If TRUE, return formatted value; if FALSE, return blank.
-#' @param blank_text Text to use for blanks (default "______").
-#' @param ... Additional arguments passed to format_fn.
-#' @return Character string.
-#' @export
-worksheet_value <- function(value, format_fn, KEY = TRUE, blank_text = "______", ...) {
-  if (KEY) {
-    format_fn(value, ...)
-  } else {
-    blank_text
-  }
-}

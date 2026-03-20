@@ -2,10 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.35">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>apa_wg_simple_contrasts_writeup – psych350lab</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -63,19 +66,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-aba01c956b72409b36012bbc0149ef07.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-5dc72fe4f8e2ee6edcea9b2c2eeaa369.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-aba01c956b72409b36012bbc0149ef07.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d7cc8b63efb29e8e42412eadb9bca2de.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b9ea414fb9105837b798b68e84c777ff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d7cc8b63efb29e8e42412eadb9bca2de.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-33ad8e3470424c659cd96ff6886cea3d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-9291fb68f63017f61098342f7067d42f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-33ad8e3470424c659cd96ff6886cea3d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-06757e82f93737b7e098a4d8c74378f0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-bf0acc6dd4f21b5f5c296883600fd3e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-06757e82f93737b7e098a4d8c74378f0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -297,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/anova_descriptives_KEY.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/apa_wg_simple_contrasts_writeup.html">apa_wg_simple_contrasts_writeup</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Functions</li><li class="breadcrumb-item"><a href="../man/apa_corr_writeup.html">APA Write-Ups</a></li><li class="breadcrumb-item"><a href="../man/apa_wg_simple_contrasts_writeup.html">apa_wg_simple_contrasts_writeup</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -307,14 +309,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../index.qmd" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Getting Started</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
- <span class="menu-text">Articles</span></a>
+ <span class="menu-text">Guides by Analysis Type</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -322,181 +330,87 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../vignettes/lab06.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Lab 06: Data Entry &amp; Univariate Stats</span></a>
+  <a href="../vignettes/correlations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Correlations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../vignettes/lab07.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Lab 7: Bivariate Analyses: Correlations and Chi-Squares</span></a>
+  <a href="../vignettes/chi-square-2x2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chi-Square (2×2)</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../vignettes/Sample-worksheet.docx" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Lab 06</span></a>
+  <a href="../vignettes/oneway-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">One-Way ANOVA (BG &amp; WG)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/kgroup-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">K-Group One-Way ANOVA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/kgroup-chi-square.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">K-Group Chi-Square (k×2)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/factorial-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Factorial ANOVA (2×2)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vignettes/regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple Linear Regression</span></a>
   </div>
 </li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Reference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Worksheets</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_descriptives_KEY</span></a>
+  <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Answer Checkers (HTML)</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/anova_factorial_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_factorial_answers</span></a>
-  </div>
+      </ul>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Functions</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Analysis</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/anova_kgroup_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_kgroup_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/anova_statistics_KEY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">anova_statistics_KEY</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_2x2_bg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_2x2_bg_factorial_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_2x2_mixed_factorial_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_2x2_mixed_factorial_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_2x2_wg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_2x2_wg_factorial_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_bg_anova_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_bg_anova_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_chi_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_chi_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_corr_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_corr_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_anova</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_chi2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_chi2</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_F.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_F</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_r</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_inline_t.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_inline_t</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_kgroup_anova_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_kgroup_chi_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_kgroup_chi_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_planned_comparisons_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_planned_comparisons_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_wg_anova_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_wg_anova_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_wg_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">apa_wg_kgroup_anova_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/apa_wg_simple_contrasts_writeup.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">apa_wg_simple_contrasts_writeup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/bg_anova_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">bg_anova_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/chi_square_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">chi_square_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/chi_square_kgroup_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">chi_square_kgroup_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/chisq_pairwise_KEY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">chisq_pairwise_KEY</span></a>
+  <a href="../man/descriptives_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">descriptives_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -513,80 +427,97 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_anova_omnibus_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_anova_omnibus_checker</span></a>
+  <a href="../man/chi_square_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">chi_square_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_anova_source_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_anova_source_table</span></a>
+  <a href="../man/chi_square_kgroup_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">chi_square_kgroup_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_answer_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_answer_table</span></a>
+  <a href="../man/bg_anova_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">bg_anova_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_anova_descriptives_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_anova_descriptives_table</span></a>
+  <a href="../man/wg_anova_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">wg_anova_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_anova_source_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_anova_source_table</span></a>
+  <a href="../man/anova_kgroup_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_kgroup_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_chi_crosstabs_table</span></a>
+  <a href="../man/anova_factorial_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_factorial_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_apa_regression_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_apa_regression_table</span></a>
+  <a href="../man/anova_factmg_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_factmg_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_bg_anova_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_bg_anova_checker</span></a>
+  <a href="../man/anova_factwg_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_factwg_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_bg_anova_combined_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_bg_anova_combined_table</span></a>
+  <a href="../man/linear_reg_answers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_answers</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_bg_anova_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_bg_anova_table</span></a>
+  <a href="../man/lsd_hsd_calculator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">lsd_hsd_calculator</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_chi_combined_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_chi_combined_table</span></a>
+  <a href="../man/pr_means_to_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pr_means_to_r</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_chi_contingency_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_chi_contingency_table</span></a>
+  <a href="../man/pr_chi_to_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">pr_chi_to_r</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Interactive Checkers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_descriptives_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_descriptives_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_chi_crosstabs_table</span></a>
+  <a href="../man/create_corr_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_corr_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -609,92 +540,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_chisq_pairwise_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_chisq_pairwise_table</span></a>
+  <a href="../man/create_bg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_bg_anova_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_corr_apa_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_corr_apa_table</span></a>
+  <a href="../man/create_wg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_wg_anova_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_corr_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_corr_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_corr_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_corr_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_correlation_interp_ft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_correlation_interp_ft</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_correlation_interpretations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_correlation_interpretations</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_descriptive_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_descriptive_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_descriptives_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_descriptives_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_anova_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_anova_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_anova_stats_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_anova_stats_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_apa_desc_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_apa_desc_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_factorial_desc_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_factorial_desc_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_linear_reg_combined_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_linear_reg_combined_table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_linear_reg_correlation_interp_ft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_linear_reg_correlation_interp_ft</span></a>
+  <a href="../man/create_anova_omnibus_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_anova_omnibus_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../man/create_lsd_pairwise_checker.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">create_lsd_pairwise_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factbg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factbg_anova_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factbg_desc_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factbg_desc_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factmg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factmg_anova_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factmg_desc_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factmg_desc_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factwg_anova_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factwg_anova_checker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_factwg_desc_checker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factwg_desc_checker</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -711,14 +612,126 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_regression_weight_interpretations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_regression_weight_interpretations</span></a>
+  <a href="../man/create_correlation_interpretations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_correlation_interpretations</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_regwt_interp_ft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_regwt_interp_ft</span></a>
+  <a href="../man/create_regression_weight_interpretations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_regression_weight_interpretations</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">APA Tables (docx)</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_descriptives_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_descriptives_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_corr_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_corr_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_chi_crosstabs_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_anova_stats_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_anova_stats_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_anova_descriptives_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_anova_descriptives_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_factbg_desc_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_factbg_desc_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_factmg_desc_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_factmg_desc_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_factwg_desc_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_factwg_desc_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_apa_regression_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_apa_regression_table</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Worksheet Tables &amp; KEY Functions</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_descriptive_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_descriptive_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_answer_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_answer_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_corr_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_corr_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_chi_crosstabs_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_chi_crosstabs_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_chi_combined_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_chi_combined_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_chi_contingency_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_chi_contingency_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -729,20 +742,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_rh_support_text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_rh_support_text</span></a>
+  <a href="../man/create_chisq_pairwise_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_chisq_pairwise_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/create_wg_anova_checker.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_wg_anova_checker</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/create_wg_anova_combined_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">create_wg_anova_combined_table</span></a>
+  <a href="../man/create_bg_anova_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_bg_anova_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -753,32 +760,97 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_interaction_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_interaction_results</span></a>
+  <a href="../man/create_anova_source_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_anova_source_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_main_effect_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_main_effect_results</span></a>
+  <a href="../man/create_bg_anova_combined_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_bg_anova_combined_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/factorial_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">factorial_table_with_comparisons</span></a>
+  <a href="../man/create_wg_anova_combined_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_wg_anova_combined_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_bg_anova_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_bg_anova_results</span></a>
+  <a href="../man/create_factbg_anova_stats_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_factbg_anova_stats_table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_chi_omnibus_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_chi_omnibus_results</span></a>
+  <a href="../man/factbg_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factbg_table_with_comparisons</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_linear_reg_combined_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_linear_reg_combined_table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_linear_reg_correlation_interp_ft.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_linear_reg_correlation_interp_ft</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_correlation_interp_ft.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_correlation_interp_ft</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_regwt_interp_ft.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_regwt_interp_ft</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/anova_statistics_KEY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_statistics_KEY</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/anova_descriptives_KEY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">anova_descriptives_KEY</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/lsd_pairwise_KEY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">lsd_pairwise_KEY</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/chisq_pairwise_KEY.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">chisq_pairwise_KEY</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Worksheet Formatters</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_corr_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_corr_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -789,68 +861,192 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_chi2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_chi2</span></a>
+  <a href="../man/format_chi_omnibus_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_chi_omnibus_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_corr_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_corr_results</span></a>
+  <a href="../man/format_bg_anova_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_bg_anova_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_df.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_df</span></a>
+  <a href="../man/format_wg_anova_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_wg_anova_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_effect_size_anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_effect_size_anova</span></a>
+  <a href="../man/format_factbg_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_factbg_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_effect.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_effect</span></a>
+  <a href="../man/factbg_interaction_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factbg_interaction_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_F.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_F</span></a>
+  <a href="../man/factbg_main_effect_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factbg_main_effect_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_factorial_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_factorial_results</span></a>
+  <a href="../man/factwg_interaction_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factwg_interaction_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_int.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_int</span></a>
+  <a href="../man/factwg_main_effect_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factwg_main_effect_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_mean.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_mean</span></a>
+  <a href="../man/factwg_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factwg_table_with_comparisons</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_mse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_mse</span></a>
+  <a href="../man/factmg_interaction_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factmg_interaction_results</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_n.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_n</span></a>
+  <a href="../man/factmg_main_effect_results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factmg_main_effect_results</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/factmg_table_with_comparisons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">factmg_table_with_comparisons</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/create_rh_support_text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">create_rh_support_text</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/key_or_blank.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">key_or_blank</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/worksheet_value.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">worksheet_value</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">APA Write-Ups</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_corr_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_corr_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_chi_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_chi_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_kgroup_chi_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_kgroup_chi_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_bg_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_bg_anova_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_wg_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_wg_anova_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_kgroup_anova_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_wg_kgroup_anova_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_wg_kgroup_anova_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_planned_comparisons_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_planned_comparisons_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_wg_simple_contrasts_writeup.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">apa_wg_simple_contrasts_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_2x2_bg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_2x2_bg_factorial_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_2x2_mixed_factorial_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_2x2_mixed_factorial_writeup</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_2x2_wg_factorial_writeup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_2x2_wg_factorial_writeup</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">Formatting Utilities</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_stat</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -867,8 +1063,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_stat.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_stat</span></a>
+  <a href="../man/format_effect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_effect</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_effect_size_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_effect_size_anova</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_mean</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_F.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_F</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -879,14 +1093,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/format_wg_anova_results.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">format_wg_anova_results</span></a>
+  <a href="../man/format_chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_chi2</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/get_spss_data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">get_spss_data</span></a>
+  <a href="../man/format_mse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_mse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_df.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_df</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_n.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_n</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/format_int.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">format_int</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">APA Inline Reporting</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_r</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_chi2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_chi2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_t</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_F.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_F</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/apa_inline_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">apa_inline_anova</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Markdown &amp; Display Helpers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/md_format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">md_format</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -895,64 +1185,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">highlight_text</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">Data &amp; Theme Utilities</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/key_or_blank.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">key_or_blank</span></a>
+  <a href="../man/get_spss_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">get_spss_data</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_answers</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_category_legend.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_category_legend</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_model_evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_model_evaluation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_model_statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_model_statistics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/linear_reg_table_legend.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">linear_reg_table_legend</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/lsd_hsd_calculator.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">lsd_hsd_calculator</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/lsd_pairwise_KEY.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">lsd_pairwise_KEY</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/md_format.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">md_format</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/number_SPSS.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">number_SPSS</span></a>
+  <a href="../man/theme_SPSS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">theme_SPSS</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -963,20 +1216,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/pr_chi_to_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">pr_chi_to_r</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/pr_means_to_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">pr_means_to_r</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../man/regression_category_legend.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">regression_category_legend</span></a>
+  <a href="../man/SPSS_pal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SPSS_pal</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -993,27 +1234,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/SPSS_pal.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">SPSS_pal</span></a>
+  <a href="../man/number_SPSS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">number_SPSS</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">Regression Table Helpers</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 ">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/linear_reg_model_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_model_statistics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/theme_SPSS.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">theme_SPSS</span></a>
+  <a href="../man/linear_reg_model_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_model_evaluation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/wg_anova_answers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">wg_anova_answers</span></a>
+  <a href="../man/linear_reg_table_legend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_table_legend</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../man/worksheet_value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">worksheet_value</span></a>
+  <a href="../man/linear_reg_category_legend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">linear_reg_category_legend</span></a>
   </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../man/regression_category_legend.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">regression_category_legend</span></a>
+  </div>
+</li>
+      </ul>
 </li>
       </ul>
 </li>
@@ -1050,7 +1316,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="undefined"><i class="bi bi-link-45deg"></i></a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../man/anova_descriptives_KEY.html">Reference</a></li><li class="breadcrumb-item"><a href="../man/apa_wg_simple_contrasts_writeup.html">apa_wg_simple_contrasts_writeup</a></li></ol></nav></header><section id="apa-write-up-for-within-groups-simple-contrasts" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="apa-write-up-for-within-groups-simple-contrasts">APA Write-Up for Within-Groups Simple Contrasts</h2>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Functions</li><li class="breadcrumb-item"><a href="../man/apa_corr_writeup.html">APA Write-Ups</a></li><li class="breadcrumb-item"><a href="../man/apa_wg_simple_contrasts_writeup.html">apa_wg_simple_contrasts_writeup</a></li></ol></nav></header><section id="apa-write-up-for-within-groups-simple-contrasts" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="apa-write-up-for-within-groups-simple-contrasts">APA Write-Up for Within-Groups Simple Contrasts</h2>
 <section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
 <p>Generates an APA-style paragraph for repeated measures ANOVA with simple (planned) contrasts comparing conditions to a reference.</p>
 </section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
