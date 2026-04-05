@@ -33,7 +33,7 @@
 #' Format p-value for display
 #' @noRd
 .format_p_factorial <- function(p_value) {
-  if (p_value < 0.001) "< .001" else sprintf("%.3f", p_value)
+  format_p_value(p_value)
 }
 
 

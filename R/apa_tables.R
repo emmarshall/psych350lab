@@ -334,13 +334,9 @@ create_apa_chi_crosstabs_table <- function(chi_results_list = NULL,
     p_value <- chi_results_list$ChiSquare$p_value
     df <- chi_results_list$ChiSquare$df
 
-    if (p_value < 0.001) {
-      p_text <- "< .001"
-    } else {
-      p_text <- sprintf("= %.3f", p_value)
-    }
+    p_text <- format_p_value(p_value, include_p = TRUE)
 
-    footer_text <- paste0("Note. \u03C7\u00B2(", df, ") = ", chi_sq, ", p ", p_text, ".")
+    footer_text <- paste0("Note. \u03C7\u00B2(", format_df(df), ") = ", format_chi2(chi_sq), ", ", p_text, ".")
 
   } else {
     if (is.null(var1_labels)) {

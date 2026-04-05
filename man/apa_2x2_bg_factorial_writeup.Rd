@@ -77,3 +77,7 @@ writeup <- apa_2x2_bg_factorial_writeup(
 }
 
 }
+\seealso{
+\code{\link[=reshape_to_bg_factorial]{reshape_to_bg_factorial()}} to convert \code{\link[=anova_factorial_answers]{anova_factorial_answers()}}
+output to the format expected by this function.
+}

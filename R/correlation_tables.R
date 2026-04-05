@@ -71,19 +71,19 @@ create_corr_table <- function(rh_name, vars, corr_results_list) {
       paste("Variable 2:", vars[2])
     ),
     Column2 = c(
-      as.character(corr_results_list$Correlation$r),
-      as.character(var1_stats$mean),
-      as.character(var2_stats$mean)
+      format_r(corr_results_list$Correlation$r),
+      format_mean(var1_stats$mean),
+      format_mean(var2_stats$mean)
     ),
     Column3 = c(
-      as.character(p_value),
-      as.character(var1_stats$sd),
-      as.character(var2_stats$sd)
+      format_p_value(p_value),
+      format_sd(var1_stats$sd),
+      format_sd(var2_stats$sd)
     ),
     Column4 = c(
-      as.character(corr_results_list$Correlation$df),
-      as.character(var1_stats$n),
-      as.character(var2_stats$n)
+      format_df(corr_results_list$Correlation$df),
+      format_n(var1_stats$n),
+      format_n(var2_stats$n)
     ),
     Column5 = c(decision, "", "")
   )
@@ -195,12 +195,12 @@ create_apa_corr_table <- function(data = NULL, vars = NULL, var_labels = NULL,
     means <- desc_stats |>
       dplyr::select(dplyr::ends_with("_mean")) |>
       unlist() |>
-      round(2)
+      purrr::map_chr(format_mean)
 
     sds <- desc_stats |>
       dplyr::select(dplyr::ends_with("_sd")) |>
       unlist() |>
-      round(2)
+      purrr::map_chr(format_sd)
 
     ns <- desc_stats |>
       dplyr::select(dplyr::ends_with("_n")) |>
@@ -222,8 +222,8 @@ create_apa_corr_table <- function(data = NULL, vars = NULL, var_labels = NULL,
     # Create the data frame
     table_data <- data.frame(
       Variable = var_labels,
-      M = as.character(means),
-      SD = as.character(sds),
+      M = unname(means),
+      SD = unname(sds),
       n = as.character(ns),
       stringsAsFactors = FALSE,
       check.names = FALSE

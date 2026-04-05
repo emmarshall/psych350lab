@@ -55,9 +55,9 @@ create_factbg_anova_stats_table <- function(rh_name, anova_results_list,
   lsd_mmd <- anova_results_list$LSD$lsd_mmd
 
   # Format p-values
-  p_iv1_fmt <- ifelse(p_iv1 < 0.001, "<.001", sprintf("%.2f", p_iv1))
-  p_iv2_fmt <- ifelse(p_iv2 < 0.001, "<.001", sprintf("%.2f", p_iv2))
-  p_interaction_fmt <- ifelse(p_interaction < 0.001, "<.001", sprintf("%.2f", p_interaction))
+  p_iv1_fmt <- .format_p_apa(p_iv1)
+  p_iv2_fmt <- .format_p_apa(p_iv2)
+  p_interaction_fmt <- .format_p_apa(p_interaction)
 
   # Determine correct answer for LSD question based on interaction
   if (p_interaction < 0.05) {
@@ -209,7 +209,7 @@ create_factbg_comparisons_table <- function(anova_results_list,
       cell_row <- desc_stats[desc_stats$iv1_label == iv1_labels[i] &
                                desc_stats$iv2_label == iv2_labels[1], ]
       if (nrow(cell_row) > 0) {
-        col_values <- c(col_values, sprintf("%.4f", cell_row$mean[1]))
+        col_values <- c(col_values, format_mean(cell_row$mean[1]))
       } else {
         col_values <- c(col_values, "NA")
       }
@@ -246,7 +246,7 @@ create_factbg_comparisons_table <- function(anova_results_list,
       cell_row <- desc_stats[desc_stats$iv1_label == iv1_labels[i] &
                                desc_stats$iv2_label == iv2_labels[2], ]
       if (nrow(cell_row) > 0) {
-        col_values <- c(col_values, sprintf("%.4f", cell_row$mean[1]))
+        col_values <- c(col_values, format_mean(cell_row$mean[1]))
       } else {
         col_values <- c(col_values, "NA")
       }
@@ -255,7 +255,7 @@ create_factbg_comparisons_table <- function(anova_results_list,
 
     # EMM column for IV1 (marginal means)
     marginal_col_name <- paste0("EMM: ", iv1_name)
-    data_list[[marginal_col_name]] <- sprintf("%.4f", emm_iv1$mean)
+    data_list[[marginal_col_name]] <- purrr::map_chr(emm_iv1$mean, format_mean)
 
     data <- as.data.frame(data_list, stringsAsFactors = FALSE, check.names = FALSE)
 
@@ -350,7 +350,7 @@ create_factbg_comparisons_table <- function(anova_results_list,
   if (KEY) {
     marginal_row_label <- paste0("EMM: ", iv2_name)
     marginal_row <- c(marginal_row_label)
-    marginal_row <- c(marginal_row, sprintf("%.4f", emm_iv2$mean[1]))
+    marginal_row <- c(marginal_row, format_mean(emm_iv2$mean[1]))
 
     # IV2 EMM comparison
     mean1 <- emm_iv2$mean[1]
@@ -358,7 +358,7 @@ create_factbg_comparisons_table <- function(anova_results_list,
     iv2_comp <- ifelse(mean1 < mean2, "<", ifelse(mean1 > mean2, ">", "="))
     marginal_row <- c(marginal_row, iv2_comp)
 
-    marginal_row <- c(marginal_row, sprintf("%.4f", emm_iv2$mean[2]))
+    marginal_row <- c(marginal_row, format_mean(emm_iv2$mean[2]))
     marginal_row <- c(marginal_row, "")
 
     ft <- flextable::add_footer_row(ft, values = marginal_row,
@@ -438,20 +438,20 @@ format_factbg_interaction_results <- function(anova_results_list,
     output <- paste0(
       "Find the results of the test of the interaction:\n\n",
       '<p style="color: red;">',
-      "F = ", hl(f_int), "     ",
-      "df = ", hl(df_int), ", ", hl(df_within), "     ",
-      "p = ", hl(sprintf("%.3f", p_int)), "     ",
-      "MSe = ", hl(mse), "     ",
+      "F = ", hl(format_F(f_int)), "     ",
+      "df = ", hl(format_df(df_int)), ", ", hl(format_df(df_within)), "     ",
+      hl(format_p_value(p_int, include_p = TRUE)), "     ",
+      "MSe = ", hl(format_mse(mse)), "     ",
       "Is there an interaction ??? ", hl(has_interaction),
       "</p>\n\n",
       "Do we need an LSDmmd to compare cell means to describe the pattern of the interaction? ______ Why or why not?\n\n",
       "If necessary, find the components for the LSDmmd computation:\n\n",
       '<p style="color: red;">',
-      "`# conditions` = ", hl(k), "     ",
-      "n = ", hl(mean_n), "     ",
-      "df error = ", hl(df_within), "     ",
-      "MSe = ", hl(mse), "     ",
-      "LSDmmd = ", hl(lsd_mmd),
+      "`# conditions` = ", hl(format_int(k)), "     ",
+      "n = ", hl(format_stat(mean_n)), "     ",
+      "df error = ", hl(format_df(df_within)), "     ",
+      "MSe = ", hl(format_mse(mse)), "     ",
+      "LSDmmd = ", hl(format_stat(lsd_mmd)),
       "</p>\n"
     )
   } else {
@@ -567,10 +567,10 @@ format_factbg_main_effect_results <- function(anova_results_list,
     output <- paste0(
       "Find the results for the test of the Main effect of ", iv_name, "\n\n",
       '<p style="color: red;">',
-      "F = ", hl(f_stat), "     ",
-      "df = ", hl(df_between), ", ", hl(df_within), "     ",
-      "p = ", hl(sprintf("%.3f", p_val)), "     ",
-      "MSe = ", hl(mse), "     ",
+      "F = ", hl(format_F(f_stat)), "     ",
+      "df = ", hl(format_df(df_between)), ", ", hl(format_df(df_within)), "     ",
+      hl(format_p_value(p_val, include_p = TRUE)), "     ",
+      "MSe = ", hl(format_mse(mse)), "     ",
       "Is there a main effect ??? ", hl(has_main_effect),
       "</p>\n\n",
       "Do we need an LSDmmd to compare marginal means to determine the pattern of the main effect? ______ Why or why not\n\n",
@@ -722,8 +722,8 @@ create_apa_factbg_desc_table <- function(anova_results_list,
           rows[[length(rows) + 1]] <- data.frame(
             IV1 = ifelse(j == 1, iv1_labels[i], ""),
             IV2 = iv2_labels[j],
-            M = sprintf("%.2f", cell$mean[1]),
-            SD = sprintf("%.2f", cell$sd[1]),
+            M = format_mean(cell$mean[1]),
+            SD = format_sd(cell$sd[1]),
             n = as.character(cell$n[1]),
             stringsAsFactors = FALSE
           )
@@ -828,8 +828,8 @@ create_apa_factmg_desc_table <- function(anova_results_list,
           rows[[length(rows) + 1]] <- data.frame(
             BG = ifelse(j == 1, bg_labels[i], ""),
             WG = wg_labels[j],
-            M  = sprintf("%.2f", cell$mean[1]),
-            SD = sprintf("%.2f", cell$sd[1]),
+            M  = format_mean(cell$mean[1]),
+            SD = format_sd(cell$sd[1]),
             n  = as.character(cell$n[1]),
             stringsAsFactors = FALSE
           )
@@ -929,8 +929,8 @@ create_apa_factwg_desc_table <- function(anova_results_list,
           rows[[length(rows) + 1]] <- data.frame(
             IV1 = ifelse(j == 1, iv1_labels[i], ""),
             IV2 = iv2_labels[j],
-            M   = sprintf("%.2f", cell$mean[1]),
-            SD  = sprintf("%.2f", cell$sd[1]),
+            M   = format_mean(cell$mean[1]),
+            SD  = format_sd(cell$sd[1]),
             n   = as.character(cell$n[1]),
             stringsAsFactors = FALSE
           )
@@ -1054,7 +1054,7 @@ format_factbg_results <- function(rh_name, anova_results_list,
   } else {
     # Format p-values
     fmt_p <- function(p) {
-      if (p < 0.001) "< .001" else sprintf("%.3f", p)
+      format_p_value(p, include_p = TRUE)
     }
 
     output <- paste0(
@@ -1063,16 +1063,16 @@ format_factbg_results <- function(rh_name, anova_results_list,
       "**Interaction (", iv1_name, " x ", iv2_name, "):**\n",
       "  F = ", anova$Interaction$F,
       "    df = ", anova$Interaction$df, ", ", anova$df_within,
-      "    p = ", fmt_p(anova$Interaction$p_value),
+      "    ", fmt_p(anova$Interaction$p_value),
       "    MSE = ", anova$mse, "\n\n",
       "**Main Effect of ", iv1_name, ":**\n",
       "  F = ", anova$MainEffect_IV1$F,
       "    df = ", anova$MainEffect_IV1$df, ", ", anova$df_within,
-      "    p = ", fmt_p(anova$MainEffect_IV1$p_value), "\n\n",
+      "    ", fmt_p(anova$MainEffect_IV1$p_value), "\n\n",
       "**Main Effect of ", iv2_name, ":**\n",
       "  F = ", anova$MainEffect_IV2$F,
       "    df = ", anova$MainEffect_IV2$df, ", ", anova$df_within,
-      "    p = ", fmt_p(anova$MainEffect_IV2$p_value), "\n\n",
+      "    ", fmt_p(anova$MainEffect_IV2$p_value), "\n\n",
       "**LSD Components:**\n",
       "  k = ", anova$k,
       "    n = ", anova$mean_n,
@@ -1099,12 +1099,12 @@ format_factbg_results <- function(rh_name, anova_results_list,
     output <- paste0(output, "  ", iv1_name, ":\n")
     for (i in seq_len(nrow(emm_iv1))) {
       output <- paste0(output, "    ", emm_iv1$iv1_label[i],
-                       ": M = ", round(emm_iv1$mean[i], 2), "\n")
+                       ": M = ", format_mean(emm_iv1$mean[i]), "\n")
     }
     output <- paste0(output, "  ", iv2_name, ":\n")
     for (i in seq_len(nrow(emm_iv2))) {
       output <- paste0(output, "    ", emm_iv2$iv2_label[i],
-                       ": M = ", round(emm_iv2$mean[i], 2), "\n")
+                       ": M = ", format_mean(emm_iv2$mean[i]), "\n")
     }
   }
 
@@ -1155,10 +1155,10 @@ format_factwg_interaction_results <- function(anova_results_list,
     output <- paste0(
       "Find the results of the test of the interaction:\n\n",
       '<p style="color: red;">',
-      "F = ", hl(f_int), "     ",
-      "df = ", hl(df_int), ", ", hl(df_err), "     ",
-      "p = ", hl(sprintf("%.3f", p_int)), "     ",
-      "MSe = ", hl(sprintf("%.4f", mse_err)), "     ",
+      "F = ", hl(format_F(f_int)), "     ",
+      "df = ", hl(format_df(df_int)), ", ", hl(format_df(df_err)), "     ",
+      hl(format_p_value(p_int, include_p = TRUE)), "     ",
+      "MSe = ", hl(format_mse(mse_err)), "     ",
       "Is there an interaction ??? ", hl(has_interaction),
       "</p>\n"
     )
@@ -1254,10 +1254,10 @@ format_factwg_main_effect_results <- function(anova_results_list,
     output <- paste0(
       "Find the results for the test of the Main effect of ", iv_name, "\n\n",
       '<p style="color: red;">',
-      "F = ", hl(f_stat), "     ",
-      "df = ", hl(df_between), ", ", hl(df_err), "     ",
-      "p = ", hl(sprintf("%.3f", p_val)), "     ",
-      "MSe = ", hl(sprintf("%.4f", mse_err)), "     ",
+      "F = ", hl(format_F(f_stat)), "     ",
+      "df = ", hl(format_df(df_between)), ", ", hl(format_df(df_err)), "     ",
+      hl(format_p_value(p_val, include_p = TRUE)), "     ",
+      "MSe = ", hl(format_mse(mse_err)), "     ",
       "Is there a main effect ??? ", hl(has_main_effect),
       "</p>\n\n",
       "So, is the main effect of ", hl(iv_name), " descriptive or misleading?\n\n",
@@ -1337,7 +1337,7 @@ create_factwg_comparisons_table <- function(anova_results_list,
                                desc_stats$iv2_level == iv2_labels[j], ]
         }
         if (nrow(cell) > 0) {
-          col_values <- c(col_values, sprintf("%.4f", cell$mean[1]))
+          col_values <- c(col_values, format_mean(cell$mean[1]))
         } else {
           col_values <- c(col_values, "NA")
         }
@@ -1349,7 +1349,7 @@ create_factwg_comparisons_table <- function(anova_results_list,
     }
 
     marginal_col_name <- paste0("EMM: ", iv1_name)
-    data_list[[marginal_col_name]] <- sprintf("%.4f", emm_iv1$mean)
+    data_list[[marginal_col_name]] <- purrr::map_chr(emm_iv1$mean, format_mean)
 
     data <- as.data.frame(data_list, stringsAsFactors = FALSE, check.names = FALSE)
 
@@ -1397,7 +1397,7 @@ create_factwg_comparisons_table <- function(anova_results_list,
   if (KEY) {
     marginal_values <- c(paste0("EMM: ", iv2_name))
     for (j in seq_len(n_iv2)) {
-      marginal_values <- c(marginal_values, sprintf("%.4f", emm_iv2$mean[j]))
+      marginal_values <- c(marginal_values, format_mean(emm_iv2$mean[j]))
       if (j < n_iv2) {
         marginal_values <- c(marginal_values, "")
       }
@@ -1470,10 +1470,10 @@ format_factmg_interaction_results <- function(anova_results_list,
     output <- paste0(
       "Find the results of the test of the interaction:\n\n",
       '<p style="color: red;">',
-      "F = ", hl(f_int), "     ",
-      "df = ", hl(df_int), ", ", hl(df_err), "     ",
-      "p = ", hl(sprintf("%.3f", p_int)), "     ",
-      "MSe = ", hl(sprintf("%.4f", mse_err)), "     ",
+      "F = ", hl(format_F(f_int)), "     ",
+      "df = ", hl(format_df(df_int)), ", ", hl(format_df(df_err)), "     ",
+      hl(format_p_value(p_int, include_p = TRUE)), "     ",
+      "MSe = ", hl(format_mse(mse_err)), "     ",
       "Is there an interaction ??? ", hl(has_interaction),
       "</p>\n"
     )
@@ -1580,10 +1580,10 @@ format_factmg_main_effect_results <- function(anova_results_list,
     output <- paste0(
       "Find the results for the test of the Main effect of ", iv_name, "\n\n",
       '<p style="color: red;">',
-      "F = ", hl(f_stat), "     ",
-      "df = ", hl(df_between), ", ", hl(df_err), "     ",
-      "p = ", hl(sprintf("%.3f", p_val)), "     ",
-      "MSe = ", hl(sprintf("%.4f", mse_err)), "     ",
+      "F = ", hl(format_F(f_stat)), "     ",
+      "df = ", hl(format_df(df_between)), ", ", hl(format_df(df_err)), "     ",
+      hl(format_p_value(p_val, include_p = TRUE)), "     ",
+      "MSe = ", hl(format_mse(mse_err)), "     ",
       "Is there a main effect ??? ", hl(has_main_effect),
       "</p>\n\n",
       "So, is the main effect of ", hl(iv_name), " descriptive or misleading?\n\n",
@@ -1659,7 +1659,7 @@ create_factmg_comparisons_table <- function(anova_results_list,
         cell <- desc_stats[desc_stats$bg_level == bg_levels[i] &
                              desc_stats$wg_level == wg_labels[j], ]
         if (nrow(cell) > 0) {
-          col_values <- c(col_values, sprintf("%.4f", cell$mean[1]))
+          col_values <- c(col_values, format_mean(cell$mean[1]))
         } else {
           col_values <- c(col_values, "NA")
         }
@@ -1671,9 +1671,77 @@ create_factmg_comparisons_table <- function(anova_results_list,
     }
 
     marginal_col_name <- paste0("EMM: ", bg_name)
-    data_list[[marginal_col_name]] <- sprintf("%.4f", emm_bg$mean)
+    data_list[[marginal_col_name]] <- purrr::map_chr(emm_bg$mean, format_mean)
 
     data <- as.data.frame(data_list, stringsAsFactors = FALSE, check.names = FALSE)
+
+    # Add comparison arrows for 2x2 designs
+    if (n_bg == 2) {
+      # Compute LSD thresholds from separate error terms
+      mean_n <- mean(info$group_ns)
+
+      # WG error for horizontal (within-subject) comparisons
+      ms_err_w <- anova_results_list$WithinSubjects$Error$ms
+      df_err_w <- anova_results_list$WithinSubjects$Error$df
+      t_crit_w <- stats::qt(0.975, df_err_w)
+      lsd_wg <- t_crit_w * sqrt(2 * ms_err_w / mean_n)
+
+      # BG error for vertical (between-subject) comparisons
+      ms_err_b <- anova_results_list$BetweenSubjects$Error$ms
+      df_err_b <- anova_results_list$BetweenSubjects$Error$df
+      t_crit_b <- stats::qt(0.975, df_err_b)
+      lsd_bg <- t_crit_b * sqrt(2 * ms_err_b / mean_n)
+
+      # Fill horizontal comparison arrows (spacer columns between WG levels)
+      for (j in seq_len(n_wg - 1)) {
+        spacer_name <- paste0(" ", strrep(" ", j))
+        for (i in seq_len(n_bg)) {
+          cell_l <- desc_stats[desc_stats$bg_level == bg_levels[i] &
+                                 desc_stats$wg_level == wg_labels[j], ]
+          cell_r <- desc_stats[desc_stats$bg_level == bg_levels[i] &
+                                 desc_stats$wg_level == wg_labels[j + 1], ]
+          if (nrow(cell_l) > 0 && nrow(cell_r) > 0) {
+            mean_diff <- abs(cell_l$mean[1] - cell_r$mean[1])
+            if (mean_diff > lsd_wg) {
+              data[i, spacer_name] <- ifelse(cell_l$mean[1] > cell_r$mean[1], ">", "<")
+            } else {
+              data[i, spacer_name] <- "="
+            }
+          }
+        }
+      }
+
+      # Build vertical comparison row between BG levels
+      new_row <- data.frame(matrix("", nrow = 1, ncol = ncol(data)))
+      names(new_row) <- names(data)
+      new_row[[1]] <- ""
+
+      # Arrows for each WG condition column (positions 2, 4, ... )
+      wg_col_indices <- seq(2, by = 2, length.out = n_wg)
+      for (idx in seq_len(n_wg)) {
+        col_idx <- wg_col_indices[idx]
+        cell_top <- desc_stats[desc_stats$bg_level == bg_levels[1] &
+                                 desc_stats$wg_level == wg_labels[idx], ]
+        cell_bot <- desc_stats[desc_stats$bg_level == bg_levels[2] &
+                                 desc_stats$wg_level == wg_labels[idx], ]
+        if (nrow(cell_top) > 0 && nrow(cell_bot) > 0) {
+          mean_diff <- abs(cell_top$mean[1] - cell_bot$mean[1])
+          if (mean_diff > lsd_bg) {
+            new_row[[col_idx]] <- ifelse(cell_top$mean[1] > cell_bot$mean[1], "v", "^")
+          } else {
+            new_row[[col_idx]] <- "="
+          }
+        }
+      }
+
+      # EMM comparison for BG marginal means
+      emm_comp <- ifelse(emm_bg$mean[1] > emm_bg$mean[2], "v",
+                         ifelse(emm_bg$mean[1] < emm_bg$mean[2], "^", "="))
+      new_row[[ncol(data)]] <- emm_comp
+
+      # Insert: row 1, comparison row, row 2
+      data <- rbind(data[1, ], new_row, data[2, ])
+    }
 
   } else {
     data_list <- list()
@@ -1700,7 +1768,7 @@ create_factmg_comparisons_table <- function(anova_results_list,
 
   ft <- flextable::border_remove(ft)
 
-  cell_rows <- seq_len(n_bg)
+  cell_rows <- if (KEY && n_bg == 2) c(1, 3) else seq_len(n_bg)
   cell_mean_cols <- seq(2, 2 + n_data_cols - 1, by = 2)
 
   ft <- flextable::border(ft,
@@ -1719,7 +1787,7 @@ create_factmg_comparisons_table <- function(anova_results_list,
   if (KEY) {
     marginal_values <- c(paste0("EMM: ", wg_name))
     for (j in seq_len(n_wg)) {
-      marginal_values <- c(marginal_values, sprintf("%.4f", emm_wg$mean[j]))
+      marginal_values <- c(marginal_values, format_mean(emm_wg$mean[j]))
       if (j < n_wg) {
         marginal_values <- c(marginal_values, "")
       }

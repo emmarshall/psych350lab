@@ -147,7 +147,7 @@ apa_wg_anova_writeup <- function(anova_results_list,
   df_eff_text <- format_df(df_effect)
   df_err_text <- format_df(df_error)
   mse_text <- format_mse(mse)
-  p_text <- format_p_value(p_val)
+  p_text <- format_p_md(p_val)
 
 
   m1 <- format_mean(cond1_mean)
@@ -177,12 +177,12 @@ apa_wg_anova_writeup <- function(anova_results_list,
   if (is_significant) {
     stat_sentence <- glue::glue(
       "There was a significant difference between the {condition_labels[1]} and the {condition_labels[2]}, ",
-      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}{es_string}."
+      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, {p_text}{es_string}."
     )
   } else {
     stat_sentence <- glue::glue(
       "There was no significant difference between the {condition_labels[1]} and the {condition_labels[2]}, ",
-      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}{es_string}."
+      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, {p_text}{es_string}."
     )
   }
 
@@ -354,7 +354,7 @@ apa_bg_anova_writeup <- function(anova_results_list,
   df_b_text <- format_df(df_between)
   df_w_text <- format_df(df_within)
   mse_text <- format_mse(mse)
-  p_text <- format_p_value(p_val)
+  p_text <- format_p_md(p_val)
 
 
   m1 <- format_mean(group1_mean)
@@ -383,12 +383,12 @@ apa_bg_anova_writeup <- function(anova_results_list,
   if (is_significant) {
     stat_sentence <- glue::glue(
       "There was a significant difference in {dv_name} between {group_labels[1]} and {group_labels[2]}, ",
-      "*F*({df_b_text}, {df_w_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}{es_string}."
+      "*F*({df_b_text}, {df_w_text}) = {f_text}, *MSe* = {mse_text}, {p_text}{es_string}."
     )
   } else {
     stat_sentence <- glue::glue(
       "There was no significant difference in {dv_name} between {group_labels[1]} and {group_labels[2]}, ",
-      "*F*({df_b_text}, {df_w_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}{es_string}."
+      "*F*({df_b_text}, {df_w_text}) = {f_text}, *MSe* = {mse_text}, {p_text}{es_string}."
     )
   }
 
@@ -565,7 +565,7 @@ apa_kgroup_anova_writeup <- function(kgroup_results_list,
   df_b_text <- format_df(df_between)
   df_w_text <- format_df(df_within)
   mse_text <- format_mse(mse)
-  p_text <- format_p_value(p_val)
+  p_text <- format_p_md(p_val)
 
 
   # Effect size
@@ -599,12 +599,12 @@ apa_kgroup_anova_writeup <- function(kgroup_results_list,
   if (is_significant) {
     omnibus <- glue::glue(
       "There was a significant difference in {dv_name} across {iv_name}, ",
-      "*F*({df_b_text}, {df_w_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}{es_string}."
+      "*F*({df_b_text}, {df_w_text}) = {f_text}, *MSe* = {mse_text}, {p_text}{es_string}."
     )
   } else {
     omnibus <- glue::glue(
       "There was no significant difference in {dv_name} across {iv_name}, ",
-      "*F*({df_b_text}, {df_w_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}{es_string}."
+      "*F*({df_b_text}, {df_w_text}) = {f_text}, *MSe* = {mse_text}, {p_text}{es_string}."
     )
   }
 
@@ -873,7 +873,7 @@ apa_wg_kgroup_anova_writeup <- function(wg_kgroup_results_list,
   df_eff_text <- format_df(df_effect)
   df_err_text <- format_df(df_error)
   mse_text <- format_mse(mse)
-  p_text <- format_p_value(p_val)
+  p_text <- format_p_md(p_val)
 
 
   # Effect size
@@ -897,12 +897,12 @@ apa_wg_kgroup_anova_writeup <- function(wg_kgroup_results_list,
   if (is_significant) {
     omnibus <- glue::glue(
       "There was a significant difference in {dv_name} across {iv_name}, ",
-      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}{es_string}."
+      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, {p_text}{es_string}."
     )
   } else {
     omnibus <- glue::glue(
       "There was no significant difference in {dv_name} across {iv_name}, ",
-      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}{es_string}."
+      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, {p_text}{es_string}."
     )
   }
 
@@ -1077,7 +1077,7 @@ apa_planned_comparisons_writeup <- function(planned_results_list,
     comp_sd <- format_sd(group_sds[comp_group])
     t_text <- format_t(contrast$t)
     df_text <- format_df(contrast$df)
-    p_text <- format_p_value(contrast$p_value)
+    p_text <- format_p_md(contrast$p_value)
 
 
     # Check direction
@@ -1107,7 +1107,7 @@ apa_planned_comparisons_writeup <- function(planned_results_list,
 
 
     contrast_texts <- c(contrast_texts, glue::glue(
-      "{comp_group} (*M* = {comp_m}, *SD* = {comp_sd}), *t*({df_text}) = {t_text}, *p* = {p_text}{es_text}"
+      "{comp_group} (*M* = {comp_m}, *SD* = {comp_sd}), *t*({df_text}) = {t_text}, {p_text}{es_text}"
     ))
   }
 
@@ -1220,7 +1220,7 @@ apa_wg_simple_contrasts_writeup <- function(wg_contrast_results_list,
   df_eff_text <- format_df(df_effect)
   df_err_text <- format_df(df_error)
   mse_text <- format_mse(mse)
-  p_text <- format_p_value(p_val)
+  p_text <- format_p_md(p_val)
 
 
   # Create condition labels string
@@ -1236,12 +1236,12 @@ apa_wg_simple_contrasts_writeup <- function(wg_contrast_results_list,
   if (is_significant) {
     omnibus <- glue::glue(
       "There was a significant difference in {dv_name} for {cond_string}, ",
-      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}."
+      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, {p_text}."
     )
   } else {
     omnibus <- glue::glue(
       "There was no significant difference in {dv_name} for {cond_string}, ",
-      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, *p* = {p_text}."
+      "*F*({df_eff_text}, {df_err_text}) = {f_text}, *MSe* = {mse_text}, {p_text}."
     )
   }
 
@@ -1315,6 +1315,57 @@ apa_wg_simple_contrasts_writeup <- function(wg_contrast_results_list,
 # 2x2 FACTORIAL ANOVAs
 # =============================================================================
 
+#' Reshape anova_factorial_answers() output for BG factorial writeup
+#'
+#' Converts the output of [anova_factorial_answers()] into the list structure
+#' expected by [apa_2x2_bg_factorial_writeup()].
+#'
+#' @param results Output from [anova_factorial_answers()].
+#'
+#' @return A list with Interaction, MainEffect_A, MainEffect_B,
+#'   CellDescriptives, MarginalMeans_A, and MarginalMeans_B.
+#'
+#' @export
+reshape_to_bg_factorial <- function(results) {
+  mse  <- results$ANOVA$mse
+  df_w <- results$ANOVA$df_within
+  list(
+    Interaction = list(
+      F         = results$ANOVA$Interaction$F,
+      p_value   = results$ANOVA$Interaction$p_value,
+      df_effect = results$ANOVA$Interaction$df,
+      df_error  = df_w,
+      mse       = mse
+    ),
+    MainEffect_A = list(
+      F         = results$ANOVA$MainEffect_IV1$F,
+      p_value   = results$ANOVA$MainEffect_IV1$p_value,
+      df_effect = results$ANOVA$MainEffect_IV1$df,
+      df_error  = df_w,
+      mse       = mse
+    ),
+    MainEffect_B = list(
+      F         = results$ANOVA$MainEffect_IV2$F,
+      p_value   = results$ANOVA$MainEffect_IV2$p_value,
+      df_effect = results$ANOVA$MainEffect_IV2$df,
+      df_error  = df_w,
+      mse       = mse
+    ),
+    CellDescriptives = results$Descriptives |>
+      dplyr::select("iv1_label", "iv2_label", "mean", "sd", "n"),
+    MarginalMeans_A = data.frame(
+      level = results$EMMs$IV1$iv1_label,
+      mean  = results$EMMs$IV1$mean,
+      se    = results$EMMs$IV1$se
+    ),
+    MarginalMeans_B = data.frame(
+      level = results$EMMs$IV2$iv2_label,
+      mean  = results$EMMs$IV2$mean,
+      se    = results$EMMs$IV2$se
+    )
+  )
+}
+
 #' APA Write-Up for 2x2 Between-Groups Factorial ANOVA
 #'
 #' Generates an APA-style paragraph for a two-way between-groups ANOVA,
@@ -1346,6 +1397,9 @@ apa_wg_simple_contrasts_writeup <- function(wg_contrast_results_list,
 #' @param report_main_effects Logical. Report main effects. Default TRUE.
 #'
 #' @return A character string with APA write-up.
+#'
+#' @seealso [reshape_to_bg_factorial()] to convert [anova_factorial_answers()]
+#'   output to the format expected by this function.
 #'
 #' @examples
 #' \dontrun{
@@ -1392,7 +1446,7 @@ apa_2x2_bg_factorial_writeup <- function(factorial_results_list,
   int_df1_text <- format_df(int_df1)
   int_df2_text <- format_df(int_df2)
   int_mse_text <- format_mse(int_mse)
-  int_p_text <- format_p_value(int_p)
+  int_p_text <- format_p_md(int_p)
 
   # Get cell descriptives
   cell_desc <- factorial_results_list$CellDescriptives
@@ -1416,13 +1470,13 @@ apa_2x2_bg_factorial_writeup <- function(factorial_results_list,
     int_sentence <- glue::glue(
       "There was a significant interaction between {factor_a_name} and {factor_b_name} ",
       "as they relate to {dv_name}, ",
-      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, *p* = {int_p_text}."
+      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, {int_p_text}."
     )
   } else {
     int_sentence <- glue::glue(
       "There was not a significant interaction between {factor_a_name} and {factor_b_name} ",
       "as they relate to {dv_name}, ",
-      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, *p* = {int_p_text}."
+      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, {int_p_text}."
     )
   }
 
@@ -1532,7 +1586,7 @@ apa_2x2_bg_factorial_writeup <- function(factorial_results_list,
     me_a_df1_text <- format_df(me_a_df1)
     me_a_df2_text <- format_df(me_a_df2)
     me_a_mse_text <- format_mse(me_a_mse)
-    me_a_p_text <- format_p_value(me_a_p)
+    me_a_p_text <- format_p_md(me_a_p)
 
     # Get marginal means for A
     marg_a <- factorial_results_list$MarginalMeans_A
@@ -1554,14 +1608,14 @@ apa_2x2_bg_factorial_writeup <- function(factorial_results_list,
 
       me_a_text <- glue::glue(
         " There was a significant main effect for {factor_a_name}, ",
-        "*F*({me_a_df1_text}, {me_a_df2_text}) = {me_a_f_text}, *MSe* = {me_a_mse_text}, *p* = {me_a_p_text}, ",
+        "*F*({me_a_df1_text}, {me_a_df2_text}) = {me_a_f_text}, *MSe* = {me_a_mse_text}, {me_a_p_text}, ",
         "such that {dv_name} was higher for {higher_a} (*M* = {higher_a_m}, *{se_label}* = {higher_a_se}) ",
         "than for {lower_a} (*M* = {lower_a_m}, *{se_label}* = {lower_a_se})."
       )
     } else {
       me_a_text <- glue::glue(
         " There was no significant main effect for {factor_a_name}, ",
-        "*F*({me_a_df1_text}, {me_a_df2_text}) = {me_a_f_text}, *MSe* = {me_a_mse_text}, *p* = {me_a_p_text}."
+        "*F*({me_a_df1_text}, {me_a_df2_text}) = {me_a_f_text}, *MSe* = {me_a_mse_text}, {me_a_p_text}."
       )
     }
 
@@ -1580,7 +1634,7 @@ apa_2x2_bg_factorial_writeup <- function(factorial_results_list,
     me_b_df1_text <- format_df(me_b_df1)
     me_b_df2_text <- format_df(me_b_df2)
     me_b_mse_text <- format_mse(me_b_mse)
-    me_b_p_text <- format_p_value(me_b_p)
+    me_b_p_text <- format_p_md(me_b_p)
 
     # Get marginal means for B
     marg_b <- factorial_results_list$MarginalMeans_B
@@ -1602,14 +1656,14 @@ apa_2x2_bg_factorial_writeup <- function(factorial_results_list,
 
       me_b_text <- glue::glue(
         " There was a significant main effect of {factor_b_name}, ",
-        "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, *p* = {me_b_p_text}, ",
+        "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, {me_b_p_text}, ",
         "such that {dv_name} was higher for {higher_b} (*M* = {higher_b_m}, *{se_label}* = {higher_b_se}) ",
         "than for {lower_b} (*M* = {lower_b_m}, *{se_label}* = {lower_b_se})."
       )
     } else {
       me_b_text <- glue::glue(
         " There was no significant main effect for {factor_b_name}, ",
-        "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, *p* = {me_b_p_text}."
+        "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, {me_b_p_text}."
       )
     }
 
@@ -1625,14 +1679,14 @@ apa_2x2_bg_factorial_writeup <- function(factorial_results_list,
 #' Generates an APA-style paragraph for a mixed design ANOVA with one
 #' between-groups factor and one within-groups factor.
 #'
-#' @param mixed_results_list Output from mixed factorial ANOVA containing:
+#' @param mixed_results_list Output from [anova_factmg_answers()] containing:
 #'   \describe{
-#'     \item{Interaction}{List with F, p_value, df_effect, df_error, mse}
-#'     \item{MainEffect_Between}{List for between-groups factor}
-#'     \item{MainEffect_Within}{List for within-groups factor}
-#'     \item{CellDescriptives}{Data frame with between_factor, within_factor, mean, sd}
-#'     \item{MarginalMeans_Between}{Data frame with level, mean, se}
-#'     \item{MarginalMeans_Within}{Data frame with level, mean, sd}
+#'     \item{WithinSubjects}{List with Interaction (F, p_value, df, ss, ms),
+#'       MainEffect_WG (F, p_value, df, ss, ms), Error (ss, df, ms)}
+#'     \item{BetweenSubjects}{List with MainEffect_BG (F, p_value, df, ss, ms),
+#'       Error (ss, df, ms)}
+#'     \item{Descriptives}{Data frame with bg_level, wg_level, mean, sd, n, sem}
+#'     \item{EMMs}{List with BG (bg_level, mean, se) and WG (wg_level, mean, se)}
 #'   }
 #' @param dv_name Character. Descriptive name for DV.
 #' @param between_name Character. Name of between-groups factor (e.g., "gender").
@@ -1661,13 +1715,13 @@ apa_2x2_mixed_factorial_writeup <- function(mixed_results_list,
                                             hypothesis = NULL,
                                             alpha = 0.05) {
 
-  # Extract interaction
-  int <- mixed_results_list$Interaction
+  # Extract interaction (nested under WithinSubjects)
+  int <- mixed_results_list$WithinSubjects$Interaction
   int_f <- int$F
   int_p <- int$p_value
-  int_df1 <- int$df_effect %||% 1
-  int_df2 <- int$df_error
-  int_mse <- int$mse
+  int_df1 <- int$df %||% 1
+  int_df2 <- mixed_results_list$WithinSubjects$Error$df
+  int_mse <- mixed_results_list$WithinSubjects$Error$ms
   int_sig <- int_p < alpha
 
   # Format interaction stats
@@ -1675,21 +1729,21 @@ apa_2x2_mixed_factorial_writeup <- function(mixed_results_list,
   int_df1_text <- format_df(int_df1)
   int_df2_text <- format_df(int_df2)
   int_mse_text <- format_mse(int_mse)
-  int_p_text <- format_p_value(int_p)
+  int_p_text <- format_p_md(int_p)
 
   # Get cell descriptives
-  cell_desc <- mixed_results_list$CellDescriptives
+  cell_desc <- mixed_results_list$Descriptives
 
   # Build interaction sentence
   if (int_sig) {
     int_sentence <- glue::glue(
       "There was a significant interaction between {between_name} and {within_name}, ",
-      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, *p* = {int_p_text}."
+      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, {int_p_text}."
     )
   } else {
     int_sentence <- glue::glue(
       "There was not a significant interaction between {between_name} and {within_name}, ",
-      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, *p* = {int_p_text}."
+      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, {int_p_text}."
     )
   }
 
@@ -1711,21 +1765,21 @@ apa_2x2_mixed_factorial_writeup <- function(mixed_results_list,
   }
 
   # Main effect - Between groups
-  me_b <- mixed_results_list$MainEffect_Between
+  me_b <- mixed_results_list$BetweenSubjects$MainEffect_BG
   me_b_f <- me_b$F
   me_b_p <- me_b$p_value
-  me_b_df1 <- me_b$df_effect %||% 1
-  me_b_df2 <- me_b$df_error
-  me_b_mse <- me_b$mse
+  me_b_df1 <- me_b$df %||% 1
+  me_b_df2 <- mixed_results_list$BetweenSubjects$Error$df
+  me_b_mse <- mixed_results_list$BetweenSubjects$Error$ms
   me_b_sig <- me_b_p < alpha
 
   me_b_f_text <- format_F(me_b_f)
   me_b_df1_text <- format_df(me_b_df1)
   me_b_df2_text <- format_df(me_b_df2)
   me_b_mse_text <- format_mse(me_b_mse)
-  me_b_p_text <- format_p_value(me_b_p)
+  me_b_p_text <- format_p_md(me_b_p)
 
-  marg_b <- mixed_results_list$MarginalMeans_Between
+  marg_b <- mixed_results_list$EMMs$BG
 
   if (me_b_sig) {
     b1_m <- format_mean(marg_b$mean[1])
@@ -1755,7 +1809,7 @@ apa_2x2_mixed_factorial_writeup <- function(mixed_results_list,
     if (!is.null(hypothesis$main_between_rh)) {
       me_b_text <- glue::glue(
         " {me_b_intro}, there was a significant main effect for {between_name}, ",
-        "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, *p* = {me_b_p_text}. ",
+        "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, {me_b_p_text}. ",
         "{hypothesis$main_between_rh}, {higher_b} (*M* = {higher_b_m}, *SE* = {higher_b_se}) ",
         "compared to {lower_b} (*M* = {lower_b_m}, *SE* = {lower_b_se})."
       )
@@ -1764,58 +1818,58 @@ apa_2x2_mixed_factorial_writeup <- function(mixed_results_list,
         " {me_b_intro} a significant main effect for {between_name}, ",
         "{higher_b} (*M* = {higher_b_m}, *SE* = {higher_b_se}) scored higher overall ",
         "than {lower_b} (*M* = {lower_b_m}, *SE* = {lower_b_se}), ",
-        "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, *p* = {me_b_p_text}."
+        "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, {me_b_p_text}."
       )
     }
   } else {
     me_b_text <- glue::glue(
       " There was no significant main effect for {between_name}, ",
-      "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, *p* = {me_b_p_text}."
+      "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, {me_b_p_text}."
     )
   }
 
   writeup <- paste0(writeup, me_b_text)
 
   # Main effect - Within groups
-  me_w <- mixed_results_list$MainEffect_Within
+  me_w <- mixed_results_list$WithinSubjects$MainEffect_WG
   me_w_f <- me_w$F
   me_w_p <- me_w$p_value
-  me_w_df1 <- me_w$df_effect %||% 1
-  me_w_df2 <- me_w$df_error
-  me_w_mse <- me_w$mse
+  me_w_df1 <- me_w$df %||% 1
+  me_w_df2 <- mixed_results_list$WithinSubjects$Error$df
+  me_w_mse <- mixed_results_list$WithinSubjects$Error$ms
   me_w_sig <- me_w_p < alpha
 
   me_w_f_text <- format_F(me_w_f)
   me_w_df1_text <- format_df(me_w_df1)
   me_w_df2_text <- format_df(me_w_df2)
   me_w_mse_text <- format_mse(me_w_mse)
-  me_w_p_text <- format_p_value(me_w_p)
+  me_w_p_text <- format_p_md(me_w_p)
 
-  marg_w <- mixed_results_list$MarginalMeans_Within
+  marg_w <- mixed_results_list$EMMs$WG
 
   if (me_w_sig) {
     w1_m <- format_mean(marg_w$mean[1])
-    w1_sd <- format_sd(marg_w$sd[1])
+    w1_se <- format_stat(marg_w$se[1])
     w2_m <- format_mean(marg_w$mean[2])
-    w2_sd <- format_sd(marg_w$sd[2])
+    w2_se <- format_stat(marg_w$se[2])
 
     higher_w <- if (marg_w$mean[1] > marg_w$mean[2]) within_labels[1] else within_labels[2]
     lower_w <- if (marg_w$mean[1] > marg_w$mean[2]) within_labels[2] else within_labels[1]
     higher_w_m <- if (marg_w$mean[1] > marg_w$mean[2]) w1_m else w2_m
-    higher_w_sd <- if (marg_w$mean[1] > marg_w$mean[2]) w1_sd else w2_sd
+    higher_w_se <- if (marg_w$mean[1] > marg_w$mean[2]) w1_se else w2_se
     lower_w_m <- if (marg_w$mean[1] > marg_w$mean[2]) w2_m else w1_m
-    lower_w_sd <- if (marg_w$mean[1] > marg_w$mean[2]) w2_sd else w1_sd
+    lower_w_se <- if (marg_w$mean[1] > marg_w$mean[2]) w2_se else w1_se
 
     me_w_text <- glue::glue(
       " There was also a significant main effect for {within_name}, such that ",
-      "{dv_name} was significantly higher for {higher_w} (*M* = {higher_w_m}, *SD* = {higher_w_sd}) ",
-      "than {lower_w} (*M* = {lower_w_m}, *SD* = {lower_w_sd}), ",
-      "*F*({me_w_df1_text}, {me_w_df2_text}) = {me_w_f_text}, *MSe* = {me_w_mse_text}, *p* = {me_w_p_text}."
+      "{dv_name} was significantly higher for {higher_w} (*M* = {higher_w_m}, *SE* = {higher_w_se}) ",
+      "than {lower_w} (*M* = {lower_w_m}, *SE* = {lower_w_se}), ",
+      "*F*({me_w_df1_text}, {me_w_df2_text}) = {me_w_f_text}, *MSe* = {me_w_mse_text}, {me_w_p_text}."
     )
   } else {
     me_w_text <- glue::glue(
       " There was no significant main effect for {within_name}, ",
-      "*F*({me_w_df1_text}, {me_w_df2_text}) = {me_w_f_text}, *MSe* = {me_w_mse_text}, *p* = {me_w_p_text}."
+      "*F*({me_w_df1_text}, {me_w_df2_text}) = {me_w_f_text}, *MSe* = {me_w_mse_text}, {me_w_p_text}."
     )
   }
 
@@ -1904,20 +1958,20 @@ apa_2x2_wg_factorial_writeup <- function(wg_factorial_results_list,
   int_df1_text <- format_df(int_df1)
   int_df2_text <- format_df(int_df2)
   int_mse_text <- format_mse(int_mse)
-  int_p_text <- format_p_value(int_p)
+  int_p_text <- format_p_md(int_p)
 
   # Build interaction sentence
   if (int_sig) {
     int_sentence <- glue::glue(
       " There was a significant interaction between {factor_a_name} and {factor_b_name} ",
       "as they relate to {dv_name}, ",
-      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, *p* = {int_p_text}."
+      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, {int_p_text}."
     )
   } else {
     int_sentence <- glue::glue(
       " There was not a significant interaction between {factor_a_name} and {factor_b_name} ",
       "as they relate to {dv_name}, ",
-      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, *p* = {int_p_text}."
+      "*F*({int_df1_text}, {int_df2_text}) = {int_f_text}, *MSe* = {int_mse_text}, {int_p_text}."
     )
   }
 
@@ -2012,7 +2066,7 @@ apa_2x2_wg_factorial_writeup <- function(wg_factorial_results_list,
   me_a_df1_text <- format_df(me_a_df1)
   me_a_df2_text <- format_df(me_a_df2)
   me_a_mse_text <- format_mse(me_a_mse)
-  me_a_p_text <- format_p_value(me_a_p)
+  me_a_p_text <- format_p_md(me_a_p)
 
   marg_a <- wg_factorial_results_list$MarginalMeans_A
 
@@ -2031,14 +2085,14 @@ apa_2x2_wg_factorial_writeup <- function(wg_factorial_results_list,
 
     me_a_text <- glue::glue(
       " There was a significant main effect for {factor_a_name}, ",
-      "*F*({me_a_df1_text}, {me_a_df2_text}) = {me_a_f_text}, *MSe* = {me_a_mse_text}, *p* = {me_a_p_text}, ",
+      "*F*({me_a_df1_text}, {me_a_df2_text}) = {me_a_f_text}, *MSe* = {me_a_mse_text}, {me_a_p_text}, ",
       "such that {higher_a} tasks (*M* = {higher_a_m}, *SE* = {higher_a_se}) were performed better ",
       "than {lower_a} tasks overall (*M* = {lower_a_m}, *SE* = {lower_a_se})."
     )
   } else {
     me_a_text <- glue::glue(
       " There was no significant main effect for {factor_a_name}, ",
-      "*F*({me_a_df1_text}, {me_a_df2_text}) = {me_a_f_text}, *MSe* = {me_a_mse_text}, *p* = {me_a_p_text}."
+      "*F*({me_a_df1_text}, {me_a_df2_text}) = {me_a_f_text}, *MSe* = {me_a_mse_text}, {me_a_p_text}."
     )
   }
 
@@ -2057,7 +2111,7 @@ apa_2x2_wg_factorial_writeup <- function(wg_factorial_results_list,
   me_b_df1_text <- format_df(me_b_df1)
   me_b_df2_text <- format_df(me_b_df2)
   me_b_mse_text <- format_mse(me_b_mse)
-  me_b_p_text <- format_p_value(me_b_p)
+  me_b_p_text <- format_p_md(me_b_p)
 
   marg_b <- wg_factorial_results_list$MarginalMeans_B
 
@@ -2076,14 +2130,14 @@ apa_2x2_wg_factorial_writeup <- function(wg_factorial_results_list,
 
     me_b_text <- glue::glue(
       " There was also a significant main effect for {factor_b_name}, ",
-      "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, *p* = {me_b_p_text}, ",
+      "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, {me_b_p_text}, ",
       "such that {higher_b} tasks (*M* = {higher_b_m}, *SE* = {higher_b_se}) were performed better ",
       "than {lower_b} tasks overall (*M* = {lower_b_m}, *SE* = {lower_b_se})."
     )
   } else {
     me_b_text <- glue::glue(
       " There was no significant main effect for {factor_b_name}, ",
-      "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, *p* = {me_b_p_text}."
+      "*F*({me_b_df1_text}, {me_b_df2_text}) = {me_b_f_text}, *MSe* = {me_b_mse_text}, {me_b_p_text}."
     )
   }
 

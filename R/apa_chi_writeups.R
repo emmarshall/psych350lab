@@ -96,7 +96,7 @@ apa_chi_writeup <- function(chi_results_list,
   # Format statistics
   chi_sq_text <- format_chi2(chi_sq)
   df_text <- format_df(df)
-  p_text <- format_p_value(p)
+  p_text <- format_p_md(p)
 
   # Calculate row totals and percentages
   row_totals <- rowSums(cont_table)
@@ -108,8 +108,8 @@ apa_chi_writeup <- function(chi_results_list,
     2
   }
 
-  pct1 <- round((cont_table[1, comparison_level] / row_totals[1]) * 100, 2)
-  pct2 <- round((cont_table[2, comparison_level] / row_totals[2]) * 100, 2)
+  pct1 <- format_stat((cont_table[1, comparison_level] / row_totals[1]) * 100)
+  pct2 <- format_stat((cont_table[2, comparison_level] / row_totals[2]) * 100)
 
   n1_text <- format_int(row_totals[1])
   n2_text <- format_int(row_totals[2])
@@ -128,12 +128,12 @@ apa_chi_writeup <- function(chi_results_list,
   if (is_significant) {
     stat_sentence <- glue::glue(
       "A two-way chi-square test found a significant relationship between {var1_name} and {var2_name}, ",
-      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, *p* = {p_text}."
+      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, {p_text}."
     )
   } else {
     stat_sentence <- glue::glue(
       "A two-way chi-square test found no significant relationship between {var1_name} and {var2_name}, ",
-      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, *p* = {p_text}."
+      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, {p_text}."
     )
   }
 
@@ -277,7 +277,7 @@ apa_kgroup_chi_writeup <- function(chi_results_list,
   # Format statistics
   chi_sq_text <- format_chi2(chi_sq)
   df_text <- format_df(df)
-  p_text <- format_p_value(p)
+  p_text <- format_p_md(p)
 
   # Comparison level for percentages
   comparison_level <- hypothesis$comparison_var2_level %||% 2
@@ -297,12 +297,12 @@ apa_kgroup_chi_writeup <- function(chi_results_list,
   if (is_significant) {
     stat_sentence <- glue::glue(
       "A chi-square test found a significant relationship between {var1_name} and {var2_name}, ",
-      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, *p* = {p_text}."
+      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, {p_text}."
     )
   } else {
     stat_sentence <- glue::glue(
       "A chi-square test found no significant relationship between {var1_name} and {var2_name}, ",
-      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, *p* = {p_text}."
+      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, {p_text}."
     )
   }
 
@@ -318,8 +318,8 @@ apa_kgroup_chi_writeup <- function(chi_results_list,
       comp_name <- comp$comparison
       groups <- trimws(strsplit(comp_name, " vs ")[[1]])
 
-      pct1 <- comp$pct1
-      pct2 <- comp$pct2
+      pct1 <- format_stat(comp$pct1)
+      pct2 <- format_stat(comp$pct2)
       chi_result <- comp$chi_result  # ">", "<", or "="
 
       if (chi_result == "=") {
@@ -387,7 +387,7 @@ apa_kgroup_chi_writeup <- function(chi_results_list,
     desc_parts <- c()
 
     for (i in seq_along(var1_labels)) {
-      pct <- round((cont_table[i, comparison_level] / row_totals[i]) * 100, 2)
+      pct <- format_stat((cont_table[i, comparison_level] / row_totals[i]) * 100)
       n_text <- format_int(row_totals[i])
       desc_parts <- c(desc_parts, glue::glue("{var1_labels[i]} (*n* = {n_text}; {pct}%)"))
     }
@@ -481,7 +481,7 @@ apa_kgroup_chi_writeup <- function(chi_results_list,
   # Format statistics
   chi_sq_text <- format_chi2(chi_sq)
   df_text <- format_df(df)
-  p_text <- format_p_value(p)
+  p_text <- format_p_md(p)
 
   # Comparison level for percentages
   comparison_level <- hypothesis$comparison_var2_level %||% 2
@@ -501,12 +501,12 @@ apa_kgroup_chi_writeup <- function(chi_results_list,
   if (is_significant) {
     stat_sentence <- glue::glue(
       "A chi-square test found a significant relationship between {var1_name} and {var2_name}, ",
-      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, *p* = {p_text}."
+      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, {p_text}."
     )
   } else {
     stat_sentence <- glue::glue(
       "A chi-square test found no significant relationship between {var1_name} and {var2_name}, ",
-      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, *p* = {p_text}."
+      "{.chi_sq_symbol()}({df_text}) = {chi_sq_text}, {p_text}."
     )
   }
 
@@ -522,8 +522,8 @@ apa_kgroup_chi_writeup <- function(chi_results_list,
       comp_name <- comp$comparison
       groups <- trimws(strsplit(comp_name, " vs ")[[1]])
 
-      pct1 <- comp$pct1
-      pct2 <- comp$pct2
+      pct1 <- format_stat(comp$pct1)
+      pct2 <- format_stat(comp$pct2)
       chi_result <- comp$chi_result  # ">", "<", or "="
 
       if (chi_result == "=") {
@@ -591,7 +591,7 @@ apa_kgroup_chi_writeup <- function(chi_results_list,
     desc_parts <- c()
 
     for (i in seq_along(var1_labels)) {
-      pct <- round((cont_table[i, comparison_level] / row_totals[i]) * 100, 2)
+      pct <- format_stat((cont_table[i, comparison_level] / row_totals[i]) * 100)
       n_text <- format_int(row_totals[i])
       desc_parts <- c(desc_parts, glue::glue("{var1_labels[i]} (*n* = {n_text}; {pct}%)"))
     }

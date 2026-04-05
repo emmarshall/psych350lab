@@ -117,8 +117,8 @@ create_bg_anova_table <- function(anova_results_list = NULL,
 
     for (i in seq_along(group_labels)) {
       data[[group_labels[i]]] <- c(
-        format_stat(desc_stats$mean[i]),
-        sprintf("%.2f", desc_stats$sd[i])
+        format_mean(desc_stats$mean[i]),
+        format_sd(desc_stats$sd[i])
       )
     }
 
@@ -270,9 +270,9 @@ create_wg_anova_table <- function(anova_results_list = NULL,
     # Create data frame with descriptive stats
     data <- tibble::tibble(
       Condition = condition_labels,
-      Mean = as.character(desc_stats$mean),
-      SD = as.character(desc_stats$sd),
-      N = as.character(desc_stats$n)
+      Mean = purrr::map_chr(desc_stats$mean, format_mean),
+      SD = purrr::map_chr(desc_stats$sd, format_sd),
+      N = purrr::map_chr(desc_stats$n, format_n)
     )
 
   } else {
@@ -368,12 +368,12 @@ create_anova_source_table <- function(anova_results_list = NULL,
         "Total"
       ),
       df = c(
-        as.character(anova$df_between),
-        as.character(anova$df_within),
-        as.character(anova$df_between + anova$df_within)
+        format_df(anova$df_between),
+        format_df(anova$df_within),
+        format_df(anova$df_between + anova$df_within)
       ),
-      MS = c("", as.character(anova$mse), ""),
-      `F` = c(as.character(anova$F), "", ""),
+      MS = c("", format_mse(anova$mse), ""),
+      `F` = c(format_F(anova$F), "", ""),
       p = c(p_text, "", "")
     )
 
@@ -475,21 +475,21 @@ create_bg_anova_combined_table <- function(anova_results_list,
         paste0("  ", iv_labels[2])
       ),
       Column2 = c(
-        as.character(anova$F),
-        as.character(desc_stats$mean[1]),
-        as.character(desc_stats$mean[2])
+        format_F(anova$F),
+        format_mean(desc_stats$mean[1]),
+        format_mean(desc_stats$mean[2])
       ),
       Column3 = c(
         p_formatted,
-        as.character(desc_stats$sd[1]),
-        as.character(desc_stats$sd[2])
+        format_sd(desc_stats$sd[1]),
+        format_sd(desc_stats$sd[2])
       ),
       Column4 = c(
-        paste0(anova$df_between, ", ", anova$df_within),
-        as.character(desc_stats$n[1]),
-        as.character(desc_stats$n[2])
+        paste0(format_df(anova$df_between), ", ", format_df(anova$df_within)),
+        format_n(desc_stats$n[1]),
+        format_n(desc_stats$n[2])
       ),
-      Column5 = c(as.character(anova$mse), "", ""),
+      Column5 = c(format_mse(anova$mse), "", ""),
       Column6 = c(decision, "", "")
     )
 
@@ -580,21 +580,21 @@ create_wg_anova_combined_table <- function(anova_results_list,
         paste0("  ", condition_labels[2])
       ),
       Column2 = c(
-        as.character(anova$F),
-        as.character(desc_stats$mean[1]),
-        as.character(desc_stats$mean[2])
+        format_F(anova$F),
+        format_mean(desc_stats$mean[1]),
+        format_mean(desc_stats$mean[2])
       ),
       Column3 = c(
         p_formatted,
-        as.character(desc_stats$sd[1]),
-        as.character(desc_stats$sd[2])
+        format_sd(desc_stats$sd[1]),
+        format_sd(desc_stats$sd[2])
       ),
       Column4 = c(
-        paste0(anova$df_effect, ", ", anova$df_error),
-        as.character(desc_stats$n[1]),
-        as.character(desc_stats$n[2])
+        paste0(format_df(anova$df_effect), ", ", format_df(anova$df_error)),
+        format_n(desc_stats$n[1]),
+        format_n(desc_stats$n[2])
       ),
-      Column5 = c(as.character(anova$mse), "", ""),
+      Column5 = c(format_mse(anova$mse), "", ""),
       Column6 = c(decision, "", "")
     )
 
@@ -699,10 +699,10 @@ lsd_pairwise_KEY <- function(anova_results_list, KEY = TRUE, group_labels = NULL
       col_name <- paste0("Comp", i)
       pairwise_data[[col_name]] <- c(
         comparison_name,
-        as.character(pairwise[[i]]$mean_diff),
+        format_stat(pairwise[[i]]$mean_diff),
         pairwise[[i]]$lsd_result,
         pairwise[[i]]$error_type,
-        as.character(pairwise[[i]]$effect_size),
+        format_effect(pairwise[[i]]$effect_size),
         power_code
       )
     }

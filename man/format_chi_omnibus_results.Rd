@@ -8,7 +8,8 @@ format_chi_omnibus_results(
   chi_results_list,
   var1_name = "Variable 1",
   var2_name = "Variable 2",
-  KEY = TRUE
+  KEY = TRUE,
+  highlight = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,9 @@ format_chi_omnibus_results(
 \item{var2_name}{Character. Display name for variable 2.}
 
 \item{KEY}{Logical. If TRUE, show answers; if FALSE, show blanks.}
+
+\item{highlight}{Logical. If TRUE and KEY is TRUE, wrap answers in
+highlight formatting for Quarto/Word output. Default FALSE.}
 }
 \value{
 A character string.

@@ -71,7 +71,6 @@ The package is organized around several core analysis workflows, each with a com
 | Function | Description |
 |---|---|
 | `get_spss_data()` | Read SPSS `.sav` files, convert missing values, and strip labels |
-| `format_p_value()` | Format p-values in APA style (e.g., "< .001") |
 
 ### Correlation Analysis
 
@@ -101,6 +100,31 @@ The package is organized around several core analysis workflows, each with a com
 | `format_wg_anova_results()` | Fill-in-the-blank or answer key text |
 | `create_wg_anova_table()` | APA descriptive statistics table |
 | `create_wg_anova_combined_table()` | Combined ANOVA + descriptives flextable |
+
+### Chi-Square Analysis
+
+| Function | Description |
+|---|---|
+| `chi_square_answers()` | Compute chi-square goodness-of-fit or 2×k test with effect size |
+| `chi_square_kgroup_answers()` | K-group chi-square with pairwise comparisons and Bonferroni correction |
+| `pr_chi_to_r()` | Convert 2×2 contingency cell counts to chi-square, p, and r |
+| `format_chi2_results()` | Fill-in-the-blank or answer key text output |
+| `create_rh_contingency()` | Display contingency table with observed/expected counts |
+| `create_chi_crosstabs_table()` | Crosstabs table with counts and percentages |
+| `create_chi_combined_table()` | Combined chi-square results and crosstabs table |
+| `format_chi_omnibus_results()` | Formatted omnibus results with highlighting |
+| `chisq_pairwise_KEY()` | Pairwise comparison results table |
+
+### K-Group ANOVA
+
+| Function | Description |
+|---|---|
+| `anova_kgroup_answers()` | K-group one-way ANOVA with group descriptives and pairwise comparisons |
+| `pr_means_to_r()` | Convert group means and n to between-groups effect size |
+| `lsd_hsd_calculator()` | Compute LSD and HSD minimum mean differences |
+| `create_rh_support_text()` | Formatted hypothesis support text |
+| `anova_statistics_KEY()` | ANOVA statistics answer key display |
+| `anova_descriptives_KEY()` | Group descriptive statistics answer key display |
 
 ### Factorial (Two-Way) ANOVA
 
@@ -142,6 +166,59 @@ The package is organized around several core analysis workflows, each with a com
 | `palette_SPSS()` | Get SPSS hex color codes directly |
 | `SPSS_pal()` | Palette function factory for ggplot2 scales |
 | `number_SPSS()` | Format axis numbers without thousands separators |
+
+### Formatting Functions
+
+All display and worksheet functions use a shared set of formatting functions to ensure consistent APA-style rounding across the package.
+
+| Function | Description |
+|---|---|
+| `format_stat()` | Format a statistic to 2 decimal places (scalar) |
+| `format_p_value()` | Format p-values in APA style (e.g., `"< .001"`, `"p = .023"`) |
+| `format_p_md()` | Format p-values with markdown italic *p* (e.g., `"*p* < .001"`) |
+| `format_r()` | Format correlation coefficient (3 decimal places, no leading zero) |
+| `format_effect()` | Format effect sizes (3 decimal places) |
+| `format_mean()` | Format means (2 decimal places) |
+| `format_sd()` | Format standard deviations (2 decimal places) |
+| `format_F()` | Format F statistics (2 decimal places) |
+| `format_t()` | Format t statistics (2 decimal places) |
+| `format_chi2()` | Format chi-square statistics (2 decimal places) |
+| `format_mse()` | Format mean square error (2 decimal places) |
+| `format_df()` | Format degrees of freedom (integer) |
+| `format_n()` | Format sample sizes (integer) |
+| `format_int()` | Format integers |
+| `p_to_stars()` | Convert p-value to significance stars |
+
+### APA Write-Up Generators
+
+These functions produce paragraph-length APA-style results write-ups in markdown, suitable for Quarto documents.
+
+| Function | Description |
+|---|---|
+| `apa_corr_writeup()` | Correlation results write-up |
+| `apa_chi_writeup()` | Chi-square test results write-up |
+| `apa_kgroup_chi_writeup()` | K-group chi-square with pairwise results write-up |
+| `apa_bg_anova_writeup()` | Between-groups ANOVA results write-up |
+| `apa_wg_anova_writeup()` | Within-groups ANOVA results write-up |
+| `apa_kgroup_anova_writeup()` | K-group ANOVA with pairwise results write-up |
+| `apa_wg_kgroup_anova_writeup()` | Within-groups k-group ANOVA write-up |
+| `apa_planned_comparisons_writeup()` | Planned comparisons write-up |
+| `apa_wg_simple_contrasts_writeup()` | Within-groups simple contrasts write-up |
+| `apa_2x2_bg_factorial_writeup()` | 2×2 between-groups factorial ANOVA write-up |
+| `apa_2x2_mixed_factorial_writeup()` | 2×2 mixed factorial ANOVA write-up |
+| `apa_2x2_wg_factorial_writeup()` | 2×2 within-groups factorial ANOVA write-up |
+
+### Inline APA Reporting
+
+Helper functions for inline reporting in Quarto/RMarkdown text, returning markdown-formatted strings:
+
+| Function | Description |
+|---|---|
+| `apa_inline_r()` | Inline *r*(df) = .xx, *p* = .xxx |
+| `apa_inline_chi2()` | Inline *χ²*(df) = x.xx, *p* = .xxx |
+| `apa_inline_t()` | Inline *t*(df) = x.xx, *p* = .xxx |
+| `apa_inline_F()` | Inline *F*(df1, df2) = x.xx, *p* = .xxx |
+| `apa_inline_anova()` | Inline ANOVA result from answers object |
 
 ## Quick Examples
 
@@ -189,6 +266,29 @@ result$Regression_Weights
 create_regression_combined_table(result, KEY = TRUE)
 ```
 
+### Chi-Square
+```r
+result <- chi_square_answers(superman_data, "clark_grp", "gender",
+  iv_labels = c("Under 6ft", "6ft+"), dv_labels = c("Male", "Female"))
+result$ChiSquare
+result$ContingencyTable
+
+# Formatted results
+cat(format_chi2_results("RH1", c("clark_grp", "gender"), result))
+```
+
+### APA Write-Up
+```r
+# Generate a paragraph-length APA results section
+corr_result <- corr_answers(superman_data, "clark_height_in", "rt_critics_score")
+writeup <- apa_corr_writeup(
+  corr_result,
+  iv_label = "Clark Kent's height",
+  dv_label = "critics' score"
+)
+cat(writeup)
+```
+
 ### SPSS-Style Plot
 ```r
 library(ggplot2)
@@ -198,6 +298,19 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, fill = factor(cyl))) +
   scale_fill_SPSS() +
   theme_SPSS(scale.x = "discrete") +
   labs(x = "Cylinders", y = "MPG")
+```
+
+### Formatting and Inline Reporting
+```r
+# Consistent APA formatting
+format_p_value(0.00012)                  # "< .001"
+format_p_value(0.034, include_p = TRUE)  # "p = .034"
+format_p_md(0.00012)                     # "*p* < .001"
+format_r(0.4567)                         # ".457"
+format_mean(3.1)                         # "3.10"
+
+# Inline reporting in Quarto text
+# `r apa_inline_r(result)` → *r*(48) = .46, *p* < .001
 ```
 
 ## Answer Key vs. Student Worksheet

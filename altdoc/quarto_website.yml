@@ -39,9 +39,9 @@ website:
             file: vignettes/factorial-anova.qmd
           - text: Multiple Linear Regression
             file: vignettes/regression.qmd
-      - section: Worksheets
+      - section: Answer Checkers (HTML)
         contents:
-          - text: Answer Checkers (HTML)
+          - text: Basics
             file: vignettes/homework-checkers.qmd
       - section: Functions
         contents:

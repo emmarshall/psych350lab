@@ -73,6 +73,9 @@ create_answer_table <- function(vars,
       dplyr::filter(.data$variable %in% vars) |>
       dplyr::slice(match(vars, .data$variable)) |>
       dplyr::mutate(
+        mean = purrr::map_chr(.data$mean, format_stat),
+        sd   = purrr::map_chr(.data$sd,   format_stat),
+        sem  = purrr::map_chr(.data$sem,  format_stat),
         Interpretable = purrr::map_chr(variable, \(v) {
           vtype <- if (v %in% names(var_type_map)) var_type_map[v] else "quantitative"
           answer_text[vtype]
@@ -170,7 +173,7 @@ create_descriptive_table <- function(data        = NULL,
     }
   }
 
-  fmt <- function(x) format(round(x, digits), nsmall = digits)
+  fmt <- function(x) format_stat(x, digits = digits)
 
   table_rows <- list()
 

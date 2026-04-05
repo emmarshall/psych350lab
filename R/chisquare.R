@@ -206,7 +206,9 @@ chi_square_kgroup_answers <- function(data, var1, var2,
 
       pairwise_table <- contingency_table[c(i, j), , drop = FALSE]
 
-      if (sum(pairwise_table) == 0 || any(colSums(pairwise_table) == 0)) next
+      if (sum(pairwise_table) == 0 ||
+          any(colSums(pairwise_table) == 0) ||
+          any(rowSums(pairwise_table) == 0)) next
 
       a <- pairwise_table[1, 1]
       b <- pairwise_table[1, 2]
@@ -225,7 +227,7 @@ chi_square_kgroup_answers <- function(data, var1, var2,
         pct_row2 <- (d / (c + d)) * 100
       }
 
-      is_sig <- pairwise_chi_stat > chi_crit
+      is_sig <- !is.na(pairwise_chi_stat) && pairwise_chi_stat > chi_crit
 
       if (is_sig) {
         chi_result <- if (pct_row1 > pct_row2) ">" else "<"
@@ -238,7 +240,7 @@ chi_square_kgroup_answers <- function(data, var1, var2,
       if (is_sig) {
         power_problem <- "No \u2013 rejecting H0: means there was sufficient power"
       } else {
-        if (effect_size < 0.10) {
+        if (is.na(effect_size) || effect_size < 0.10) {
           power_problem <- "No \u2013 effect is \"too small to be interesting,\" (r < .10)"
         } else {
           power_problem <- "Yes \u2013 The effect is \"large enough to be interesting,\" (r > .10)"
@@ -305,6 +307,11 @@ chi_square_kgroup_answers <- function(data, var1, var2,
 #'
 #' @export
 pr_chi_to_r <- function(a, b, c, d) {
+  # Coerce to double to prevent integer overflow with large contingency tables
+  a <- as.double(a)
+  b <- as.double(b)
+  c <- as.double(c)
+  d <- as.double(d)
   n <- a + b + c + d
   chi_sq <- (n * (a*d - b*c)^2) / ((a + b) * (c + d) * (a + c) * (b + d))
   p_val <- stats::pchisq(chi_sq, df = 1, lower.tail = FALSE)

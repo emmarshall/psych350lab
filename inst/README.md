@@ -2,27 +2,21 @@
 # psych350lab <img src="man/figures/logo.png" align="right" height="139" />
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
-**psych350lab** provides helper functions for a Research Methods and
-Statistical Analysis lab course. It streamlines running common
-statistical analyses, generating APA-formatted tables, and creating
-interactive student worksheets — all from R and Quarto/RMarkdown.
+**psych350lab** provides helper functions for a Research Methods and Statistical Analysis lab course. It streamlines running common statistical analyses, generating APA-formatted tables, and creating interactive student worksheets — all from R and Quarto/RMarkdown.
+
 
 ## Installation
 
-You can install **psych350lab** using the
-[`pak`](https://pak.r-lib.org/) package, which handles both CRAN and
-GitHub installations seamlessly.
+You can install **psych350lab** using the [`pak`](https://pak.r-lib.org/) package, which handles both CRAN and GitHub installations seamlessly.
 
 ### Install from GitHub (recommended)
 
 To install you need to first set up GitHub authentication first.
 
 #### Step 1: Configure GitHub credentials (one-time setup)
-
-``` r
+```r
 # Install required packages if needed
 install.packages(c("gitcreds", "usethis"))
 
@@ -39,17 +33,14 @@ gitcreds::gitcreds_set()
 ```
 
 #### Step 2: Install the package
-
-``` r
+```r
 pak::pak("emmarshall/psych350lab")
 ```
 
 ### Install from a local source
 
-If you have a local copy of the package (e.g., a `.tar.gz` file or a
-cloned repo), you can install it with:
-
-``` r
+If you have a local copy of the package (e.g., a `.tar.gz` file or a cloned repo), you can install it with:
+```r
 # From a .tar.gz file
 pak::pak("local::path/to/psych350lab_0.1.0.tar.gz")
 
@@ -60,8 +51,7 @@ pak::pak("local::path/to/psych350lab")
 ### Troubleshooting authentication
 
 If you encounter authentication errors:
-
-``` r
+```r
 # Check your current GitHub configuration
 usethis::git_sitrep()
 
@@ -71,21 +61,18 @@ gitcreds::gitcreds_set()
 
 ## Overview
 
-The package is organized around several core analysis workflows, each
-with a computation function (`*_answers()`) and companion
-table/formatting functions.
+The package is organized around several core analysis workflows, each with a computation function (`*_answers()`) and companion table/formatting functions.
 
 ### Data Import
 
 | Function | Description |
-|----|----|
+|---|---|
 | `get_spss_data()` | Read SPSS `.sav` files, convert missing values, and strip labels |
-| `format_p_value()` | Format p-values in APA style (e.g., “\< .001”) |
 
 ### Correlation Analysis
 
 | Function | Description |
-|----|----|
+|---|---|
 | `corr_answers()` | Compute Pearson correlation with descriptives and hypothesis test |
 | `create_corr_table()` | Compact flextable with r, p, df, means, SDs |
 | `format_corr_results()` | Fill-in-the-blank or answer key text output |
@@ -95,7 +82,7 @@ table/formatting functions.
 ### Between-Groups ANOVA
 
 | Function | Description |
-|----|----|
+|---|---|
 | `bg_anova_answers()` | One-way between-groups ANOVA with group descriptives |
 | `format_bg_anova_results()` | Fill-in-the-blank or answer key text |
 | `create_bg_anova_table()` | APA descriptive statistics table |
@@ -105,16 +92,41 @@ table/formatting functions.
 ### Within-Groups (Repeated Measures) ANOVA
 
 | Function | Description |
-|----|----|
+|---|---|
 | `wg_anova_answers()` | Repeated measures ANOVA for two conditions |
 | `format_wg_anova_results()` | Fill-in-the-blank or answer key text |
 | `create_wg_anova_table()` | APA descriptive statistics table |
 | `create_wg_anova_combined_table()` | Combined ANOVA + descriptives flextable |
 
+### Chi-Square Analysis
+
+| Function | Description |
+|---|---|
+| `chi_square_answers()` | Compute chi-square goodness-of-fit or 2×k test with effect size |
+| `chi_square_kgroup_answers()` | K-group chi-square with pairwise comparisons and Bonferroni correction |
+| `pr_chi_to_r()` | Convert 2×2 contingency cell counts to chi-square, p, and r |
+| `format_chi2_results()` | Fill-in-the-blank or answer key text output |
+| `create_rh_contingency()` | Display contingency table with observed/expected counts |
+| `create_chi_crosstabs_table()` | Crosstabs table with counts and percentages |
+| `create_chi_combined_table()` | Combined chi-square results and crosstabs table |
+| `format_chi_omnibus_results()` | Formatted omnibus results with highlighting |
+| `chisq_pairwise_KEY()` | Pairwise comparison results table |
+
+### K-Group ANOVA
+
+| Function | Description |
+|---|---|
+| `anova_kgroup_answers()` | K-group one-way ANOVA with group descriptives and pairwise comparisons |
+| `pr_means_to_r()` | Convert group means and n to between-groups effect size |
+| `lsd_hsd_calculator()` | Compute LSD and HSD minimum mean differences |
+| `create_rh_support_text()` | Formatted hypothesis support text |
+| `anova_statistics_KEY()` | ANOVA statistics answer key display |
+| `anova_descriptives_KEY()` | Group descriptive statistics answer key display |
+
 ### Factorial (Two-Way) ANOVA
 
 | Function | Description |
-|----|----|
+|---|---|
 | `anova_factorial_answers()` | 2×2 factorial ANOVA via `jmv` with EMMs and post-hoc |
 | `lsd_hsd_calculator()` | Compute LSD and HSD minimum mean differences |
 | `check_factor_alignment()` | Diagnostic check for factor level ordering |
@@ -122,10 +134,10 @@ table/formatting functions.
 ### Multiple Regression
 
 | Function | Description |
-|----|----|
+|---|---|
 | `regression_answers()` | Full regression with univariate, bivariate, and multivariate results plus interpretation categories (a–d) |
 | `regression_model_statistics()` | Formatted model summary line (R, R², F, df, p) |
-| `regression_model_evaluation()` | “Does the model work?” / “How well?” text |
+| `regression_model_evaluation()` | "Does the model work?" / "How well?" text |
 | `create_regression_combined_table()` | Flextable with r, b, type, and result category per predictor |
 | `regression_table_legend()` | Markdown legend for result categories |
 | `regression_category_legend()` | Extended markdown legend |
@@ -135,7 +147,7 @@ table/formatting functions.
 #### Interactive Webexercise Checkers (for Quarto)
 
 | Function | Description |
-|----|----|
+|---|---|
 | `create_model_summary_checker()` | Fill-in-the-blank model summary (tinytable + webexercises) |
 | `create_predictor_checker()` | Interactive predictor results table with MCQs |
 | `create_correlation_interpretations()` | Interactive correlation interpretation table |
@@ -144,7 +156,7 @@ table/formatting functions.
 ### SPSS-Style Plotting
 
 | Function | Description |
-|----|----|
+|---|---|
 | `theme_SPSS()` | Complete ggplot2 theme mimicking SPSS charts (modern or legacy) |
 | `scale_color_SPSS()` | SPSS discrete color scale |
 | `scale_fill_SPSS()` | SPSS discrete fill scale |
@@ -152,11 +164,63 @@ table/formatting functions.
 | `SPSS_pal()` | Palette function factory for ggplot2 scales |
 | `number_SPSS()` | Format axis numbers without thousands separators |
 
+### Formatting Functions
+
+All display and worksheet functions use a shared set of formatting functions to ensure consistent APA-style rounding across the package.
+
+| Function | Description |
+|---|---|
+| `format_stat()` | Format a statistic to 2 decimal places (scalar) |
+| `format_p_value()` | Format p-values in APA style (e.g., `"< .001"`, `"p = .023"`) |
+| `format_p_md()` | Format p-values with markdown italic *p* (e.g., `"*p* < .001"`) |
+| `format_r()` | Format correlation coefficient (3 decimal places, no leading zero) |
+| `format_effect()` | Format effect sizes (3 decimal places) |
+| `format_mean()` | Format means (2 decimal places) |
+| `format_sd()` | Format standard deviations (2 decimal places) |
+| `format_F()` | Format F statistics (2 decimal places) |
+| `format_t()` | Format t statistics (2 decimal places) |
+| `format_chi2()` | Format chi-square statistics (2 decimal places) |
+| `format_mse()` | Format mean square error (2 decimal places) |
+| `format_df()` | Format degrees of freedom (integer) |
+| `format_n()` | Format sample sizes (integer) |
+| `format_int()` | Format integers |
+| `p_to_stars()` | Convert p-value to significance stars |
+
+### APA Write-Up Generators
+
+These functions produce paragraph-length APA-style results write-ups in markdown, suitable for Quarto documents.
+
+| Function | Description |
+|---|---|
+| `apa_corr_writeup()` | Correlation results write-up |
+| `apa_chi_writeup()` | Chi-square test results write-up |
+| `apa_kgroup_chi_writeup()` | K-group chi-square with pairwise results write-up |
+| `apa_bg_anova_writeup()` | Between-groups ANOVA results write-up |
+| `apa_wg_anova_writeup()` | Within-groups ANOVA results write-up |
+| `apa_kgroup_anova_writeup()` | K-group ANOVA with pairwise results write-up |
+| `apa_wg_kgroup_anova_writeup()` | Within-groups k-group ANOVA write-up |
+| `apa_planned_comparisons_writeup()` | Planned comparisons write-up |
+| `apa_wg_simple_contrasts_writeup()` | Within-groups simple contrasts write-up |
+| `apa_2x2_bg_factorial_writeup()` | 2×2 between-groups factorial ANOVA write-up |
+| `apa_2x2_mixed_factorial_writeup()` | 2×2 mixed factorial ANOVA write-up |
+| `apa_2x2_wg_factorial_writeup()` | 2×2 within-groups factorial ANOVA write-up |
+
+### Inline APA Reporting
+
+Helper functions for inline reporting in Quarto/RMarkdown text, returning markdown-formatted strings:
+
+| Function | Description |
+|---|---|
+| `apa_inline_r()` | Inline *r*(df) = .xx, *p* = .xxx |
+| `apa_inline_chi2()` | Inline *χ²*(df) = x.xx, *p* = .xxx |
+| `apa_inline_t()` | Inline *t*(df) = x.xx, *p* = .xxx |
+| `apa_inline_F()` | Inline *F*(df1, df2) = x.xx, *p* = .xxx |
+| `apa_inline_anova()` | Inline ANOVA result from answers object |
+
 ## Quick Examples
 
 ### Correlation
-
-``` r
+```r
 library(psych350lab)
 data(superman_data)
 
@@ -169,8 +233,7 @@ create_corr_table("RH1", c("clark_height_in", "rt_critics_score"), result)
 ```
 
 ### Between-Groups ANOVA
-
-``` r
+```r
 result <- bg_anova_answers(superman_data, iv = "clark_grp", dv = "rt_critics_score")
 result$ANOVA
 result$Descriptives
@@ -181,8 +244,7 @@ cat(format_bg_anova_results("RH1", c("clark_grp", "rt_critics_score"),
 ```
 
 ### Multiple Regression
-
-``` r
+```r
 sm <- superman_data[!is.na(superman_data$rt_critics_score) &
                     !is.na(superman_data$rt_audience_score), ]
 
@@ -201,9 +263,31 @@ result$Regression_Weights
 create_regression_combined_table(result, KEY = TRUE)
 ```
 
-### SPSS-Style Plot
+### Chi-Square
+```r
+result <- chi_square_answers(superman_data, "clark_grp", "gender",
+  iv_labels = c("Under 6ft", "6ft+"), dv_labels = c("Male", "Female"))
+result$ChiSquare
+result$ContingencyTable
 
-``` r
+# Formatted results
+cat(format_chi2_results("RH1", c("clark_grp", "gender"), result))
+```
+
+### APA Write-Up
+```r
+# Generate a paragraph-length APA results section
+corr_result <- corr_answers(superman_data, "clark_height_in", "rt_critics_score")
+writeup <- apa_corr_writeup(
+  corr_result,
+  iv_label = "Clark Kent's height",
+  dv_label = "critics' score"
+)
+cat(writeup)
+```
+
+### SPSS-Style Plot
+```r
 library(ggplot2)
 
 ggplot(mtcars, aes(x = factor(cyl), y = mpg, fill = factor(cyl))) +
@@ -213,14 +297,23 @@ ggplot(mtcars, aes(x = factor(cyl), y = mpg, fill = factor(cyl))) +
   labs(x = "Cylinders", y = "MPG")
 ```
 
-## Answer Key vs. Student Worksheet
+### Formatting and Inline Reporting
+```r
+# Consistent APA formatting
+format_p_value(0.00012)                  # "< .001"
+format_p_value(0.034, include_p = TRUE)  # "p = .034"
+format_p_md(0.00012)                     # "*p* < .001"
+format_r(0.4567)                         # ".457"
+format_mean(3.1)                         # "3.10"
 
-Most table and formatting functions include a `Key` (or `KEY`) argument.
-Set `Key = TRUE` for a filled answer key, or `Key = FALSE` for a blank
-student worksheet — making it easy to generate both versions from the
-same code.
+# Inline reporting in Quarto text
+# `r apa_inline_r(result)` → *r*(48) = .46, *p* < .001
+```
 
-``` r
+## Answer Key vs. Student Worksheet
+
+Most table and formatting functions include a `Key` (or `KEY`) argument. Set `Key = TRUE` for a filled answer key, or `Key = FALSE` for a blank student worksheet — making it easy to generate both versions from the same code.
+```r
 # Answer key
 cat(format_bg_anova_results("RH1", vars, result, iv_labels = labels, Key = TRUE))
 
@@ -230,13 +323,8 @@ cat(format_bg_anova_results("RH1", vars, result, iv_labels = labels, Key = FALSE
 
 ## Interactive Webexercises (Quarto)
 
-Several functions generate interactive fill-in-the-blank and
-multiple-choice tables powered by
-[`webexercises`](https://psyteachr.github.io/webexercises/) and
-[`tinytable`](https://vincentarelbundock.github.io/tinytable/). These
-are designed for use in Quarto HTML documents:
-
-``` r
+Several functions generate interactive fill-in-the-blank and multiple-choice tables powered by [`webexercises`](https://psyteachr.github.io/webexercises/) and [`tinytable`](https://vincentarelbundock.github.io/tinytable/). These are designed for use in Quarto HTML documents:
+```r
 # In a Quarto document
 create_model_summary_checker(result)
 create_predictor_checker(result)
@@ -244,10 +332,8 @@ create_predictor_checker(result)
 
 ## Sample Data
 
-The package includes `superman_data`, a dataset used throughout the
-examples and course materials.
-
-``` r
+The package includes `superman_data`, a dataset used throughout the examples and course materials.
+```r
 data(superman_data)
 str(superman_data)
 ```

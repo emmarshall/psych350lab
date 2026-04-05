@@ -68,7 +68,7 @@ apa_corr_writeup <- function(corr_results_list,
 
   # Format statistics
   r_text <- format_r(r)
-  p_text <- format_p_value(p)
+  p_text <- format_p_md(p)
   df_text <- format_df(df)
 
   # Determine actual results
@@ -98,12 +98,12 @@ apa_corr_writeup <- function(corr_results_list,
     direction_word <- if (r > 0) "positive" else "negative"
     main_sentence <- glue::glue(
       "There was {sig_phrase} {direction_word} linear relationship between {desc_phrase}, ",
-      "*r*({df_text}) = {r_text}, *p* = {p_text}."
+      "*r*({df_text}) = {r_text}, {p_text}."
     )
   } else {
     main_sentence <- glue::glue(
       "There was no significant linear relationship between {desc_phrase}, ",
-      "*r*({df_text}) = {r_text}, *p* = {p_text}."
+      "*r*({df_text}) = {r_text}, {p_text}."
     )
   }
 

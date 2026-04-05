@@ -47,7 +47,7 @@ format_corr_results <- function(rh_name, vars, corr_results_list, Key = TRUE,
   # Format values based on Key
   if (Key) {
     r_fmt <- format_r(r, digits = digits)
-    p_fmt <- format_p_value(p, digits = p_digits, include_p = FALSE)
+    p_fmt <- format_p_value(p, digits = p_digits)
     n_fmt <- as.character(n)
     df_fmt <- format_df(df)
     m1_fmt <- format_mean(desc1$mean, digits = digits)
@@ -124,7 +124,7 @@ format_bg_anova_results <- function(rh_name,
 
   if (KEY) {
     f_fmt <- format_F(f_val, digits = digits)
-    p_fmt <- format_p_value(p_val, include_p = FALSE)
+    p_fmt <- format_p_value(p_val)
     df_b_fmt <- format_df(df_between)
     df_w_fmt <- format_df(df_within)
     mse_fmt <- format_mse(mse, digits = digits)
@@ -193,7 +193,7 @@ format_wg_anova_results <- function(rh_name,
 
   if (KEY) {
     f_fmt      <- format_F(f_val, digits = digits)
-    p_fmt      <- format_p_value(p_val, include_p = FALSE)
+    p_fmt      <- format_p_value(p_val)
     df_eff_fmt <- format_df(df_effect)
     df_err_fmt <- format_df(df_error)
     mse_fmt    <- format_mse(mse, digits = digits)

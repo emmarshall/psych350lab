@@ -58,7 +58,7 @@ format_chi2_results <- function(rh_name, vars, chi_results_list,
       "Number of ", var1_labels[2], " in the sample: ", var1_desc$n[2], "\n",
       "Number of ", var2_labels[1], " in the sample: ", var2_desc$n[1], "\n",
       "Number of ", var2_labels[2], " in the sample: ", var2_desc$n[2], "\n\n",
-      "\u03C7\u00B2 = ", chi_sq, "     df = ", df, "     p = ", p_value, "\n\n",
+      "\u03C7\u00B2 = ", format_chi2(chi_sq), "     df = ", format_df(df), "     ", format_p_value(p_value, include_p = TRUE), "\n\n",
       "State the H\u2080: There is no pattern of relationship between ",
       vars[1], " and ", vars[2], "\n\n",
       "Retain or reject H\u2080? ", h0_decision, "\n\n",
@@ -351,13 +351,9 @@ create_chi_crosstabs_table <- function(chi_results_list = NULL,
     df <- chi_results_list$ChiSquare$df
 
     # Format p-value for footer
-    if (p_value < 0.001) {
-      p_text <- "< .001"
-    } else {
-      p_text <- sprintf("= %.3f", p_value)
-    }
+    p_text <- format_p_value(p_value, include_p = TRUE)
 
-    footer_text <- paste0("Note. \u03C7\u00B2(", df, ") = ", chi_sq, ", p ", p_text, ".")
+    footer_text <- paste0("Note. \u03C7\u00B2(", format_df(df), ") = ", format_chi2(chi_sq), ", ", p_text, ".")
 
   } else {
     # =============================================
@@ -469,11 +465,7 @@ create_chi_combined_table <- function(rh_name, vars, chi_results_list,
     }
 
     # Format p-value
-    if (p_value < 0.001) {
-      p_formatted <- "< .001"
-    } else {
-      p_formatted <- format_p_value(p_value)
-    }
+    p_formatted <- format_p_value(p_value)
 
     # Build combined table
     combined_data <- tibble::tibble(
@@ -483,12 +475,12 @@ create_chi_combined_table <- function(rh_name, vars, chi_results_list,
         paste0("  ", vars[2], " (", var2_labels[1], " / ", var2_labels[2], ")")
       ),
       Column2 = c(
-        as.character(chi_sq),
+        format_chi2(chi_sq),
         paste0(var1_desc$n[1], " / ", var1_desc$n[2]),
         paste0(var2_desc$n[1], " / ", var2_desc$n[2])
       ),
       Column3 = c(p_formatted, "", ""),
-      Column4 = c(as.character(df), "", ""),
+      Column4 = c(format_df(df), "", ""),
       Column5 = c(decision, "", "")
     )
   } else {
@@ -634,6 +626,8 @@ create_chi_contingency_table <- function(chi_results = NULL,
 #' @param var1_name Character. Display name for variable 1.
 #' @param var2_name Character. Display name for variable 2.
 #' @param KEY Logical. If TRUE, show answers; if FALSE, show blanks.
+#' @param highlight Logical. If TRUE and KEY is TRUE, wrap answers in
+#'   highlight formatting for Quarto/Word output. Default FALSE.
 #'
 #' @return A character string.
 #'
@@ -641,15 +635,25 @@ create_chi_contingency_table <- function(chi_results = NULL,
 format_chi_omnibus_results <- function(chi_results_list,
                                        var1_name = "Variable 1",
                                        var2_name = "Variable 2",
-                                       KEY = TRUE) {
+                                       KEY = TRUE,
+                                       highlight = FALSE) {
+
+  hl <- function(text) {
+    if (highlight && KEY) {
+      paste0("[", text, "]{custom-style=\"highlight-yellow\"}")
+    } else {
+      as.character(text)
+    }
+  }
 
   if (KEY) {
-    chi_sq <- sprintf("%.2f", chi_results_list$ChiSquare$chi_sq)
-    df <- chi_results_list$ChiSquare$df
-    p_value <- sprintf("%.3f", chi_results_list$ChiSquare$p_value)
-    n <- sum(chi_results_list$ContingencyTable)
-    k <- ncol(chi_results_list$ContingencyTable)
-    n_per_group <- round(n / nrow(chi_results_list$ContingencyTable), 2)
+    chi_sq <- format_chi2(chi_results_list$ChiSquare$chi_sq)
+    df <- format_df(chi_results_list$ChiSquare$df)
+    p_value <- format_p_value(chi_results_list$ChiSquare$p_value, include_p = TRUE)
+    n_raw <- sum(chi_results_list$ContingencyTable)
+    n <- format_n(n_raw)
+    k <- format_int(ncol(chi_results_list$ContingencyTable))
+    n_per_group <- format_stat(n_raw / nrow(chi_results_list$ContingencyTable))
 
     if (chi_results_list$ChiSquare$p_value < 0.05) {
       pairwise_needed <- "Yes because there is a pattern of difference that needs to be determined based on p-value."
@@ -657,24 +661,24 @@ format_chi_omnibus_results <- function(chi_results_list,
       pairwise_needed <- "No because the omnibus test was not significant."
     }
 
-    chi_crit <- sprintf("%.2f", chi_results_list$ChiCrit)
+    chi_crit <- format_chi2(chi_results_list$ChiCrit)
 
     output <- paste0(
-      "\\u03C7\\u00B2 = ", chi_sq, "        df = ", df, "        p = ", p_value,
-      "       N = ", n, "       k = ", k, "       n = ", n_per_group, "\n\n",
-      "Pairwise X\\u00B2-critical, Pairwise Comparisons, Effect Sizes & Statistical Decision Errors\n\n",
-      "Do we need to perform pairwise X\\u00B2 comparisons to test the RH? Why or why not?\n",
-      pairwise_needed, "\n\n",
-      "X\\u00B2-critical = ", chi_crit, "\n"
+      "\u03C7\u00B2 = ", hl(chi_sq), "        df = ", hl(df), "        ", hl(p_value),
+      "       N = ", hl(n), "       k = ", hl(k), "       n = ", hl(n_per_group), "\n\n",
+      "Pairwise X\u00B2-critical, Pairwise Comparisons, Effect Sizes & Statistical Decision Errors\n\n",
+      "Do we need to perform pairwise X\u00B2 comparisons to test the RH? Why or why not?\n",
+      hl(pairwise_needed), "\n\n",
+      "X\u00B2-critical = ", hl(chi_crit), "\n"
     )
 
   } else {
     output <- paste0(
-      "\\u03C7\\u00B2 = ____      df = ____      p = ____      N = ____      k = ____      n = ____\n\n",
-      "Pairwise X\\u00B2-critical, Pairwise Comparisons, Effect Sizes & Statistical Decision Errors\n\n",
-      "Do we need to perform pairwise X\\u00B2 comparisons to test the RH? Why or why not?\n",
+      "\u03C7\u00B2 = ____      df = ____      p = ____      N = ____      k = ____      n = ____\n\n",
+      "Pairwise X\u00B2-critical, Pairwise Comparisons, Effect Sizes & Statistical Decision Errors\n\n",
+      "Do we need to perform pairwise X\u00B2 comparisons to test the RH? Why or why not?\n",
       "____\n\n",
-      "X\\u00B2-critical = ____\n"
+      "X\u00B2-critical = ____\n"
     )
   }
 
@@ -740,10 +744,10 @@ chisq_pairwise_KEY <- function(chi_results_list,
       col_name <- paste0("Comp", i)
       pairwise_data[[col_name]] <- c(
         pairwise[[i]]$comparison,
-        paste0(pairwise[[i]]$pct1, "% vs ", pairwise[[i]]$pct2, "%"),
-        paste0(pairwise[[i]]$chi_sq, " ", pairwise[[i]]$chi_result),
+        paste0(format_stat(pairwise[[i]]$pct1), "% vs ", format_stat(pairwise[[i]]$pct2), "%"),
+        paste0(format_chi2(pairwise[[i]]$chi_sq), " ", pairwise[[i]]$chi_result),
         pairwise[[i]]$error_type,
-        as.character(pairwise[[i]]$effect_size),
+        format_effect(pairwise[[i]]$effect_size),
         power_code
       )
     }

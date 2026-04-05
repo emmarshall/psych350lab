@@ -471,22 +471,24 @@ anova_statistics_KEY <- function(anova_results_list,
   }
 
   if(p_value < 0.05) {
-    posthoc_answer <- "Yes \\u2013 we know there's a mean difference, but we don't know which groups are different from which others."
+    posthoc_answer <- "Yes \u2013 we know there's a mean difference, but we don't know which groups are different from which others."
   } else {
-    posthoc_answer <- "No \\u2013 a nonsignificant Omnibus F-test"
+    posthoc_answer <- "No \u2013 a nonsignificant Omnibus F-test"
   }
 
   if (KEY) {
+    p_fmt <- format_p_value(p_value, include_p = TRUE)
+
     anova_text <- paste0(
-      "F = ", hl(f_stat), "    df = ", hl(df_between), " , ", hl(df_within),
-      "    MSE = ", hl(mse), "    p = ", hl(p_value),
-      "    N = ", hl(total_n), "    k = ", hl(k), "    n = ", hl(mean_n), "\n\n",
+      "F = ", hl(format_F(f_stat)), "    df = ", hl(format_df(df_between)), " , ", hl(format_df(df_within)),
+      "    MSE = ", hl(format_mse(mse)), "    ", hl(p_fmt),
+      "    N = ", hl(format_n(total_n)), "    k = ", hl(format_int(k)), "    n = ", hl(format_stat(mean_n)), "\n\n",
       "Do we need to perform LSD pairwise comparisons to test the RH? Why or why not? ",
       hl(posthoc_answer)
     )
 
     if (has_lsd) {
-      anova_text <- paste0(anova_text, "\n\nLSDmmd = ", hl(lsd_mmd),
+      anova_text <- paste0(anova_text, "\n\nLSDmmd = ", hl(format_stat(lsd_mmd)),
                            "  Based on the LSDmmd, use <, > & = signs to show the results of each pairwise comparison.")
     }
   } else {
@@ -540,8 +542,8 @@ anova_descriptives_KEY <- function(anova_results_list,
 
     for (i in 1:n_groups) {
       desc_data[[group_labels[i]]] <- c(
-        as.character(desc_stats$mean[i]),
-        as.character(desc_stats$sd[i])
+        format_mean(desc_stats$mean[i]),
+        format_sd(desc_stats$sd[i])
       )
     }
   } else {
@@ -570,64 +572,4 @@ anova_descriptives_KEY <- function(anova_results_list,
   }
 
   return(ft)
-}
-
-# ANOVA Statistics Text Output
-anova_statistics_KEY <- function(anova_results_list,
-                                 KEY = TRUE,
-                                 highlight = FALSE) {
-  f_stat <- anova_results_list$ANOVA$F
-  p_value <- anova_results_list$ANOVA$p_value
-  df_between <- anova_results_list$ANOVA$df_between
-  df_within <- anova_results_list$ANOVA$df_within
-  mse <- anova_results_list$ANOVA$mse
-  total_n <- anova_results_list$ANOVA$total_n
-  k <- anova_results_list$ANOVA$k
-  mean_n <- anova_results_list$ANOVA$mean_n
-
-  has_lsd <- !is.null(anova_results_list$LSD$lsd_mmd) && !is.na(anova_results_list$LSD$lsd_mmd)
-  if (has_lsd) {
-    lsd_mmd <- anova_results_list$LSD$lsd_mmd
-  }
-
-  hl <- function(text) {
-    if (highlight && KEY) {
-      paste0("[", text, "]{custom-style=\"highlight-yellow\"}")
-    } else {
-      as.character(text)
-    }
-  }
-
-  if(p_value < 0.05) {
-    posthoc_answer <- "Yes \\u2013 we know there's a mean difference, but we don't know which groups are different from which others."
-  } else {
-    posthoc_answer <- "No \\u2013 a nonsignificant Omnibus F-test"
-  }
-
-  if (KEY) {
-    anova_text <- paste0(
-      "F = ", hl(f_stat), "    df = ", hl(df_between), " , ", hl(df_within),
-      "    MSE = ", hl(mse), "    p = ", hl(p_value),
-      "    N = ", hl(total_n), "    k = ", hl(k), "    n = ", hl(mean_n), "\n\n",
-      "Do we need to perform LSD pairwise comparisons to test the RH? Why or why not? ",
-      hl(posthoc_answer)
-    )
-
-    if (has_lsd) {
-      anova_text <- paste0(anova_text, "\n\nLSDmmd = ", hl(lsd_mmd),
-                           "  Based on the LSDmmd, use <, > & = signs to show the results of each pairwise comparison.")
-    }
-  } else {
-    anova_text <- paste0(
-      "F = ____           df = ____ , ____            MSE = ____           p = ____            N = ____        k = ____         n = ____\n\n",
-      "## LSD, Pairwise Comparisons & RH: Testing\n\n",
-      "\n\nDo we need to perform LSD pairwise comparisons to test the RH? Why or why not? ____________"
-    )
-
-    if (has_lsd) {
-      anova_text <- paste0(anova_text, "\n\nLSDmmd = ____\n\n Based on the LSDmmd, use <, > & = signs to show the results of each pairwise comparison.")
-    }
-  }
-
-  return(anova_text)
 }

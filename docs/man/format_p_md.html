@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.9.35">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Getting Started with psych350lab – psych350lab</title>
+<title>format_p_md – psych350lab</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -299,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../vignettes/getting-started.html">Getting Started</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -315,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../vignettes/getting-started.html" class="sidebar-item-text sidebar-link active">
+  <a href="../vignettes/getting-started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Getting Started</span></a>
   </div>
 </li>
@@ -1303,271 +1303,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#what-this-package-does" id="toc-what-this-package-does" class="nav-link active" data-scroll-target="#what-this-package-does">What This Package Does</a></li>
-  <li>
-<a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a>
+<li>
+<a href="#format-p-value-with-markdown-italic-prefix" id="toc-format-p-value-with-markdown-italic-prefix" class="nav-link active" data-scroll-target="#format-p-value-with-markdown-italic-prefix">Format p-value with markdown italic prefix</a>
   <ul class="collapse">
-<li><a href="#github-authentication-first-time-only" id="toc-github-authentication-first-time-only" class="nav-link" data-scroll-target="#github-authentication-first-time-only">GitHub Authentication (First Time Only)</a></li>
+<li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments">Arguments</a></li>
+  <li><a href="#value" id="toc-value" class="nav-link" data-scroll-target="#value">Value</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   </ul>
 </li>
-  <li><a href="#core-workflow" id="toc-core-workflow" class="nav-link" data-scroll-target="#core-workflow">Core Workflow</a></li>
-  <li><a href="#the-keyblank-system" id="toc-the-keyblank-system" class="nav-link" data-scroll-target="#the-keyblank-system">The KEY/BLANK System</a></li>
-  <li><a href="#available-analyses" id="toc-available-analyses" class="nav-link" data-scroll-target="#available-analyses">Available Analyses</a></li>
-  <li><a href="#function-naming-conventions" id="toc-function-naming-conventions" class="nav-link" data-scroll-target="#function-naming-conventions">Function Naming Conventions</a></li>
-  <li><a href="#formatting-utilities" id="toc-formatting-utilities" class="nav-link" data-scroll-target="#formatting-utilities">Formatting Utilities</a></li>
-  <li><a href="#spss-style-plots" id="toc-spss-style-plots" class="nav-link" data-scroll-target="#spss-style-plots">SPSS-Style Plots</a></li>
-  <li><a href="#typical-lab-file-structure" id="toc-typical-lab-file-structure" class="nav-link" data-scroll-target="#typical-lab-file-structure">Typical Lab File Structure</a></li>
   </ul><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="undefined"><i class="bi bi-link-45deg"></i></a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Getting Started with psych350lab</h1>
-<p class="subtitle lead">Installation, core concepts, and a quick tour</p>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header><section id="what-this-package-does" class="level2"><h2 class="anchored" data-anchor-id="what-this-package-does">What This Package Does</h2>
-<p><strong>psych350lab</strong> helps instructors and TAs build statistics lab materials in R that replicate SPSS/jamovi output. The package provides four types of output for each statistical test:</p>
-<ol type="1">
-<li>
-<strong>Worksheet output</strong> — markdown-formatted results with a KEY/BLANK toggle for answer keys vs.&nbsp;student fill-in-the-blank worksheets (rendered via Quarto to <code>.docx</code>)</li>
-<li>
-<strong>APA tables</strong> — publication-ready tables as <code>flextable</code> objects</li>
-<li>
-<strong>Statistical write-ups</strong> — complete APA-style interpretation text</li>
-<li>
-<strong>Homework checkers</strong> — interactive HTML widgets (via <code>webexercises</code>) where students enter answers and get immediate feedback</li>
-</ol></section><section id="installation" class="level2"><h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>Install both packages from GitHub using <code>pak</code>:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html">pak</a></span><span class="op">(</span><span class="st">"emmarshall/psych350data"</span><span class="op">)</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html">pak</a></span><span class="op">(</span><span class="st">"emmarshall/psych350lab"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<section id="github-authentication-first-time-only" class="level3"><h3 class="anchored" data-anchor-id="github-authentication-first-time-only">GitHub Authentication (First Time Only)</h3>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gitcreds"</span>, <span class="st">"usethis"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/github-token.html">create_github_token</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">gitcreds</span><span class="fu">::</span><span class="fu"><a href="https://gitcreds.r-lib.org/reference/gitcreds_get.html">gitcreds_set</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/git_sitrep.html">git_sitrep</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section></section><section id="core-workflow" class="level2"><h2 class="anchored" data-anchor-id="core-workflow">Core Workflow</h2>
-<p>Every lab section follows the same five-step pattern, regardless of the statistical test:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://emmarshall.github.io/psych350lab">psych350lab</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://emmarshall.github.io/psych350data/">psych350data</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># ── Step 1: Load and prepare data ────────────────────────</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">superman</span>, package <span class="op">=</span> <span class="st">"psych350data"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># ── Step 2: Run the analysis ─────────────────────────────</span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/corr_answers.html">corr_answers</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">superman</span>,</span>
-<span>  var1 <span class="op">=</span> <span class="st">"clark_height_in"</span>,</span>
-<span>  var2 <span class="op">=</span> <span class="st">"rt_audience_score"</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># ── Step 3: Format for worksheets (KEY or BLANK) ─────────</span></span>
-<span><span class="va">key_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_corr_results.html">format_corr_results</a></span><span class="op">(</span></span>
-<span>  rh_name <span class="op">=</span> <span class="st">"RH1"</span>,</span>
-<span>  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"clark_height_in"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span>,</span>
-<span>  corr_results_list <span class="op">=</span> <span class="va">result</span>,</span>
-<span>  Key <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># ── Step 4: Create APA table ─────────────────────────────</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/create_apa_corr_table.html">create_apa_corr_table</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">superman</span>,</span>
-<span>  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"clark_height_in"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span>,</span>
-<span>  var_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1. Actor Height (in)"</span>, <span class="st">"2. Audience Score"</span><span class="op">)</span>,</span>
-<span>  KEY <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># ── Step 5: Generate write-up ────────────────────────────</span></span>
-<span><span class="va">writeup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/apa_corr_writeup.html">apa_corr_writeup</a></span><span class="op">(</span></span>
-<span>  corr_results_list <span class="op">=</span> <span class="va">result</span>,</span>
-<span>  var1_label <span class="op">=</span> <span class="st">"actor height"</span>,</span>
-<span>  var2_label <span class="op">=</span> <span class="st">"audience score"</span>,</span>
-<span>  hypothesis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
-<span>    direction <span class="op">=</span> <span class="st">"positive"</span>,</span>
-<span>    rh_text <span class="op">=</span> <span class="st">"taller actors would receive higher audience scores"</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  include_descriptives <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section><section id="the-keyblank-system" class="level2"><h2 class="anchored" data-anchor-id="the-keyblank-system">The KEY/BLANK System</h2>
-<p>Most display functions have a <code>KEY</code> argument (sometimes called <code>Key</code>) that toggles between two modes:</p>
-<ul>
-<li>
-<strong><code>KEY = TRUE</code></strong> — fills in all values (instructor answer key)</li>
-<li>
-<strong><code>KEY = FALSE</code></strong> — shows blanks for students to fill in</li>
-</ul>
-<p>This lets you generate both versions from the same Quarto source file using a <code>params</code> toggle:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your .qmd YAML header:</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">params</span><span class="kw">:</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">hide_answers</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># In a code chunk:</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_corr_results.html">format_corr_results</a></span><span class="op">(</span></span>
-<span>  rh_name <span class="op">=</span> <span class="st">"RH1"</span>,</span>
-<span>  vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"clark_height_in"</span>, <span class="st">"rt_audience_score"</span><span class="op">)</span>,</span>
-<span>  corr_results_list <span class="op">=</span> <span class="va">result</span>,</span>
-<span>  Key <span class="op">=</span> <span class="op">!</span><span class="va">params</span><span class="op">$</span><span class="va">hide_answers</span></span>
-<span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section><section id="available-analyses" class="level2"><h2 class="anchored" data-anchor-id="available-analyses">Available Analyses</h2>
-<p>The package follows the lab course progression. Each analysis type has its own detailed guide:</p>
-<table class="caption-top table">
-<thead><tr class="header">
-<th>Lab Topic</th>
-<th>Analysis</th>
-<th>Guide</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>Bivariate</td>
-<td>Pearson’s correlation</td>
-<td><a href="../vignettes/correlations.html">Correlations</a></td>
-</tr>
-<tr class="even">
-<td>Bivariate</td>
-<td>Chi-square (2×2)</td>
-<td><a href="../vignettes/chi-square-2x2.html">Chi-Square (2×2)</a></td>
-</tr>
-<tr class="odd">
-<td>Group differences</td>
-<td>One-way ANOVA (BG &amp; WG)</td>
-<td><a href="../vignettes/oneway-anova.html">One-Way ANOVA</a></td>
-</tr>
-<tr class="even">
-<td>Group differences</td>
-<td>K-group one-way ANOVA</td>
-<td><a href="../vignettes/kgroup-anova.html">K-Group ANOVA</a></td>
-</tr>
-<tr class="odd">
-<td>Categorical</td>
-<td>K-group chi-square (k×2)</td>
-<td><a href="../vignettes/kgroup-chi-square.html">K-Group Chi-Square</a></td>
-</tr>
-<tr class="even">
-<td>Factorial</td>
-<td>2×2 factorial ANOVA (BG, MG, WG)</td>
-<td><a href="../vignettes/factorial-anova.html">Factorial ANOVA</a></td>
-</tr>
-<tr class="odd">
-<td>Multivariate</td>
-<td>Multiple linear regression</td>
-<td><a href="../vignettes/regression.html">Regression</a></td>
-</tr>
-</tbody>
-</table></section><section id="function-naming-conventions" class="level2"><h2 class="anchored" data-anchor-id="function-naming-conventions">Function Naming Conventions</h2>
-<p>Functions follow a consistent naming pattern:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead><tr class="header">
-<th>Pattern</th>
-<th>Purpose</th>
-<th>Example</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><code>*_answers()</code></td>
-<td>Run analysis, return raw results</td>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header><section id="format-p-value-with-markdown-italic-prefix" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="format-p-value-with-markdown-italic-prefix">Format p-value with markdown italic prefix</h2>
+<section id="description" class="level3"><h3 class="anchored" data-anchor-id="description">Description</h3>
+<p>Convenience wrapper for APA write-ups. Returns a markdown-formatted p-value string with the correct prefix operator ("<em>p</em> &lt; .001" or "<em>p</em> = .023").</p>
+</section><section id="usage" class="level3"><h3 class="anchored" data-anchor-id="usage">Usage</h3>
+<pre><code class="language-R">format_p_md(p, digits = 3)
+</code></pre>
+</section><section id="arguments" class="level3"><h3 class="anchored" data-anchor-id="arguments">Arguments</h3>
+<table role="presentation">
+<tbody><tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="p">p</code>
+</td>
 <td>
-<code><a href="https://emmarshall.github.io/psych350lab/man/corr_answers.html">corr_answers()</a></code>, <code><a href="https://emmarshall.github.io/psych350lab/man/bg_anova_answers.html">bg_anova_answers()</a></code>
+Numeric p-value.
 </td>
 </tr>
-<tr class="even">
-<td><code>format_*_results()</code></td>
-<td>Markdown for worksheets (KEY/BLANK)</td>
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/format_corr_results.html">format_corr_results()</a></code></td>
-</tr>
-<tr class="odd">
-<td><code>create_*_table()</code></td>
-<td>APA flextable</td>
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_apa_corr_table.html">create_apa_corr_table()</a></code></td>
-</tr>
-<tr class="even">
-<td><code>create_*_checker()</code></td>
-<td>Interactive HTML checker</td>
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/create_corr_checker.html">create_corr_checker()</a></code></td>
-</tr>
-<tr class="odd">
-<td><code>apa_*_writeup()</code></td>
-<td>Full APA write-up text</td>
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/apa_corr_writeup.html">apa_corr_writeup()</a></code></td>
-</tr>
-<tr class="even">
-<td><code>apa_inline_*()</code></td>
-<td>Inline APA statistic</td>
-<td><code><a href="https://emmarshall.github.io/psych350lab/man/apa_inline_r.html">apa_inline_r()</a></code></td>
-</tr>
-<tr class="odd">
-<td><code>format_*()</code></td>
-<td>Format a single value</td>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="digits">digits</code>
+</td>
 <td>
-<code><a href="https://emmarshall.github.io/psych350lab/man/format_p_value.html">format_p_value()</a></code>, <code><a href="https://emmarshall.github.io/psych350lab/man/format_stat.html">format_stat()</a></code>
+Integer. Number of decimal places. Default 3.
 </td>
 </tr>
-</tbody>
-</table></section><section id="formatting-utilities" class="level2"><h2 class="anchored" data-anchor-id="formatting-utilities">Formatting Utilities</h2>
-<p>These helper functions format individual values for display:</p>
+</tbody></table></section><section id="value" class="level3"><h3 class="anchored" data-anchor-id="value">Value</h3>
+<p>Character string like <code>“<em>p</em> = .023”</code> or <code>“<em>p</em> &lt; .001”</code>.</p>
+</section><section id="examples" class="level3"><h3 class="anchored" data-anchor-id="examples">Examples</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_p_value.html">format_p_value</a></span><span class="op">(</span><span class="fl">0.023</span><span class="op">)</span>                         <span class="co"># ".023"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_p_value.html">format_p_value</a></span><span class="op">(</span><span class="fl">0.0004</span><span class="op">)</span>                        <span class="co"># "&lt; .001"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_p_value.html">format_p_value</a></span><span class="op">(</span><span class="fl">0.023</span>, include_p <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>       <span class="co"># "p = .023"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_stat.html">format_stat</a></span><span class="op">(</span><span class="fl">3.456</span><span class="op">)</span>                            <span class="co"># "3.46"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_stat.html">format_stat</a></span><span class="op">(</span><span class="fl">0.456</span>, remove_leading_zero <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># ".46"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_r.html">format_r</a></span><span class="op">(</span><span class="fl">0.456</span><span class="op">)</span>                               <span class="co"># ".46"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_effect.html">format_effect</a></span><span class="op">(</span><span class="fl">0.35</span><span class="op">)</span>                           <span class="co"># ".35"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_int.html">format_int</a></span><span class="op">(</span><span class="fl">25.4</span><span class="op">)</span>                              <span class="co"># "25"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/p_to_stars.html">p_to_stars</a></span><span class="op">(</span><span class="fl">0.003</span><span class="op">)</span>                             <span class="co"># "**"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/key_or_blank.html">key_or_blank</a></span><span class="op">(</span><span class="fl">0.45</span>, KEY <span class="op">=</span> <span class="cn">TRUE</span>, format_fn <span class="op">=</span> <span class="va">format_r</span><span class="op">)</span> <span class="co"># ".45"</span></span>
-<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/key_or_blank.html">key_or_blank</a></span><span class="op">(</span><span class="fl">0.45</span>, KEY <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>               <span class="co"># "______"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://emmarshall.github.io/psych350lab">"psych350lab"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_p_md.html">format_p_md</a></span><span class="op">(</span><span class="fl">0.023</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "*p* = .023"</code></pre>
 </div>
-</section><section id="spss-style-plots" class="level2"><h2 class="anchored" data-anchor-id="spss-style-plots">SPSS-Style Plots</h2>
-<p><code><a href="https://emmarshall.github.io/psych350lab/man/theme_SPSS.html">theme_SPSS()</a></code> and <code>number_SPSS</code> replicate the SPSS chart appearance:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">superman</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">clark_height_in</span>, y <span class="op">=</span> <span class="va">rt_audience_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
-<span>    shape <span class="op">=</span> <span class="fl">21</span>, fill <span class="op">=</span> <span class="st">"#1192E8"</span>, color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>    size <span class="op">=</span> <span class="fl">2.5</span>, stroke <span class="op">=</span> <span class="fl">0.75</span>, alpha <span class="op">=</span> <span class="fl">0.7</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/theme_SPSS.html">theme_SPSS</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">number_SPSS</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="va">number_SPSS</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Actor Height (inches)"</span>, y <span class="op">=</span> <span class="st">"Audience Score"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://emmarshall.github.io/psych350lab/man/format_p_md.html">format_p_md</a></span><span class="op">(</span><span class="fl">0.0001</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "*p* &lt; .001"</code></pre>
 </div>
-</section><section id="typical-lab-file-structure" class="level2"><h2 class="anchored" data-anchor-id="typical-lab-file-structure">Typical Lab File Structure</h2>
-<p>A complete lab consists of three files:</p>
-<pre><code>labs/lab-07/
-├── lab07-setup.R          # Data prep + all analyses
-├── lab07_worksheet.qmd    # Quarto → Word worksheet
-└── lab07_checker.qmd      # Quarto → HTML homework checker</code></pre>
-<p>The <strong>setup file</strong> runs all analyses and stores results in objects. The <strong>worksheet</strong> and <strong>checker</strong> files source the setup file and display the results using the appropriate output functions.</p>
-<p>See the <a href="../vignettes/correlations.html">Correlations</a> guide for a complete setup file example.</p>
+</div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
     if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {

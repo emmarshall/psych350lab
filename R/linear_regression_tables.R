@@ -87,7 +87,7 @@ linear_reg_model_statistics <- function(reg_results_list,
   f_stat <- reg_results_list$Model$F
   df1 <- reg_results_list$Model$df1
   df2 <- reg_results_list$Model$df2
-  p_val_formatted <- reg_results_list$Model$p_value_formatted
+  p_val_formatted <- format_p_value(reg_results_list$Model$p_value, include_p = TRUE)
 
   hl <- function(text) {
     if (highlight && KEY) {
@@ -99,11 +99,11 @@ linear_reg_model_statistics <- function(reg_results_list,
 
   if (KEY) {
     output <- paste0(
-      "R = ", hl(r), "     ",
-      "R\u00B2 = ", hl(r_sq), "     ",
-      "F = ", hl(f_stat), "     ",
-      "df = ", hl(df1), ", ", hl(df2), "     ",
-      "p ", hl(p_val_formatted), "\n"
+      "R = ", hl(format_r(r)), "     ",
+      "R\u00B2 = ", hl(format_effect(r_sq)), "     ",
+      "F = ", hl(format_F(f_stat)), "     ",
+      "df = ", hl(format_df(df1)), ", ", hl(format_df(df2)), "     ",
+      hl(p_val_formatted), "\n"
     )
   } else {
     output <- paste0(
@@ -170,8 +170,8 @@ linear_reg_model_evaluation <- function(reg_results_list,
   df1 <- reg_results_list$Model$df1
   df2 <- reg_results_list$Model$df2
   p_val <- reg_results_list$Model$p_value
-  p_val_formatted <- reg_results_list$Model$p_value_formatted
-  var_explained <- reg_results_list$Model$variance_explained
+  p_val_formatted <- format_p_value(reg_results_list$Model$p_value, include_p = TRUE)
+  var_explained <- format_stat(reg_results_list$Model$variance_explained, digits = 1)
   criterion_label <- reg_results_list$Labels$criterion_label
 
   hl <- function(text) {
@@ -189,12 +189,12 @@ linear_reg_model_evaluation <- function(reg_results_list,
     output <- paste0(
       "**a. Does the multiple linear regression model work? Where did you look to decide?**\n\n",
       hl(model_works), ", p ", hl(p_comparison),
-      ", significant ANOVA (F = ", hl(f_stat),
-      ", df = ", hl(df1), ", ", hl(df2),
-      ", p ", hl(p_val_formatted), ")\n\n",
+      ", significant ANOVA (F = ", hl(format_F(f_stat)),
+      ", df = ", hl(format_df(df1)), ", ", hl(format_df(df2)),
+      ", ", hl(p_val_formatted), ")\n\n",
       "**b. How well does the multiple linear regression model work?**\n\n",
       "Accounts for ", hl(var_explained), "% of ", criterion_label,
-      " variance (R\u00B2 = ", hl(r_sq), ")\n"
+      " variance (R\u00B2 = ", hl(format_effect(r_sq)), ")\n"
     )
   } else {
     output <- paste0(
@@ -266,7 +266,7 @@ create_linear_reg_combined_table <- function(reg_results_list, KEY = TRUE) {
       }),
       b_p = purrr::map_chr(predictors, \(p) {
         regwt <- reg_results_list$Regression_Weights[[p]]
-        paste0(sprintf("%.3f", regwt$b), " (", regwt$p_value_formatted, ")")
+        paste0(format_stat(regwt$b), " (", format_p_value(regwt$p_value), ")")
       }),
       Result = purrr::map_chr(predictors, \(p) {
         reg_results_list$Regression_Weights[[p]]$category
@@ -675,13 +675,13 @@ create_regwt_interp_table <- function(reg_results_list,
       if (p_type == "Binary") {
         direction <- ifelse(regwt$b > 0, "higher", "lower")
         return(paste0("Higher coded group has ", criterion_label, " scores ",
-                      abs(regwt$b), " ", direction,
+                      format_stat(abs(regwt$b)), " ", direction,
                       " than lower coded group, after controlling for all other variables"))
       } else {
         direction <- ifelse(regwt$b > 0, "increase", "decrease")
         return(paste0("For each 1-unit increase in ", p_label, ", ",
                       criterion_label, " is expected to ", direction, " by ",
-                      abs(regwt$b),
+                      format_stat(abs(regwt$b)),
                       ", after controlling for all other variables in the model"))
       }
     })

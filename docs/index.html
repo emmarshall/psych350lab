@@ -393,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Worksheets</span></a>
+ <span class="menu-text">Answer Checkers (HTML)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -402,7 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Answer Checkers (HTML)</span></a>
+ <span class="menu-text">Basics</span></a>
   </div>
 </li>
       </ul>
@@ -1337,16 +1337,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#correlation-analysis" id="toc-correlation-analysis" class="nav-link" data-scroll-target="#correlation-analysis">Correlation Analysis</a></li>
   <li><a href="#between-groups-anova" id="toc-between-groups-anova" class="nav-link" data-scroll-target="#between-groups-anova">Between-Groups ANOVA</a></li>
   <li><a href="#within-groups-repeated-measures-anova" id="toc-within-groups-repeated-measures-anova" class="nav-link" data-scroll-target="#within-groups-repeated-measures-anova">Within-Groups (Repeated Measures) ANOVA</a></li>
+  <li><a href="#chi-square-analysis" id="toc-chi-square-analysis" class="nav-link" data-scroll-target="#chi-square-analysis">Chi-Square Analysis</a></li>
+  <li><a href="#k-group-anova" id="toc-k-group-anova" class="nav-link" data-scroll-target="#k-group-anova">K-Group ANOVA</a></li>
   <li><a href="#factorial-two-way-anova" id="toc-factorial-two-way-anova" class="nav-link" data-scroll-target="#factorial-two-way-anova">Factorial (Two-Way) ANOVA</a></li>
   <li><a href="#multiple-regression" id="toc-multiple-regression" class="nav-link" data-scroll-target="#multiple-regression">Multiple Regression</a></li>
   <li><a href="#spss-style-plotting" id="toc-spss-style-plotting" class="nav-link" data-scroll-target="#spss-style-plotting">SPSS-Style Plotting</a></li>
+  <li><a href="#formatting-functions" id="toc-formatting-functions" class="nav-link" data-scroll-target="#formatting-functions">Formatting Functions</a></li>
+  <li><a href="#apa-write-up-generators" id="toc-apa-write-up-generators" class="nav-link" data-scroll-target="#apa-write-up-generators">APA Write-Up Generators</a></li>
+  <li><a href="#inline-apa-reporting" id="toc-inline-apa-reporting" class="nav-link" data-scroll-target="#inline-apa-reporting">Inline APA Reporting</a></li>
   </ul></li>
   <li><a href="#quick-examples" id="toc-quick-examples" class="nav-link" data-scroll-target="#quick-examples">Quick Examples</a>
   <ul class="collapse">
   <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation">Correlation</a></li>
   <li><a href="#between-groups-anova-1" id="toc-between-groups-anova-1" class="nav-link" data-scroll-target="#between-groups-anova-1">Between-Groups ANOVA</a></li>
   <li><a href="#multiple-regression-1" id="toc-multiple-regression-1" class="nav-link" data-scroll-target="#multiple-regression-1">Multiple Regression</a></li>
+  <li><a href="#chi-square" id="toc-chi-square" class="nav-link" data-scroll-target="#chi-square">Chi-Square</a></li>
+  <li><a href="#apa-write-up" id="toc-apa-write-up" class="nav-link" data-scroll-target="#apa-write-up">APA Write-Up</a></li>
   <li><a href="#spss-style-plot" id="toc-spss-style-plot" class="nav-link" data-scroll-target="#spss-style-plot">SPSS-Style Plot</a></li>
+  <li><a href="#formatting-and-inline-reporting" id="toc-formatting-and-inline-reporting" class="nav-link" data-scroll-target="#formatting-and-inline-reporting">Formatting and Inline Reporting</a></li>
   </ul></li>
   <li><a href="#answer-key-vs.-student-worksheet" id="toc-answer-key-vs.-student-worksheet" class="nav-link" data-scroll-target="#answer-key-vs.-student-worksheet">Answer Key vs.&nbsp;Student Worksheet</a></li>
   <li><a href="#interactive-webexercises-quarto" id="toc-interactive-webexercises-quarto" class="nav-link" data-scroll-target="#interactive-webexercises-quarto">Interactive Webexercises (Quarto)</a></li>
@@ -1433,10 +1441,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td><code>get_spss_data()</code></td>
 <td>Read SPSS <code>.sav</code> files, convert missing values, and strip labels</td>
-</tr>
-<tr class="even">
-<td><code>format_p_value()</code></td>
-<td>Format p-values in APA style (e.g., “&lt; .001”)</td>
 </tr>
 </tbody>
 </table>
@@ -1544,6 +1548,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td><code>create_wg_anova_combined_table()</code></td>
 <td>Combined ANOVA + descriptives flextable</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="chi-square-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="chi-square-analysis">Chi-Square Analysis</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>chi_square_answers()</code></td>
+<td>Compute chi-square goodness-of-fit or 2×k test with effect size</td>
+</tr>
+<tr class="even">
+<td><code>chi_square_kgroup_answers()</code></td>
+<td>K-group chi-square with pairwise comparisons and Bonferroni correction</td>
+</tr>
+<tr class="odd">
+<td><code>pr_chi_to_r()</code></td>
+<td>Convert 2×2 contingency cell counts to chi-square, p, and r</td>
+</tr>
+<tr class="even">
+<td><code>format_chi2_results()</code></td>
+<td>Fill-in-the-blank or answer key text output</td>
+</tr>
+<tr class="odd">
+<td><code>create_rh_contingency()</code></td>
+<td>Display contingency table with observed/expected counts</td>
+</tr>
+<tr class="even">
+<td><code>create_chi_crosstabs_table()</code></td>
+<td>Crosstabs table with counts and percentages</td>
+</tr>
+<tr class="odd">
+<td><code>create_chi_combined_table()</code></td>
+<td>Combined chi-square results and crosstabs table</td>
+</tr>
+<tr class="even">
+<td><code>format_chi_omnibus_results()</code></td>
+<td>Formatted omnibus results with highlighting</td>
+</tr>
+<tr class="odd">
+<td><code>chisq_pairwise_KEY()</code></td>
+<td>Pairwise comparison results table</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="k-group-anova" class="level3">
+<h3 class="anchored" data-anchor-id="k-group-anova">K-Group ANOVA</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>anova_kgroup_answers()</code></td>
+<td>K-group one-way ANOVA with group descriptives and pairwise comparisons</td>
+</tr>
+<tr class="even">
+<td><code>pr_means_to_r()</code></td>
+<td>Convert group means and n to between-groups effect size</td>
+</tr>
+<tr class="odd">
+<td><code>lsd_hsd_calculator()</code></td>
+<td>Compute LSD and HSD minimum mean differences</td>
+</tr>
+<tr class="even">
+<td><code>create_rh_support_text()</code></td>
+<td>Formatted hypothesis support text</td>
+</tr>
+<tr class="odd">
+<td><code>anova_statistics_KEY()</code></td>
+<td>ANOVA statistics answer key display</td>
+</tr>
+<tr class="even">
+<td><code>anova_descriptives_KEY()</code></td>
+<td>Group descriptive statistics answer key display</td>
 </tr>
 </tbody>
 </table>
@@ -1700,6 +1798,184 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
+<section id="formatting-functions" class="level3">
+<h3 class="anchored" data-anchor-id="formatting-functions">Formatting Functions</h3>
+<p>All display and worksheet functions use a shared set of formatting functions to ensure consistent APA-style rounding across the package.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>format_stat()</code></td>
+<td>Format a statistic to 2 decimal places (scalar)</td>
+</tr>
+<tr class="even">
+<td><code>format_p_value()</code></td>
+<td>Format p-values in APA style (e.g., <code>"&lt; .001"</code>, <code>"p = .023"</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>format_p_md()</code></td>
+<td>Format p-values with markdown italic <em>p</em> (e.g., <code>"*p* &lt; .001"</code>)</td>
+</tr>
+<tr class="even">
+<td><code>format_r()</code></td>
+<td>Format correlation coefficient (3 decimal places, no leading zero)</td>
+</tr>
+<tr class="odd">
+<td><code>format_effect()</code></td>
+<td>Format effect sizes (3 decimal places)</td>
+</tr>
+<tr class="even">
+<td><code>format_mean()</code></td>
+<td>Format means (2 decimal places)</td>
+</tr>
+<tr class="odd">
+<td><code>format_sd()</code></td>
+<td>Format standard deviations (2 decimal places)</td>
+</tr>
+<tr class="even">
+<td><code>format_F()</code></td>
+<td>Format F statistics (2 decimal places)</td>
+</tr>
+<tr class="odd">
+<td><code>format_t()</code></td>
+<td>Format t statistics (2 decimal places)</td>
+</tr>
+<tr class="even">
+<td><code>format_chi2()</code></td>
+<td>Format chi-square statistics (2 decimal places)</td>
+</tr>
+<tr class="odd">
+<td><code>format_mse()</code></td>
+<td>Format mean square error (2 decimal places)</td>
+</tr>
+<tr class="even">
+<td><code>format_df()</code></td>
+<td>Format degrees of freedom (integer)</td>
+</tr>
+<tr class="odd">
+<td><code>format_n()</code></td>
+<td>Format sample sizes (integer)</td>
+</tr>
+<tr class="even">
+<td><code>format_int()</code></td>
+<td>Format integers</td>
+</tr>
+<tr class="odd">
+<td><code>p_to_stars()</code></td>
+<td>Convert p-value to significance stars</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="apa-write-up-generators" class="level3">
+<h3 class="anchored" data-anchor-id="apa-write-up-generators">APA Write-Up Generators</h3>
+<p>These functions produce paragraph-length APA-style results write-ups in markdown, suitable for Quarto documents.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>apa_corr_writeup()</code></td>
+<td>Correlation results write-up</td>
+</tr>
+<tr class="even">
+<td><code>apa_chi_writeup()</code></td>
+<td>Chi-square test results write-up</td>
+</tr>
+<tr class="odd">
+<td><code>apa_kgroup_chi_writeup()</code></td>
+<td>K-group chi-square with pairwise results write-up</td>
+</tr>
+<tr class="even">
+<td><code>apa_bg_anova_writeup()</code></td>
+<td>Between-groups ANOVA results write-up</td>
+</tr>
+<tr class="odd">
+<td><code>apa_wg_anova_writeup()</code></td>
+<td>Within-groups ANOVA results write-up</td>
+</tr>
+<tr class="even">
+<td><code>apa_kgroup_anova_writeup()</code></td>
+<td>K-group ANOVA with pairwise results write-up</td>
+</tr>
+<tr class="odd">
+<td><code>apa_wg_kgroup_anova_writeup()</code></td>
+<td>Within-groups k-group ANOVA write-up</td>
+</tr>
+<tr class="even">
+<td><code>apa_planned_comparisons_writeup()</code></td>
+<td>Planned comparisons write-up</td>
+</tr>
+<tr class="odd">
+<td><code>apa_wg_simple_contrasts_writeup()</code></td>
+<td>Within-groups simple contrasts write-up</td>
+</tr>
+<tr class="even">
+<td><code>apa_2x2_bg_factorial_writeup()</code></td>
+<td>2×2 between-groups factorial ANOVA write-up</td>
+</tr>
+<tr class="odd">
+<td><code>apa_2x2_mixed_factorial_writeup()</code></td>
+<td>2×2 mixed factorial ANOVA write-up</td>
+</tr>
+<tr class="even">
+<td><code>apa_2x2_wg_factorial_writeup()</code></td>
+<td>2×2 within-groups factorial ANOVA write-up</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="inline-apa-reporting" class="level3">
+<h3 class="anchored" data-anchor-id="inline-apa-reporting">Inline APA Reporting</h3>
+<p>Helper functions for inline reporting in Quarto/RMarkdown text, returning markdown-formatted strings:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>apa_inline_r()</code></td>
+<td>Inline <em>r</em>(df) = .xx, <em>p</em> = .xxx</td>
+</tr>
+<tr class="even">
+<td><code>apa_inline_chi2()</code></td>
+<td>Inline <em>χ²</em>(df) = x.xx, <em>p</em> = .xxx</td>
+</tr>
+<tr class="odd">
+<td><code>apa_inline_t()</code></td>
+<td>Inline <em>t</em>(df) = x.xx, <em>p</em> = .xxx</td>
+</tr>
+<tr class="even">
+<td><code>apa_inline_F()</code></td>
+<td>Inline <em>F</em>(df1, df2) = x.xx, <em>p</em> = .xxx</td>
+</tr>
+<tr class="odd">
+<td><code>apa_inline_anova()</code></td>
+<td>Inline ANOVA result from answers object</td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 <section id="quick-examples" class="level2">
 <h2 class="anchored" data-anchor-id="quick-examples">Quick Examples</h2>
@@ -1744,38 +2020,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Combined predictor table</span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">create_regression_combined_table</span>(result, <span class="at">KEY =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="chi-square" class="level3">
+<h3 class="anchored" data-anchor-id="chi-square">Chi-Square</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">chi_square_answers</span>(superman_data, <span class="st">"clark_grp"</span>, <span class="st">"gender"</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv_labels =</span> <span class="fu">c</span>(<span class="st">"Under 6ft"</span>, <span class="st">"6ft+"</span>), <span class="at">dv_labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>ChiSquare</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span>ContingencyTable</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Formatted results</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">format_chi2_results</span>(<span class="st">"RH1"</span>, <span class="fu">c</span>(<span class="st">"clark_grp"</span>, <span class="st">"gender"</span>), result))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="apa-write-up" class="level3">
+<h3 class="anchored" data-anchor-id="apa-write-up">APA Write-Up</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a paragraph-length APA results section</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>corr_result <span class="ot">&lt;-</span> <span class="fu">corr_answers</span>(superman_data, <span class="st">"clark_height_in"</span>, <span class="st">"rt_critics_score"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>writeup <span class="ot">&lt;-</span> <span class="fu">apa_corr_writeup</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  corr_result,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">iv_label =</span> <span class="st">"Clark Kent's height"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv_label =</span> <span class="st">"critics' score"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(writeup)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
 <section id="spss-style-plot" class="level3">
 <h3 class="anchored" data-anchor-id="spss-style-plot">SPSS-Style Plot</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(cyl), <span class="at">y =</span> mpg, <span class="at">fill =</span> <span class="fu">factor</span>(cyl))) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_SPSS</span>() <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_SPSS</span>(<span class="at">scale.x =</span> <span class="st">"discrete"</span>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cylinders"</span>, <span class="at">y =</span> <span class="st">"MPG"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(cyl), <span class="at">y =</span> mpg, <span class="at">fill =</span> <span class="fu">factor</span>(cyl))) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_SPSS</span>() <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_SPSS</span>(<span class="at">scale.x =</span> <span class="st">"discrete"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cylinders"</span>, <span class="at">y =</span> <span class="st">"MPG"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="formatting-and-inline-reporting" class="level3">
+<h3 class="anchored" data-anchor-id="formatting-and-inline-reporting">Formatting and Inline Reporting</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Consistent APA formatting</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format_p_value</span>(<span class="fl">0.00012</span>)                  <span class="co"># "&lt; .001"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">format_p_value</span>(<span class="fl">0.034</span>, <span class="at">include_p =</span> <span class="cn">TRUE</span>)  <span class="co"># "p = .034"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">format_p_md</span>(<span class="fl">0.00012</span>)                     <span class="co"># "*p* &lt; .001"</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">format_r</span>(<span class="fl">0.4567</span>)                         <span class="co"># ".457"</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">format_mean</span>(<span class="fl">3.1</span>)                         <span class="co"># "3.10"</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Inline reporting in Quarto text</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># `r apa_inline_r(result)` → *r*(48) = .46, *p* &lt; .001</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="answer-key-vs.-student-worksheet" class="level2">
 <h2 class="anchored" data-anchor-id="answer-key-vs.-student-worksheet">Answer Key vs.&nbsp;Student Worksheet</h2>
 <p>Most table and formatting functions include a <code>Key</code> (or <code>KEY</code>) argument. Set <code>Key = TRUE</code> for a filled answer key, or <code>Key = FALSE</code> for a blank student worksheet — making it easy to generate both versions from the same code.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Answer key</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">format_bg_anova_results</span>(<span class="st">"RH1"</span>, vars, result, <span class="at">iv_labels =</span> labels, <span class="at">Key =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Student worksheet</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">format_bg_anova_results</span>(<span class="st">"RH1"</span>, vars, result, <span class="at">iv_labels =</span> labels, <span class="at">Key =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Answer key</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">format_bg_anova_results</span>(<span class="st">"RH1"</span>, vars, result, <span class="at">iv_labels =</span> labels, <span class="at">Key =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Student worksheet</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">format_bg_anova_results</span>(<span class="st">"RH1"</span>, vars, result, <span class="at">iv_labels =</span> labels, <span class="at">Key =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="interactive-webexercises-quarto" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-webexercises-quarto">Interactive Webexercises (Quarto)</h2>
 <p>Several functions generate interactive fill-in-the-blank and multiple-choice tables powered by <a href="https://psyteachr.github.io/webexercises/"><code>webexercises</code></a> and <a href="https://vincentarelbundock.github.io/tinytable/"><code>tinytable</code></a>. These are designed for use in Quarto HTML documents:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In a Quarto document</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">create_model_summary_checker</span>(result)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">create_predictor_checker</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In a Quarto document</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">create_model_summary_checker</span>(result)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">create_predictor_checker</span>(result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="sample-data" class="level2">
 <h2 class="anchored" data-anchor-id="sample-data">Sample Data</h2>
 <p>The package includes <code>superman_data</code>, a dataset used throughout the examples and course materials.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(superman_data)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(superman_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(superman_data)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(superman_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

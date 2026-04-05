@@ -176,6 +176,28 @@ format_p_value <- function(p, digits = 3, include_p = FALSE) {
 }
 
 
+#' Format p-value with markdown italic prefix
+#'
+#' Convenience wrapper for APA write-ups. Returns a markdown-formatted
+#' p-value string with the correct prefix operator ("*p* < .001" or
+#' "*p* = .023").
+#'
+#' @param p Numeric p-value.
+#' @param digits Integer. Number of decimal places. Default 3.
+#'
+#' @return Character string like `"*p* = .023"` or `"*p* < .001"`.
+#'
+#' @examples
+#' format_p_md(0.023)
+#' format_p_md(0.0001)
+#'
+#' @export
+format_p_md <- function(p, digits = 3) {
+  p_text <- format_p_value(p, digits = digits, include_p = TRUE)
+  sub("^p", "*p*", p_text)
+}
+
+
 #' Format a statistic for display
 #'
 #' Formats numeric statistics with appropriate decimal places and leading zeros.
@@ -526,7 +548,7 @@ apa_inline_r <- function(corr_results) {
   df <- corr_results$Correlation$df
 
   r_text <- format_r(r)
-  p_text <- format_p_value(p, include_p = TRUE)
+  p_text <- format_p_md(p)
 
   paste0("*r*(", format_df(df), ") = ", r_text, ", ", p_text)
 }
@@ -556,7 +578,7 @@ apa_inline_chi2 <- function(chi_results) {
   }
 
   chi2_text <- format_chi2(chi_sq)
-  p_text <- format_p_value(p, include_p = TRUE)
+  p_text <- format_p_md(p)
 
   paste0(.chi_sq_symbol(), "(", format_df(df), ") = ", chi2_text, ", ", p_text)
 }
@@ -573,7 +595,7 @@ apa_inline_chi2 <- function(chi_results) {
 #' @export
 apa_inline_t <- function(t_value, df, p_value) {
   t_text <- format_t(t_value)
-  p_text <- format_p_value(p_value, include_p = TRUE)
+  p_text <- format_p_md(p_value)
 
   paste0("*t*(", format_df(df), ") = ", t_text, ", ", p_text)
 }
@@ -592,7 +614,7 @@ apa_inline_t <- function(t_value, df, p_value) {
 #' @export
 apa_inline_F <- function(f_value, df_between, df_within, p_value, mse = NULL) {
   f_text <- format_F(f_value)
-  p_text <- format_p_value(p_value, include_p = TRUE)
+  p_text <- format_p_md(p_value)
 
   result <- paste0("*F*(", format_df(df_between), ", ", format_df(df_within), ") = ", f_text)
 

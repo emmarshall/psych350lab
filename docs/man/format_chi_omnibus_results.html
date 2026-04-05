@@ -358,7 +358,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Worksheets</span></a>
+ <span class="menu-text">Answer Checkers (HTML)</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -367,7 +367,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../vignettes/homework-checkers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Answer Checkers (HTML)</span></a>
+ <span class="menu-text">Basics</span></a>
   </div>
 </li>
       </ul>
@@ -1317,7 +1317,8 @@ ul.task-list li input[type="checkbox"] {
   chi_results_list,
   var1_name = "Variable 1",
   var2_name = "Variable 2",
-  KEY = TRUE
+  KEY = TRUE,
+  highlight = FALSE
 )
 </code></pre>
 </section>
@@ -1354,6 +1355,14 @@ Character. Display name for variable 2.
 </td>
 <td>
 Logical. If TRUE, show answers; if FALSE, show blanks.
+</td>
+</tr>
+<tr>
+<td style="white-space: collapse; font-family: monospace; vertical-align: top">
+<code id="highlight">highlight</code>
+</td>
+<td>
+Logical. If TRUE and KEY is TRUE, wrap answers in highlight formatting for Quarto/Word output. Default FALSE.
 </td>
 </tr>
 </tbody></table>
